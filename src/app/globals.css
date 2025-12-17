@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --max-width: 1080px !important;
+  --border-radius: 4px !important;
+  --colormain: #c8302f !important;
+  --hovercolormain: #b32b2a !important;
+  --colorsekunder: #ffffff !important;
+  --colorthrid: #1A1918 !important;
+  --colornotif: #ffdf00 !important;
+  --colorbggrey: #777577 !important;
+  --colorgrey: #30302f !important;
+  --colorbggreyutama: #e7e7e9 !important;
+  --hovercolorbggreyutama: #c2c2ca !important;
+
+  --colorwa: #137036 !important;
+  --hover-colorwa: #137037ef !important;
+  font-size: 25px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  border: 0;
+}
+
+/* html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  letter-spacing: 0.5px;
+} */
+
+body {
+  background-color: #E7E7E9;
+  color: var(--colorthrid);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 0.8rem;
+}
+
+
+button {
+  border: 0;
+  background-color: var(--colorbggreyutama);
+}
+
+button:hover {
+  background-color: var(--hovercolorbggreyutama);
+}
+
+
+tbody,
+tr,
+th,
+td {
+  border-bottom: 2px solid #ccc;
+  border-collapse: collapse
+}
+
+hr {
+  border-top: 1px solid var(--colorbggreyutama);
+}
+
+
+.cm-s-easymde .cm-header-1 {
+  font-size: calc(0.3rem + .7vw) !important;
+  color: var(--colormain);
+}
+
+.cm-s-easymde .cm-header-2 {
+  font-size: calc(0.3rem + .7vw) !important;
+  color: rgb(43, 34, 197);
+}
+
+.cm-s-easymde .cm-header-3 {
+  font-size: calc(0.3rem + .7vw) !important;
+  color: rgb(34, 197, 43);
+}
+
+
+
+.public-DraftEditor-content[contenteditable=true] {
+  /* padding: 10px; */
+  min-height: 230px;
+  /* line-height: 0.5px; */
+}
+
+.public-DraftStyleDefault-block {
+  margin: 0 !important;
+}
+
+.rdw-editor-main {
+  height: auto !important;
+}
+
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
+
+@media only screen and (max-width: 767px) {
+
+  .mobile {
+    display: block;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  h1 {
+    font-size: 0.7rem;
+  }
+
+}
+
+
+@media only screen and (max-width: 480px) {
+  h1 {
+    font-size: 0.7rem;
+  }
+
+}

@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": {
+            "first": "Dan",
+            "last": "Jones"
+        },
+        "rating": [
+            {
+                "satu": 1,
+                "dua": 2,
+                "tiga": 3
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": {
+            "first": "Bill",
+            "last": "Barner"
+        },
+        "rating": [
+            {
+                "satu": 1,
+                "dua": 2,
+                "tiga": 3
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": {
+            "first": "Joe",
+            "last": "Smoe"
+        },
+        "rating": [
+            {
+                "satu": 1,
+                "dua": 2,
+                "tiga": 3
+            }
+        ]
+    }
+]

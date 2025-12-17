@@ -1,0 +1,308 @@
+    .container {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .filtercontrols {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 20px 0;
+    }
+
+    .filtercontrols select,
+    .filtercontrols .year-input {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .filtercontrols select:hover,
+    .filtercontrols .year-input:hover {
+        border-color: #0070f3;
+    }
+
+
+    .filtercontrols input,
+    .filtercontrols .year-input {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .filtercontrols input:hover,
+    .filtercontrols .year-input:hover {
+        border-color: #0070f3;
+    }
+
+
+    .dalamcontainer {
+        width: 80vw;
+        background-color: var(--colorsekunder);
+    }
+
+
+    .atas {
+        display: flex;
+        padding: 30px 30px;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+        width: 80vw;
+        background-color: var(--colorsekunder);
+        position: sticky;
+        top: 0;
+        z-index: 99;
+    }
+
+    .atas .judul {
+        font-weight: 1000;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .atas .judul:hover {
+        opacity: 0.9;
+    }
+
+    .atas .judulkanan {
+        font-weight: 700;
+    }
+
+    .atas .search {
+        border: 1px solid var(--colorthrid);
+        border-radius: var(--border-radius);
+        padding: 1px;
+        display: flex;
+    }
+
+    .atas .search input {
+        padding: 10px;
+    }
+
+    .atas .search input:focus {
+        border: transparent;
+        outline: 0;
+    }
+
+    .atas .search .searchB {
+        height: 100%;
+        padding: 10px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 700;
+    }
+
+    .atas .searchP {
+        height: 40px;
+        padding: 0 18px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 700;
+    }
+
+    .atas button {
+        background-color: var(--colorbggreyutama);
+    }
+
+    .atas button:hover {
+        background-color: var(--hovercolorbggreyutama);
+    }
+
+    .ataskanan {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* Styling untuk tabel */
+    .bawah {
+        font-size: 0.7rem;
+    }
+
+    .orderTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 0.9em;
+        text-align: left;
+    }
+
+    .orderTable th,
+    .orderTable td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .orderTable th {
+        background-color: #f4f4f4;
+    }
+
+    .orderTable tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .orderTable select {
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    .orderTable button {
+        height: 40px;
+        width: fit-content;
+        padding: 0 18px;
+    }
+
+    .orderTable input {
+        height: 40px;
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    .orderTable span {
+        font-weight: 700;
+    }
+
+    .containeritemWrapper {
+        list-style-type: none;
+        display: flex;
+    }
+
+    .itemWrapper {
+        margin-bottom: 14px;
+        padding: 12px;
+        border-radius: 10px;
+        background: #fafafa;
+        border: 1px solid #eee;
+    }
+
+    .itemLink {
+        font-weight: 700;
+        text-decoration: underline;
+        cursor: pointer;
+        color: #222;
+    }
+
+    .itemNote {
+        color: #777;
+        font-weight: 400;
+    }
+
+    .itemMeta {
+        margin-top: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 14px;
+    }
+
+    .diskonText {
+        color: #009688;
+        font-weight: 600;
+    }
+
+    .totalharga {
+        margin-top: 20px;
+        padding-top: 12px;
+        border-top: 2px solid #e5e5e5;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    /* LOADING */
+
+    .loading {
+        position: absolute;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .loading .kotak {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: var(--colorsekunder); */
+        font-size: 2rem;
+        font-weight: 1000;
+    }
+
+
+
+    /* Container utama transaksi */
+    .orderTable td.transaction {
+        line-height: 1.4;
+        padding: 20px;
+        vertical-align: top;
+    }
+
+    /* ID Transaksi / Reference */
+    .transaction .reference {
+        font-weight: 600;
+        color: #1d4ed8;
+        padding: 10px;
+        border-radius: 5px;
+        /* biru */
+        cursor: pointer;
+        text-decoration: underline;
+        display: inline-block;
+        margin-bottom: 4px;
+    }
+
+    /* Tanggal */
+    .transaction .tanggal {
+        color: #6b7280;
+        /* abu abu */
+        margin-bottom: 6px;
+    }
+
+    /* Label informasi */
+    .transaction .label {
+        color: #6b7280;
+        /* abu abu */
+        display: inline-block;
+        min-width: 80px;
+        /* supaya rapi rata */
+    }
+
+    /* Value informasi */
+    .transaction .value {
+        font-weight: 500;
+        color: #111827;
+    }
+
+    .orderTable ul li {
+        list-style-position: inside;
+    }
+
+    .atasb {
+        padding: 10px;
+        background-color: #111827;
+        color: white;
+        border-radius: 15px;
+    }
+
+    .atasb:hover {
+        padding: 10px;
+        background-color: #111827d4;
+        color: white;
+        border-radius: 15px;
+    }

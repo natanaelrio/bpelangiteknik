@@ -1,0 +1,404 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/d/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
+model categoryProductUtama {
+  id              Int               @id @default(autoincrement())
+  start           DateTime          @default(now())
+  end             DateTime          @updatedAt
+  category        String            @unique
+  slugCategory    String            @unique
+  image           String?
+  icon            String?
+  urlYoutube      String?
+  title           String?
+  desc            String?
+  tags            String?
+  categoryProduct categoryProduct[]
+}
+
+model categoryProduct {
+  id                     Int                   @id @default(autoincrement())
+  start                  DateTime              @default(now())
+  end                    DateTime              @updatedAt
+  category               String                @unique
+  slugCategory           String                @unique
+  image                  String?
+  icon                   String?
+  urlYoutube             String?
+  title                  String?
+  desc                   String?
+  tags                   String?
+  listProducts           listProduct[]
+  categoryProductUtama   categoryProductUtama? @relation(fields: [categoryProductUtamaId], references: [id])
+  categoryProductUtamaId Int?
+
+  @@index([categoryProductUtamaId])
+}
+
+model listProduct {
+  id              Int      @id @default(autoincrement())
+  username        String?
+  start           DateTime @default(now())
+  end             DateTime @updatedAt
+  slugProduct     String   @unique
+  saveDraf        Boolean  @default(true)
+  descProduct     String?
+  productName     String?
+  stockProduct    Int?
+  descMetaProduct String?
+  viewProduct     Int?     @default(1)
+  sold            Int?     @default(0)
+  spekNew         Json?
+
+  weightProduct Int?
+  lengthProduct Int?
+  widthProduct  Int?
+  heightProduct Int?
+
+  subKategoriProduct String?
+  productType        String?
+  tagProduct         String?
+  productPrice       BigInt?
+  productDiscount    Int?
+  productPriceFinal  BigInt?
+  urlYoutube         String?
+
+  productKategori Int
+  user            categoryProduct @relation(fields: [productKategori], references: [id])
+
+  url_image_product imageProduct[]
+  spec_product      specProduct?
+  cartItem          cartItem[]
+  imageProductUtama imageProductUtama?
+  fMerek            fMerek[]           @relation("FMerek")
+
+  // 🔗 Relasi ke artikel (many-to-many)
+  relatedArticles postArtikel[] @relation("ArtikelProduk")
+
+  @@index([productKategori])
+}
+
+model fMerek {
+  id        String        @id @default(uuid())
+  name      String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  Merek     listProduct[] @relation("FMerek")
+}
+
+model specProduct {
+  id                   Int      @id @default(autoincrement())
+  start                DateTime @default(now())
+  end                  DateTime @updatedAt
+  phase_spec           String?
+  frequency_spec       String?
+  gensetPower_spec     String?
+  ratedPower_spec      String?
+  maxPower_spec        String?
+  ratedACVoltage_spec  String?
+  starting_spec        String?
+  fuelConsumption_spec String?
+  weight_spec          Int?
+  dimension_spec       String?
+
+  IdProduct Int         @unique
+  user      listProduct @relation(fields: [IdProduct], references: [id])
+}
+
+model imageProductUtama {
+  id                Int      @id @default(autoincrement())
+  start             DateTime @default(now())
+  end               DateTime @updatedAt
+  asset_id          String?  @unique // Asset ID
+  public_id         String?  @unique // Public ID
+  version           Int? // Version
+  version_id        String? // Version ID
+  signature         String? // Signature
+  width             Int? // Image width
+  height            Int? // Image height
+  format            String? // Image format (e.g., jpg, png)
+  resource_type     String? // Resource type (e.g., image, video)
+  created_at        DateTime @default(now()) // Time of creation
+  pages             Int? // Time of creation
+  tags              Json? // Tags associated with the image
+  bytes             Int? // Size of the file in bytes
+  type              String? // Upload type
+  etag              String? // ETag for cache control
+  placeholder       Boolean? // Whether the image is a placeholder
+  url               String? // URL to access the image
+  secure_url        String? // Secure URL for access
+  asset_folder      String? // Asset folder (nullable)
+  display_name      String? // Display name of the file (nullable)
+  original_filename String? // Original filename
+  api_key           String? // API key used for upload
+  overwritten       Boolean?
+
+  IdProduct Int         @unique
+  user      listProduct @relation(fields: [IdProduct], references: [id])
+}
+
+model imageProduct {
+  id                Int      @id @default(autoincrement())
+  start             DateTime @default(now())
+  end               DateTime @updatedAt
+  asset_id          String?  @unique // Asset ID
+  public_id         String?  @unique // Public ID
+  version           Int? // Version
+  version_id        String? // Version ID
+  signature         String? // Signature
+  width             Int? // Image width
+  height            Int? // Image height
+  format            String? // Image format (e.g., jpg, png)
+  resource_type     String? // Resource type (e.g., image, video)
+  created_at        DateTime @default(now()) // Time of creation
+  pages             Int? // Time of creation
+  tags              Json? // Tags associated with the image
+  bytes             Int? // Size of the file in bytes
+  type              String? // Upload type
+  etag              String? // ETag for cache control
+  placeholder       Boolean? // Whether the image is a placeholder
+  url               String? // URL to access the image
+  secure_url        String? // Secure URL for access
+  asset_folder      String? // Asset folder (nullable)
+  display_name      String? // Display name of the file (nullable)
+  original_filename String? // Original filename
+  api_key           String? // API key used for upload
+  overwritten       Boolean?
+
+  IdProduct Int
+  user      listProduct @relation(fields: [IdProduct], references: [id])
+
+  @@index([IdProduct])
+}
+
+model voucher {
+  id        String   @id @default(uuid())
+  kode      String   @unique
+  tipe      String?
+  diskon    Int
+  nominal   BigInt?
+  harga     BigInt?
+  expiredAt DateTime
+  carts     cart[] // one-to-many
+}
+
+model cart {
+  IDCart      String         @id
+  email       String         @unique
+  name        String?
+  avatar      String?
+  id          Int            @default(autoincrement())
+  start       DateTime       @default(now())
+  end         DateTime?      @updatedAt
+  items       cartItem[] // Relasi ke item di keranjang
+  formData    formPembelian?
+  dataPesanan dataPesanan[]
+  ongkosKirim ongkosKirim?
+  voucherId   String? // foreign key
+  voucher     voucher?       @relation(fields: [voucherId], references: [id])
+}
+
+model cartItem {
+  id        Int         @id @default(autoincrement())
+  start     DateTime    @default(now())
+  end       DateTime?   @updatedAt
+  cart      cart        @relation(fields: [cartId], references: [IDCart], onDelete: Cascade)
+  cartId    String
+  product   listProduct @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int         @default(1)
+  checkList Boolean     @default(false)
+  note      String?
+}
+
+model formPembelian {
+  id                  Int       @id @default(autoincrement())
+  start               DateTime  @default(now())
+  end                 DateTime? @updatedAt
+  nama_lengkap_user   String?   @db.VarChar(200)
+  alamat_lengkap_user String?   @db.VarChar(200)
+  alamat_detail       String?
+  kode_pos_user       Int?
+  no_hp_user          BigInt?
+  catatan_pengiriman  String?   @db.VarChar(200)
+  province            String?   @db.VarChar(200)
+  city                String?   @db.VarChar(200)
+
+  cartID String @unique
+  user   cart   @relation(fields: [cartID], references: [IDCart])
+}
+
+model ongkosKirim {
+  id          Int       @id @default(autoincrement())
+  start       DateTime  @default(now())
+  end         DateTime? @updatedAt
+  productName String?
+  price       BigInt?
+  quantity    Int?
+
+  cartID String @unique
+  user   cart   @relation(fields: [cartID], references: [IDCart])
+}
+
+model dataPesananItem {
+  id              Int       @id @default(autoincrement())
+  start           DateTime  @default(now())
+  end             DateTime? @updatedAt
+  note            String?
+  productName     String?
+  price           BigInt?
+  priceOriginal   BigInt?
+  quantity        Int?
+  methodPayment   String?
+  image           String?
+  slugProduct     String?
+  merchantOrderId String?
+  status          String?
+  noResi          String?
+
+  dataPesanan   dataPesanan? @relation(fields: [dataPesananId], references: [id])
+  dataPesananId Int?
+}
+
+model dataPesanan {
+  id                  Int               @id @default(autoincrement())
+  start               DateTime          @default(now())
+  end                 DateTime?         @updatedAt
+  payment             Boolean?          @default(false)
+  reference           String            @unique
+  merchantOrderId     String            @unique
+  nama_lengkap_user   String?           @db.VarChar(200)
+  alamat_lengkap_user String?           @db.VarChar(200)
+  alamat_detail       String?
+  kode_pos_user       Int?
+  no_hp_user          BigInt?
+  catatan_pengiriman  String?           @db.VarChar(200)
+  kode                String?           @db.VarChar(200)
+  diskon              Int?
+  diskon_nominal      BigInt?
+  nota_url            String?           @db.VarChar(200)
+  dataPesananItems    dataPesananItem[]
+  payment_info        String?
+
+  cart   cart   @relation(fields: [cartID], references: [IDCart])
+  cartID String
+
+  @@index([cartID, kode, reference])
+}
+
+model suratPenawaran {
+  id          String    @id @default(uuid())
+  start       DateTime  @default(now())
+  end         DateTime? @updatedAt
+  nameProduct String?
+  slugProduct String?
+  name        String?
+  email       String?
+  noHP        BigInt?
+  note        String?
+  sales       String?
+}
+
+model postArtikel {
+  id                  Int                   @id @default(autoincrement())
+  start               DateTime              @default(now())
+  end                 DateTime              @updatedAt
+  title               String
+  slug                String                @unique
+  viewArtikel         Int?                  @default(1)
+  content             String
+  description         String? // Meta description for SEO
+  // tags                String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  saveDraf            Boolean?              @default(true)
+  imageProductArtikel imageProductArtikel[]
+  tagsArtikel         tagArtikel[]          @relation("ArticleTags")
+
+  // 🔗 Relasi ke produk (many-to-many)
+  relatedProducts   listProduct[]   @relation("ArtikelProduk")
+  categoryArtikel   categoryArtikel @relation(fields: [categoryArtikelId], references: [id])
+  categoryArtikelId Int
+}
+
+model tagArtikel {
+  id        String        @id @default(uuid())
+  name      String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  articles  postArtikel[] @relation("ArticleTags")
+}
+
+model imageProductArtikel {
+  id                Int      @id @default(autoincrement())
+  start             DateTime @default(now())
+  end               DateTime @updatedAt
+  asset_id          String?  @unique // Asset ID
+  public_id         String?  @unique // Public ID
+  version           Int? // Version
+  version_id        String? // Version ID
+  signature         String? // Signature
+  width             Int? // Image width
+  height            Int? // Image height
+  format            String? // Image format (e.g., jpg, png)
+  resource_type     String? // Resource type (e.g., image, video)
+  created_at        DateTime @default(now()) // Time of creation
+  pages             Int? // Time of creation
+  tags              Json? // Tags associated with the image
+  bytes             Int? // Size of the file in bytes
+  type              String? // Upload type
+  etag              String? // ETag for cache control
+  placeholder       Boolean? // Whether the image is a placeholder
+  url               String? // URL to access the image
+  secure_url        String? // Secure URL for access
+  asset_folder      String? // Asset folder (nullable)
+  display_name      String? // Display name of the file (nullable)
+  original_filename String? // Original filename
+  api_key           String? // API key used for upload
+  overwritten       Boolean?
+
+  IdProductArtikel Int
+  userd            postArtikel @relation(fields: [IdProductArtikel], references: [id])
+
+  @@index([IdProductArtikel])
+}
+
+model categoryArtikel {
+  id           Int           @id @default(autoincrement())
+  start        DateTime      @default(now())
+  end          DateTime      @updatedAt
+  category     String        @unique
+  slugCategory String        @unique
+  image        String?
+  icon         String?
+  urlYoutube   String?
+  title        String?
+  desc         String?
+  tags         String?
+  postArtikel  postArtikel[]
+}
+
+model sales {
+  id             String   @id @default(uuid())
+  name           String
+  numberWA       String   @unique
+  numberForm     String   @unique
+  clickCountWA   Int      @default(0)
+  clickCountForm Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

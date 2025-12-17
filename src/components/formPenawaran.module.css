@@ -1,0 +1,242 @@
+.container {
+    display: flex;
+    justify-content: center;
+    font-size: 10px !important;
+}
+
+.dalamcontainer {
+    width: 80vw;
+    background-color: var(--colorsekunder);
+}
+
+
+.atas {
+    display: flex;
+    padding: 30px 30px;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    width: 80vw;
+    background-color: var(--colorsekunder);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+.atas .judul {
+    font-weight: 1000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.atas .judul:hover {
+    opacity: 0.9;
+}
+
+.atas .judulkanan {
+    font-weight: 700;
+}
+
+.atas .search {
+    border: 1px solid var(--colorthrid);
+    border-radius: var(--border-radius);
+    padding: 1px;
+    display: flex;
+}
+
+.atas .search input {
+    padding: 10px;
+}
+
+.atas .search input:focus {
+    border: transparent;
+    outline: 0;
+}
+
+.atas .search .searchB {
+    height: 100%;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.atas .searchP {
+    height: 40px;
+    padding: 0 18px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.atas button {
+    background-color: var(--colorbggreyutama);
+}
+
+.atas button:hover {
+    background-color: var(--hovercolorbggreyutama);
+}
+
+.ataskanan {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+/* Styling untuk tabel */
+.bawah {
+    font-size: 0.7rem;
+}
+
+.orderTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.65em;
+    text-align: left;
+}
+
+.orderTable th,
+.orderTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.orderTable th {
+    background-color: #f4f4f4;
+}
+
+.orderTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.orderTable tbody tr td:nth-child(3) {
+    font-weight: 700;
+}
+
+.orderTable tbody tr td:nth-child(3):hover {
+    text-decoration: underline;
+    font-weight: 1000;
+    cursor: pointer;
+}
+
+
+.orderTable .note {
+    margin: 0 0 4px 0;
+    /* line-height: 2rem; */
+    /* font-weight: 500; */
+    overflow: hidden;
+    /* -webkit-line-clamp: 3; */
+    /* display: box; */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.orderTable tbody tr td:nth-child(8):hover {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.orderTable select {
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.orderTable button {
+    height: 40px;
+    width: fit-content;
+    padding: 0 18px;
+}
+
+.orderTable input {
+    height: 40px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.orderTable span {
+    font-weight: 700;
+}
+
+.orderTable button {
+    font-weight: 1000;
+    height: 40px;
+    padding: 0 18px;
+    cursor: pointer;
+}
+
+/* LOADING */
+
+.loading {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.loading .kotak {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: var(--colorsekunder); */
+    font-size: 2rem;
+    font-weight: 1000;
+}
+
+
+.bghitam {
+    background-color: black;
+    position: fixed;
+    top: 0;
+    opacity: 0.7;
+    z-index: 10;
+    width: 100vw;
+    height: 100dvh;
+}
+
+.edit {
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    top: -70px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 10;
+    width: 500px;
+    height: fit-content;
+    border-radius: 12px;
+}
+
+.edit label {
+    font-size: 16px;
+}
+
+.edit form {
+    padding: 30px;
+}
+
+.edit textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid grey;
+    padding: 20px;
+}
+
+.edit button {
+    font-weight: 1000;
+    height: 40px;
+    padding: 0 18px;
+    cursor: pointer;
+}

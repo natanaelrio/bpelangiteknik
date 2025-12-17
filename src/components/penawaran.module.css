@@ -1,0 +1,256 @@
+.bghitam {
+    position: fixed;
+    top: 0;
+    background-color: black;
+    width: 100vw;
+    height: 100dvh;
+    opacity: 0.8;
+    z-index: 999;
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 500px;
+    background-color: var(--colorsekunder);
+    height: fit-content;
+    z-index: 9999;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: var(--border-radius);
+    gap: 10px;
+}
+
+
+.suratpenawaran {
+    font-weight: 1000;
+    border: 1px solid var(--colormain);
+    padding: 10px 30px;
+}
+
+.judul {
+    font-weight: 1000;
+    font-size: var(--font1);
+    text-align: left;
+    margin: 5px 0;
+}
+
+.tombol {
+    margin-top: 20px;
+    background-color: var(--colorthrid);
+    color: var(--colorsekunder);
+    width: fit-content;
+    border-radius: var(--border-radius);
+    height: 60px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+
+.tombol:hover {
+    background-color: var(--colorgrey);
+    cursor: pointer;
+}
+
+.container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container input {
+    width: 100%;
+    border: 1px solid var(--colorthrid);
+    border-radius: var(--border-radius);
+    font-size: var(--font1);
+}
+
+.container button {
+    width: 100%;
+    height: 50px;
+    background-color: var(--colormain);
+    color: var(--colorsekunder);
+    border-radius: var(--border-radius);
+    font-size: var(--font1);
+}
+
+.container button:hover {
+    background-color: var(--hovercolormain);
+    cursor: pointer;
+}
+
+.container .input {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+}
+
+
+.container .input label {
+    display: flex;
+}
+
+.container .er {
+    color: red;
+}
+
+.container input {
+    padding: 10px;
+}
+
+.container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--colorthrid);
+}
+
+.salles {
+    background-color: yellowgreen;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.custumer {
+    background-color: rgb(30, 27, 28);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.custumer b {
+    color: white;
+}
+
+.gambar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 200px;
+}
+
+.gambar img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.harga {
+    display: flex;
+    gap: 20px;
+}
+
+.harga .input input {
+    width: 100%;
+}
+
+.harga label {
+    width: 100%;
+}
+
+.alert {
+    text-align: left;
+}
+
+.text {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.doc {
+    cursor: pointer;
+}
+
+
+.jumlahbarang {
+    background-color: rgb(138, 32, 85);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.jumlahbarang b {
+    color: white;
+}
+
+.dalamcontainer {
+    height: 80dvh;
+    overflow-y: scroll;
+    width: 100%;
+    /* padding: 0 30px; */
+}
+
+.notecontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputnote {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deletenote {
+    background-color: red;
+    color: white;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 480px) {
+
+    .gambar {
+        width: 100%;
+        height: auto
+    }
+
+    .gambar img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+
+    .container {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: auto;
+        right: auto;
+        margin: auto;
+        width: 100%;
+        padding: 30px 0;
+    }
+
+    .dalamcontainer {
+        height: 80dvh;
+        overflow-y: scroll;
+        padding: 0 30px;
+    }
+
+    .tombol {
+        font-size: var(--font1)
+    }
+}

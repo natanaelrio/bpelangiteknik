@@ -1,0 +1,474 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+
+.tombol {
+    height: 40px;
+    padding: 0 18px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    background-color: var(--colorbggreyutama);
+    font-size: 0.6rem;
+}
+
+.tombol:hover {
+    background-color: var(--hovercolorbggreyutama);
+}
+
+.container button {
+    height: 40px;
+    padding: 0 18px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.container .save {
+    background-color: var(--colormain) !important;
+    color: var(--colorsekunder) !important;
+}
+
+.container .save:hover {
+    background-color: var(--hovercolormain) !important;
+}
+
+.atas {
+    display: flex;
+    padding: 0 30px;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    width: var(--max-width);
+    background-color: var(--colorsekunder);
+    position: sticky;
+    top: 0;
+    z-index: 1999;
+}
+
+.atas .kiri {
+    font-weight: 1000;
+}
+
+.atas .kanan {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+
+
+.dalamcontainer {
+    width: var(--max-width);
+    font-size: 0.7rem;
+}
+
+.bawah {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    padding: 0 30px;
+}
+
+.bawah .judul {
+    /* padding: 20px 0 ; */
+    padding: 20px 0 0 0;
+    font-weight: 500;
+}
+
+.bawah hr {
+    margin: 10px 0 20px 0 !important;
+}
+
+/* .bawah .isi {
+    padding-bottom: 40px;
+} */
+
+
+
+.bawah .labeltag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--colorbggreyutama);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    height: 70px;
+}
+
+.bawah .labeltag:hover {
+    transition: all ease 0.2s;
+    background-color: var(--colorbggreyutama);
+}
+
+.bawah .productImage {
+    width: 30%;
+    background-color: var(--colorsekunder);
+    border-radius: var(--border-radius);
+    /* height: 500px !important; */
+    height: fit-content !important;
+    position: sticky;
+    top: 90px;
+    padding: 0 20px;
+}
+
+.bawah .productImage .isi {
+    font-size: 0.6rem !important;
+}
+
+.bawah .judulsamping {
+    padding: 10px 0;
+}
+
+.bawah .detail {
+    width: 735px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--colorsekunder);
+    border-radius: var(--border-radius);
+    padding: 0 40px 30px 40px;
+    border: 1px solid black;
+}
+
+.bawah .tag {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+.bawah .tag label {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.bawah .tag input {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--colorbggreyutama);
+    margin-bottom: 10px;
+}
+
+.bawah textarea {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--colorbggreyutama);
+    margin-bottom: 10px;
+    height: 130px;
+}
+
+.satubaris {
+    display: flex;
+    gap: 10px;
+}
+
+.bariskan {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tambahkategoriklik {
+    font-weight: 700;
+}
+
+.tambahkategoriklik:hover {
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.bariskankategori {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tambahkategori {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--colorsekunder);
+    border: 2px solid var(--colorthrid);
+    z-index: 999;
+    border-radius: var(--border-radius);
+    padding: 5px;
+}
+
+.ataskategori {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.closekategori {
+    font-weight: 700;
+    width: 20px;
+    cursor: pointer;
+}
+
+
+.bawah select {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--colorbggreyutama);
+    margin-bottom: 10px;
+}
+
+.bawah .detail .isi {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.6rem;
+}
+
+
+.bawah input {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--colorbggreyutama);
+    margin-bottom: 10px;
+}
+
+.bawah .detail .isi label {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.bawah .dalamcek {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* margin-bottom: 20px;
+    padding-bottom: 20px; */
+}
+
+/* styles.module.css */
+.labelcek {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(59, 56, 56);
+    width: fit-content;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 7px;
+    color: white;
+    text-transform: capitalize;
+}
+
+.labelcek input[type="checkbox"] {
+    width: 23px;
+    height: 23px;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    accent-color: #007BFF;
+    /* Warna checkbox modern */
+}
+
+.labelcek input[type="checkbox"]:hover {
+    transform: scale(1.1);
+    /* Efek zoom sederhana */
+    transition: transform 0.2s ease;
+}
+
+
+
+.yesno {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    /* background-color: var(--colorsekunder); */
+}
+
+.yesno .tombol {
+    background-color: var(--colormain);
+    color: var(--colorsekunder);
+    padding: 3px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+}
+
+.yesno .tombol:hover {
+    background-color: var(--hovercolormain);
+    cursor: pointer;
+}
+
+.tombolhapus {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: var(--colormain);
+    color: var(--colorsekunder);
+    border: none;
+    font-size: 0.5rem;
+    cursor: 'pointer';
+    width: fit-content !important;
+    height: 20px !important;
+    padding: 0 10px !important;
+}
+
+.red {
+    border: 2px solid var(--colormain) !important;
+}
+
+
+.bgblack {
+    position: absolute;
+    top: 0;
+    background-color: var(--colormain);
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.gambarnew {
+    width: 110px;
+    height: 100px;
+    border: 1px solid var(--colorthrid);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+}
+
+.listgambar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.previewImage {
+    width: 110px;
+    height: 100px;
+}
+
+.deleteButton {
+    width: 100%;
+    background-color: var(--colormain);
+    color: var(--colorsekunder);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.deleteButtonutama {
+    width: 100%;
+    background-color: var(--colormain);
+    color: var(--colorsekunder);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    height: 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gambarutama {
+    width: 100%;
+    height: 200px;
+    border: 1px solid var(--colorthrid);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.previewImage {
+    width: 110px;
+    height: 100px;
+}
+
+.previewImageUtama {
+    width: 100%;
+    height: 200px;
+}
+
+.form {
+    position: relative;
+}
+
+.animasiloading {
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 70px;
+    font-weight: 700;
+}
+
+.animasidalam {
+    z-index: 3001;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: fit-content;
+    text-align: center;
+}
+
+.textloading {
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+
+
+.speksifikasibaru {
+    background-color: var(--colorsekunder);
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.speksifikasibaru .dalamspek {
+    gap: 10px;
+    padding: 0 30px 30px 30px;
+}
+
+.speksifikasibaru input {
+    width: 100%;
+}
+
+.speksifikasibaru label {
+    font-size: 0.6rem;
+}
+
+.speksifikasibaru button {
+    margin-bottom: 10px;
+}
