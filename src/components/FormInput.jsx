@@ -487,122 +487,174 @@ export default function FormInput({ data, text, kondisi, session }) {
     });
 
     const handleSubmit = async (value) => {
-
-        // const isEmpty = Object.values(value).some((val) => val === "" || val === null);
-
-        // if (isEmpty) {
-        //     toast.error("Harap lengkapi semua data sebelum melanjutkan!");
-        //     return; // stop submit
-        // }
-
+        let isSuccess = false;
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ids: {
-                        product: `product:${data?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                        listProduct: 'data:productList',
-                        // generate searchAll1 sampai searchAll13
-                        ...Object.fromEntries(
-                            Array.from({ length: 1000 }, (_, i) => [
-                                `searchAll${i + 1}`,
-                                `search::m:All:t:${i + 1}`,
-                            ])
-                        ),
-                    },
-                }),
-            });
-
-            setKategori(false)
-            setLoading(true)
-            const slug = value?.productName
-                ?.toLowerCase() // ubah jadi huruf kecil
-                ?.replace(/[^a-z0-9\s]/g, '') // hapus karakter selain huruf, angka, dan spasi
-                ?.trim() // hapus spasi di awal dan akhir
-                ?.replace(/\s+/g, '-')
-
-
-            // Validate if the slug is duplicate
-            const slugData = pathname == '/post' ? await HandleValidasi(slug) : []
-
-            if (pathname == '/post' && slugData?.data?.length) {
-                // Handle duplicate slug
-                toast.error("Produk dengan nama ini sudah ada, silakan pilih nama lain.");
-                setLoading(false);
-                return; // Stop further execution if slug exists
-            } else {
-
-                const dataImage = []
-                const CouldinaryUtama = async () => {
-
-                    const resultImage = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
+            /** ================== REDIS ================== */
+            const redisToast = toast.loading("Membersihkan cache...");
+            try {
+                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ids: {
+                            product: `product:${data?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                            listProduct: 'data:productList',
+                            ...Object.fromEntries(
+                                Array.from({ length: 1000 }, (_, i) => [
+                                    `searchAll${i + 1}`,
+                                    `search::m:All:t:${i + 1}`,
+                                ])
+                            ),
                         },
+                    }),
+                });
+                toast.success("Cache berhasil dibersihkan", { id: redisToast });
+            } catch (err) {
+                toast.error("Gagal membersihkan cache", { id: redisToast });
+                throw err;
+            }
+
+            setKategori(false);
+            setLoading(true);
+
+            /** ================== SLUG ================== */
+            const slug = value?.productName
+                ?.toLowerCase()
+                ?.replace(/[^a-z0-9\s]/g, '')
+                ?.trim()
+                ?.replace(/\s+/g, '-');
+
+            /** ================== VALIDASI SLUG ================== */
+            const slugToast = toast.loading("Validasi nama produk...");
+            try {
+                const slugData = pathname === '/post' ? await HandleValidasi(slug) : [];
+                if (pathname === '/post' && slugData?.data?.length) {
+                    toast.error("Nama produk sudah ada", { id: slugToast });
+                    setLoading(false);
+                    return;
+                }
+                toast.success("Validasi nama aman", { id: slugToast });
+            } catch (err) {
+                toast.error("Gagal validasi produk", { id: slugToast });
+                throw err;
+            }
+
+            /** ================== UPLOAD IMAGE ================== */
+            const dataImage = [];
+            const dataListImage = [];
+
+            if (DataImageUtama.length) {
+                const imgUtamaToast = toast.loading("Upload gambar utama...");
+                try {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ image: DataImageUtama }),
                     });
-                    const data1 = await resultImage.json();
-                    dataImage.push(data1.data[0])
+                    const json = await res.json();
+                    dataImage.push(json.data[0]);
+                    toast.success("Gambar utama terupload", { id: imgUtamaToast });
+                } catch (err) {
+                    toast.error("Upload gambar utama gagal", { id: imgUtamaToast });
+                    throw err;
                 }
+            }
 
-                const dataListImage = []
-                const CouldinaryList = async () => {
-                    const resultListImage = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
+            if (DataImageList.length) {
+                const imgListToast = toast.loading("Upload gambar tambahan...");
+                try {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ image: DataImageList }),
                     });
-                    const data2 = await resultListImage.json();
-                    dataListImage.push(data2.data)
+                    const json = await res.json();
+                    dataListImage.push(json.data);
+                    toast.success("Gambar tambahan terupload", { id: imgListToast });
+                } catch (err) {
+                    toast.error("Upload gambar tambahan gagal", { id: imgListToast });
+                    throw err;
                 }
+            }
 
+            /** ================== DELETE IMAGE CLOUDINARY ================== */
+            if (data && selectPubListImage?.length) {
+                const delListToast = toast.loading("Menghapus gambar list lama...");
+                try {
+                    await HandleDeleteImageC(selectPubListImage);
+                    toast.success("Gambar list lama dihapus", { id: delListToast });
+                } catch (err) {
+                    toast.error("Gagal hapus gambar list", { id: delListToast });
+                    throw err;
+                }
+            }
 
-                DataImageUtama.length && await CouldinaryUtama()
-                DataImageList.length && await CouldinaryList()
+            if (data && selectPubImageUtama?.length) {
+                const delUtamaToast = toast.loading("Menghapus gambar utama lama...");
+                try {
+                    await HandleDeleteImageC(selectPubImageUtama);
+                    toast.success("Gambar utama lama dihapus", { id: delUtamaToast });
+                } catch (err) {
+                    toast.error("Gagal hapus gambar utama", { id: delUtamaToast });
+                    throw err;
+                }
+            }
 
-                selectPubListImage.length && data && await HandleDeleteImageC(selectPubListImage)
-                selectPubImageUtama.length && data && await HandleDeleteImageC(selectPubImageUtama)
+            // ================== DELETE GAMBAR UTAMA ==================
+            if (selectPubImageUtama.length && data) {
+                const deleteUtamaToast = toast.loading("Menghapus gambar utama produk...");
 
-
-                selectPubImageUtama.length && data &&
+                try {
                     await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/listProduct`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `${process.env.NEXT_PUBLIC_SECREET}`
+                            'Authorization': `${process.env.NEXT_PUBLIC_SECREET}`,
                         },
                         body: JSON.stringify({
                             id: selectIDUtama,
-                            kondisiImageUtama: selectPubImageUtama.length
+                            kondisiImageUtama: selectPubImageUtama.length,
                         }),
-                    })
+                    });
 
+                    toast.success("Gambar utama berhasil dihapus", { id: deleteUtamaToast });
 
-                //  LIST GAMBAR
+                } catch (err) {
+                    console.error(err);
+                    toast.error("Gagal menghapus gambar utama", { id: deleteUtamaToast });
+                    throw err;
+                }
+            }
+
+            // ================== DELETE LIST GAMBAR ==================
+            const deleteToast = toast.loading("Menghapus gambar list produk...");
+            try {
                 for (const public_id of selectPubListImage) {
-                    {
-                        selectPubListImage.length && data &&
-                            await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/listProduct`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `${process.env.NEXT_PUBLIC_SECREET}`
-                                },
-                                body: JSON.stringify({
-                                    public_id: public_id,
-                                    kondisiListImage: selectPubListImage.length
-                                }),
-                            })
+                    if (selectPubListImage.length && data) {
+                        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/listProduct`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `${process.env.NEXT_PUBLIC_SECREET}`,
+                            },
+                            body: JSON.stringify({
+                                public_id,
+                                kondisiListImage: selectPubListImage.length,
+                            }),
+                        });
                     }
                 }
+                toast.success("Semua gambar list berhasil dihapus", { id: deleteToast });
+            } catch (err) {
+                console.error(err);
+                toast.error("Gagal menghapus sebagian gambar list", { id: deleteToast });
+                throw err;
+            }
 
+            /** ================== SAVE DATA ================== */
+            const saveToast = toast.loading("Menyimpan data produk...");
+            try {
                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/listProduct`, {
                     method: data ? 'PUT' : 'POST',
                     headers: {
@@ -612,6 +664,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                     body: JSON.stringify(
                         data ? {
                             ...value,
+                            productType: value?.productType.replace(/\s+/g, ''),
                             descProduct: draftToHtml(convertToRaw(editorState.getCurrentContent())),
                             productPriceFinal: Math.round(value?.productPrice - ((value?.productPrice * value?.productDiscount) / 100)),
                             slugProduct: slug,
@@ -625,6 +678,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             spekNew: specifications
                         } : {
                             ...value,
+                            productType: value?.productType.replace(/\s+/g, ''),
                             descProduct: draftToHtml(convertToRaw(editorState.getCurrentContent())),
                             productPriceFinal: Math.round(value?.productPrice - ((value?.productPrice * value?.productDiscount) / 100)),
                             slugProduct: slug,
@@ -638,24 +692,27 @@ export default function FormInput({ data, text, kondisi, session }) {
                             spekNew: specifications
                         }),
                 })
-
-                setLoading(false)
-                // router.push('/')
-
-                pathname === "/" && setLayang()
-                pathname.startsWith("/s/") && setLayang()
-                router.refresh()
-                toast.success('data berhasil ditambahkan!')
-                !data && router.push('/')
-                // handle the error
-                // if (!res.ok) throw new Error(await res.text())
+                toast.success("Data berhasil disimpan", { id: saveToast });
+            } catch (err) {
+                toast.error(`Gagal menyimpan data`, { id: saveToast });
+                throw err;
             }
 
-        } catch (e) {
-            // Handle errors here
-            toast.error("Tidak Berhasil, silahkan Ulang")
-            setLoading(false)
-            console.error(e)
+            isSuccess = true;
+
+
+        } catch (err) {
+            console.error(err);
+            toast.error("Proses gagal, silakan ulangi.");
+            setLoading(false);
+        } finally {
+            if (isSuccess) {
+                toast.success("Semua proses selesai");
+                setLoading(false);
+                router.refresh();
+                data && setLayang();
+                !data && router.push('/');
+            }
         }
     };
 
