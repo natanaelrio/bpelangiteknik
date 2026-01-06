@@ -557,6 +557,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                     toast.success("Gambar utama terupload", { id: imgUtamaToast });
                 } catch (err) {
                     toast.error("Upload gambar utama gagal", { id: imgUtamaToast });
+                    console.log('Upload gambar utama', err);
                     throw err;
                 }
             }
@@ -574,6 +575,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                     toast.success("Gambar tambahan terupload", { id: imgListToast });
                 } catch (err) {
                     toast.error("Upload gambar tambahan gagal", { id: imgListToast });
+                    console.log('Upload gambar tambahan', err);
                     throw err;
                 }
             }
@@ -586,6 +588,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                     toast.success("Gambar list lama dihapus", { id: delListToast });
                 } catch (err) {
                     toast.error("Gagal hapus gambar list", { id: delListToast });
+                    console.log('DELETE IMAGE CLOUDINARY', err)
                     throw err;
                 }
             }
@@ -597,6 +600,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                     toast.success("Gambar utama lama dihapus", { id: delUtamaToast });
                 } catch (err) {
                     toast.error("Gagal hapus gambar utama", { id: delUtamaToast });
+                    console.log('DELETE IMAGE CLOUDINARY', err);
                     throw err;
                 }
             }
