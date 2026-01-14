@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Login from "@/components/login";
 import { revalidatePath } from "next/cache";
+import ListProductNew from "@/components/listProductNew";
+import HeaderNew from "@/components/headerNew";
 
 export const dynamic = 'force-dynamic'
 
@@ -29,12 +31,14 @@ export async function GetListProduct(id) {
 export default async function Home({ params }) {
     const data = await GetListProduct(params?.id)
     const session = await getServerSession(authOptions)
-    console.log();
 
     return (
         <>
             {session ?
-                <ListProduct dataList={data?.data} query={params?.id} />
+                <>
+                    <HeaderNew session={session} />
+                    <ListProductNew dataList={data?.data} query={params?.id} />
+                </>
                 : <Login />}
         </>
     );

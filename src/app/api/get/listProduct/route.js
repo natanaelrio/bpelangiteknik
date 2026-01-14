@@ -57,6 +57,8 @@ export async function GET(req) {
             heightProduct: true,
             widthProduct: true,
             lengthProduct: true,
+            sold: true,
+            spekNew: true,
             imageProductUtama: {
                 select: {
                     url: true,

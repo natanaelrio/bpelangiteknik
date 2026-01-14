@@ -1,0 +1,172 @@
+/* ===== BASE ===== */
+.atas {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    min-height: 64px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.totalP {
+    background: #ef4444;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 50%;
+    margin-left: 4px;
+}
+
+/* ===== LOGO ===== */
+.judul {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* ===== BUTTON MENU ===== */
+.searchP {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.searchP:hover {
+    background: #111827;
+    color: #fff;
+}
+
+/* ===== RIGHT AREA ===== */
+.ataskanan {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ===== SEARCH ===== */
+.search form {
+    display: flex;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.search input {
+    border: none;
+    outline: none;
+    padding: 8px 10px;
+    width: 180px;
+    font-size: 13px;
+}
+
+.searchB {
+    border: none;
+    background: #111827;
+    color: #fff;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+/* ===== LOGOUT ===== */
+.ataskanan span {
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.ataskanan span:hover {
+    background: #f3f4f6;
+}
+
+/* =================== */
+/* ===== TABLET ===== */
+/* =================== */
+@media (max-width: 1024px) {
+    .search input {
+        width: 140px;
+    }
+
+    .searchP {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+}
+
+/* =================== */
+/* ===== MOBILE ===== */
+/* =================== */
+@media (max-width: 768px) {
+    .atas {
+        flex-wrap: wrap;
+        min-height: auto;
+        padding: 10px 14px;
+    }
+
+    .judul {
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .searchP {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .search {
+        width: 100%;
+        order: 3;
+    }
+
+    .search form {
+        width: 100%;
+    }
+
+    .search input {
+        width: 100%;
+    }
+
+    .ataskanan {
+        width: 100%;
+        justify-content: space-between;
+        margin-left: 0;
+    }
+}
+
+/* =================== */
+/* ===== SMALL MOBILE ===== */
+/* =================== */
+@media (max-width: 480px) {
+    .searchB {
+        display: none;
+    }
+
+    .search input {
+        padding: 10px;
+    }
+
+    .searchP {
+        gap: 4px;
+    }
+
+    .judul span {
+        display: none;
+    }
+}

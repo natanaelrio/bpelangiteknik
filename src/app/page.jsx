@@ -10,6 +10,8 @@ import {
   GetListKategoriArtikel,
   GetTagsArtikel,
 } from "@/service/n";
+import ListProductNew from "@/components/listProductNew";
+import HeaderNew from "@/components/headerNew";
 
 
 export default async function Home() {
@@ -25,13 +27,22 @@ export default async function Home() {
 
   return (
     <>
-      {session ? <ListProduct
+      <HeaderNew session={session} />
+      <ListProductNew
         session={session}
         dataKategori={dataKategori?.data}
         dataArtikel={dataArtikel?.data}
         dataKategoriArtikel={dataKategoriArtikel?.data}
         dataTagsArtikel={dataTagsArtikel?.data}
-      /> : <Login />}
+
+      />
+      {/* {session ? <ListProduct
+        session={session}
+        dataKategori={dataKategori?.data}
+        dataArtikel={dataArtikel?.data}
+        dataKategoriArtikel={dataKategoriArtikel?.data}
+        dataTagsArtikel={dataTagsArtikel?.data}
+      /> : <Login />} */}
     </>
   );
 }

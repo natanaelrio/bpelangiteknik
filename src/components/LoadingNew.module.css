@@ -1,0 +1,81 @@
+/* =========================
+   OVERLAY / BACKDROP
+   z-index: 1
+========================= */
+.animasiloading {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+/* =========================
+   LOADING CONTAINER
+   z-index: 2
+========================= */
+.animasidalam {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    /* background: #ffffff; */
+    padding: 26px 30px;
+    border-radius: 14px;
+    /* box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25); */
+    min-width: 540px;
+}
+
+/* =========================
+   ANIMATION WRAPPER
+========================= */
+.gambarloading {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* pastikan lottie tidak overflow */
+.gambarloading svg,
+.gambarloading canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* =========================
+   TEXT
+========================= */
+.textloading {
+    font-size: 30px;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+    .animasidalam {
+        width: 85%;
+        padding: 22px;
+    }
+
+    .gambarloading {
+        width: 96px;
+        height: 96px;
+    }
+
+    .textloading {
+        font-size: 13px;
+    }
+}

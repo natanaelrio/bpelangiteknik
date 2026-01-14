@@ -13,10 +13,11 @@ export default async function Page({ params, searchParams }) {
     const session = await getServerSession(authOptions)
     const data = await GetDataPesanan(month, year, payment)
 
-    return (session ? <ListPesanan
-        month={month}
-        year={year}
-        payment={payment}
-        data={data}
-        session={session} /> : <Login />)
+    return (
+        session ? <ListPesanan
+            month={month}
+            year={year}
+            payment={payment}
+            data={data}
+            session={session} /> : <Login />)
 }
