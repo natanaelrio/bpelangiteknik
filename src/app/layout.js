@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import NextTopLoader from "nextjs-toploader";
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,7 +23,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <GoogleTagManager gtmId="GTM-N8N4T4Z8" />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <GoogleAnalytics gaId="G-X9V8WXZW3L" />
         <Toaster
           toastOptions={{
             style: {

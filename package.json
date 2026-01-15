@@ -10,6 +10,7 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.2",
     "@prisma/client": "5.19.1",
     "@uidotdev/usehooks": "^2.4.1",
     "cloudinary": "^2.4.0",

@@ -10,6 +10,7 @@ import LogoAtas from './logo/logoAtas';
 import TTD from './logo/ttd';
 import { FormatRupiah } from '@/utils/formatRupiah';
 import { useCon } from '@/zustand/useCon';
+import { sendGAEventL } from '@/lib/ga';
 
 export default function Layangpenawaran({ dataPenawaran, setDataPenawaran }) {
     const logoBase64 = LogoAtas()
@@ -103,7 +104,10 @@ a.c 588.5062.609`
     const handleSubmitPenawaran = async () => {
         try {
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
-
+            process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
+                customer_penawaran_admin: customerName,
+                sales_penawaran_admin: nameSales - numberSales,
+            });
             const docDefinitionv = {
                 content: [
                     {
