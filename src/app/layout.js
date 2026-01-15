@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <GoogleTagManager gtmId="GTM-N8N4T4Z8" />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <GoogleAnalytics gaId="G-X9V8WXZW3L" />
+        <GoogleAnalytics gaId="G-7TXR2L5D2J" />
         <Toaster
           toastOptions={{
             style: {
