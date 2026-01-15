@@ -23,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <GoogleTagManager gtmId="GTM-N8N4T4Z8" />
+      <GoogleTagManager gtmId="G-7TXR2L5D2J" />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <GoogleAnalytics gaId="G-7TXR2L5D2J" />
         <Toaster
