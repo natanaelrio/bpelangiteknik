@@ -36,10 +36,6 @@ const FormInput = dynamic(() => import('@/components/FormInput'), {
     loading: () => <p>Loading Form...</p>, // Optional: loading state while the component is being loaded
     ssr: false // Disable server-side rendering for this component
 });
-const FormInputArtikel = dynamic(() => import('@/components/FormInputArtikel'), {
-    loading: () => <p>Loading Form...</p>, // Optional: loading state while the component is being loaded
-    ssr: false // Disable server-side rendering for this component
-});
 
 
 export default function ListProduct({ session, dataList, query, dataKategori, dataArtikel, dataKategoriArtikel, dataTagsArtikel }) {

@@ -12,6 +12,7 @@ import {
 } from "@/service/n";
 import ListProductNew from "@/components/listProductNew";
 import HeaderNew from "@/components/headerNew";
+import ArtikelNew from "@/components/artikelNew";
 
 
 export default async function Home() {
@@ -31,10 +32,12 @@ export default async function Home() {
       <ListProductNew
         session={session}
         dataKategori={dataKategori?.data}
+      />
+      <ArtikelNew
+        session={session}
         dataArtikel={dataArtikel?.data}
         dataKategoriArtikel={dataKategoriArtikel?.data}
         dataTagsArtikel={dataTagsArtikel?.data}
-
       />
       {/* {session ? <ListProduct
         session={session}

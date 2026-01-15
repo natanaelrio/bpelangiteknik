@@ -52,6 +52,11 @@ a.c 588.5062.609`
     const [newNote, setNewNote] = useState('');
     const [notes, setNotes] = useState(defaultNotes);
 
+    // Hitung total harga satuan & total keseluruhan
+    const totalHargaSatuan = dataPenawaran.reduce((acc, item) => acc + Number(item.productPriceFinal), 0);
+    const totalKeseluruhan = dataPenawaran.reduce((acc, item) => acc + (Number(item.productPriceFinal) * Number(item.qty)), 0);
+    const totalQty = dataPenawaran.reduce((acc, item) => acc + (Number(item.qty)), 0);
+
     const updateQty = (index, value) => {
         if (value < 1) return;
         const updated = [...dataPenawaran];
@@ -185,7 +190,14 @@ a.c 588.5062.609`
                                         alignment: "right",
                                         fontSize: 10
                                     }
-                                ]))
+                                ])),
+                                [
+                                    { text: totalQty, style: "tableHeader", alignment: 'center' },
+                                    { text: "", style: "tableHeader" },
+                                    { text: FormatRupiah(totalHargaSatuan), style: "tableHeader" },
+                                    { text: FormatRupiah(totalKeseluruhan), style: "tableHeader" },
+
+                                ],
                             ]
                         }, layout: {
                             hLineWidth: () => 0.5,

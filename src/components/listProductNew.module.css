@@ -75,6 +75,10 @@
     text-overflow: ellipsis;
 }
 
+.title:hover {
+    text-decoration: underline;
+}
+
 /* ID + Dimensi */
 .meta {
     display: flex;

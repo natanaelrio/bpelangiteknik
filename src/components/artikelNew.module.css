@@ -1,0 +1,119 @@
+/* Container bawah dengan bg dan shadow */
+.bottomContainer {
+    position: relative;
+    padding: 20px;
+    background-color: #ffffff;
+    /* bg putih */
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Tabel artikel */
+.productTable {
+    font-size: 18px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.productTableHead th,
+.productTableBody td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.productTableHead th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.productTableBody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+/* Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 28px;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.switch input:checked+.slider {
+    background-color: var(--colormain, #4caf50);
+}
+
+.switch input:checked+.slider::before {
+    transform: translateX(22px);
+}
+
+/* Delete icon */
+.deleteIcon {
+    cursor: pointer;
+    color: var(--colormain, #007bff);
+    transition: color 0.2s;
+}
+
+.deleteIcon:hover {
+    color: #ff4d4f;
+}
+
+/* UPDATE */
+.overlay {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100dvh;
+    background-color: var(--colorthrid);
+    opacity: 0.7;
+    z-index: 999;
+}
+
+
+.modalContainer {
+    position: fixed;
+    top: 50px;
+    width: var(--max-width);
+    height: 80vh;
+    background-color: var(--colorsekunder);
+    z-index: 1000;
+    border-radius: var(--border-radius);
+    padding: 0 50px 50px 50px;
+    overflow: hidden;
+}
+
+.modalContainer:hover {
+    overflow-y: scroll;
+}

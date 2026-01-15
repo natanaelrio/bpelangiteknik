@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { GetListProduct, GetFilterProduct, GetProduct } from "@/service/n";
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+import { FiExternalLink } from 'react-icons/fi';
 import Image from 'next/image'
 import { FormatRupiah } from '@/utils/formatRupiah'
 import { TimeConverter } from '@/utils/formatMoment'
@@ -28,7 +29,7 @@ const FormInputArtikel = dynamic(() => import('@/components/FormInputArtikel'), 
     ssr: false // Disable server-side rendering for this component
 });
 
-export default function ListProductNew({ session, dataList, query, dataKategori, dataArtikel, dataKategoriArtikel, dataTagsArtikel }) {
+export default function ListProductNew({ session, query, dataKategori, }) {
     // console.log('ARTIKELLL', dataArtikel);
     const UserSPV = session?.user?.email === 'rio@pelangiteknik.com'
     const pathname = usePathname()
@@ -235,11 +236,20 @@ export default function ListProductNew({ session, dataList, query, dataKategori,
                                 className={styles.image}
                             />
                             <div className={styles.productInfo}>
-                                <h4 className={styles.title}>{item?.productName}</h4>
+                                <h4 className={styles.title}>
+                                    <a
+                                        href={`${process.env.NEXT_PUBLIC_URL2}/product/${item?.slugProduct}`}  // ganti dengan link tujuan produk
+                                        target="_blank"
+                                        rel="noopener noreferrer"   // aman untuk membuka di tab baru
+                                        className={styles.titleLink} // optional styling khusus link
+                                    >
+                                        {item?.productName} <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
+                                    </a>
+                                </h4>
                                 <div className={styles.meta}>
                                     <span className={styles.id}>ID: {item?.id}</span>
                                     <span className={styles.dimension}>
-                                        Dimensi:   {item?.lengthProduct}×{item?.widthProduct}×{item?.heightProduct} cm
+                                        Dimensi: {item?.lengthProduct}×{item?.widthProduct}×{item?.heightProduct} cm
                                     </span>
                                     <span className={styles.dimension}>
                                         Berat: {item?.weightProduct} kg
