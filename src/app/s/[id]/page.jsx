@@ -7,6 +7,15 @@ import ListProductNew from "@/components/listProductNew";
 import HeaderNew from "@/components/headerNew";
 
 export const dynamic = 'force-dynamic'
+export async function generateMetadata({ params, searchParams }, parent) {
+    // read route params
+    const { id } = await params
+
+    return {
+        title: `Hasil Pencarian Produk: ${id}`,
+        description: `Menampilkan hasil pencarian produk untuk kata kunci: ${id}`,
+    }
+}
 
 export async function GetListProduct(id) {
     try {

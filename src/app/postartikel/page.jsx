@@ -4,7 +4,10 @@ import { authOptions } from "@/lib/auth";
 import Login from "@/components/login";
 
 export const dynamic = 'force-dynamic'
-
+export const metadata = {
+  title: 'Halaman Posting Artikel',
+  description: 'Halaman untuk mengelola Posting Artikel',
+}
 export async function GetListKategoriArtikel() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/a/kategori`, {

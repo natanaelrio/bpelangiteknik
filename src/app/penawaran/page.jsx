@@ -4,7 +4,10 @@ import Login from "@/components/login";
 import FormPenawaran from "@/components/formPenawaran";
 
 export const dynamic = 'force-dynamic'
-
+export const metadata = {
+    title: 'Halaman Penawaran',
+    description: 'Halaman untuk melihat dan mengelola penawaran',
+}
 export async function GetListProduct() {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/get/suratPernawaran`, {

@@ -4,6 +4,11 @@ import ListPesanan from "@/components/listPesanan";
 import { GetDataPesanan } from "@/service/handleGetDataPesanan";
 import Login from "@/components/login";
 
+export const metadata = {
+    title: 'Halaman Pesanan',
+    description: 'Halaman untuk melihat dan mengelola pesanan',
+}
+
 export default async function Page({ params, searchParams }) {
     const now = new Date()
 

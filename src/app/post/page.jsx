@@ -5,6 +5,10 @@ import Login from "@/components/login";
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+    title: 'Halaman Posting Product',
+    description: 'Halaman untuk mengelola Posting Product',
+}
 
 export default async function Page() {
     const session = await getServerSession(authOptions)
