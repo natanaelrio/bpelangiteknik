@@ -106,7 +106,7 @@ a.c 588.5062.609`
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
                 customer_penawaran_admin: customerName,
-                sales_penawaran_admin: nameSales - numberSales,
+                sales_penawaran_admin: `${nameSales} - ${numberSales}`,
                 customer_plus_sales: `${customerName} - ${nameSales} - ${numberSales}`,
                 total_item_penawaran_admin: dataPenawaran?.length,
                 total_harga_satuan_penawaran_admin: totalHargaSatuan,
