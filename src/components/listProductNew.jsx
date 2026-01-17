@@ -369,7 +369,7 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                         <div className={styles.center}>
                             <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'} </b>
                             <span className={styles.time}>
-                                {TimeConverter(item?.end)}
+                                {TimeConverter(item?.start)}
                             </span>
                         </div>
 

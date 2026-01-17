@@ -16,7 +16,11 @@ export async function PUT(req) {
     if (authorization == process.env.NEXT_PUBLIC_SECREET) {
         const data = await prisma.listProduct.update({
             where: { slugProduct: slugProduct },
-            data: { stockProduct: Number(stockProduct), username: username }
+            data: {
+                start: new Date(),
+                stockProduct: Number(stockProduct),
+                username: username
+            }
         })
         const res = await ResponseData(data, authorization)
         return res
