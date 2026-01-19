@@ -288,7 +288,14 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                                 },
                                                 body: JSON.stringify({
                                                     ids: {
-                                                        product: `product:${item.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                                                        product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                                                        listProduct: 'data:productList',
+                                                        ...Object.fromEntries(
+                                                            Array.from({ length: 1000 }, (_, i) => [
+                                                                `searchAll${i + 1}`,
+                                                                `search::m:All:t:${i + 1}`,
+                                                            ])
+                                                        ),
                                                     },
                                                 }),
                                             })
@@ -337,7 +344,14 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                                 },
                                                 body: JSON.stringify({
                                                     ids: {
-                                                        product: `product:${item.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                                                        product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                                                        listProduct: 'data:productList',
+                                                        ...Object.fromEntries(
+                                                            Array.from({ length: 1000 }, (_, i) => [
+                                                                `searchAll${i + 1}`,
+                                                                `search::m:All:t:${i + 1}`,
+                                                            ])
+                                                        ),
                                                     },
                                                 }),
                                             })
