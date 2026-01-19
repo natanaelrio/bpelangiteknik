@@ -254,6 +254,9 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                     <span className={styles.dimension}>
                                         Berat: {item?.weightProduct} kg
                                     </span>
+                                    <span className={styles.dimension}>
+                                        Type: {item?.productType}
+                                    </span>
                                 </div>
                             </div>
                         </div>
