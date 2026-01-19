@@ -17,7 +17,7 @@ export async function PUT(req) {
         const data = await prisma.listProduct.update({
             where: { slugProduct: slugProduct },
             data: {
-                start: new Date(),
+                updateDate: new Date(),
                 productDiscount: Number(0),
                 productPrice: Number(price),
                 productPriceFinal: Number(price),

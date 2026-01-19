@@ -54,6 +54,7 @@ model listProduct {
   username        String?
   start           DateTime @default(now())
   end             DateTime @updatedAt
+  updateDate      DateTime @default(now())
   slugProduct     String   @unique
   saveDraf        Boolean  @default(true)
   descProduct     String?

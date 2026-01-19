@@ -153,6 +153,7 @@ exports.Prisma.ListProductScalarFieldEnum = {
   username: 'username',
   start: 'start',
   end: 'end',
+  updateDate: 'updateDate',
   slugProduct: 'slugProduct',
   saveDraf: 'saveDraf',
   descProduct: 'descProduct',

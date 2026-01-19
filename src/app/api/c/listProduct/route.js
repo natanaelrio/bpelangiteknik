@@ -159,7 +159,7 @@ export async function PUT(req) {
             where: { id: IdProduct },
             data: {
                 // slugProduct,
-                start: new Date(),
+                updateDate: new Date(),
                 productName,
                 saveDraf,
                 productType,

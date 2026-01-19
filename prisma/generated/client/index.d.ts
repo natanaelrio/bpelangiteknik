@@ -5035,6 +5035,7 @@ export namespace Prisma {
     username: string | null
     start: Date | null
     end: Date | null
+    updateDate: Date | null
     slugProduct: string | null
     saveDraf: boolean | null
     descProduct: string | null
@@ -5062,6 +5063,7 @@ export namespace Prisma {
     username: string | null
     start: Date | null
     end: Date | null
+    updateDate: Date | null
     slugProduct: string | null
     saveDraf: boolean | null
     descProduct: string | null
@@ -5089,6 +5091,7 @@ export namespace Prisma {
     username: number
     start: number
     end: number
+    updateDate: number
     slugProduct: number
     saveDraf: number
     descProduct: number
@@ -5149,6 +5152,7 @@ export namespace Prisma {
     username?: true
     start?: true
     end?: true
+    updateDate?: true
     slugProduct?: true
     saveDraf?: true
     descProduct?: true
@@ -5176,6 +5180,7 @@ export namespace Prisma {
     username?: true
     start?: true
     end?: true
+    updateDate?: true
     slugProduct?: true
     saveDraf?: true
     descProduct?: true
@@ -5203,6 +5208,7 @@ export namespace Prisma {
     username?: true
     start?: true
     end?: true
+    updateDate?: true
     slugProduct?: true
     saveDraf?: true
     descProduct?: true
@@ -5318,6 +5324,7 @@ export namespace Prisma {
     username: string | null
     start: Date
     end: Date
+    updateDate: Date
     slugProduct: string
     saveDraf: boolean
     descProduct: string | null
@@ -5365,6 +5372,7 @@ export namespace Prisma {
     username?: boolean
     start?: boolean
     end?: boolean
+    updateDate?: boolean
     slugProduct?: boolean
     saveDraf?: boolean
     descProduct?: boolean
@@ -5401,6 +5409,7 @@ export namespace Prisma {
     username?: boolean
     start?: boolean
     end?: boolean
+    updateDate?: boolean
     slugProduct?: boolean
     saveDraf?: boolean
     descProduct?: boolean
@@ -5430,6 +5439,7 @@ export namespace Prisma {
     username?: boolean
     start?: boolean
     end?: boolean
+    updateDate?: boolean
     slugProduct?: boolean
     saveDraf?: boolean
     descProduct?: boolean
@@ -5483,6 +5493,7 @@ export namespace Prisma {
       username: string | null
       start: Date
       end: Date
+      updateDate: Date
       slugProduct: string
       saveDraf: boolean
       descProduct: string | null
@@ -5908,6 +5919,7 @@ export namespace Prisma {
     readonly username: FieldRef<"listProduct", 'String'>
     readonly start: FieldRef<"listProduct", 'DateTime'>
     readonly end: FieldRef<"listProduct", 'DateTime'>
+    readonly updateDate: FieldRef<"listProduct", 'DateTime'>
     readonly slugProduct: FieldRef<"listProduct", 'String'>
     readonly saveDraf: FieldRef<"listProduct", 'Boolean'>
     readonly descProduct: FieldRef<"listProduct", 'String'>
@@ -24722,6 +24734,7 @@ export namespace Prisma {
     username: 'username',
     start: 'start',
     end: 'end',
+    updateDate: 'updateDate',
     slugProduct: 'slugProduct',
     saveDraf: 'saveDraf',
     descProduct: 'descProduct',
@@ -25392,6 +25405,7 @@ export namespace Prisma {
     username?: StringNullableFilter<"listProduct"> | string | null
     start?: DateTimeFilter<"listProduct"> | Date | string
     end?: DateTimeFilter<"listProduct"> | Date | string
+    updateDate?: DateTimeFilter<"listProduct"> | Date | string
     slugProduct?: StringFilter<"listProduct"> | string
     saveDraf?: BoolFilter<"listProduct"> | boolean
     descProduct?: StringNullableFilter<"listProduct"> | string | null
@@ -25427,6 +25441,7 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     start?: SortOrder
     end?: SortOrder
+    updateDate?: SortOrder
     slugProduct?: SortOrder
     saveDraf?: SortOrder
     descProduct?: SortOrderInput | SortOrder
@@ -25466,6 +25481,7 @@ export namespace Prisma {
     username?: StringNullableFilter<"listProduct"> | string | null
     start?: DateTimeFilter<"listProduct"> | Date | string
     end?: DateTimeFilter<"listProduct"> | Date | string
+    updateDate?: DateTimeFilter<"listProduct"> | Date | string
     saveDraf?: BoolFilter<"listProduct"> | boolean
     descProduct?: StringNullableFilter<"listProduct"> | string | null
     productName?: StringNullableFilter<"listProduct"> | string | null
@@ -25500,6 +25516,7 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     start?: SortOrder
     end?: SortOrder
+    updateDate?: SortOrder
     slugProduct?: SortOrder
     saveDraf?: SortOrder
     descProduct?: SortOrderInput | SortOrder
@@ -25536,6 +25553,7 @@ export namespace Prisma {
     username?: StringNullableWithAggregatesFilter<"listProduct"> | string | null
     start?: DateTimeWithAggregatesFilter<"listProduct"> | Date | string
     end?: DateTimeWithAggregatesFilter<"listProduct"> | Date | string
+    updateDate?: DateTimeWithAggregatesFilter<"listProduct"> | Date | string
     slugProduct?: StringWithAggregatesFilter<"listProduct"> | string
     saveDraf?: BoolWithAggregatesFilter<"listProduct"> | boolean
     descProduct?: StringNullableWithAggregatesFilter<"listProduct"> | string | null
@@ -27423,6 +27441,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -27457,6 +27476,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -27490,6 +27510,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27524,6 +27545,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27558,6 +27580,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -27585,6 +27608,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27612,6 +27636,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29906,6 +29931,7 @@ export namespace Prisma {
     username?: SortOrder
     start?: SortOrder
     end?: SortOrder
+    updateDate?: SortOrder
     slugProduct?: SortOrder
     saveDraf?: SortOrder
     descProduct?: SortOrder
@@ -29949,6 +29975,7 @@ export namespace Prisma {
     username?: SortOrder
     start?: SortOrder
     end?: SortOrder
+    updateDate?: SortOrder
     slugProduct?: SortOrder
     saveDraf?: SortOrder
     descProduct?: SortOrder
@@ -29976,6 +30003,7 @@ export namespace Prisma {
     username?: SortOrder
     start?: SortOrder
     end?: SortOrder
+    updateDate?: SortOrder
     slugProduct?: SortOrder
     saveDraf?: SortOrder
     descProduct?: SortOrder
@@ -32558,6 +32586,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -32591,6 +32620,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -32685,6 +32715,7 @@ export namespace Prisma {
     username?: StringNullableFilter<"listProduct"> | string | null
     start?: DateTimeFilter<"listProduct"> | Date | string
     end?: DateTimeFilter<"listProduct"> | Date | string
+    updateDate?: DateTimeFilter<"listProduct"> | Date | string
     slugProduct?: StringFilter<"listProduct"> | string
     saveDraf?: BoolFilter<"listProduct"> | boolean
     descProduct?: StringNullableFilter<"listProduct"> | string | null
@@ -33324,6 +33355,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33357,6 +33389,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33410,6 +33443,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33443,6 +33477,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33491,6 +33526,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33524,6 +33560,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33556,6 +33593,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33589,6 +33627,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33637,6 +33676,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33670,6 +33710,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33702,6 +33743,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33735,6 +33777,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -33783,6 +33826,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33816,6 +33860,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34261,6 +34306,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -34294,6 +34340,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -34381,6 +34428,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34414,6 +34462,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34926,6 +34975,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -34959,6 +35009,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -35410,6 +35461,7 @@ export namespace Prisma {
     username?: string | null
     start?: Date | string
     end?: Date | string
+    updateDate?: Date | string
     slugProduct: string
     saveDraf?: boolean
     descProduct?: string | null
@@ -35436,6 +35488,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35469,6 +35522,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35502,6 +35556,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35751,6 +35806,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35784,6 +35840,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35817,6 +35874,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36215,6 +36273,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36248,6 +36307,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36281,6 +36341,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
     slugProduct?: StringFieldUpdateOperationsInput | string
     saveDraf?: BoolFieldUpdateOperationsInput | boolean
     descProduct?: NullableStringFieldUpdateOperationsInput | string | null
