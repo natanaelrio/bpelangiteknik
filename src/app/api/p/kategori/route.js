@@ -54,6 +54,7 @@ export async function GET(req) {
                     viewProduct: true,
                     subKategoriProduct: true,
                     productType: true,
+                    fMerek: true,
                     tagProduct: true,
                     productPrice: true,
                     productDiscount: true,
