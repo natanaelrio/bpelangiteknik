@@ -14,6 +14,11 @@ export async function GET(req) {
                     categoryProductUtama: true,
                 }
             },
+            fMerek: {
+                include: {
+                    fMerek: true
+                }
+            },
             spec_product: true,
             url_image_product: {
                 select: {
