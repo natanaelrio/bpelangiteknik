@@ -95,11 +95,11 @@ export default function ListProductNew({ session, query, dataKategori, }) {
 
     useEffect(() => {
         try {
-            const fetchDataFilter = async () => {
-                const res = await GetFilterProduct()
-                setDataFilterMerek(res)
-            }
-            fetchDataFilter()
+            // const fetchDataFilter = async () => {
+            //     const res = await GetFilterProduct()
+            //     setDataFilterMerek(res)
+            // }
+            // fetchDataFilter()
             const fetchDataShop = async () => {
                 const res = await GetListProduct(take, 5, m, query)
                 setLoading(false)

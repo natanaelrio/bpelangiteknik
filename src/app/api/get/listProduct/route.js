@@ -40,6 +40,7 @@ export async function GET(req) {
             id: true,
             start: true,
             end: true,
+            updateDate: true,
             productName: true,
             slugProduct: true,
             stockProduct: true,
