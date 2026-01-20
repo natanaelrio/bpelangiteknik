@@ -281,6 +281,11 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                         if (e.key === 'Enter') {
                                             // SIMPAN KE API DI SINI
                                             setLoading(true)
+                                            await UpdateStockProduct({
+                                                slugProduct: item.slugProduct,
+                                                stockProduct: stockValue,
+                                                username: session?.username
+                                            })
                                             await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                 method: 'DELETE',
                                                 headers: {
@@ -298,11 +303,6 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                                         ),
                                                     },
                                                 }),
-                                            })
-                                            await UpdateStockProduct({
-                                                slugProduct: item.slugProduct,
-                                                stockProduct: stockValue,
-                                                username: session?.username
                                             })
                                             toast.success('Stok berhasil diupdate')
                                             setLoading(false)
@@ -337,6 +337,11 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                     onKeyDown={async (e) => {
                                         if (e.key === 'Enter') {
                                             setLoading(true)
+                                            await UpdatePriceProduct({
+                                                slugProduct: item.slugProduct,
+                                                price: priceValue,
+                                                username: session?.username
+                                            })
                                             await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                 method: 'DELETE',
                                                 headers: {
@@ -354,11 +359,6 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                                         ),
                                                     },
                                                 }),
-                                            })
-                                            await UpdatePriceProduct({
-                                                slugProduct: item.slugProduct,
-                                                price: priceValue,
-                                                username: session?.username
                                             })
                                             toast.success('Harga berhasil diupdate')
                                             setLoading(false)

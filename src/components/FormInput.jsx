@@ -99,6 +99,9 @@ export default function FormInput({ data, text, kondisi, session }) {
     const [selectPubImageUtama, setSelectPubImageUtama] = useState([]);
     const [selectIDUtama, setselectIDUtama] = useState(null);
 
+    console.log('DataImageUtama', DataImageUtama);
+    console.log('DataImageList', DataImageList);
+
     // Function to handle image change and preview generation
     const handleImageChange = (event, imageIndex) => {
         const file = event.target.files[0];
@@ -490,30 +493,7 @@ export default function FormInput({ data, text, kondisi, session }) {
         let isSuccess = false;
 
         try {
-            /** ================== REDIS ================== */
-            const redisToast = toast.loading("Membersihkan cache...");
-            try {
-                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        ids: {
-                            product: `product:${data?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                            listProduct: 'data:productList',
-                            ...Object.fromEntries(
-                                Array.from({ length: 1000 }, (_, i) => [
-                                    `searchAll${i + 1}`,
-                                    `search::m:All:t:${i + 1}`,
-                                ])
-                            ),
-                        },
-                    }),
-                });
-                toast.success("Cache berhasil dibersihkan", { id: redisToast });
-            } catch (err) {
-                toast.error("Gagal membersihkan cache", { id: redisToast });
-                throw err;
-            }
+
 
             setKategori(false);
             setLoading(true);
@@ -564,18 +544,34 @@ export default function FormInput({ data, text, kondisi, session }) {
 
             if (DataImageList.length) {
                 const imgListToast = toast.loading("Upload gambar tambahan...");
+                const uploadedImages = [];
+
                 try {
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ image: DataImageList }),
-                    });
-                    const json = await res.json();
-                    dataListImage.push(json.data);
+                    for (const img of DataImageList) {
+                        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ image: img }),
+                        });
+
+                        if (!res.ok) {
+                            throw new Error('Gagal upload salah satu gambar');
+                        }
+
+                        const json = await res.json();
+
+                        // karena backend return { data: uploadResults }
+                        // dan sekarang upload 1 gambar, ambil index 0
+                        uploadedImages.push(json.data[0]);
+                    }
+
+                    // gabungkan ke data utama
+                    dataListImage.push(...uploadedImages);
+
                     toast.success("Gambar tambahan terupload", { id: imgListToast });
                 } catch (err) {
                     toast.error("Upload gambar tambahan gagal", { id: imgListToast });
-                    console.log('Upload gambar tambahan', err);
+                    console.error('Upload gambar tambahan', err);
                     throw err;
                 }
             }
@@ -699,6 +695,31 @@ export default function FormInput({ data, text, kondisi, session }) {
                 toast.success("Data berhasil disimpan", { id: saveToast });
             } catch (err) {
                 toast.error(`Gagal menyimpan data`, { id: saveToast });
+                throw err;
+            }
+
+            /** ================== REDIS ================== */
+            const redisToast = toast.loading("Membersihkan cache...");
+            try {
+                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ids: {
+                            product: `product:${data?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                            listProduct: 'data:productList',
+                            ...Object.fromEntries(
+                                Array.from({ length: 1000 }, (_, i) => [
+                                    `searchAll${i + 1}`,
+                                    `search::m:All:t:${i + 1}`,
+                                ])
+                            ),
+                        },
+                    }),
+                });
+                toast.success("Cache berhasil dibersihkan", { id: redisToast });
+            } catch (err) {
+                toast.error("Gagal membersihkan cache", { id: redisToast });
                 throw err;
             }
 
