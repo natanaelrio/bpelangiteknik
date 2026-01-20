@@ -656,6 +656,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             IdProduct: data.id,
                             fMerek: selectedMerek.join(", "),
                             fMerekDelete: selectedMerekDelete.join(", "),
+                            username: session.username,
                             spekNew: specifications
                         } : {
                             ...value,
