@@ -113,6 +113,7 @@ export async function PUT(req) {
 
     const { IdProduct,
         // slugProduct,
+        username,
         productName,
         saveDraf,
         productType,
@@ -160,6 +161,7 @@ export async function PUT(req) {
             data: {
                 // slugProduct,
                 updateDate: new Date(),
+                username,
                 productName,
                 saveDraf,
                 productType,
