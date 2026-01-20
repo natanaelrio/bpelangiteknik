@@ -9,7 +9,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "draft-js/dist/Draft.css";
 import draftToHtml from "draftjs-to-html";
-import { useRouter } from 'nextjs-toploader/app';
+import { useRouter } from 'next/navigation';
 import { MdOutlineFileUpload } from "react-icons/md";
 import Image from 'next/image';
 import { HandleDeleteImageC } from '@/service/handleDeleteImageC';
@@ -486,7 +486,6 @@ export default function FormInput({ data, text, kondisi, session }) {
         // email: Yup.string().email('Invalid email address').required('Required'),
     });
 
-
     const handleSubmit = async (value) => {
         let isSuccess = false;
 
@@ -522,9 +521,6 @@ export default function FormInput({ data, text, kondisi, session }) {
             const dataImage = [];
             const dataListImage = [];
 
-            console.log('datayangdikirimkedatabaseUTAMA', dataImage);
-            console.log('datayangdikirimkedatabaseLIST', dataListImage);
-
             if (DataImageUtama.length) {
                 const imgUtamaToast = toast.loading("Upload gambar utama...");
                 try {
@@ -544,59 +540,19 @@ export default function FormInput({ data, text, kondisi, session }) {
             }
 
             if (DataImageList.length) {
-                const total = DataImageList.length;
-                let index = 1;
-
-                console.log('[UPLOAD] Total gambar:', total);
-                console.log('[UPLOAD] DataImageList:', DataImageList);
-
-                const imgListToast = toast.loading(`Upload gambar ${index} dari ${total}...`);
-                const uploadedImages = [];
-
+                const imgListToast = toast.loading("Upload gambar tambahan...");
                 try {
-                    for (const img of DataImageList) {
-
-                        console.log(`\n[UPLOAD] Mulai gambar ke-${index}`);
-                        console.log('[UPLOAD] img:', img);
-
-                        toast.loading(
-                            `Upload gambar ${index} dari ${total}...`,
-                            { id: imgListToast }
-                        );
-
-                        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ image: [img] }),
-                        });
-
-                        console.log(`[UPLOAD] Response status gambar ke-${index}:`, res.status);
-
-                        const json = await res.json();
-                        console.log(`[UPLOAD] Response body gambar ke-${index}:`, json);
-
-                        if (!res.ok) {
-                            throw new Error(json?.error || `HTTP ${res.status}`);
-                        }
-
-                        if (!json?.data || !json.data.length) {
-                            throw new Error('Response data kosong');
-                        }
-
-                        uploadedImages.push(json.data[0]);
-                        console.log(`[UPLOAD] Sukses gambar ke-${index}`);
-
-                        index++;
-                    }
-
-                    console.log('[UPLOAD] Semua upload sukses:', uploadedImages);
-                    dataListImage.push(uploadedImages);
-
-                    toast.success(`Berhasil upload ${total} gambar`, { id: imgListToast });
-
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ image: DataImageList }),
+                    });
+                    const json = await res.json();
+                    dataListImage.push(json.data);
+                    toast.success("Gambar tambahan terupload", { id: imgListToast });
                 } catch (err) {
-                    console.error('[UPLOAD ERROR]', err);
-                    toast.error(`Upload gagal di gambar ke-${index}`, { id: imgListToast });
+                    toast.error("Upload gambar tambahan gagal", { id: imgListToast });
+                    console.log('Upload gambar tambahan', err);
                     throw err;
                 }
             }
@@ -680,9 +636,6 @@ export default function FormInput({ data, text, kondisi, session }) {
             /** ================== SAVE DATA ================== */
             const saveToast = toast.loading("Menyimpan data produk...");
             try {
-                console.log('dataListImageFINAL', dataListImage);
-                console.log('dataImageFINAL', dataImage);
-
                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/listProduct`, {
                     method: data ? 'PUT' : 'POST',
                     headers: {
@@ -752,8 +705,9 @@ export default function FormInput({ data, text, kondisi, session }) {
             }
 
             isSuccess = true;
-            router.refresh();
+            data && setLayang();
             data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
+
         } catch (err) {
             console.error(err);
             toast.error("Proses gagal, silakan ulangi.");
@@ -763,6 +717,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                 toast.success("Semua proses selesai");
                 setLoading(false);
                 router.refresh();
+                data && setLayang();
                 data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
                 !data && router.push('/');
             }
