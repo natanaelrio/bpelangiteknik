@@ -99,9 +99,6 @@ export default function FormInput({ data, text, kondisi, session }) {
     const [selectPubImageUtama, setSelectPubImageUtama] = useState([]);
     const [selectIDUtama, setselectIDUtama] = useState(null);
 
-    console.log('DataImageUtama', DataImageUtama);
-    console.log('DataImageList', DataImageList);
-
     // Function to handle image change and preview generation
     const handleImageChange = (event, imageIndex) => {
         const file = event.target.files[0];
@@ -524,6 +521,9 @@ export default function FormInput({ data, text, kondisi, session }) {
             const dataImage = [];
             const dataListImage = [];
 
+            console.log('datayangdikirimkedatabaseUTAMA', dataImage);
+            console.log('datayangdikirimkedatabaseLIST', dataListImage);
+
             if (DataImageUtama.length) {
                 const imgUtamaToast = toast.loading("Upload gambar utama...");
                 try {
@@ -546,11 +546,18 @@ export default function FormInput({ data, text, kondisi, session }) {
                 const total = DataImageList.length;
                 let index = 1;
 
+                console.log('[UPLOAD] Total gambar:', total);
+                console.log('[UPLOAD] DataImageList:', DataImageList);
+
                 const imgListToast = toast.loading(`Upload gambar ${index} dari ${total}...`);
                 const uploadedImages = [];
 
                 try {
                     for (const img of DataImageList) {
+
+                        console.log(`\n[UPLOAD] Mulai gambar ke-${index}`);
+                        console.log('[UPLOAD] img:', img);
+
                         toast.loading(
                             `Upload gambar ${index} dari ${total}...`,
                             { id: imgListToast }
@@ -559,31 +566,36 @@ export default function FormInput({ data, text, kondisi, session }) {
                         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ image: img }),
+                            body: JSON.stringify({ image: [img] }),
                         });
 
-                        if (!res.ok) {
-                            throw new Error(`Gagal upload gambar ke-${index}`);
-                        }
+                        console.log(`[UPLOAD] Response status gambar ke-${index}:`, res.status);
 
                         const json = await res.json();
+                        console.log(`[UPLOAD] Response body gambar ke-${index}:`, json);
+
+                        if (!res.ok) {
+                            throw new Error(json?.error || `HTTP ${res.status}`);
+                        }
+
+                        if (!json?.data || !json.data.length) {
+                            throw new Error('Response data kosong');
+                        }
+
                         uploadedImages.push(json.data[0]);
+                        console.log(`[UPLOAD] Sukses gambar ke-${index}`);
 
                         index++;
                     }
 
-                    dataListImage.push(...uploadedImages);
+                    console.log('[UPLOAD] Semua upload sukses:', uploadedImages);
+                    dataListImage.push(uploadedImages);
 
-                    toast.success(
-                        `Berhasil upload ${total} gambar`,
-                        { id: imgListToast }
-                    );
+                    toast.success(`Berhasil upload ${total} gambar`, { id: imgListToast });
+
                 } catch (err) {
-                    toast.error(
-                        `Upload gagal di gambar ke-${index}`,
-                        { id: imgListToast }
-                    );
-                    console.error('Upload gambar tambahan', err);
+                    console.error('[UPLOAD ERROR]', err);
+                    toast.error(`Upload gagal di gambar ke-${index}`, { id: imgListToast });
                     throw err;
                 }
             }
@@ -667,6 +679,9 @@ export default function FormInput({ data, text, kondisi, session }) {
             /** ================== SAVE DATA ================== */
             const saveToast = toast.loading("Menyimpan data produk...");
             try {
+                console.log('dataListImageFINAL', dataListImage);
+                console.log('dataImageFINAL', dataImage);
+
                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/listProduct`, {
                     method: data ? 'PUT' : 'POST',
                     headers: {
