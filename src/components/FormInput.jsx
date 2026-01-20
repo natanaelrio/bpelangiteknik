@@ -9,7 +9,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "draft-js/dist/Draft.css";
 import draftToHtml from "draftjs-to-html";
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'nextjs-toploader/app';
 import { MdOutlineFileUpload } from "react-icons/md";
 import Image from 'next/image';
 import { HandleDeleteImageC } from '@/service/handleDeleteImageC';
@@ -486,6 +486,7 @@ export default function FormInput({ data, text, kondisi, session }) {
         // email: Yup.string().email('Invalid email address').required('Required'),
     });
 
+
     const handleSubmit = async (value) => {
         let isSuccess = false;
 
@@ -752,7 +753,7 @@ export default function FormInput({ data, text, kondisi, session }) {
 
             isSuccess = true;
             router.refresh();
-            data && setLayang();
+            data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
         } catch (err) {
             console.error(err);
             toast.error("Proses gagal, silakan ulangi.");
@@ -762,7 +763,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                 toast.success("Semua proses selesai");
                 setLoading(false);
                 router.refresh();
-                data && setLayang();
+                data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
                 !data && router.push('/');
             }
         }
