@@ -436,6 +436,7 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                     <div className={styles.bghitam} onClick={() => setLayang()}></div>
                     <div className={styles.containerupdate}>
                         <FormInput
+                            session={session}
                             kondisi={true}
                             data={dataProductDetail}
                             text={'Update Product'}
