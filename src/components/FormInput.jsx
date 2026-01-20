@@ -706,8 +706,10 @@ export default function FormInput({ data, text, kondisi, session }) {
             }
 
             isSuccess = true;
-            data && setLayang();
-            data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
+            if (data) {
+                setLayang();
+            }
+            // data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
 
         } catch (err) {
             console.error(err);
@@ -718,8 +720,8 @@ export default function FormInput({ data, text, kondisi, session }) {
                 toast.success("Semua proses selesai");
                 setLoading(false);
                 router.refresh();
-                data && setLayang();
-                data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
+                // data && setLayang();
+                // data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
                 !data && router.push('/');
             }
         }

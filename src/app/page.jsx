@@ -1,7 +1,5 @@
-import ListProduct from "@/components/listProduct";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import Login from "@/components/login";
 
 export const dynamic = 'force-dynamic'
 import {

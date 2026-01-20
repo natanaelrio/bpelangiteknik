@@ -46,7 +46,10 @@ export default async function Home({ params }) {
             {session ?
                 <>
                     <HeaderNew session={session} />
-                    <ListProductNew dataList={data?.data} query={params?.id} />
+                    <ListProductNew
+                        session={session}
+                        dataList={data?.data}
+                        query={params?.id} />
                 </>
                 : <Login />}
         </>
