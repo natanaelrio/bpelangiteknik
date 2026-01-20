@@ -751,9 +751,8 @@ export default function FormInput({ data, text, kondisi, session }) {
             }
 
             isSuccess = true;
-
             router.refresh();
-            router.reload()
+            data && setLayang();
         } catch (err) {
             console.error(err);
             toast.error("Proses gagal, silakan ulangi.");
@@ -763,7 +762,6 @@ export default function FormInput({ data, text, kondisi, session }) {
                 toast.success("Semua proses selesai");
                 setLoading(false);
                 router.refresh();
-                router.reload()
                 data && setLayang();
                 !data && router.push('/');
             }
