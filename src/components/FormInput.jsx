@@ -543,11 +543,19 @@ export default function FormInput({ data, text, kondisi, session }) {
             }
 
             if (DataImageList.length) {
-                const imgListToast = toast.loading("Upload gambar tambahan...");
+                const total = DataImageList.length;
+                let index = 1;
+
+                const imgListToast = toast.loading(`Upload gambar ${index} dari ${total}...`);
                 const uploadedImages = [];
 
                 try {
                     for (const img of DataImageList) {
+                        toast.loading(
+                            `Upload gambar ${index} dari ${total}...`,
+                            { id: imgListToast }
+                        );
+
                         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cloudinary/e`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -555,22 +563,26 @@ export default function FormInput({ data, text, kondisi, session }) {
                         });
 
                         if (!res.ok) {
-                            throw new Error('Gagal upload salah satu gambar');
+                            throw new Error(`Gagal upload gambar ke-${index}`);
                         }
 
                         const json = await res.json();
-
-                        // karena backend return { data: uploadResults }
-                        // dan sekarang upload 1 gambar, ambil index 0
                         uploadedImages.push(json.data[0]);
+
+                        index++;
                     }
 
-                    // gabungkan ke data utama
                     dataListImage.push(...uploadedImages);
 
-                    toast.success("Gambar tambahan terupload", { id: imgListToast });
+                    toast.success(
+                        `Berhasil upload ${total} gambar`,
+                        { id: imgListToast }
+                    );
                 } catch (err) {
-                    toast.error("Upload gambar tambahan gagal", { id: imgListToast });
+                    toast.error(
+                        `Upload gagal di gambar ke-${index}`,
+                        { id: imgListToast }
+                    );
                     console.error('Upload gambar tambahan', err);
                     throw err;
                 }
