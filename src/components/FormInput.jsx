@@ -102,8 +102,9 @@ export default function FormInput({ data, text, kondisi, session }) {
     // Function to handle image change and preview generation
     const handleImageChange = (event, imageIndex) => {
         const file = event.target.files[0];
+        if (file.size > 1500 * 1024) { // 10MB in bytes
+            alert("Ukuran file terlalu besar. Maksimal 1.5 MB.");
 
-        if (file.size > 10000 * 1024) { // 10MB in bytes
             setImages((prevImages) => {
                 const updatedImages = [...prevImages];
                 updatedImages[imageIndex].kondisi = true;
@@ -803,7 +804,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                         <>
                                                             <label className={styles.gambarutama} style={images[0].kondisi ? { border: '1px solid red' } : {}} htmlFor="image1">
                                                                 <MdOutlineFileUpload /> &nbsp;Gambar Utama
-                                                                {images[0].kondisi && <div style={{ color: 'red' }}>max 10MB</div>}
+                                                                {images[0].kondisi && <div style={{ color: 'red' }}>max 1.5MB</div>}
                                                             </label>
                                                             <input
                                                                 style={{ display: 'none' }}
