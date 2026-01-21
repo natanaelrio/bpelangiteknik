@@ -9,7 +9,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "draft-js/dist/Draft.css";
 import draftToHtml from "draftjs-to-html";
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'nextjs-toploader/app';
 import { MdOutlineFileUpload } from "react-icons/md";
 import Image from 'next/image';
 import { HandleDeleteImageC } from '@/service/handleDeleteImageC';
@@ -32,7 +32,7 @@ export default function FormInput({ data, text, kondisi, session }) {
     const [loading, setLoading] = useState(false)
     const pathname = usePathname()
     const segment = pathname.split("/")[1]
-
+    const setIsSuccess = useCon((state) => state.setIsSuccess)
     const setLayang = useCon((state) => state.setLayang)
 
     const [images, setImages] = useState([
@@ -372,7 +372,7 @@ export default function FormInput({ data, text, kondisi, session }) {
         // productKategori: data ? data?.productKategori : '',
         tagProduct: data ? data?.tagProduct : '',
         productPrice: data ? data?.productPrice : '',
-        productDiscount: data ? data?.productDiscount : '',
+        productDiscount: data ? data?.productDiscount : 0,
         productPriceFinal: data ? data?.productPriceFinal : '',
         urlYoutube: data ? data?.urlYoutube : '',
         descMetaProduct: data ? data?.descMetaProduct : '',
@@ -646,7 +646,9 @@ export default function FormInput({ data, text, kondisi, session }) {
                     body: JSON.stringify(
                         data ? {
                             ...value,
-                            productType: value?.productType.replace(/\s+/g, ''),
+                            productType: value?.productType
+                                ?.replace(/\s+/g, '')
+                                .toUpperCase(),
                             descProduct: draftToHtml(convertToRaw(editorState.getCurrentContent())),
                             productPriceFinal: Math.round(value?.productPrice - ((value?.productPrice * value?.productDiscount) / 100)),
                             slugProduct: slug,
@@ -661,7 +663,9 @@ export default function FormInput({ data, text, kondisi, session }) {
                             spekNew: specifications
                         } : {
                             ...value,
-                            productType: value?.productType.replace(/\s+/g, ''),
+                            productType: value?.productType
+                                ?.replace(/\s+/g, '')
+                                .toUpperCase(),
                             descProduct: draftToHtml(convertToRaw(editorState.getCurrentContent())),
                             productPriceFinal: Math.round(value?.productPrice - ((value?.productPrice * value?.productDiscount) / 100)),
                             slugProduct: slug,
@@ -709,6 +713,9 @@ export default function FormInput({ data, text, kondisi, session }) {
             isSuccess = true;
             if (data) {
                 setLayang();
+                setIsSuccess()
+                // router.refresh();
+                // router.push(`${process.env.NEXT_PUBLIC_URL}${pathname}`, { scroll: false });
             }
             // data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
 
@@ -1052,6 +1059,27 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                         />
                                                     </div>
                                                 </div>
+                                                <div className={styles.satubaris} >
+                                                    <div className={styles.bariskan} style={{ width: '300px' }}>
+                                                        <label htmlFor="lengthProduct">Panjang (cm) <ErrorMessage name="lengthProduct" component="div" style={{ color: 'red' }} /></label>
+                                                        <Field disabled={loading} placeholder={'ex: 100'} type="number" name="lengthProduct" id="length_spec" />
+                                                    </div>
+                                                    <div className={styles.bariskan} style={{ width: '300px' }}>
+                                                        <label htmlFor="widthProduct">Lebar (cm) <ErrorMessage name="widthProduct" component="div" style={{ color: 'red' }} /></label>
+                                                        <Field disabled={loading} placeholder={'ex: 50'} type="number" name="widthProduct" id="width_spec" />
+                                                    </div>
+                                                    <div className={styles.bariskan} style={{ width: '300px' }}>
+                                                        <label htmlFor="heightProduct">Tinggi (cm) <ErrorMessage name="heightProduct" component="div" style={{ color: 'red' }} /></label>
+                                                        <Field disabled={loading} placeholder={'ex: 30'} type="number" name="heightProduct" id="height_spec" />
+                                                    </div>
+
+                                                </div>
+                                                <div className={styles.satubaris} >
+                                                    <div className={styles.bariskan} style={{ width: '300px' }}>
+                                                        <label htmlFor="weightProduct">Berat (satuan kilogram)<ErrorMessage name="weightProduct" component="div" style={{ color: 'red' }} /></label>
+                                                        <Field disabled={loading} placeholder={'ex: 10'} type="number" name="weightProduct" id="weight_spec" />
+                                                    </div>
+                                                </div>
                                                 <label htmlFor="productDescription">Deskripsi</label>
                                                 <Editor
                                                     editorState={editorState}
@@ -1063,7 +1091,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                 />
                                             </div>
 
-                                            <div className={styles.detail} style={{ margin: '20px 0' }}>
+                                            {/* <div className={styles.detail} style={{ margin: '20px 0' }}>
                                                 <div className={styles.judul}>Berat Barang ( max 5000kg )</div>
                                                 <hr />
                                                 <div className={styles.isi}>
@@ -1094,7 +1122,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                             <div className={styles.speksifikasibaru}>
                                                 <div className={styles.judul} style={{ padding: '20px 40px 10px 40px' }}>Spesifikasi Produk</div>

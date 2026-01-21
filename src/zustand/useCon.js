@@ -4,6 +4,9 @@ export const useCon = create((set) => ({
     layang: false,
     setLayang: () => set((state) => ({ layang: !state.layang })),
 
+    isSuccess: false,
+    setIsSuccess: (e) => set((state) => ({ isSuccess: !state.isSuccess })),
+
     layangPenawaran: false,
     setLayangPenawaran: (value) => set({ layangPenawaran: value }),
 

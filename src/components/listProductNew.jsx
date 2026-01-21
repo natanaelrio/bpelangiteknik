@@ -55,7 +55,7 @@ export default function ListProductNew({ session, query, dataKategori, }) {
     const setLoading = useCon((state) => state.setLoading)
     const loading = useCon((state) => state.loading)
     const setTotalPenawaran = useCon((state) => state.setTotalPenawaran)
-
+    const isSuccess = useCon((state) => state.isSuccess)
 
     const [editStockId, setEditStockId] = useState(null);
     const [stockValue, setStockValue] = useState('');
@@ -112,8 +112,7 @@ export default function ListProductNew({ session, query, dataKategori, }) {
         catch (e) {
             console.log(e)
         }
-    }, [take, m, search, dataSlugUpdatePublish, dataSlugProduct, loading])
-
+    }, [take, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess])
 
     const GetDetailProduct = async (id) => {
         setLoading(true)
