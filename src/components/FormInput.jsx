@@ -841,7 +841,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                                             style={images[i].kondisi ? { border: '1px solid red' } : {}}
                                                                             htmlFor={i}>
                                                                             <MdOutlineFileUpload /> &nbsp;Upload Gambar
-                                                                            {images[i].kondisi && <div style={{ color: 'red' }}>max 10MB</div>}
+                                                                            {images[i].kondisi && <div style={{ color: 'red' }}>max 1.5MB</div>}
                                                                         </label>
                                                                         <input
                                                                             style={{ display: 'none' }}
