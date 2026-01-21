@@ -117,9 +117,9 @@ export default function ListProductNew({ session, query, dataKategori, }) {
     const GetDetailProduct = async (id) => {
         setLoading(true)
         try {
-            setLayang()
             const data = await handleDetailProduct(id)
             setDataProductDetail(data?.data[0])
+            setLayang()
             setLoading(false)
         } catch {
             setLoading(false)
