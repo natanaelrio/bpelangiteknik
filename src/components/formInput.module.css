@@ -166,7 +166,12 @@
     border-radius: var(--border-radius);
     border: 2px solid var(--colorbggreyutama);
     margin-bottom: 10px;
-    height: 130px;
+    /* height: 130px; */
+    field-sizing: content;
+    min-height: 4rem;
+    /* Optional: Sets a minimum height */
+    resize: none;
+    /* Optional: Disables manual user resize handle */
 }
 
 .satubaris {

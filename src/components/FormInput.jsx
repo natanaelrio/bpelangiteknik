@@ -771,9 +771,10 @@ export default function FormInput({ data, text, kondisi, session }) {
                                             <hr />
                                             <div className={styles.isi}>
                                                 <div className={styles.tag}>
-                                                    <label htmlFor="tagProduct">Kata Kunci(tag)<ErrorMessage name="tagProduct" component="div" style={{ color: 'red' }} /></label>
+                                                    <label htmlFor="tagProduct">Kata Kunci(tag) pisahkan tanda ,<ErrorMessage name="tagProduct" component="div" style={{ color: 'red' }} /></label>
                                                     <Field type="text"
                                                         name="tagProduct"
+                                                        as="textarea"
                                                         id="tagProduct"
                                                         placeholder={'ex: genset slient, genset 20kva'}
                                                         disabled={loading}
