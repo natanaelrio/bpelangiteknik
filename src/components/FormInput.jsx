@@ -28,6 +28,8 @@ import { HandleGetKategoriID } from '@/service/handleGetKategoriID';
 
 export default function FormInput({ data, text, kondisi, session }) {
 
+    const spv = session?.user?.email === 'rio@pelangiteknik.com'
+
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const pathname = usePathname()
@@ -659,7 +661,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             IdProduct: data.id,
                             fMerek: selectedMerek.join(", "),
                             fMerekDelete: selectedMerekDelete.join(", "),
-                            username: session?.username,
+                            username: spv ? data?.username : session?.username,
                             spekNew: specifications
                         } : {
                             ...value,
@@ -675,7 +677,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             productKategori: Number(kategoriID),
                             fMerek: selectedMerek.join(", "),
                             fMerekDelete: selectedMerekDelete.join(", "),
-                            username: session?.username,
+                            username: spv ? data?.username : session?.username,
                             spekNew: specifications
                         }),
                 })
