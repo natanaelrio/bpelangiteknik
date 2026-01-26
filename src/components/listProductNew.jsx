@@ -31,7 +31,7 @@ const FormInputArtikel = dynamic(() => import('@/components/FormInputArtikel'), 
 
 export default function ListProductNew({ session, query, dataKategori, }) {
     // console.log('ARTIKELLL', dataArtikel);
-    const UserSPV = session?.user?.email === 'rio@pelangiteknik.com'
+    const spv = session?.user?.email === 'rio@pelangiteknik.com'
     const pathname = usePathname()
     const router = useRouter()
     const KondisiPencarian = pathname.startsWith('/s/')
@@ -223,191 +223,193 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                 </div>
 
                 {/* DATA */}
-                {DataProduct?.map((item, index) => (
-                    <div className={styles.row} key={index}>
-                        {/* Produk */}
-                        <div className={styles.product}>
-                            <Image
-                                width={56}
-                                height={56}
-                                src={item?.imageProductUtama?.secure_url}
-                                alt={item?.productName}
-                                className={styles.image}
-                            />
-                            <div className={styles.productInfo}>
-                                <h4 className={styles.title}>
-                                    <a
-                                        href={`${process.env.NEXT_PUBLIC_URL2}/product/${item?.slugProduct}`}  // ganti dengan link tujuan produk
-                                        target="_blank"
-                                        rel="noopener noreferrer"   // aman untuk membuka di tab baru
-                                        className={styles.titleLink} // optional styling khusus link
-                                    >
-                                        {item?.productName} <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
-                                    </a>
-                                </h4>
-                                <div className={styles.meta}>
-                                    <span className={styles.id}>ID: {item?.id}</span>
-                                    <span className={styles.dimension}>
-                                        Dimensi: {item?.lengthProduct}×{item?.widthProduct}×{item?.heightProduct} cm
-                                    </span>
-                                    <span className={styles.dimension}>
-                                        Berat: {item?.weightProduct} kg
-                                    </span>
-                                    <span className={styles.dimension}>
-                                        Type: {item?.productType}
-                                    </span>
+                {DataProduct?.map((item, index) => {
+                    return (
+                        <div className={styles.row} key={index}>
+                            {/* Produk */}
+                            <div className={styles.product}>
+                                <Image
+                                    width={56}
+                                    height={56}
+                                    src={item?.imageProductUtama?.secure_url}
+                                    alt={item?.productName}
+                                    className={styles.image}
+                                />
+                                <div className={styles.productInfo}>
+                                    <h4 className={styles.title}>
+                                        <a
+                                            href={`${process.env.NEXT_PUBLIC_URL2}/product/${item?.slugProduct}`}  // ganti dengan link tujuan produk
+                                            target="_blank"
+                                            rel="noopener noreferrer"   // aman untuk membuka di tab baru
+                                            className={styles.titleLink} // optional styling khusus link
+                                        >
+                                            {item?.productName} <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
+                                        </a>
+                                    </h4>
+                                    <div className={styles.meta}>
+                                        <span className={styles.id}>ID: {item?.id}</span>
+                                        <span className={styles.dimension}>
+                                            Dimensi: {item?.lengthProduct}×{item?.widthProduct}×{item?.heightProduct} cm
+                                        </span>
+                                        <span className={styles.dimension}>
+                                            Berat: {item?.weightProduct} kg
+                                        </span>
+                                        <span className={styles.dimension}>
+                                            Type: {item?.productType}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Penjualan */}
-                        <div className={styles.center}>
-                            <span>{item?.sold} produk terjual</span>
-                            <small>Tayang: {item?.viewProduct}</small>
-                        </div>
+                            {/* Penjualan */}
+                            <div className={styles.center}>
+                                <span>{item?.sold} produk terjual</span>
+                                <small>Tayang: {item?.viewProduct}</small>
+                            </div>
 
-                        {/* Stok */}
-                        <div className={styles.center}>
-                            {editStockId === item.id ? (
-                                <input
-                                    type="number"
-                                    className={styles.stockInput}
-                                    value={stockValue}
-                                    autoFocus
-                                    onChange={(e) => setStockValue(e.target.value)}
-                                    onBlur={() => setEditStockId(null)}
-                                    onKeyDown={async (e) => {
-                                        if (e.key === 'Enter') {
-                                            // SIMPAN KE API DI SINI
-                                            setLoading(true)
-                                            await UpdateStockProduct({
-                                                slugProduct: item.slugProduct,
-                                                stockProduct: stockValue,
-                                                username: session?.username
-                                            })
-                                            await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                                                method: 'DELETE',
-                                                headers: {
-                                                    'Content-Type': 'application/json',
-                                                },
-                                                body: JSON.stringify({
-                                                    ids: {
-                                                        product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                                                        listProduct: 'data:productList',
-                                                        ...Object.fromEntries(
-                                                            Array.from({ length: 1000 }, (_, i) => [
-                                                                `searchAll${i + 1}`,
-                                                                `search::m:All:t:${i + 1}`,
-                                                            ])
-                                                        ),
+                            {/* Stok */}
+                            <div className={styles.center}>
+                                {editStockId === item.id ? (
+                                    <input
+                                        type="number"
+                                        className={styles.stockInput}
+                                        value={stockValue}
+                                        autoFocus
+                                        onChange={(e) => setStockValue(e.target.value)}
+                                        onBlur={() => setEditStockId(null)}
+                                        onKeyDown={async (e) => {
+                                            if (e.key === 'Enter') {
+                                                // SIMPAN KE API DI SINI
+                                                setLoading(true)
+                                                await UpdateStockProduct({
+                                                    slugProduct: item.slugProduct,
+                                                    stockProduct: stockValue,
+                                                    username: spv ? item?.username : session?.username
+                                                })
+                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                                                    method: 'DELETE',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
                                                     },
-                                                }),
-                                            })
-                                            toast.success('Stok berhasil diupdate')
-                                            setLoading(false)
-                                            console.log('Save stock:', stockValue);
-                                            setEditStockId(null);
-                                        }
-                                    }}
-                                />
-                            ) : (
-                                <span
-                                    className={`${styles.bold} ${styles.stockText}`}
-                                    onClick={() => {
-                                        setEditStockId(item.id);
-                                        setStockValue(item.stockProduct);
-                                    }}
-                                >
-                                    {item?.stockProduct}
-                                </span>
-                            )}
-                        </div>
+                                                    body: JSON.stringify({
+                                                        ids: {
+                                                            product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                                                            listProduct: 'data:productList',
+                                                            ...Object.fromEntries(
+                                                                Array.from({ length: 1000 }, (_, i) => [
+                                                                    `searchAll${i + 1}`,
+                                                                    `search::m:All:t:${i + 1}`,
+                                                                ])
+                                                            ),
+                                                        },
+                                                    }),
+                                                })
+                                                toast.success('Stok berhasil diupdate')
+                                                setLoading(false)
+                                                console.log('Save stock:', stockValue);
+                                                setEditStockId(null);
+                                            }
+                                        }}
+                                    />
+                                ) : (
+                                    <span
+                                        className={`${styles.bold} ${styles.stockText}`}
+                                        onClick={() => {
+                                            setEditStockId(item.id);
+                                            setStockValue(item.stockProduct);
+                                        }}
+                                    >
+                                        {item?.stockProduct}
+                                    </span>
+                                )}
+                            </div>
 
-                        {/* Harga */}
-                        <div className={styles.price}>
-                            {editPriceId === item.id ? (
-                                <input
-                                    type="number"
-                                    className={styles.priceInput}
-                                    value={priceValue}
-                                    autoFocus
-                                    onChange={(e) => setPriceValue(e.target.value)}
-                                    onBlur={() => setEditPriceId(null)}
-                                    onKeyDown={async (e) => {
-                                        if (e.key === 'Enter') {
-                                            setLoading(true)
-                                            await UpdatePriceProduct({
-                                                slugProduct: item.slugProduct,
-                                                price: priceValue,
-                                                username: session?.username
-                                            })
-                                            await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                                                method: 'DELETE',
-                                                headers: {
-                                                    'Content-Type': 'application/json',
-                                                },
-                                                body: JSON.stringify({
-                                                    ids: {
-                                                        product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                                                        listProduct: 'data:productList',
-                                                        ...Object.fromEntries(
-                                                            Array.from({ length: 1000 }, (_, i) => [
-                                                                `searchAll${i + 1}`,
-                                                                `search::m:All:t:${i + 1}`,
-                                                            ])
-                                                        ),
+                            {/* Harga */}
+                            <div className={styles.price}>
+                                {editPriceId === item.id ? (
+                                    <input
+                                        type="number"
+                                        className={styles.priceInput}
+                                        value={priceValue}
+                                        autoFocus
+                                        onChange={(e) => setPriceValue(e.target.value)}
+                                        onBlur={() => setEditPriceId(null)}
+                                        onKeyDown={async (e) => {
+                                            if (e.key === 'Enter') {
+                                                setLoading(true)
+                                                await UpdatePriceProduct({
+                                                    slugProduct: item.slugProduct,
+                                                    price: priceValue,
+                                                    username: spv ? item?.username : session?.username
+                                                })
+                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                                                    method: 'DELETE',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
                                                     },
-                                                }),
-                                            })
-                                            toast.success('Harga berhasil diupdate')
-                                            setLoading(false)
-                                            console.log('save price', priceValue);
-                                            setEditPriceId(null);
-                                        }
-                                    }}
-                                />
-                            ) : (
-                                <span
-                                    className={styles.normalPrice}
-                                    onClick={() => {
-                                        setEditPriceId(item.id);
-                                        setPriceValue(item.productPriceFinal);
-                                    }}
-                                    title="Klik untuk edit harga"
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    {FormatRupiah(item?.productPriceFinal)}
+                                                    body: JSON.stringify({
+                                                        ids: {
+                                                            product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
+                                                            listProduct: 'data:productList',
+                                                            ...Object.fromEntries(
+                                                                Array.from({ length: 1000 }, (_, i) => [
+                                                                    `searchAll${i + 1}`,
+                                                                    `search::m:All:t:${i + 1}`,
+                                                                ])
+                                                            ),
+                                                        },
+                                                    }),
+                                                })
+                                                toast.success('Harga berhasil diupdate')
+                                                setLoading(false)
+                                                console.log('save price', priceValue);
+                                                setEditPriceId(null);
+                                            }
+                                        }}
+                                    />
+                                ) : (
+                                    <span
+                                        className={styles.normalPrice}
+                                        onClick={() => {
+                                            setEditPriceId(item.id);
+                                            setPriceValue(item.productPriceFinal);
+                                        }}
+                                        title="Klik untuk edit harga"
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        {FormatRupiah(item?.productPriceFinal)}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* Selesai */}
+                            <div className={styles.center}>
+                                <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'} </b>
+                                <span className={styles.time}>
+                                    {TimeConverter(item?.updateDate)}
                                 </span>
-                            )}
-                        </div>
+                            </div>
 
-                        {/* Selesai */}
-                        <div className={styles.center}>
-                            <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'} </b>
-                            <span className={styles.time}>
-                                {TimeConverter(item?.updateDate)}
-                            </span>
+                            {/* Aksi */}
+                            <div className={styles.action}>
+                                <button onClick={() => GetDetailProduct(item?.slugProduct)} className={styles.iconBtn}>
+                                    <FaEdit />
+                                </button>
+                                <button onClick={() => AddFormPenawaran(item)} className={styles.iconBtn}>
+                                    <FaPlus />
+                                </button>
+                                {session?.user?.email == 'rio@pelangiteknik.com' &&
+                                    <button
+                                        className={`${styles.iconBtn} ${styles.deleteBtn}`}
+                                        onClick={() => HandleDeleteProducts(item?.id, item?.slugProduct)}
+                                        title="Hapus produk"
+                                    >
+                                        <FaTrash />
+                                    </button>}
+                            </div>
                         </div>
-
-                        {/* Aksi */}
-                        <div className={styles.action}>
-                            <button onClick={() => GetDetailProduct(item?.slugProduct)} className={styles.iconBtn}>
-                                <FaEdit />
-                            </button>
-                            <button onClick={() => AddFormPenawaran(item)} className={styles.iconBtn}>
-                                <FaPlus />
-                            </button>
-                            {session?.user?.email == 'rio@pelangiteknik.com' &&
-                                <button
-                                    className={`${styles.iconBtn} ${styles.deleteBtn}`}
-                                    onClick={() => HandleDeleteProducts(item?.id, item?.slugProduct)}
-                                    title="Hapus produk"
-                                >
-                                    <FaTrash />
-                                </button>}
-                        </div>
-                    </div>
-                ))}
+                    )
+                })}
                 <div className={styles.pagination}>
                     <button
                         onClick={handlePrev}
