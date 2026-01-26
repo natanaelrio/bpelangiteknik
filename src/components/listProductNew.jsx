@@ -31,6 +31,8 @@ const FormInputArtikel = dynamic(() => import('@/components/FormInputArtikel'), 
 
 export default function ListProductNew({ session, query, dataKategori, }) {
     // console.log('ARTIKELLL', dataArtikel);
+    console.log('rio');
+
     const spv = session?.user?.email === 'rio@pelangiteknik.com'
     const pathname = usePathname()
     const router = useRouter()
