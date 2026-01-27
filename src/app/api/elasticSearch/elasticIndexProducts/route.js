@@ -11,7 +11,8 @@ export async function GET(req) {
                     select: {
                         secure_url: true
                     }
-                }
+                },
+                fMerek: true
             }
         });
 
@@ -22,7 +23,7 @@ export async function GET(req) {
                 id: p.id.toString(),
                 start: p.start,
                 productName: p.productName,
-                descProduct: p.descProduct,
+                // descProduct: p.descProduct,
                 descMetaProduct: p.descMetaProduct,
                 tagProduct: p.tagProduct,
                 productType: p.productType,
@@ -30,6 +31,7 @@ export async function GET(req) {
                 productDiscount: p.productDiscount,
                 productPriceFinal: p.productPriceFinal.toString(),
                 imageProductUtama: p.imageProductUtama?.secure_url,
+                fMerek: p.fMerek,
 
                 username: p.username,
                 updateDate: p.updateDate,
