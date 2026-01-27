@@ -20,10 +20,7 @@ export async function GET(req) {
             multi_match: {
                 query,
                 fields: [
-                    "productName^3",
-                    "descProduct",
-                    "descMetaProduct",
-                    "tagProduct^2",
+                    "productName^3"
                 ],
             },
         }
