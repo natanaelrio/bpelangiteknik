@@ -28,9 +28,9 @@ export async function GET(req) {
                 tagProduct: p.tagProduct,
                 productKategori: p.productKategori,
                 productType: p.productType,
-                productPrice: p.productPrice,
+                productPrice: p.productPrice.toString(),
                 productDiscount: p.productDiscount,
-                productPriceFinal: p.productPriceFinal,
+                productPriceFinal: p.productPriceFinal.toString(),
                 imageProductUtama: p.imageProductUtama?.secure_url,
 
                 username: p.username,
