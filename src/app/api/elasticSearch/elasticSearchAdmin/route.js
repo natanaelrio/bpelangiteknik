@@ -20,8 +20,13 @@ export async function GET(req) {
             multi_match: {
                 query,
                 fields: [
-                    "productName^3"
+                    "productName^5",
+                    "tagProduct^2",
+                    "productType"
                 ],
+                type: "best_fields",
+                fuzziness: "AUTO",
+                operator: "and"
             },
         }
         : { match_all: {} }

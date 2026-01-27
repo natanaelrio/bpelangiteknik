@@ -27,6 +27,7 @@ export async function GET(req) {
                 query,
                 fields: [
                     "productName^3",
+                    "tagProduct^2",
                 ],
                 fuzziness: "AUTO"
             }
