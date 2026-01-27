@@ -2,6 +2,7 @@ import { prisma } from "@/controllers/prisma";
 
 import { ResponseData } from '@/components/api/ResponseData'
 import { customAlphabet } from 'nanoid'
+import { upsertProductToES } from "@/service/elasticSearch/updateElasticSearch";
 
 export async function POST(req) {
     const authorization = req.headers.get('authorization')
@@ -103,6 +104,10 @@ export async function POST(req) {
                 imageProductUtama: { create: imageProductUtama }
             }
         })
+
+        const resElasticsearch = await upsertProductToES(CreateList)
+        console.log("Elasticsearch response:", resElasticsearch);
+
         const res = await ResponseData(CreateList, authorization)
         return res
     } else return Response.json({ status: 500, isCreated: false, contact: 'natanael rio wijaya 08971041460' })
@@ -188,9 +193,17 @@ export async function PUT(req) {
                         where: { name: tagName },
                         create: { name: tagName },
                     })),
-                },
+                }
+            },
+            include: {
+                imageProductUtama: {
+                    select: { secure_url: true }
+                }
             }
         })
+
+        const resElasticsearch = await upsertProductToES(UpdateList)
+        console.log("Elasticsearch response:", resElasticsearch);
 
         const UpdateListSpec = await prisma.specProduct.updateMany({
             where: { id: IdProduct },

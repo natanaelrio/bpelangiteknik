@@ -150,10 +150,8 @@ exports.Prisma.CategoryProductScalarFieldEnum = {
 
 exports.Prisma.ListProductScalarFieldEnum = {
   id: 'id',
-  username: 'username',
   start: 'start',
   end: 'end',
-  updateDate: 'updateDate',
   slugProduct: 'slugProduct',
   saveDraf: 'saveDraf',
   descProduct: 'descProduct',
@@ -161,12 +159,6 @@ exports.Prisma.ListProductScalarFieldEnum = {
   stockProduct: 'stockProduct',
   descMetaProduct: 'descMetaProduct',
   viewProduct: 'viewProduct',
-  sold: 'sold',
-  spekNew: 'spekNew',
-  weightProduct: 'weightProduct',
-  lengthProduct: 'lengthProduct',
-  widthProduct: 'widthProduct',
-  heightProduct: 'heightProduct',
   subKategoriProduct: 'subKategoriProduct',
   productType: 'productType',
   tagProduct: 'tagProduct',
@@ -174,7 +166,15 @@ exports.Prisma.ListProductScalarFieldEnum = {
   productDiscount: 'productDiscount',
   productPriceFinal: 'productPriceFinal',
   urlYoutube: 'urlYoutube',
-  productKategori: 'productKategori'
+  productKategori: 'productKategori',
+  sold: 'sold',
+  username: 'username',
+  spekNew: 'spekNew',
+  weightProduct: 'weightProduct',
+  heightProduct: 'heightProduct',
+  lengthProduct: 'lengthProduct',
+  widthProduct: 'widthProduct',
+  updateDate: 'updateDate'
 };
 
 exports.Prisma.FMerekScalarFieldEnum = {
@@ -264,11 +264,11 @@ exports.Prisma.ImageProductScalarFieldEnum = {
 exports.Prisma.VoucherScalarFieldEnum = {
   id: 'id',
   kode: 'kode',
-  tipe: 'tipe',
   diskon: 'diskon',
+  expiredAt: 'expiredAt',
   nominal: 'nominal',
-  harga: 'harga',
-  expiredAt: 'expiredAt'
+  tipe: 'tipe',
+  harga: 'harga'
 };
 
 exports.Prisma.CartScalarFieldEnum = {
@@ -299,13 +299,13 @@ exports.Prisma.FormPembelianScalarFieldEnum = {
   end: 'end',
   nama_lengkap_user: 'nama_lengkap_user',
   alamat_lengkap_user: 'alamat_lengkap_user',
-  alamat_detail: 'alamat_detail',
   kode_pos_user: 'kode_pos_user',
   no_hp_user: 'no_hp_user',
   catatan_pengiriman: 'catatan_pengiriman',
-  province: 'province',
+  cartID: 'cartID',
   city: 'city',
-  cartID: 'cartID'
+  province: 'province',
+  alamat_detail: 'alamat_detail'
 };
 
 exports.Prisma.OngkosKirimScalarFieldEnum = {
@@ -343,37 +343,35 @@ exports.Prisma.DataPesananScalarFieldEnum = {
   payment: 'payment',
   reference: 'reference',
   merchantOrderId: 'merchantOrderId',
-  nama_lengkap_user: 'nama_lengkap_user',
+  cartID: 'cartID',
   alamat_lengkap_user: 'alamat_lengkap_user',
-  alamat_detail: 'alamat_detail',
-  kode_pos_user: 'kode_pos_user',
-  no_hp_user: 'no_hp_user',
   catatan_pengiriman: 'catatan_pengiriman',
-  kode: 'kode',
+  kode_pos_user: 'kode_pos_user',
+  nama_lengkap_user: 'nama_lengkap_user',
+  no_hp_user: 'no_hp_user',
   diskon: 'diskon',
-  diskon_nominal: 'diskon_nominal',
+  kode: 'kode',
+  alamat_detail: 'alamat_detail',
   nota_url: 'nota_url',
   payment_info: 'payment_info',
-  cartID: 'cartID'
+  diskon_nominal: 'diskon_nominal'
 };
 
 exports.Prisma.SuratPenawaranScalarFieldEnum = {
   id: 'id',
   start: 'start',
   end: 'end',
-  nameProduct: 'nameProduct',
-  slugProduct: 'slugProduct',
   name: 'name',
   email: 'email',
   noHP: 'noHP',
+  nameProduct: 'nameProduct',
   note: 'note',
+  slugProduct: 'slugProduct',
   sales: 'sales'
 };
 
 exports.Prisma.PostArtikelScalarFieldEnum = {
   id: 'id',
-  start: 'start',
-  end: 'end',
   title: 'title',
   slug: 'slug',
   viewArtikel: 'viewArtikel',
@@ -382,7 +380,9 @@ exports.Prisma.PostArtikelScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   saveDraf: 'saveDraf',
-  categoryArtikelId: 'categoryArtikelId'
+  categoryArtikelId: 'categoryArtikelId',
+  end: 'end',
+  start: 'start'
 };
 
 exports.Prisma.TagArtikelScalarFieldEnum = {
@@ -439,12 +439,12 @@ exports.Prisma.CategoryArtikelScalarFieldEnum = {
 exports.Prisma.SalesScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  numberWA: 'numberWA',
-  numberForm: 'numberForm',
-  clickCountWA: 'clickCountWA',
-  clickCountForm: 'clickCountForm',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  numberForm: 'numberForm',
+  numberWA: 'numberWA',
+  clickCountForm: 'clickCountForm',
+  clickCountWA: 'clickCountWA'
 };
 
 exports.Prisma.SortOrder = {
@@ -467,10 +467,210 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.categoryProductUtamaOrderByRelevanceFieldEnum = {
+  category: 'category',
+  slugCategory: 'slugCategory',
+  image: 'image',
+  icon: 'icon',
+  urlYoutube: 'urlYoutube',
+  title: 'title',
+  desc: 'desc',
+  tags: 'tags'
+};
+
+exports.Prisma.categoryProductOrderByRelevanceFieldEnum = {
+  category: 'category',
+  slugCategory: 'slugCategory',
+  image: 'image',
+  icon: 'icon',
+  urlYoutube: 'urlYoutube',
+  title: 'title',
+  desc: 'desc',
+  tags: 'tags'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.listProductOrderByRelevanceFieldEnum = {
+  slugProduct: 'slugProduct',
+  descProduct: 'descProduct',
+  productName: 'productName',
+  descMetaProduct: 'descMetaProduct',
+  subKategoriProduct: 'subKategoriProduct',
+  productType: 'productType',
+  tagProduct: 'tagProduct',
+  urlYoutube: 'urlYoutube',
+  username: 'username'
+};
+
+exports.Prisma.fMerekOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.specProductOrderByRelevanceFieldEnum = {
+  phase_spec: 'phase_spec',
+  frequency_spec: 'frequency_spec',
+  gensetPower_spec: 'gensetPower_spec',
+  ratedPower_spec: 'ratedPower_spec',
+  maxPower_spec: 'maxPower_spec',
+  ratedACVoltage_spec: 'ratedACVoltage_spec',
+  starting_spec: 'starting_spec',
+  fuelConsumption_spec: 'fuelConsumption_spec',
+  dimension_spec: 'dimension_spec'
+};
+
+exports.Prisma.imageProductUtamaOrderByRelevanceFieldEnum = {
+  asset_id: 'asset_id',
+  public_id: 'public_id',
+  version_id: 'version_id',
+  signature: 'signature',
+  format: 'format',
+  resource_type: 'resource_type',
+  type: 'type',
+  etag: 'etag',
+  url: 'url',
+  secure_url: 'secure_url',
+  asset_folder: 'asset_folder',
+  display_name: 'display_name',
+  original_filename: 'original_filename',
+  api_key: 'api_key'
+};
+
+exports.Prisma.imageProductOrderByRelevanceFieldEnum = {
+  asset_id: 'asset_id',
+  public_id: 'public_id',
+  version_id: 'version_id',
+  signature: 'signature',
+  format: 'format',
+  resource_type: 'resource_type',
+  type: 'type',
+  etag: 'etag',
+  url: 'url',
+  secure_url: 'secure_url',
+  asset_folder: 'asset_folder',
+  display_name: 'display_name',
+  original_filename: 'original_filename',
+  api_key: 'api_key'
+};
+
+exports.Prisma.voucherOrderByRelevanceFieldEnum = {
+  id: 'id',
+  kode: 'kode',
+  tipe: 'tipe'
+};
+
+exports.Prisma.cartOrderByRelevanceFieldEnum = {
+  IDCart: 'IDCart',
+  email: 'email',
+  name: 'name',
+  avatar: 'avatar',
+  voucherId: 'voucherId'
+};
+
+exports.Prisma.cartItemOrderByRelevanceFieldEnum = {
+  cartId: 'cartId',
+  note: 'note'
+};
+
+exports.Prisma.formPembelianOrderByRelevanceFieldEnum = {
+  nama_lengkap_user: 'nama_lengkap_user',
+  alamat_lengkap_user: 'alamat_lengkap_user',
+  catatan_pengiriman: 'catatan_pengiriman',
+  cartID: 'cartID',
+  city: 'city',
+  province: 'province',
+  alamat_detail: 'alamat_detail'
+};
+
+exports.Prisma.ongkosKirimOrderByRelevanceFieldEnum = {
+  productName: 'productName',
+  cartID: 'cartID'
+};
+
+exports.Prisma.dataPesananItemOrderByRelevanceFieldEnum = {
+  note: 'note',
+  productName: 'productName',
+  methodPayment: 'methodPayment',
+  image: 'image',
+  slugProduct: 'slugProduct',
+  merchantOrderId: 'merchantOrderId',
+  status: 'status',
+  noResi: 'noResi'
+};
+
+exports.Prisma.dataPesananOrderByRelevanceFieldEnum = {
+  reference: 'reference',
+  merchantOrderId: 'merchantOrderId',
+  cartID: 'cartID',
+  alamat_lengkap_user: 'alamat_lengkap_user',
+  catatan_pengiriman: 'catatan_pengiriman',
+  nama_lengkap_user: 'nama_lengkap_user',
+  kode: 'kode',
+  alamat_detail: 'alamat_detail',
+  nota_url: 'nota_url',
+  payment_info: 'payment_info'
+};
+
+exports.Prisma.suratPenawaranOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  nameProduct: 'nameProduct',
+  note: 'note',
+  slugProduct: 'slugProduct',
+  sales: 'sales'
+};
+
+exports.Prisma.postArtikelOrderByRelevanceFieldEnum = {
+  title: 'title',
+  slug: 'slug',
+  content: 'content',
+  description: 'description'
+};
+
+exports.Prisma.tagArtikelOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.imageProductArtikelOrderByRelevanceFieldEnum = {
+  asset_id: 'asset_id',
+  public_id: 'public_id',
+  version_id: 'version_id',
+  signature: 'signature',
+  format: 'format',
+  resource_type: 'resource_type',
+  type: 'type',
+  etag: 'etag',
+  url: 'url',
+  secure_url: 'secure_url',
+  asset_folder: 'asset_folder',
+  display_name: 'display_name',
+  original_filename: 'original_filename',
+  api_key: 'api_key'
+};
+
+exports.Prisma.categoryArtikelOrderByRelevanceFieldEnum = {
+  category: 'category',
+  slugCategory: 'slugCategory',
+  image: 'image',
+  icon: 'icon',
+  urlYoutube: 'urlYoutube',
+  title: 'title',
+  desc: 'desc',
+  tags: 'tags'
+};
+
+exports.Prisma.salesOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  numberForm: 'numberForm',
+  numberWA: 'numberWA'
 };
 
 

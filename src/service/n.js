@@ -22,7 +22,7 @@ export const GetFilterProduct = async () => {
 
 export const GetListProduct = async (page, take, m, search) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/get/listProduct?page=${page ? page : 1}&take=${take}&m=${m ? m : 'undefined'}&search=${search}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/elasticSearch/elasticSearch?page=${page ? page : 1}&limit=${take}&m=${m ? m : 'undefined'}&query=${search}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

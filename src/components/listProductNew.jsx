@@ -29,9 +29,8 @@ const FormInputArtikel = dynamic(() => import('@/components/FormInputArtikel'), 
     ssr: false // Disable server-side rendering for this component
 });
 
-export default function ListProductNew({ session, query, dataKategori, }) {
+export default function ListProductNew({ session, query, dataKategori }) {
     // console.log('ARTIKELLL', dataArtikel);
-    console.log('rio');
 
     const spv = session?.user?.email === 'rio@pelangiteknik.com'
     const pathname = usePathname()
@@ -107,7 +106,7 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                 setLoading(false)
                 setTotalMaxProduct(res?.totalMaxProduct)
                 setTotalProduct(res?.totalProduct)
-                setDataProduct(res?.data)
+                setDataProduct(res?.data.data)
             }
             fetchDataShop()
         }
@@ -223,7 +222,6 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                     <div>Selesai</div>
                     <div>Aksi</div>
                 </div>
-
                 {/* DATA */}
                 {DataProduct?.map((item, index) => {
                     return (
@@ -233,7 +231,7 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                 <Image
                                     width={56}
                                     height={56}
-                                    src={item?.imageProductUtama?.secure_url}
+                                    src={item?.imageProductUtama || '/notfoundicon.jpg'}
                                     alt={item?.productName}
                                     className={styles.image}
                                 />
@@ -308,7 +306,6 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                                 })
                                                 toast.success('Stok berhasil diupdate')
                                                 setLoading(false)
-                                                console.log('Save stock:', stockValue);
                                                 setEditStockId(null);
                                             }
                                         }}
@@ -364,7 +361,6 @@ export default function ListProductNew({ session, query, dataKategori, }) {
                                                 })
                                                 toast.success('Harga berhasil diupdate')
                                                 setLoading(false)
-                                                console.log('save price', priceValue);
                                                 setEditPriceId(null);
                                             }
                                         }}
