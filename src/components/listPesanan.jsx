@@ -20,6 +20,26 @@ import Image from 'next/image';
 import { FaShippingFast } from "react-icons/fa";
 export default function ListPesanan({ session, data, month, year, payment }) {
 
+
+    const result = data.data.filter(item => item.payment === true);
+    const total = result.reduce((sumAll, datae, indexDatae) => {
+        // total sebelum diskon
+        const totalBeforeDiscount = datae.dataPesananItems.reduce((sumItems, item) => {
+            return sumItems + (item.priceOriginal * item.quantity);
+        }, 0);
+
+        let totalAfterDiscount;
+        if (datae.diskon) {
+            totalAfterDiscount = totalBeforeDiscount - (totalBeforeDiscount * datae.diskon / 100);
+        } else if (datae.diskon_nominal) {
+            totalAfterDiscount = totalBeforeDiscount - datae.diskon_nominal;
+        } else {
+            totalAfterDiscount = totalBeforeDiscount;
+        }
+
+        return sumAll + totalAfterDiscount;
+    }, 0);
+
     const UserSPV = session?.user?.email === 'rio@pelangiteknik.com'
     const searchParams = useSearchParams();
     const logoBase64 = LogoAtas()
@@ -364,7 +384,9 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                 </div>
                 {loading ? 'Loading...' :
                     <>
-                        <div className="totalpesanan">{payment == null && "" || payment == 'false' && 'Belum Bayar ' || payment == 'true' && 'Sudah Bayar '}{data.totalCart} Invoice</div>
+                        <div className={styles.totalpesanan}>
+                            {payment == null && "" || payment == 'false' && 'Belum Bayar ' || payment == 'true' && 'Sudah Bayar '}{data.totalCart} Invoice | Close {FormatRupiah(total)}
+                        </div>
                         <div className={styles.dalamcontainer}>
                             <div className={styles.bawah}>
                                 <table className={styles.orderTable}>
@@ -382,7 +404,6 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                     <tbody>
                                         <Fragment >
                                             {data?.data?.map((pesanan, j) => {
-                                                console.log();
                                                 return (
                                                     <tr key={j}>
                                                         {/* Data Transaksi */}

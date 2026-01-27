@@ -11,7 +11,6 @@ export const metadata = {
 
 export default async function Page({ params, searchParams }) {
     const now = new Date()
-
     const month = Number(searchParams.month) || now.getMonth() + 1
     const year = Number(searchParams.year) || now.getFullYear()
     const payment = searchParams.payment || null
