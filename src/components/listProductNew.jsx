@@ -300,6 +300,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                     }),
                                                 })
                                                 toast.success('Stok berhasil diupdate')
+                                                router.refresh()
                                                 setIsSuccess()
                                                 setLoading(false)
                                                 setEditStockId(null);
@@ -350,6 +351,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                     }),
                                                 })
                                                 toast.success('Harga berhasil diupdate')
+                                                router.refresh()
                                                 setIsSuccess()
                                                 setLoading(false)
                                                 setEditPriceId(null);
