@@ -57,6 +57,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
     const loading = useCon((state) => state.loading)
     const setTotalPenawaran = useCon((state) => state.setTotalPenawaran)
     const isSuccess = useCon((state) => state.isSuccess)
+    const setIsSuccess = useCon((state) => state.setIsSuccess)
 
     const [editStockId, setEditStockId] = useState(null);
     const [stockValue, setStockValue] = useState('');
@@ -295,16 +296,11 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                         ids: {
                                                             product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
                                                             listProduct: 'data:productList',
-                                                            ...Object.fromEntries(
-                                                                Array.from({ length: 1000 }, (_, i) => [
-                                                                    `searchAll${i + 1}`,
-                                                                    `search::m:All:t:${i + 1}`,
-                                                                ])
-                                                            ),
                                                         },
                                                     }),
                                                 })
                                                 toast.success('Stok berhasil diupdate')
+                                                setIsSuccess()
                                                 setLoading(false)
                                                 setEditStockId(null);
                                             }
@@ -350,16 +346,11 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                         ids: {
                                                             product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
                                                             listProduct: 'data:productList',
-                                                            ...Object.fromEntries(
-                                                                Array.from({ length: 1000 }, (_, i) => [
-                                                                    `searchAll${i + 1}`,
-                                                                    `search::m:All:t:${i + 1}`,
-                                                                ])
-                                                            ),
                                                         },
                                                     }),
                                                 })
                                                 toast.success('Harga berhasil diupdate')
+                                                setIsSuccess()
                                                 setLoading(false)
                                                 setEditPriceId(null);
                                             }
