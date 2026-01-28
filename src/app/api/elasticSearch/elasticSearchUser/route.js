@@ -32,9 +32,9 @@ export async function GET(req) {
                         multi_match: {
                             query: normalizedQuery,
                             fields: [
-                                "productName^5",
-                                "tagProduct^2",
-                                "productType"
+                                "productName^6",
+                                "tagProduct^3",
+                                "productType^2"
                             ],
                             type: "best_fields",
                             fuzziness: "AUTO",
@@ -46,7 +46,7 @@ export async function GET(req) {
                         multi_match: {
                             query: noSpaceQuery,
                             fields: [
-                                "productName^5",
+                                "productName^4",
                                 "tagProduct^2",
                                 "productType"
                             ],
