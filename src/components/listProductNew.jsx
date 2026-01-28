@@ -34,23 +34,17 @@ export default function ListProductNew({ session, query, dataKategori }) {
     // console.log('ARTIKELLL', dataArtikel);
 
     const spv = session?.user?.email === 'rio@pelangiteknik.com'
-    const pathname = usePathname()
     const router = useRouter()
-    const KondisiPencarian = pathname.startsWith('/s/')
     const searchParams = useSearchParams()
     const m = searchParams.get('m')
 
     const setLayang = useCon((state) => state.setLayang)
     const layang = useCon((state) => state.layang)
     const setLayangArtikel = useCon((state) => state.setLayangArtikel)
-    const layangArtikel = useCon((state) => state.layangArtikel)
     const setIsPenawaran = useCon((state) => state.setIsPenawaran)
-    const isPenawaran = useCon((state) => state.isPenawaran)
-    const setDataPenawaran = useCon((state) => state.setDataPenawaran)
-    const DataPenawaran = useCon((state) => state.DataPenawaran)
+
     const DataProduct = useCon((state) => state.DataProduct)
     const totalMaxProduct = useCon((state) => state.totalMaxProduct)
-    const totalProduct = useCon((state) => state.totalProduct)
     const setDataProduct = useCon((state) => state.setDataProduct)
     const setTotalMaxProduct = useCon((state) => state.setTotalMaxProduct)
     const setTotalProduct = useCon((state) => state.setTotalProduct)
@@ -62,8 +56,6 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
     const [editStockId, setEditStockId] = useState(null);
     const [stockValue, setStockValue] = useState('');
-    const [dataFilterMerek, setDataFilterMerek] = useState([])
-    const [take, setTake] = useState(1)
 
     const [editPriceId, setEditPriceId] = useState(null);
     const [priceValue, setPriceValue] = useState('');
@@ -72,39 +64,31 @@ export default function ListProductNew({ session, query, dataKategori }) {
     const [search, setSearch] = useState(query)
     const [dataSlugUpdatePublish, setDataAtaSlugUpdatePublish] = useState(null)
     const [dataSlugProduct, setDataSlugProduct] = useState(null)
-    const [kategori, setKategori] = useState(true)
 
     const ITEMS_PER_PAGE = 5;
 
     const [currentPage, setCurrentPage] = useState(1);
 
+    // total halaman
     const totalPages = Math.ceil(totalMaxProduct / ITEMS_PER_PAGE);
 
-    // const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    // const endIndex = startIndex + ITEMS_PER_PAGE;
-
-    // const currentData = DataProduct.slice(startIndex, endIndex);
+    // offset data (skip)
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
     const handlePrev = () => {
-        if (currentPage > 1) setCurrentPage(prev => prev - 1);
-        setLoading(true)
+        if (currentPage <= 1) return;
+        setCurrentPage((prev) => prev - 1);
     };
 
     const handleNext = () => {
-        if (currentPage < totalMaxProduct) setCurrentPage(prev => prev + 1);
-        if (currentPage < totalMaxProduct) setTake(take + 1)
-        setLoading(true)
+        if (currentPage >= totalPages) return;
+        setCurrentPage((prev) => prev + 1);
     };
 
     useEffect(() => {
         try {
-            // const fetchDataFilter = async () => {
-            //     const res = await GetFilterProduct()
-            //     setDataFilterMerek(res)
-            // }
-            // fetchDataFilter()
             const fetchDataShop = async () => {
-                const res = await GetListProduct(take, 5, m, query)
+                const res = await GetListProduct(currentPage, ITEMS_PER_PAGE, m, query)
                 setLoading(false)
                 setTotalMaxProduct(res?.totalMaxProduct)
                 setTotalProduct(res?.totalProduct)
@@ -115,7 +99,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
         catch (e) {
             console.log(e)
         }
-    }, [take, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess])
+    }, [currentPage, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess])
 
     const GetDetailProduct = async (id) => {
         setLoading(true)
