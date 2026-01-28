@@ -14,20 +14,42 @@ export async function GET(req) {
     const limit = parseInt(searchParams.get("limit") || "7")
 
     const from = (page - 1) * limit
+    const normalizedQuery = query?.trim();
+    const noSpaceQuery = normalizedQuery?.replace(/\s+/g, "");
 
-    const esQuery = query
+    console.log(normalizedQuery);
+    console.log(noSpaceQuery);
+    const esQuery = normalizedQuery
         ? {
-            multi_match: {
-                query,
-                fields: [
-                    "productName^5",
-                    "tagProduct^2",
-                    "productType"
+            bool: {
+                should: [
+                    {
+                        multi_match: {
+                            query: normalizedQuery,
+                            fields: [
+                                "productName^5",
+                                "tagProduct^2",
+                                "productType"
+                            ],
+                            type: "best_fields",
+                            fuzziness: "AUTO",
+                            operator: "and"
+                        }
+                    },
+                    {
+                        multi_match: {
+                            query: noSpaceQuery,
+                            fields: [
+                                "productName^5",
+                                "tagProduct^2",
+                                "productType"
+                            ],
+                            fuzziness: "AUTO"
+                        }
+                    }
                 ],
-                type: "best_fields",
-                fuzziness: "AUTO",
-                operator: "and"
-            },
+                minimum_should_match: 1
+            }
         }
         : { match_all: {} }
 

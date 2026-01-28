@@ -20,22 +20,48 @@ export async function GET(req) {
 
     const mustQuery = []
 
-    // SEARCH QUERY
+    // SEARCH QUERY (support spasi & tanpa spasi)
     if (query) {
+        const normalizedQuery = query
+            .trim()
+            .replace(/[\s-]+/g, "");
+        const noSpaceQuery = normalizedQuery.replace(/\s+/g, "");
+
         mustQuery.push({
-            multi_match: {
-                query,
-                fields: [
-                    "productName^5",
-                    "tagProduct^2",
-                    "productType"
+            bool: {
+                should: [
+                    {
+                        multi_match: {
+                            query: normalizedQuery,
+                            fields: [
+                                "productName^6",
+                                "tagProduct^3",
+                                "productType^2"
+                            ],
+                            type: "best_fields",
+                            fuzziness: "AUTO",
+                            operator: "and",
+                            lenient: true
+                        }
+                    },
+                    {
+                        multi_match: {
+                            query: noSpaceQuery,
+                            fields: [
+                                "productName^4",
+                                "tagProduct^2",
+                                "productType"
+                            ],
+                            fuzziness: "AUTO",
+                            lenient: true
+                        }
+                    }
                 ],
-                type: "best_fields",
-                fuzziness: "AUTO",
-                operator: "and"
+                minimum_should_match: 1
             }
-        })
+        });
     }
+
 
     // FILTER MEREK
     if (m) {
