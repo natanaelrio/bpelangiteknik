@@ -87,14 +87,15 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
     useEffect(() => {
         try {
+            setLoading(true)
             const fetchDataShop = async () => {
                 const res = await GetListProduct(currentPage, ITEMS_PER_PAGE, m, query)
-                setLoading(false)
                 setTotalMaxProduct(res?.totalMaxProduct)
                 setTotalProduct(res?.totalProduct)
                 setDataProduct(res?.data.data)
             }
             fetchDataShop()
+            setLoading(false)
         }
         catch (e) {
             console.log(e)
