@@ -681,6 +681,8 @@ export default function FormInput({ data, text, kondisi, session }) {
                             spekNew: specifications
                         }),
                 })
+
+
                 toast.success("Data berhasil disimpan", { id: saveToast });
             } catch (err) {
                 toast.error(`Gagal menyimpan data`, { id: saveToast });
@@ -722,6 +724,9 @@ export default function FormInput({ data, text, kondisi, session }) {
                 );
                 // router.refresh();
                 // router.push(`${process.env.NEXT_PUBLIC_URL}${pathname}`, { scroll: false });
+            }
+            if (!data) {
+                router.push('/')
             }
             // data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
 

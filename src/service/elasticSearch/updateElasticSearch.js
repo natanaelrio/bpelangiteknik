@@ -1,6 +1,6 @@
 import { esClient } from "@/controllers/elasticsearch"
 
-export async function upsertProductToES(product) {
+export async function UpsertProductToES(product) {
     if (!product?.id) {
         throw new Error("Product ID wajib ada untuk update Elasticsearch")
     }

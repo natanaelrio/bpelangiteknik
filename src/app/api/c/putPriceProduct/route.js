@@ -1,7 +1,7 @@
 import { prisma } from "@/controllers/prisma";
 import { esClient } from "@/controllers/elasticsearch";
 import { ResponseData } from "@/components/api/ResponseData";
-import { upsertProductToES } from "@/service/elasticSearch/updateElasticSearch";
+import { UpsertProductToES } from "@/service/elasticSearch/updateElasticSearch";
 
 export async function PUT(req) {
     const authorization = req.headers.get("authorization");
@@ -43,7 +43,7 @@ export async function PUT(req) {
         });
 
         // 2️⃣ Sync ke Elasticsearch (UPSERT)
-        await upsertProductToES(product)
+        await UpsertProductToES(product)
 
         const res = await ResponseData(
             { message: "Price updated & Elasticsearch synced", product },

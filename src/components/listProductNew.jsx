@@ -131,7 +131,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
             // Save it!
             setLoading(true)
             try {
-                await DeleteProductFromES(e);
+                await DeleteProductFromES(e)
                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                     method: 'DELETE',
                     headers: {

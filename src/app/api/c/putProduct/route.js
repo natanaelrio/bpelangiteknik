@@ -1,5 +1,7 @@
+
+
+
 import { prisma } from "@/controllers/prisma";
-import { esClient } from "@/controllers/elasticsearch";
 import { ResponseData } from "@/components/api/ResponseData";
 import { UpsertProductToES } from "@/service/elasticSearch/updateElasticSearch";
 
@@ -7,11 +9,11 @@ export async function PUT(req) {
     const authorization = req.headers.get("authorization");
 
     const {
-        slugProduct,
-        stockProduct,
-        username
+        productID,
     } = await req.json();
 
+    console.log(productID);
+    
     BigInt.prototype.toJSON = function () {
         return this.toString();
     };
@@ -26,19 +28,14 @@ export async function PUT(req) {
 
     try {
         // 1️⃣ Update Prisma (DB utama)
-        const product = await prisma.listProduct.update({
-            where: { slugProduct },
-            data: {
-                updateDate: new Date(),
-                stockProduct: Number(stockProduct),
-                username
-            },
+        const product = await prisma.listProduct.findMany({
+            where: { id: productID },
             include: {
                 imageProductUtama: {
                     select: { secure_url: true }
                 }
             }
-        });
+        })
 
         // 2️⃣ Sync ke Elasticsearch (UPSERT)
         await UpsertProductToES(product)
