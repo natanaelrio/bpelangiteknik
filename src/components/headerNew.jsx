@@ -1,7 +1,7 @@
 'use client'
 import styles from '@/components/headerNew.module.css'
 import Link from 'next/link'
-import { MdHome } from "react-icons/md";
+import { MdHome, MdLogout } from "react-icons/md";
 import { FaBorderAll } from "react-icons/fa";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { MdLibraryAdd } from "react-icons/md";
@@ -10,12 +10,13 @@ import { useState } from 'react';
 import Logout from './logout';
 import { useCon } from '@/zustand/useCon';
 import LoadingNew from './loadingNew';
-import { useEffect } from 'react';
 import Layangpenawaran from './layangpenawaran';
+import { signOut } from "next-auth/react"
 
 export default function HeaderNew({ session }) {
     const router = useRouter()
     const setLoading = useCon((state) => state.setLoading)
+    const loading = useCon((state) => state.loading)
     const setLayangPenawaran = useCon((state) => state.setLayangPenawaran)
     const layangPenawaran = useCon((state) => state.layangPenawaran)
     const total = JSON.parse(
@@ -36,6 +37,8 @@ export default function HeaderNew({ session }) {
 
     const handleLogout = () => {
         setLoading(true)
+        signOut()
+        setLoading(false)
     }
 
     const handlePenawaran = () => {
@@ -86,7 +89,9 @@ export default function HeaderNew({ session }) {
                         </form>
                     </div>
                     <span onClick={handleLogout}>
-                        <Logout />
+                        <div className="logout" style={{ cursor: "pointer" }}>
+                            {loading ? <LoadingNew /> : <MdLogout size={30} color='red' />}
+                        </div>
                     </span>
                 </div>
             </div>

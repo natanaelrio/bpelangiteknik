@@ -19,6 +19,7 @@ import dynamic from 'next/dynamic'
 import { UpdateStockProduct } from '@/service/handlePutStockProduct'
 import { UpdatePriceProduct } from '@/service/handlePutPriceProduct'
 import { HandleDeleteProduct } from '@/service/handleDeleteProduct'
+import { DeleteProductFromES } from '@/service/elasticSearch/deleteElasticSearch'
 
 const FormInput = dynamic(() => import('@/components/FormInput'), {
     loading: () => <p>Loading Form...</p>, // Optional: loading state while the component is being loaded
@@ -145,6 +146,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
             // Save it!
             setLoading(true)
             try {
+                await DeleteProductFromES(e);
                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                     method: 'DELETE',
                     headers: {
