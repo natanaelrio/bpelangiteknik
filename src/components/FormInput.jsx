@@ -662,6 +662,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             fMerek: selectedMerek.join(", "),
                             fMerekDelete: selectedMerekDelete.join(", "),
                             username: spv ? data?.username : session?.username,
+                            updateDate: spv ? data?.updateDate : new Date(),
                             spekNew: specifications
                         } : {
                             ...value,

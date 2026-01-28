@@ -272,7 +272,8 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                 await UpdateStockProduct({
                                                     slugProduct: item.slugProduct,
                                                     stockProduct: stockValue,
-                                                    username: spv ? item?.username : session?.username
+                                                    username: spv ? item?.username : session?.username,
+                                                    updateDate: spv ? item?.updateDate : new Date()
                                                 })
                                                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                     method: 'DELETE',
@@ -282,7 +283,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                     body: JSON.stringify({
                                                         ids: {
                                                             product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                                                            listProduct: 'data:productList',
+                                                            listProduct: 'data:productList'
                                                         },
                                                     }),
                                                 })
@@ -323,7 +324,8 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                 await UpdatePriceProduct({
                                                     slugProduct: item.slugProduct,
                                                     price: priceValue,
-                                                    username: spv ? item?.username : session?.username
+                                                    username: spv ? item?.username : session?.username,
+                                                    updateDate: spv ? item?.updateDate : new Date()
                                                 })
                                                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                     method: 'DELETE',

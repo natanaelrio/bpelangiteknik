@@ -9,7 +9,8 @@ export async function PUT(req) {
     const {
         slugProduct,
         stockProduct,
-        username
+        username,
+        updateDate
     } = await req.json();
 
     BigInt.prototype.toJSON = function () {
@@ -29,7 +30,7 @@ export async function PUT(req) {
         const product = await prisma.listProduct.update({
             where: { slugProduct },
             data: {
-                updateDate: new Date(),
+                updateDate,
                 stockProduct: Number(stockProduct),
                 username
             },

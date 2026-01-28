@@ -179,7 +179,8 @@ export async function PUT(req) {
             fMerekDelete,
 
             dataImage,
-            imageProductUtama
+            imageProductUtama,
+            updateDate
         } = await req.json()
 
         const FilterMerek = fMerek ? fMerek.split(", ") : []
@@ -191,7 +192,7 @@ export async function PUT(req) {
             const updateProduct = await tx.listProduct.update({
                 where: { id: IdProduct },
                 data: {
-                    updateDate: new Date(),
+                    updateDate,
                     username,
                     productName,
                     saveDraf,
