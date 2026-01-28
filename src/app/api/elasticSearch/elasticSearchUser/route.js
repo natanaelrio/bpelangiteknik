@@ -22,9 +22,7 @@ export async function GET(req) {
 
     // SEARCH QUERY (support spasi & tanpa spasi)
     if (query) {
-        const normalizedQuery = query
-            .trim()
-            .replace(/[\s-]+/g, "");
+        const normalizedQuery = query.trim().replace(/[\s-]+/g, " ")
         const noSpaceQuery = normalizedQuery.replace(/\s+/g, "");
 
         mustQuery.push({
@@ -34,9 +32,9 @@ export async function GET(req) {
                         multi_match: {
                             query: normalizedQuery,
                             fields: [
-                                "productName^6",
-                                "tagProduct^3",
-                                "productType^2"
+                                "productName^5",
+                                "tagProduct^2",
+                                "productType"
                             ],
                             type: "best_fields",
                             fuzziness: "AUTO",
@@ -48,7 +46,7 @@ export async function GET(req) {
                         multi_match: {
                             query: noSpaceQuery,
                             fields: [
-                                "productName^4",
+                                "productName^5",
                                 "tagProduct^2",
                                 "productType"
                             ],

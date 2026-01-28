@@ -17,8 +17,6 @@ export async function GET(req) {
     const normalizedQuery = query?.trim();
     const noSpaceQuery = normalizedQuery?.replace(/\s+/g, "");
 
-    console.log(normalizedQuery);
-    console.log(noSpaceQuery);
     const esQuery = normalizedQuery
         ? {
             bool: {
