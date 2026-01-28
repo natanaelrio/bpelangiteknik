@@ -16,7 +16,8 @@ export async function GET(req) {
 
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "7")
-    const from = (page - 1) * limit
+    const size = page * limit;
+    const from = 0;
 
     const mustQuery = []
 
@@ -77,7 +78,7 @@ export async function GET(req) {
     const result = await esClient.search({
         index: "products",
         from,
-        size: limit * page,
+        size,
         sort: [{ start: { order: "desc" } }],
         query: finalQuery,
         aggs: {
