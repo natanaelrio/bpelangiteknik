@@ -2,10 +2,12 @@
 import { signIn, signOut } from "next-auth/react"
 import styles from '@/components/login.module.css'
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
 
 export default function Login() {
+    const pathname = usePathname()
+
     const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,29 +15,31 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true)
+        setLoading(true);
+
         try {
-            const res = await signIn("credentials",
-                {
-                    redirect: false,
-                    email: email,
-                    password: password
-                }
-            )
+            const res = await signIn("credentials", {
+                redirect: false,
+                email,
+                password,
+            });
+
             if (!res?.error) {
-                router.push('/')
-                router.refresh()
-                toast.success('Successfully Login! ')
-                setLoading(false)
+                const redirectTo = pathname === '/login' ? '/' : pathname;
+                router.replace(redirectTo);
+                router.refresh();
+                toast.success('Successfully Login!');
             } else {
                 toast.error("Failed Login");
-                setLoading(false)
             }
         } catch (err) {
             console.log(err);
+            toast.error("Server Error");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false)
     };
+
 
     return (
         <div className={styles.loginContainer}>

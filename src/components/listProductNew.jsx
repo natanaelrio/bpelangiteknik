@@ -105,9 +105,10 @@ export default function ListProductNew({ session, query, dataKategori }) {
     const GetDetailProduct = async (id) => {
         setLoading(true)
         try {
-            const data = await handleDetailProduct(id)
-            setDataProductDetail(data?.data[0])
-            setLayang()
+            // const data = await handleDetailProduct(id)
+            // setDataProductDetail(data?.data[0])
+            // setLayang()
+            router.push(`/${id}`)
             setLoading(false)
         } catch {
             setLoading(false)
@@ -383,8 +384,14 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
                             {/* Aksi */}
                             <div className={styles.action}>
-                                <button onClick={() => GetDetailProduct(item?.slugProduct)} className={styles.iconBtn}>
-                                    <FaEdit />
+                                <button className={styles.iconBtn}>
+                                    <a
+                                        href={`${process.env.NEXT_PUBLIC_URL}/${item?.slugProduct}`}  // ganti dengan link tujuan produk
+                                        target="_blank"
+                                        rel="noopener noreferrer"   // aman untuk membuka di tab baru
+                                    >
+                                        <FaEdit />
+                                    </a>
                                 </button>
                                 <button onClick={() => AddFormPenawaran(item)} className={styles.iconBtn}>
                                     <FaPlus />

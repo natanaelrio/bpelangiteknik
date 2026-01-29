@@ -253,8 +253,9 @@ export default function FormInput({ data, text, kondisi, session }) {
             const res = await HandleGetKategoriID(data?.productKategori)
             setKategoriUtamaID(res.data[0].categoryProductUtamaId)
         }
-        pathname == '/' && kategoriUtamaIDfalse && IDKategori()
-        segment == 's' && kategoriUtamaIDfalse && IDKategori()
+        IDKategori()
+        // pathname == '/' && kategoriUtamaIDfalse && IDKategori()
+        // segment == 's' && kategoriUtamaIDfalse && IDKategori()
 
         const fetchData = async () => {
             setLoading(true)
@@ -722,8 +723,9 @@ export default function FormInput({ data, text, kondisi, session }) {
 
             isSuccess = true;
             if (data) {
-                setLayang();
+                // setLayang();
                 setIsSuccess()
+                router.push(`/`)
                 window.open(
                     `${process.env.NEXT_PUBLIC_URL2}/product/${data.slugProduct}`,
                     '_blank'
@@ -732,6 +734,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                 // router.push(`${process.env.NEXT_PUBLIC_URL}${pathname}`, { scroll: false });
             }
             if (!data) {
+                setIsSuccess()
                 router.push('/')
             }
             // data && router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data?.slugProduct}`);
