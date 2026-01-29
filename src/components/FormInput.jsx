@@ -489,6 +489,38 @@ export default function FormInput({ data, text, kondisi, session }) {
         // email: Yup.string().email('Invalid email address').required('Required'),
     });
 
+    const defaultValue = data?.tagProduct || ''
+
+
+    const parsed = defaultValue
+        .split(",")
+        .map(v => v.trim())
+        .filter(Boolean);
+    const [inputTag, setInputTag] = useState("");
+    const [tags, setTags] = useState(parsed);
+
+    const addTag = () => {
+        const val = inputTag.trim().replace(/,+$/, "");
+        if (!val) return;
+
+        if (!tags.includes(val)) {
+            const newTags = [...tags, val];
+            setTags(newTags);
+            setInputTag('')
+            // onChange?.(newTags.join(","));
+        }
+
+        setInputTag("");
+    };
+    console.log(tags);
+
+
+    const removeTag = (index) => {
+        const newTags = tags.filter((_, i) => i !== index);
+        setTags(newTags);
+        // onChange?.(newTags.join(","));
+    };
+
     const handleSubmit = async (value) => {
         let isSuccess = false;
 
@@ -663,7 +695,8 @@ export default function FormInput({ data, text, kondisi, session }) {
                             fMerekDelete: selectedMerekDelete.join(", "),
                             username: spv ? data?.username : session?.username,
                             updateDate: spv ? data?.updateDate : new Date(),
-                            spekNew: specifications
+                            spekNew: specifications,
+                            tagProduct: tags.join(",")
                         } : {
                             ...value,
                             productType: value?.productType
@@ -679,7 +712,8 @@ export default function FormInput({ data, text, kondisi, session }) {
                             fMerek: selectedMerek.join(", "),
                             fMerekDelete: selectedMerekDelete.join(", "),
                             username: spv ? data?.username : session?.username,
-                            spekNew: specifications
+                            spekNew: specifications,
+                            tagProduct: tags.join(",")
                         }),
                 })
 
@@ -747,6 +781,8 @@ export default function FormInput({ data, text, kondisi, session }) {
         }
     };
 
+
+
     return (
         <Formik
             initialValues={initialValues}
@@ -782,7 +818,29 @@ export default function FormInput({ data, text, kondisi, session }) {
                                             <div className={styles.judul}>Meta Tag Google</div>
                                             <hr />
                                             <div className={styles.isi}>
-                                                <div className={styles.tag}>
+                                                <label htmlFor="tagProduct">Kata Kunci(tag)<ErrorMessage name="tagProduct" component="div" style={{ color: 'red' }} /></label>
+
+                                                <div className={styles.wrapperTag}>
+                                                    <div className={styles.tagBox}>
+                                                        {tags.map((tag, i) => (
+                                                            <span key={i} className={styles.tag}>
+                                                                {tag}
+                                                                <button type="button" onClick={() => removeTag(i)}>×</button>
+                                                            </span>
+                                                        ))}
+
+                                                        <input
+                                                            value={inputTag}
+                                                            onChange={(e) => setInputTag(e.target.value)}
+                                                            placeholder="Contoh: genset 10kva"
+                                                        />
+                                                    </div>
+
+                                                    <div onClick={addTag} className={styles.btn}>
+                                                        Tambahkan Kata Kunci
+                                                    </div>
+                                                </div>
+                                                {/* <div className={styles.tag}>
                                                     <label htmlFor="tagProduct">Kata Kunci(tag) pisahkan tanda ,<ErrorMessage name="tagProduct" component="div" style={{ color: 'red' }} /></label>
                                                     <Field type="text"
                                                         name="tagProduct"
@@ -791,8 +849,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                         placeholder={'ex: genset slient, genset 20kva'}
                                                         disabled={loading}
                                                     />
-
-                                                </div>
+                                                </div> */}
                                                 <div className={styles.tag}>
                                                     <label htmlFor="descMetaProduct">Deskripsi  <ErrorMessage name="descMetaProduct" component="div" style={{ color: 'red' }} /></label>
                                                     <Field

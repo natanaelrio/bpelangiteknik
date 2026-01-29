@@ -477,3 +477,113 @@
 .speksifikasibaru button {
     margin-bottom: 10px;
 }
+
+
+.wrapperTag {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+/* Box container */
+.wrapperTag .tagBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border: 1px solid #d0d7e2;
+    padding: 8px 10px;
+    border-radius: 10px;
+    align-items: center;
+    background: #fff;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.wrapperTag .tagBox:focus-within {
+    border-color: #152f66;
+    box-shadow: 0 0 0 2px rgba(21, 47, 102, 0.12);
+}
+
+/* Tag chip */
+.wrapperTag .tag {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 6px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 6px;
+    font-size: 13px;
+    line-height: 1;
+    /* height: 32px;
+    white-space: nowrap; */
+}
+
+/* Remove button */
+.wrapperTag .tag button {
+    border: none;
+    background: rgba(255, 255, 255, .9);
+    color: #152f66;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    width: 18px;
+    height: 18px;
+    /* border-radius: 50%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s ease;
+}
+
+.wrapperTag .tag button:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+/* Input field */
+.wrapperTag .tagBox input {
+    border: none;
+    flex: 1;
+    min-width: 160px;
+    outline: none;
+    font-size: 14px;
+    padding: 6px 4px;
+}
+
+/* Button */
+.wrapperTag .btn {
+    align-self: flex-start;
+    padding: 14px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #152f66;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, transform .1s ease;
+}
+
+.wrapperTag .btn:hover {
+    background: #0f2452;
+}
+
+.wrapperTag .btn:active {
+    transform: scale(.96);
+}
+
+/* Mobile friendly */
+@media (max-width: 640px) {
+    .wrapperTag .tag {
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .wrapperTag .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
