@@ -29,23 +29,46 @@ export async function GET(req) {
         mustQuery.push({
             bool: {
                 should: [
+                    // ==========================
+                    // 1️⃣ EXACT MATCH (PRIORITAS)
+                    // ==========================
                     {
                         multi_match: {
                             query: normalizedQuery,
                             fields: [
-                                "productName^6",
-                                "tagProduct^3",
-                                "productType^2"
+                                "productName^10",
+                                "tagProduct^5",
+                                "productType^3"
                             ],
                             type: "best_fields",
-                            fuzziness: "AUTO",
                             operator: "and",
                             lenient: true
                         }
                     },
+
+                    // ==========================
+                    // 2️⃣ EXACT MATCH NO SPACE
+                    // ==========================
                     {
                         multi_match: {
                             query: noSpaceQuery,
+                            fields: [
+                                "productName^8",
+                                "tagProduct^4",
+                                "productType^2"
+                            ],
+                            type: "best_fields",
+                            operator: "and",
+                            lenient: true
+                        }
+                    },
+
+                    // ==========================
+                    // 3️⃣ FUZZY MATCH (CADANGAN)
+                    // ==========================
+                    {
+                        multi_match: {
+                            query: normalizedQuery,
                             fields: [
                                 "productName^4",
                                 "tagProduct^2",
@@ -83,6 +106,15 @@ export async function GET(req) {
             { _score: "desc" },
             { start: { order: "desc" } }
         ],
+        highlight: {
+            pre_tags: ["<mark>"],
+            post_tags: ["</mark>"],
+            fields: {
+                productName: {},
+                tagProduct: {},
+                productType: {}
+            }
+        },
         query: finalQuery,
         aggs: {
             merekAgg: {
@@ -94,10 +126,15 @@ export async function GET(req) {
         }
     })
 
+
     // ================================
     // AMBIL HITS
     // ================================
-    const hits = result.hits.hits.map(hit => hit._source)
+    const hits = result.hits.hits.map(hit => ({
+        ...hit._source,
+        highlight: hit.highlight
+    }));
+
     const total = typeof result.hits.total === "number" ? result.hits.total : result.hits.total?.value || 0
 
     // ================================

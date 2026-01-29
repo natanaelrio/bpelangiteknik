@@ -231,7 +231,18 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                             rel="noopener noreferrer"   // aman untuk membuka di tab baru
                                             className={styles.titleLink} // optional styling khusus link
                                         >
-                                            {item?.productName} <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
+                                            <span className={styles.name}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: item?.highlight?.productName || item?.productName
+                                                }}
+                                            >
+                                            </span>
+                                            <span>
+                                                <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
+                                            </span>
+                                            {/* {item?.productName} */}
+
+
                                         </a>
                                     </h4>
                                     <div className={styles.meta}>

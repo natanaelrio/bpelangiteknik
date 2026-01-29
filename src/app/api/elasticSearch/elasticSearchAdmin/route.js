@@ -20,41 +20,81 @@ export async function GET(req) {
     const esQuery = normalizedQuery
         ? {
             bool: {
-                should: [
+                must: [
                     {
-                        multi_match: {
-                            query: normalizedQuery,
-                            fields: [
-                                "productName^5",
-                                "tagProduct^2",
-                                "productType"
+                        bool: {
+                            should: [
+                                // ==========================
+                                // 1️⃣ EXACT MATCH (PRIORITAS)
+                                // ==========================
+                                {
+                                    multi_match: {
+                                        query: normalizedQuery,
+                                        fields: [
+                                            "productName^10",
+                                            "tagProduct^5",
+                                            "productType^3"
+                                        ],
+                                        type: "best_fields",
+                                        operator: "and",
+                                        lenient: true
+                                    }
+                                },
+
+                                // ==========================
+                                // 2️⃣ EXACT MATCH NO SPACE
+                                // ==========================
+                                {
+                                    multi_match: {
+                                        query: noSpaceQuery,
+                                        fields: [
+                                            "productName^8",
+                                            "tagProduct^4",
+                                            "productType^2"
+                                        ],
+                                        type: "best_fields",
+                                        operator: "and",
+                                        lenient: true
+                                    }
+                                },
+
+                                // ==========================
+                                // 3️⃣ FUZZY MATCH (CADANGAN)
+                                // ==========================
+                                {
+                                    multi_match: {
+                                        query: normalizedQuery,
+                                        fields: [
+                                            "productName^4",
+                                            "tagProduct^2",
+                                            "productType"
+                                        ],
+                                        fuzziness: "AUTO",
+                                        lenient: true
+                                    }
+                                }
                             ],
-                            type: "best_fields",
-                            fuzziness: "AUTO",
-                            operator: "and"
-                        }
-                    },
-                    {
-                        multi_match: {
-                            query: noSpaceQuery,
-                            fields: [
-                                "productName^5",
-                                "tagProduct^2",
-                                "productType"
-                            ],
-                            fuzziness: "AUTO"
+                            minimum_should_match: 1
                         }
                     }
-                ],
-                minimum_should_match: 1
+                ]
             }
         }
-        : { match_all: {} }
+        : { match_all: {} };
 
     const result = await esClient.search({
         index: "products",
         from,
         size: limit,
+        highlight: {
+            pre_tags: ["<mark>"],
+            post_tags: ["</mark>"],
+            fields: {
+                productName: {},
+                tagProduct: {},
+                productType: {}
+            }
+        },
         sort: [
             { _score: "desc" },
             { start: { order: "desc" } }
@@ -62,7 +102,11 @@ export async function GET(req) {
         query: esQuery,
     })
 
-    const hits = result.hits.hits.map((hit) => hit._source)
+    const hits = result.hits.hits.map(hit => ({
+        ...hit._source,
+        highlight: hit.highlight
+    }));
+
     const total =
         typeof result.hits.total === "number"
             ? result.hits.total
