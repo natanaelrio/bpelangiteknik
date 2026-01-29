@@ -79,7 +79,10 @@ export async function GET(req) {
         index: "products",
         from,
         size,
-        sort: [{ start: { order: "desc" } }],
+        sort: [
+            { _score: "desc" },
+            { start: { order: "desc" } }
+        ],
         query: finalQuery,
         aggs: {
             merekAgg: {

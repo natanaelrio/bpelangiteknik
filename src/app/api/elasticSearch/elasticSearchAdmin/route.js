@@ -56,7 +56,8 @@ export async function GET(req) {
         from,
         size: limit,
         sort: [
-            { start: { order: "desc" } }  // 👈 sorting terbaru dulu
+            { _score: "desc" },
+            { start: { order: "desc" } }
         ],
         query: esQuery,
     })
