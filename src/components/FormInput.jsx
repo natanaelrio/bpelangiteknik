@@ -366,13 +366,42 @@ export default function FormInput({ data, text, kondisi, session }) {
         );
     };
 
+    const defaultValue = data?.tagProduct || ''
+
+    const parsed = defaultValue
+        .split(",")
+        .map(v => v.trim())
+        .filter(Boolean);
+    const [inputTag, setInputTag] = useState("");
+    const [tags, setTags] = useState(parsed);
+
+    const addTag = () => {
+        const val = inputTag.trim().replace(/,+$/, "");
+        if (!val) return;
+
+        if (!tags.includes(val)) {
+            const newTags = [...tags, val];
+            setTags(newTags);
+            setInputTag('')
+            // onChange?.(newTags.join(","));
+        }
+
+        setInputTag("");
+    };
+
+    const removeTag = (index) => {
+        const newTags = tags.filter((_, i) => i !== index);
+        setTags(newTags);
+        // onChange?.(newTags.join(","));
+    };
+
     const initialValues = {
         productName: data ? data?.productName : '',
         stockProduct: data ? data?.stockProduct : '',
         productType: data ? data?.productType : '',
         subKategoriProduct: data ? data?.subKategoriProduct : '',
         // productKategori: data ? data?.productKategori : '',
-        tagProduct: data ? data?.tagProduct : '',
+        tagProduct: data ? data?.tagProduct : tags.join(","),
         productPrice: data ? data?.productPrice : '',
         productDiscount: data ? data?.productDiscount : 0,
         productPriceFinal: data ? data?.productPriceFinal : '',
@@ -489,37 +518,6 @@ export default function FormInput({ data, text, kondisi, session }) {
         // email: Yup.string().email('Invalid email address').required('Required'),
     });
 
-    const defaultValue = data?.tagProduct || ''
-
-
-    const parsed = defaultValue
-        .split(",")
-        .map(v => v.trim())
-        .filter(Boolean);
-    const [inputTag, setInputTag] = useState("");
-    const [tags, setTags] = useState(parsed);
-
-    const addTag = () => {
-        const val = inputTag.trim().replace(/,+$/, "");
-        if (!val) return;
-
-        if (!tags.includes(val)) {
-            const newTags = [...tags, val];
-            setTags(newTags);
-            setInputTag('')
-            // onChange?.(newTags.join(","));
-        }
-
-        setInputTag("");
-    };
-    console.log(tags);
-
-
-    const removeTag = (index) => {
-        const newTags = tags.filter((_, i) => i !== index);
-        setTags(newTags);
-        // onChange?.(newTags.join(","));
-    };
 
     const handleSubmit = async (value) => {
         let isSuccess = false;
