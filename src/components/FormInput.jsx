@@ -366,34 +366,7 @@ export default function FormInput({ data, text, kondisi, session }) {
         );
     };
 
-    const defaultValue = data?.tagProduct || ''
 
-    const parsed = defaultValue
-        .split(",")
-        .map(v => v.trim())
-        .filter(Boolean);
-    const [inputTag, setInputTag] = useState("");
-    const [tags, setTags] = useState(parsed);
-
-    const addTag = () => {
-        const val = inputTag.trim().replace(/,+$/, "");
-        if (!val) return;
-
-        if (!tags.includes(val)) {
-            const newTags = [...tags, val];
-            setTags(newTags);
-            setInputTag('')
-            // onChange?.(newTags.join(","));
-        }
-
-        setInputTag("");
-    };
-
-    const removeTag = (index) => {
-        const newTags = tags.filter((_, i) => i !== index);
-        setTags(newTags);
-        // onChange?.(newTags.join(","));
-    };
 
     const initialValues = {
         productName: data ? data?.productName : '',
@@ -401,7 +374,7 @@ export default function FormInput({ data, text, kondisi, session }) {
         productType: data ? data?.productType : '',
         subKategoriProduct: data ? data?.subKategoriProduct : '',
         // productKategori: data ? data?.productKategori : '',
-        tagProduct: data ? data?.tagProduct : tags.join(","),
+        tagProduct: data ? data?.tagProduct : '',
         productPrice: data ? data?.productPrice : '',
         productDiscount: data ? data?.productDiscount : 0,
         productPriceFinal: data ? data?.productPriceFinal : '',
@@ -694,7 +667,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             username: spv ? data?.username : session?.username,
                             updateDate: spv ? data?.updateDate : new Date(),
                             spekNew: specifications,
-                            tagProduct: tags.join(",")
+                            // tagProduct: tags.join(",")
                         } : {
                             ...value,
                             productType: value?.productType
@@ -711,7 +684,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                             fMerekDelete: selectedMerekDelete.join(", "),
                             username: spv ? data?.username : session?.username,
                             spekNew: specifications,
-                            tagProduct: tags.join(",")
+                            // tagProduct: tags.join(",")
                         }),
                 })
 
@@ -779,7 +752,8 @@ export default function FormInput({ data, text, kondisi, session }) {
         }
     };
 
-
+    const [inputTag, setInputTag] = useState("");
+    const [tags, setTags] = useState([]);
 
     return (
         <Formik
@@ -787,7 +761,41 @@ export default function FormInput({ data, text, kondisi, session }) {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ setFieldValue, values }) => {
+            {({ values, setFieldValue, errors, touched }) => {
+
+                useEffect(() => {
+                    if (values.tagProduct) {
+                        const parsed = values.tagProduct
+                            .split(",")
+                            .map(v => v.trim())
+                            .filter(Boolean);
+
+                        setTags(parsed);
+                    }
+                }, [values.tagProduct]);
+
+                const addTag = () => {
+                    if (!inputTag.trim()) return;
+
+                    const newItems = inputTag
+                        .split(",")
+                        .map(v => v.trim())
+                        .filter(Boolean);
+
+                    const merged = [...new Set([...tags, ...newItems])];
+
+                    setTags(merged);
+                    setInputTag("");
+                    setFieldValue("tagProduct", merged.join(","));
+                };
+
+                const removeTag = (index) => {
+                    const newTags = tags.filter((_, i) => i !== index);
+
+                    setTags(newTags);
+                    setFieldValue("tagProduct", newTags.join(","));
+                };
+
                 return (
                     <Form>
                         <div className={styles.container}>
@@ -820,9 +828,10 @@ export default function FormInput({ data, text, kondisi, session }) {
 
                                                 <div className={styles.wrapperTag}>
                                                     <div className={styles.tagBox}>
+
                                                         {tags.map((tag, i) => (
                                                             <span key={i} className={styles.tag}>
-                                                                {tag}
+                                                                <span>{tag}</span>
                                                                 <button type="button" onClick={() => removeTag(i)}>×</button>
                                                             </span>
                                                         ))}
@@ -834,9 +843,14 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                         />
                                                     </div>
 
-                                                    <div onClick={addTag} className={styles.btn}>
+                                                    <div
+                                                        type="button"
+                                                        onClick={addTag}
+                                                        className={styles.btn}
+                                                    >
                                                         Tambahkan Kata Kunci
                                                     </div>
+
                                                 </div>
                                                 {/* <div className={styles.tag}>
                                                     <label htmlFor="tagProduct">Kata Kunci(tag) pisahkan tanda ,<ErrorMessage name="tagProduct" component="div" style={{ color: 'red' }} /></label>
