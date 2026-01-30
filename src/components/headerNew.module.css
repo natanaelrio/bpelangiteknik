@@ -97,6 +97,54 @@
     background: #f3f4f6;
 }
 
+
+.logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ff4d4f, #ff7875);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    border: none;
+    outline: none;
+    user-select: none;
+    transition: all .25s ease;
+    box-shadow: 0 4px 10px rgba(255, 77, 79, 0.25);
+}
+
+/* Hover */
+.logout:hover {
+    background: linear-gradient(135deg, #ff7875, #ff4d4f);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(255, 77, 79, 0.35);
+}
+
+/* Active / Click */
+.logout:active {
+    transform: scale(.96);
+}
+
+/* Loading state */
+.logout :global(svg),
+.logout :global(.spinner) {
+    width: 18px;
+    height: 18px;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+    .logout {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+}
+
+
+
 /* =================== */
 /* ===== TABLET ===== */
 /* =================== */

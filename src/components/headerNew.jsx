@@ -89,8 +89,8 @@ export default function HeaderNew({ session }) {
                         </form>
                     </div>
                     <span onClick={handleLogout}>
-                        <div className="logout" style={{ cursor: "pointer" }}>
-                            {loading ? <LoadingNew /> : <MdLogout size={30} color='red' />}
+                        <div className={styles.logout} style={{ cursor: "pointer" }}>
+                            {loading ? <LoadingNew /> : 'Logout'}
                         </div>
                     </span>
                 </div>
