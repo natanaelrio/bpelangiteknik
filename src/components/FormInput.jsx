@@ -253,7 +253,7 @@ export default function FormInput({ data, text, kondisi, session }) {
             const res = await HandleGetKategoriID(data?.productKategori)
             setKategoriUtamaID(res.data[0].categoryProductUtamaId)
         }
-        IDKategori()
+        kategoriUtamaIDfalse && IDKategori()
         // pathname == '/' && kategoriUtamaIDfalse && IDKategori()
         // segment == 's' && kategoriUtamaIDfalse && IDKategori()
 
@@ -798,7 +798,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                         <div className={styles.container}>
                             <div className={styles.dalamcontainer}>
                                 <div className={styles.form}>
-                                    <div className={styles.atas}>
+                                    <div className={styles.atas} style={pathname == '/post' ? { top: '0' } : { top: '65px' }}>
                                         <Link target='_blank' href={'/'} className={styles.kiri}>
                                             {data ? data?.productName : 'PelangiTeknik'}
                                         </Link>
