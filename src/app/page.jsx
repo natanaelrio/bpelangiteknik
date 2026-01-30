@@ -23,6 +23,9 @@ export default async function Home() {
     GetTagsArtikel(),
   ])
 
+  console.log(dataKategori);
+
+
   const session = await getServerSession(authOptions)
 
   return (
