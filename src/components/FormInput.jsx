@@ -719,11 +719,11 @@ export default function FormInput({ data, text, kondisi, session }) {
             if (data) {
                 // setLayang();
                 setIsSuccess()
-                router.push(`/`)
-                window.open(
-                    `${process.env.NEXT_PUBLIC_URL2}/product/${data.slugProduct}`,
-                    '_blank'
-                );
+                router.push(`${process.env.NEXT_PUBLIC_URL2}/product/${data.slugProduct}`)
+                // window.open(
+                //     `${process.env.NEXT_PUBLIC_URL2}/product/${data.slugProduct}`,
+                //     '_blank'
+                // );
                 // router.refresh();
                 // router.push(`${process.env.NEXT_PUBLIC_URL}${pathname}`, { scroll: false });
             }
