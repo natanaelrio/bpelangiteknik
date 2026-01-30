@@ -20,6 +20,7 @@ import { UpdateStockProduct } from '@/service/handlePutStockProduct'
 import { UpdatePriceProduct } from '@/service/handlePutPriceProduct'
 import { HandleDeleteProduct } from '@/service/handleDeleteProduct'
 import { DeleteProductFromES } from '@/service/elasticSearch/deleteElasticSearch'
+import { HandleDraf } from '@/service/handleDraf'
 
 const FormInput = dynamic(() => import('@/components/FormInput'), {
     loading: () => <p>Loading Form...</p>, // Optional: loading state while the component is being loaded
@@ -94,6 +95,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                 setTotalProduct(res?.totalProduct)
                 setDataProduct(res?.data.data)
             }
+
             fetchDataShop()
             setLoading(false)
         }
@@ -197,6 +199,36 @@ export default function ListProductNew({ session, query, dataKategori }) {
         // setDataPenawaran(updated);
     };
 
+    const UpdatePublish = async (slug, draf) => {
+        setLoading(true)
+        try {
+            await HandleDraf(slug, draf)
+            /** ================== REDIS ================== */
+            const redisToast = toast.loading("Membersihkan cache...");
+            try {
+                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ids: {
+                            product: `product:${slug || 'abcdefghijklmnopzrefekekwkwk'}`,
+                            listProduct: 'data:productList'
+                        },
+                    }),
+                });
+                toast.success("Cache berhasil dibersihkan", { id: redisToast });
+            } catch (err) {
+                toast.error("Gagal membersihkan cache", { id: redisToast });
+                throw err;
+            }
+            setLoading(false)
+            // setDataAtaSlugUpdatePublish(draf)
+            toast.success('Successfully!')
+        } catch {
+            setLoading(false)
+            toast.error(`Error Internet`);
+        }
+    }
 
     return (
         <>
@@ -404,6 +436,17 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                     >
                                         <FaTrash />
                                     </button>}
+                                <div className={styles.switchdelete} >
+                                    <label className={styles.switch}>
+                                        <input
+                                            disabled={loading}
+                                            type="checkbox"
+                                            checked={!item?.saveDraf}
+                                            onChange={() => UpdatePublish(item?.slugProduct, !item?.saveDraf)}
+                                        />
+                                        <span className={styles.slider}></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     )

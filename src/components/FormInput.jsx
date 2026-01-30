@@ -706,12 +706,6 @@ export default function FormInput({ data, text, kondisi, session }) {
                         ids: {
                             product: `product:${data?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
                             listProduct: 'data:productList',
-                            ...Object.fromEntries(
-                                Array.from({ length: 1000 }, (_, i) => [
-                                    `searchAll${i + 1}`,
-                                    `search::m:All:t:${i + 1}`,
-                                ])
-                            ),
                         },
                     }),
                 });

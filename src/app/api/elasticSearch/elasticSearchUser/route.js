@@ -5,7 +5,7 @@ export async function GET(req) {
     const searchParams = req.nextUrl.searchParams
 
     // ================================
-    // AMBIL QUERY & FILTER MEREK
+    // AMBIL QUERY & FILTER
     // ================================
     const rawQuery = searchParams.get("query")
     const query = !rawQuery || rawQuery === "undefined" ? "" : rawQuery.trim()
@@ -13,25 +13,23 @@ export async function GET(req) {
     const rawM = searchParams.get("m") || ""
     const m = rawM !== "undefined" ? rawM.trim() : ""
 
-
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "7")
-    const size = page * limit;
-    const from = 0;
+    const size = page * limit
+    const from = 0
 
     const mustQuery = []
 
-    // SEARCH QUERY (support spasi & tanpa spasi)
+    // ================================
+    // SEARCH QUERY (SPASI + TANPA SPASI)
+    // ================================
     if (query) {
-        const normalizedQuery = query.trim().replace(/[\s-]+/g, " ")
-        const noSpaceQuery = normalizedQuery.replace(/\s+/g, "");
+        const normalizedQuery = query.replace(/[\s-]+/g, " ")
+        const noSpaceQuery = normalizedQuery.replace(/\s+/g, "")
 
         mustQuery.push({
             bool: {
                 should: [
-                    // ==========================
-                    // 1️⃣ EXACT MATCH (PRIORITAS)
-                    // ==========================
                     {
                         multi_match: {
                             query: normalizedQuery,
@@ -45,10 +43,6 @@ export async function GET(req) {
                             lenient: true
                         }
                     },
-
-                    // ==========================
-                    // 2️⃣ EXACT MATCH NO SPACE
-                    // ==========================
                     {
                         multi_match: {
                             query: noSpaceQuery,
@@ -62,10 +56,6 @@ export async function GET(req) {
                             lenient: true
                         }
                     },
-
-                    // ==========================
-                    // 3️⃣ FUZZY MATCH (CADANGAN)
-                    // ==========================
                     {
                         multi_match: {
                             query: normalizedQuery,
@@ -81,23 +71,25 @@ export async function GET(req) {
                 ],
                 minimum_should_match: 1
             }
-        });
-    }
-
-
-    // FILTER MEREK
-    if (m) {
-        mustQuery.push({
-            terms: { "fMerek.name.keyword": [m] } // exact match
         })
     }
 
-    const finalQuery = mustQuery.length > 0 ? { bool: { must: mustQuery } } : { match_all: {} }
+    // ================================
+    // FILTER MEREK
+    // ================================
+    if (m) {
+        mustQuery.push({
+            terms: { "fMerek.name.keyword": [m] }
+        })
+    }
+
+    const finalQuery = mustQuery.length
+        ? { bool: { must: mustQuery } }
+        : { match_all: {} }
 
     // ================================
-    // SEARCH HITS DENGAN PAGINATION + AGGREGATION
+    // EXECUTE SEARCH
     // ================================
-
     const result = await esClient.search({
         index: "products",
         from,
@@ -116,38 +108,75 @@ export async function GET(req) {
             }
         },
         query: finalQuery,
+
+        // ================================
+        // SUGGEST DID YOU MEAN
+        // ================================
+        suggest: query ? {
+            did_you_mean: {
+                text: query,
+                phrase: {
+                    field: "productName",
+                    size: 3,
+                    gram_size: 2,
+                    direct_generator: [
+                        {
+                            field: "productName",
+                            suggest_mode: "popular"
+                        }
+                    ],
+                    highlight: {
+                        pre_tag: "<mark>",
+                        post_tag: "</mark>"
+                    }
+                }
+            }
+        } : undefined,
+
+        // ================================
+        // AGGREGATION MEREK
+        // ================================
         aggs: {
             merekAgg: {
                 terms: {
                     field: "fMerek.name.keyword",
-                    size: 100 // jumlah maksimal merek yang ditampilkan
+                    size: 100
                 }
             }
         }
     })
 
-
     // ================================
-    // AMBIL HITS
+    // PARSE HITS
     // ================================
     const hits = result.hits.hits.map(hit => ({
         ...hit._source,
         highlight: hit.highlight
-    }));
+    }))
 
-    const total = typeof result.hits.total === "number" ? result.hits.total : result.hits.total?.value || 0
+    const total =
+        typeof result.hits.total === "number"
+            ? result.hits.total
+            : result.hits.total?.value || 0
 
     // ================================
-    // DATA PREVIEW MEREK DARI AGGREGATION
+    // PARSE SUGGEST
+    // ================================
+    const suggest =
+        result.suggest?.did_you_mean?.[0]?.options?.map(o => o.text) || []
+
+    // ================================
+    // PREVIEW MEREK
     // ================================
     const now = new Date().toISOString()
-    const dataPreviewMerek = (result.aggregations?.merekAgg?.buckets || []).map(bucket => ({
-        id: bucket.key,
-        name: bucket.key,
-        createdAt: now,
-        updatedAt: now,
-        _count: { Merek: bucket.doc_count }
-    }))
+    const dataPreviewMerek =
+        result.aggregations?.merekAgg?.buckets?.map(b => ({
+            id: b.key,
+            name: b.key,
+            createdAt: now,
+            updatedAt: now,
+            _count: { Merek: b.doc_count }
+        })) || []
 
     // ================================
     // AUTHORIZATION
@@ -155,12 +184,15 @@ export async function GET(req) {
     const authorization = req.headers.get("authorization")
 
     return ResponseData(
-        { data: hits },
+        {
+            data: hits
+        },
         authorization,
         {
             totalMaxProduct: total,
             totalProduct: limit * page,
-            dataPreviewMerek
+            dataPreviewMerek,
+            suggest
         }
     )
 }
