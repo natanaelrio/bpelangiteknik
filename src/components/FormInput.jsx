@@ -211,7 +211,7 @@ export default function FormInput({ data, text, kondisi, session }) {
     };
 
 
-    const [mereks, setMereks] = useState(null)
+    const [mereks, setMereks] = useState([])
     useEffect(() => {
         const edit = () => {
             const contentBlock = htmlToDraft(data?.descProduct);

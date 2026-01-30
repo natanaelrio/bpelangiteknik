@@ -8,6 +8,8 @@ import FormInput from "@/components/FormInput";
 import Login from "@/components/login";
 import HeaderNew from "@/components/headerNew";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home({ params }) {
 
     const [dataKategori, dataProductDetail] = await Promise.all([
