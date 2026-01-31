@@ -122,7 +122,6 @@ export async function GET(req) {
                     direct_generator: [
                         {
                             field: "productName",
-                            field: "productType",
                             suggest_mode: "popular"
                         }
                     ],
