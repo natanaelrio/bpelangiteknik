@@ -66,25 +66,36 @@ export default function ListPesanan({ session, data, month, year, payment }) {
         setOpenResi(true)
         setIDitemResi(id)
     }
+    const handleStatusChange = async (newStatus, pesanan) => {
+        try {
+            const items = pesanan?.dataPesananItems || []
 
-    const handleStatusChange = async (id, newStatus) => {
-        setIDitem(id)
-        // setLoading(true)
-        const fetchData = async () => await UpdateDataPesanan({
-            id: id,
-            status: newStatus,
-        })
-        await toast.promise(
-            fetchData(),
-            {
-                loading: 'Loading Ganti yachh...',
-                success: <b>Suksesss diganti!</b>,
-                error: <b>Try again</b>,
+            const fetchData = async () => {
+                await Promise.all(
+                    items.map(item =>
+                        UpdateDataPesanan({
+                            id: item.id,
+                            status: newStatus
+                        })
+                    )
+                )
             }
-        );
-        router.refresh()
-        // setLoading(false)
-    };
+
+            await toast.promise(
+                fetchData(),
+                {
+                    loading: 'Loading ganti status...',
+                    success: <b>Semua status berhasil diupdate!</b>,
+                    error: <b>Gagal update, coba lagi</b>,
+                }
+            )
+
+            router.refresh()
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
 
     const HandleNota = async (e) => {
         const fetchData = async () => {
@@ -621,6 +632,7 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                         {/* Status */}
                                                         <td>
                                                             {pesanan?.dataPesananItems?.map((item, k) => {
+
                                                                 return (
                                                                     <div key={k} style={{ marginBottom: "8px" }}>
                                                                         {iditem === item?.id && loading ? (
@@ -628,16 +640,18 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                                         ) : (
                                                                             <select
                                                                                 style={
+
                                                                                     item?.status === "Dikirim"
                                                                                         ? { background: 'yellow' }
                                                                                         : item?.status === "Selesai"
                                                                                             ? { background: 'green', color: 'white' }
                                                                                             : item?.status === "Diproses"
                                                                                                 ? { background: 'grey', color: 'white' }
-                                                                                                : item?.productName == "Ongkos Kirim" ? { display: 'none' } : {}
+                                                                                                : item?.productName == "Ongkos Kirim" ? { display: 'none' }
+                                                                                                    : {}
                                                                                 }
                                                                                 value={item?.status}
-                                                                                onChange={(e) => handleStatusChange(item?.id, e.target.value)}
+                                                                                onChange={(e) => handleStatusChange(e.target.value, pesanan)}
                                                                             >
                                                                                 <option value="">Belum Diproses</option>
                                                                                 <option value="Diproses">Diproses</option>
