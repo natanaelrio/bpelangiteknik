@@ -70,7 +70,7 @@ export async function GET(req) {
                             fuzziness: "AUTO",
                             lenient: true
                         }
-                    } 
+                    }
                 ],
                 minimum_should_match: 1
             }
@@ -97,6 +97,7 @@ export async function GET(req) {
         ? {
             bool: {
                 should: [
+                    // ===== productName =====
                     {
                         match_phrase: {
                             productName: {
@@ -112,12 +113,31 @@ export async function GET(req) {
                                 slop: 0
                             }
                         }
+                    },
+
+                    // ===== productType =====
+                    {
+                        match_phrase: {
+                            productType: {
+                                query: normalizedQuery,
+                                slop: 0
+                            }
+                        }
+                    },
+                    {
+                        match_phrase: {
+                            productType: {
+                                query: noSpaceQuery,
+                                slop: 0
+                            }
+                        }
                     }
                 ],
                 minimum_should_match: 1
             }
         }
         : undefined
+
 
     // ================================
     // EXECUTE SEARCH
@@ -135,14 +155,17 @@ export async function GET(req) {
         highlight: {
             pre_tags: ["<mark>"],
             post_tags: ["</mark>"],
+            require_field_match: true,
             fields: {
+                productType: {
+                    number_of_fragments: 0
+                },
                 productName: {
                     number_of_fragments: 0
                 }
             },
             highlight_query: highlightQuery
         },
-
         // ================================
         // SUGGEST (RAW)
         // ================================
@@ -226,8 +249,13 @@ export async function GET(req) {
     // ================================
     // FINAL SUGGEST (JIKA HIGHLIGHT ADA → KOSONG)
     // ================================
-    const finalSuggest = hasHighlight ? [] : validatedSuggest
-
+    const finalSuggest = hits.some(
+        item =>
+            item.highlight?.productType?.length ||
+            item.highlight?.productName?.length
+    )
+        ? []
+        : validatedSuggest
     // ================================
     // PREVIEW MEREK
     // ================================
