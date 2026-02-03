@@ -5,7 +5,7 @@ export async function GET(req) {
     const searchParams = req.nextUrl.searchParams
 
     // ================================
-    // AMBIL QUERY & FILTER
+    // QUERY PARAM
     // ================================
     const rawQuery = searchParams.get("query")
     const query = !rawQuery || rawQuery === "undefined" ? "" : rawQuery.trim()
@@ -21,12 +21,15 @@ export async function GET(req) {
     const mustQuery = []
 
     // ================================
-    // SEARCH QUERY (SPASI + TANPA SPASI)
+    // NORMALISASI QUERY
+    // ================================
+    const normalizedQuery = query.replace(/[\s-]+/g, " ").trim()
+    const noSpaceQuery = normalizedQuery.replace(/\s+/g, "")
+
+    // ================================
+    // SEARCH QUERY (FUZZY BOLEH)
     // ================================
     if (query) {
-        const normalizedQuery = query.replace(/[\s-]+/g, " ")
-        const noSpaceQuery = normalizedQuery.replace(/\s+/g, "")
-
         mustQuery.push({
             bool: {
                 should: [
@@ -38,8 +41,8 @@ export async function GET(req) {
                                 "tagProduct^5",
                                 "productType^3"
                             ],
-                            type: "best_fields",
                             operator: "and",
+                            type: "best_fields",
                             lenient: true
                         }
                     },
@@ -51,8 +54,8 @@ export async function GET(req) {
                                 "tagProduct^4",
                                 "productType^2"
                             ],
-                            type: "best_fields",
                             operator: "and",
+                            type: "best_fields",
                             lenient: true
                         }
                     },
@@ -67,7 +70,7 @@ export async function GET(req) {
                             fuzziness: "AUTO",
                             lenient: true
                         }
-                    }
+                    } 
                 ],
                 minimum_should_match: 1
             }
@@ -88,6 +91,35 @@ export async function GET(req) {
         : { match_all: {} }
 
     // ================================
+    // HIGHLIGHT QUERY (STRICT URUTAN)
+    // ================================
+    const highlightQuery = query
+        ? {
+            bool: {
+                should: [
+                    {
+                        match_phrase: {
+                            productName: {
+                                query: normalizedQuery,
+                                slop: 0
+                            }
+                        }
+                    },
+                    {
+                        match_phrase: {
+                            productName: {
+                                query: noSpaceQuery,
+                                slop: 0
+                            }
+                        }
+                    }
+                ],
+                minimum_should_match: 1
+            }
+        }
+        : undefined
+
+    // ================================
     // EXECUTE SEARCH
     // ================================
     const result = await esClient.search({
@@ -98,37 +130,35 @@ export async function GET(req) {
             { _score: "desc" },
             { start: { order: "desc" } }
         ],
+        query: finalQuery,
+
         highlight: {
             pre_tags: ["<mark>"],
             post_tags: ["</mark>"],
             fields: {
-                productName: {},
-                tagProduct: {},
-                productType: {}
-            }
+                productName: {
+                    number_of_fragments: 0
+                }
+            },
+            highlight_query: highlightQuery
         },
-        query: finalQuery,
 
         // ================================
-        // SUGGEST DID YOU MEAN
+        // SUGGEST (RAW)
         // ================================
         suggest: query ? {
             did_you_mean: {
                 text: query,
                 phrase: {
                     field: "productName",
-                    size: 3,
                     gram_size: 2,
+                    size: 3,
                     direct_generator: [
                         {
                             field: "productName",
                             suggest_mode: "popular"
                         }
-                    ],
-                    highlight: {
-                        pre_tag: "<mark>",
-                        post_tag: "</mark>"
-                    }
+                    ]
                 }
             }
         } : undefined,
@@ -160,10 +190,43 @@ export async function GET(req) {
             : result.hits.total?.value || 0
 
     // ================================
-    // PARSE SUGGEST
+    // DETEKSI HIGHLIGHT (KUNCI UTAMA)
     // ================================
-    const suggest =
+    const hasHighlight = hits.some(
+        item => item.highlight?.productName?.length
+    )
+
+    // ================================
+    // PARSE & VALIDASI SUGGEST
+    // ================================
+    const rawSuggest =
         result.suggest?.did_you_mean?.[0]?.options?.map(o => o.text) || []
+
+    const validatedSuggest = []
+
+    for (const s of rawSuggest) {
+        const check = await esClient.search({
+            index: "products",
+            size: 1,
+            query: {
+                match_phrase: {
+                    productName: {
+                        query: s,
+                        slop: 0
+                    }
+                }
+            }
+        })
+
+        if (check.hits.total.value > 0) {
+            validatedSuggest.push(s)
+        }
+    }
+
+    // ================================
+    // FINAL SUGGEST (JIKA HIGHLIGHT ADA → KOSONG)
+    // ================================
+    const finalSuggest = hasHighlight ? [] : validatedSuggest
 
     // ================================
     // PREVIEW MEREK
@@ -179,7 +242,7 @@ export async function GET(req) {
         })) || []
 
     // ================================
-    // AUTHORIZATION
+    // RESPONSE
     // ================================
     const authorization = req.headers.get("authorization")
 
@@ -192,7 +255,7 @@ export async function GET(req) {
             totalMaxProduct: total,
             totalProduct: limit * page,
             dataPreviewMerek,
-            suggest
+            suggest: finalSuggest
         }
     )
 }
