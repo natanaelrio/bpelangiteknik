@@ -963,7 +963,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                                                 <div className={styles.judul}>General Information</div>
                                                 <hr />
                                                 <div className={styles.isi}>
-                                                    <label htmlFor="productName">Product Name [ Merek + Kapasitas + Fitur + Kata Kunci + Keunggulan ] max 100kar <ErrorMessage name="productName" component="div" style={{ color: 'red' }} /></label>
+                                                    <label htmlFor="productName">Produk Name [Kategori produk] [ Kapasitas Produk ] [ Type Produk ] [ Brand ] max 100kar <ErrorMessage name="productName" component="div" style={{ color: 'red' }} /></label>
                                                     <Field
                                                         type="text"
                                                         name="productName"
