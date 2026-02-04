@@ -267,14 +267,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
         //     },
         //     cache: 'no-store'
         // })
-
-        const abc = await UpdateStockProduct({
-            slugProduct: item.slugProduct,
-            stockProduct: newValue,
-            username: spv ? item?.username : session?.username,
-            updateDate: spv ? item?.updateDate : new Date()
-        })
-
+        console.time('REDIS')
         await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -285,11 +278,23 @@ export default function ListProductNew({ session, query, dataKategori }) {
                 }
             }),
         })
+        console.timeEnd('REDIS')
 
+        console.time('PUT')
+        const abc = await UpdateStockProduct({
+            slugProduct: item.slugProduct,
+            stockProduct: newValue,
+            username: spv ? item?.username : session?.username,
+            updateDate: spv ? item?.updateDate : new Date()
+        })
+        console.timeEnd('PUT')
+
+        console.time('REFRESH')
         toast.success('Stok berhasil diupdate')
         setIsSuccess()
-        window.location.reload()
+        // window.location.reload()
         router.refresh()
+        console.timeEnd('REFRESH')
         setLoadingStockPrice(false)
         setEditStockId(null)
     }
