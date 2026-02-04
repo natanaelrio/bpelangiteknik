@@ -104,7 +104,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
         catch (e) {
             console.log(e)
         }
-    }, [currentPage, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess, isLoadingStockPrice])
+    }, [currentPage, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess])
 
     const GetDetailProduct = async (id) => {
         setLoading(true)
