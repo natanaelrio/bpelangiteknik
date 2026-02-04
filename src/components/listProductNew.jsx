@@ -275,8 +275,6 @@ export default function ListProductNew({ session, query, dataKategori }) {
             updateDate: spv ? item?.updateDate : new Date()
         })
 
-        console.log(abc);
-
         await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -290,6 +288,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
         toast.success('Stok berhasil diupdate')
         setIsSuccess()
+        window.location.reload()
         router.refresh()
         setLoadingStockPrice(false)
         setEditStockId(null)
@@ -342,6 +341,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
         toast.success('Harga berhasil diupdate')
         setIsSuccess()
         router.refresh()
+        window.location.reload()
         setLoadingStockPrice(true)
         setEditPriceId(null)
     }
