@@ -229,6 +229,110 @@ export default function ListProductNew({ session, query, dataKategori }) {
             toast.error(`Error Internet`);
         }
     }
+    const [isLoadingStockPrice, setLoadingStockPrice] = useState(false)
+    console.log(isLoadingStockPrice)
+
+
+    const saveStock = async (item) => {
+        console.log(item);
+        console.log(stockValue);
+        setLoadingStockPrice(true)
+        const newValue = Number(stockValue)
+
+        if (Number.isNaN(newValue) || newValue < 0) {
+            setEditStockId(null)
+            return
+        }
+
+        if (newValue === item.stockProduct) {
+            setEditStockId(null)
+            return
+        }
+
+        setLoadingStockPrice(true)
+
+        const abc = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                slugProduct: item.slugProduct,
+                stockProduct: newValue,
+                username: spv ? item?.username : session?.username,
+                updateDate: spv ? item?.updateDate : new Date()
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': process.env.NEXT_PUBLIC_SECREET
+            },
+            cache: 'no-store'
+        })
+
+
+        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ids: {
+                    product: `product:${item.slugProduct}`,
+                    listProduct: 'data:productList'
+                }
+            }),
+        })
+
+        toast.success('Stok berhasil diupdate')
+        setIsSuccess()
+        router.refresh()
+        setLoadingStockPrice(false)
+        setEditStockId(null)
+    }
+
+    const savePrice = async (item) => {
+        const newValue = Number(priceValue)
+        setLoadingStockPrice(true)
+        if (Number.isNaN(newValue) || newValue <= 0) {
+            setEditPriceId(null)
+            return
+        }
+
+        if (newValue === item.productPriceFinal) {
+            setEditPriceId(null)
+            return
+        }
+
+        setLoadingStockPrice(true)
+
+        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putPriceProduct`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                slugProduct: item.slugProduct,
+                price: newValue,
+                username: spv ? item?.username : session?.username,
+                updateDate: spv ? item?.updateDate : new Date()
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': process.env.NEXT_PUBLIC_SECREET
+            },
+            cache: 'no-store'
+        })
+
+        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ids: {
+                    product: `product:${item.slugProduct}`,
+                    listProduct: 'data:productList'
+                }
+            }),
+        })
+
+        toast.success('Harga berhasil diupdate')
+        setIsSuccess()
+        router.refresh()
+        setLoadingStockPrice(true)
+        setEditPriceId(null)
+    }
+
 
     return (
         <>
@@ -299,127 +403,72 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                 <small>Tayang: {item?.viewProduct}</small>
                             </div>
 
-                            {/* Stok */}
+                            {/* ====== STOK ====== */}
                             <div className={styles.center}>
-                                {editStockId === item.id ? (
-                                    <input
-                                        type="number"
-                                        className={styles.stockInput}
-                                        value={stockValue}
-                                        autoFocus
-                                        onChange={(e) => setStockValue(e.target.value)}
-                                        onBlur={() => setEditStockId(null)}
-                                        onKeyDown={async (e) => {
-                                            if (e.key === 'Enter') {
-                                                // SIMPAN KE API DI SINI
-                                                setLoading(true)
-                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putPriceProduct`, {
-                                                    method: 'PUT',
-                                                    body: JSON.stringify({
-                                                        slugProduct: item.slugProduct,
-                                                        stockProduct: stockValue,
-                                                        username: spv ? item?.username : session?.username,
-                                                        updateDate: spv ? item?.updateDate : new Date()
-                                                    }),
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'Authorization': process.env.NEXT_PUBLIC_SECREET
-                                                    }, cache: 'no-store',
-                                                })
-                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                                                    method: 'DELETE',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                    },
-                                                    body: JSON.stringify({
-                                                        ids: {
-                                                            product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                                                            listProduct: 'data:productList'
-                                                        },
-                                                    }),
-                                                })
-                                                toast.success('Stok berhasil diupdate')
-                                                router.refresh()
-                                                setIsSuccess()
-                                                setLoading(false)
-                                                setEditStockId(null);
-                                            }
-                                        }}
-                                    />
-                                ) : (
-                                    <span
-                                        className={`${styles.bold} ${styles.stockText}`}
-                                        onClick={() => {
-                                            setEditStockId(item.id);
-                                            setStockValue(item.stockProduct);
-                                        }}
-                                    >
-                                        {item?.stockProduct}
-                                    </span>
-                                )}
+                                {
+                                    editStockId === item.id && isLoadingStockPrice ? <span>Loading...</span>
+                                        :
+                                        editStockId === item.id ? (
+                                            <input
+                                                type="number"
+                                                className={styles.stockInput}
+                                                value={stockValue}
+                                                autoFocus
+                                                onChange={(e) => setStockValue(e.target.value)}
+                                                onBlur={() => saveStock(item)} // 👈 klik kiri = SIMPAN
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') saveStock(item)
+                                                    if (e.key === 'Escape') setEditStockId(null)
+                                                }}
+                                            />
+                                        ) : (
+                                            <span
+                                                className={`${styles.bold} ${styles.stockText}`}
+                                                style={{ cursor: 'pointer' }}
+                                                title="Klik untuk edit stok"
+                                                onClick={() => {
+                                                    setEditStockId(item.id)
+                                                    setStockValue(item.stockProduct ?? 0)
+                                                }}
+                                            >
+                                                {item?.stockProduct}
+                                            </span>
+                                        )}
                             </div>
 
-                            {/* Harga */}
+                            {/* ====== HARGA ====== */}
                             <div className={styles.price}>
-                                {editPriceId === item.id ? (
-                                    <input
-                                        type="number"
-                                        className={styles.priceInput}
-                                        value={priceValue}
-                                        autoFocus
-                                        onChange={(e) => setPriceValue(e.target.value)}
-                                        onBlur={() => setEditPriceId(null)}
-                                        onKeyDown={async (e) => {
-                                            if (e.key === 'Enter') {
-                                                setLoading(true)
-                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putPriceProduct`, {
-                                                    method: 'PUT',
-                                                    body: JSON.stringify({
-                                                        slugProduct: item.slugProduct,
-                                                        price: priceValue,
-                                                        username: spv ? item?.username : session?.username,
-                                                        updateDate: spv ? item?.updateDate : new Date()
-                                                    }),
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'Authorization': process.env.NEXT_PUBLIC_SECREET
-                                                    },
-                                                    cache: 'no-store',
-                                                })
-                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                                                    method: 'DELETE',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                    },
-                                                    body: JSON.stringify({
-                                                        ids: {
-                                                            product: `product:${item?.slugProduct || 'abcdefghijklmnopzrefekekwkwk'}`,
-                                                            listProduct: 'data:productList',
-                                                        },
-                                                    }),
-                                                })
-                                                toast.success('Harga berhasil diupdate')
-                                                router.refresh()
-                                                setIsSuccess()
-                                                setLoading(false)
-                                                setEditPriceId(null);
-                                            }
-                                        }}
-                                    />
-                                ) : (
-                                    <span
-                                        className={styles.normalPrice}
-                                        onClick={() => {
-                                            setEditPriceId(item.id);
-                                            setPriceValue(item.productPriceFinal);
-                                        }}
-                                        title="Klik untuk edit harga"
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        {FormatRupiah(item?.productPriceFinal)}
-                                    </span>
-                                )}
+                                {
+                                    editPriceId === item.id && isLoadingStockPrice ? <span>Loading...</span>
+                                        :
+                                        editPriceId === item.id ? (
+                                            <input
+                                                type="number"
+                                                className={styles.priceInput}
+                                                value={priceValue}
+                                                autoFocus
+                                                onChange={(e) => setPriceValue(e.target.value)}
+                                                onBlur={() => savePrice(item)} // 👈 klik kiri = SIMPAN
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') savePrice(item)
+                                                    if (e.key === 'Escape') setEditPriceId(null)
+                                                }}
+                                            />
+                                        ) : (
+                                            <span
+                                                className={styles.normalPrice}
+                                                style={{ cursor: 'pointer' }}
+                                                title="Klik untuk edit harga"
+                                                onClick={() => {
+                                                    setEditPriceId(item.id)
+                                                    setPriceValue(item.productPriceFinal ?? 0)
+                                                }}
+                                            >
+                                                {FormatRupiah(item?.productPriceFinal)}
+                                            </span>
+                                        )}
                             </div>
+
 
                             {/* Selesai */}
                             <div className={styles.center}>
