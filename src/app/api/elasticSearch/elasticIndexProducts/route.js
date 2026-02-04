@@ -2,6 +2,8 @@ import { prisma } from "@/controllers/prisma";
 import { esClient } from "@/controllers/elasticsearch";
 import { ResponseData } from "@/components/api/ResponseData";
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req) {
     try {
         // Ambil semua produk dari Prisma

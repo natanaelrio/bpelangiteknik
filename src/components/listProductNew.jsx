@@ -324,7 +324,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                     headers: {
                                                         'Content-Type': 'application/json',
                                                         'Authorization': process.env.NEXT_PUBLIC_SECREET
-                                                    }
+                                                    }, cache: 'no-store',
                                                 })
                                                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                     method: 'DELETE',
@@ -383,7 +383,8 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                                     headers: {
                                                         'Content-Type': 'application/json',
                                                         'Authorization': process.env.NEXT_PUBLIC_SECREET
-                                                    }
+                                                    },
+                                                    cache: 'no-store',
                                                 })
                                                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                     method: 'DELETE',
