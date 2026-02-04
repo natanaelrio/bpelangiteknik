@@ -313,11 +313,18 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                             if (e.key === 'Enter') {
                                                 // SIMPAN KE API DI SINI
                                                 setLoading(true)
-                                                await UpdateStockProduct({
-                                                    slugProduct: item.slugProduct,
-                                                    stockProduct: stockValue,
-                                                    username: spv ? item?.username : session?.username,
-                                                    updateDate: spv ? item?.updateDate : new Date()
+                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putPriceProduct`, {
+                                                    method: 'PUT',
+                                                    body: JSON.stringify({
+                                                        slugProduct: item.slugProduct,
+                                                        stockProduct: stockValue,
+                                                        username: spv ? item?.username : session?.username,
+                                                        updateDate: spv ? item?.updateDate : new Date()
+                                                    }),
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Authorization': process.env.NEXT_PUBLIC_SECREET
+                                                    }
                                                 })
                                                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                     method: 'DELETE',
@@ -365,11 +372,18 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                         onKeyDown={async (e) => {
                                             if (e.key === 'Enter') {
                                                 setLoading(true)
-                                                await UpdatePriceProduct({
-                                                    slugProduct: item.slugProduct,
-                                                    price: priceValue,
-                                                    username: spv ? item?.username : session?.username,
-                                                    updateDate: spv ? item?.updateDate : new Date()
+                                                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putPriceProduct`, {
+                                                    method: 'PUT',
+                                                    body: JSON.stringify({
+                                                        slugProduct: item.slugProduct,
+                                                        price: priceValue,
+                                                        username: spv ? item?.username : session?.username,
+                                                        updateDate: spv ? item?.updateDate : new Date()
+                                                    }),
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Authorization': process.env.NEXT_PUBLIC_SECREET
+                                                    }
                                                 })
                                                 await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
                                                     method: 'DELETE',

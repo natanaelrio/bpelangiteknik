@@ -27,9 +27,9 @@ export async function GET(req) {
                 descMetaProduct: p.descMetaProduct,
                 tagProduct: p.tagProduct,
                 productType: p.productType,
-                productPrice: p.productPrice.toString(),
+                productPrice: p.productPrice?.toString() ?? "0",
                 productDiscount: p.productDiscount,
-                productPriceFinal: p.productPriceFinal.toString(),
+                productPriceFinal: p.productPriceFinal?.toString() ?? "0",
                 imageProductUtama: p.imageProductUtama?.secure_url,
                 fMerek: p.fMerek,
 
