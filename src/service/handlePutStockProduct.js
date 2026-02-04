@@ -1,5 +1,4 @@
-'use server'
-import { revalidatePath } from "next/cache"
+export const dynamic = 'force-dynamic'
 export async function UpdateStockProduct(dataKu) {
     try {
         // DATA ADMIN
@@ -9,7 +8,7 @@ export async function UpdateStockProduct(dataKu) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': process.env.NEXT_PUBLIC_SECREET
-            }, next: { revalidate: 0 }
+            }, cache: 'no-store'
         })
         return res.json()
     }

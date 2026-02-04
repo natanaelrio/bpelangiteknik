@@ -253,21 +253,29 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
         setLoadingStockPrice(true)
 
-        const abc = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                slugProduct: item.slugProduct,
-                stockProduct: newValue,
-                username: spv ? item?.username : session?.username,
-                updateDate: spv ? item?.updateDate : new Date()
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': process.env.NEXT_PUBLIC_SECREET
-            },
-            cache: 'no-store'
+        // const abc = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {
+        //     method: 'PUT',
+        //     body: JSON.stringify({
+        //         slugProduct: item.slugProduct,
+        //         stockProduct: newValue,
+        //         username: spv ? item?.username : session?.username,
+        //         updateDate: spv ? item?.updateDate : new Date()
+        //     }),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': process.env.NEXT_PUBLIC_SECREET
+        //     },
+        //     cache: 'no-store'
+        // })
+
+        const abc = await UpdateStockProduct({
+            slugProduct: item.slugProduct,
+            stockProduct: newValue,
+            username: spv ? item?.username : session?.username,
+            updateDate: spv ? item?.updateDate : new Date()
         })
 
+        console.log(abc);
 
         await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
             method: 'DELETE',
