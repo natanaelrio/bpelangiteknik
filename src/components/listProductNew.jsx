@@ -66,6 +66,8 @@ export default function ListProductNew({ session, query, dataKategori }) {
     const [dataSlugUpdatePublish, setDataAtaSlugUpdatePublish] = useState(null)
     const [dataSlugProduct, setDataSlugProduct] = useState(null)
 
+    const [isLoadingStockPrice, setLoadingStockPrice] = useState(false)
+
     const ITEMS_PER_PAGE = 5;
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -102,7 +104,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
         catch (e) {
             console.log(e)
         }
-    }, [currentPage, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess])
+    }, [currentPage, m, search, dataSlugUpdatePublish, dataSlugProduct, loading, isSuccess, isLoadingStockPrice])
 
     const GetDetailProduct = async (id) => {
         setLoading(true)
@@ -229,8 +231,6 @@ export default function ListProductNew({ session, query, dataKategori }) {
             toast.error(`Error Internet`);
         }
     }
-    const [isLoadingStockPrice, setLoadingStockPrice] = useState(false)
-    console.log(isLoadingStockPrice)
 
 
     const saveStock = async (item) => {
@@ -240,11 +240,13 @@ export default function ListProductNew({ session, query, dataKategori }) {
         const newValue = Number(stockValue)
 
         if (Number.isNaN(newValue) || newValue < 0) {
+            setLoadingStockPrice(false)
             setEditStockId(null)
             return
         }
 
         if (newValue === item.stockProduct) {
+            setLoadingStockPrice(false)
             setEditStockId(null)
             return
         }
@@ -289,11 +291,14 @@ export default function ListProductNew({ session, query, dataKategori }) {
         const newValue = Number(priceValue)
         setLoadingStockPrice(true)
         if (Number.isNaN(newValue) || newValue <= 0) {
+            setLoadingStockPrice(false)
             setEditPriceId(null)
             return
         }
 
         if (newValue === item.productPriceFinal) {
+            setLoadingStockPrice(false)
+            setLoadingStockPrice(true)
             setEditPriceId(null)
             return
         }
