@@ -408,7 +408,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
                             {/* Selesai */}
                             <div className={styles.center}>
-                                <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'} </b>
+                                <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'}{item?.username == 'sales05' && 'dhita'}</b>
                                 <span className={styles.time}>
                                     {TimeConverter(item?.updateDate)}
                                 </span>

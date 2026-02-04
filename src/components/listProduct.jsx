@@ -353,7 +353,7 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
                                                 <div key={i} className={styles.kotak}>
                                                     <div className={styles.indiatas}>
                                                         <div className={styles.username}>
-                                                            <b> {data.username} - {data.username == 'sales01' && 'alma'}{data.username == 'sales02' && 'sifa'}{data.username == 'sales03' && 'ina'} </b>
+                                                            <b> {data.username} - {data.username == 'sales01' && 'alma'}{data.username == 'sales02' && 'sifa'}{data.username == 'sales03' && 'ina'}{data.username == 'sales05' && 'dhita'} </b>
                                                             <br />
                                                             {TimeConverter(data?.start)}
                                                         </div>
