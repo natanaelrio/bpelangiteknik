@@ -267,19 +267,6 @@ export default function ListProductNew({ session, query, dataKategori }) {
         //     },
         //     cache: 'no-store'
         // })
-        console.time('REDIS')
-        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ids: {
-                    product: `product:${item.slugProduct}`,
-                    listProduct: 'data:productList'
-                }
-            }),
-        })
-        console.timeEnd('REDIS')
-
         console.time('PUT')
         const abc = await UpdateStockProduct({
             slugProduct: item.slugProduct,
