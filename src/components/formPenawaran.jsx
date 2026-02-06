@@ -16,6 +16,7 @@ import { FormatRupiah } from '@/utils/formatRupiah';
 import QRCode from 'qrcode';
 import GetRandomPhoneNumber from '@/utils/getRandomPhoneNumber';
 
+
 export default function FormPenawaran({ data }) {
 
     const phoneNumbers = GetRandomPhoneNumber()
