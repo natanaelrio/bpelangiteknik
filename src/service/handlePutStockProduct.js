@@ -10,7 +10,7 @@ export async function UpdateStockProduct(dataKu) {
                     product: `product:${dataKu.slugProduct}`,
                     listProduct: 'data:productList'
                 }
-            }),
+            }), cache: 'no-store'
         })
         // DATA ADMIN
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {

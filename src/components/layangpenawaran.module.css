@@ -1,16 +1,36 @@
+.layarpenawarankeluar {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.84);
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    z-index: 800;
+}
+
 /* =========================
    Overlay background
 ========================= */
 .overlay {
-    position: fixed;
+    /* position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.84);
-    z-index: 900;
+    z-index: 900; */
 
+    background-color: #991b1b;
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    top: 0;
+    z-index: 900;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 80px;
+    /* padding-top: 80px; */
+    border-radius: 20px;
 }
 
 /* =========================
@@ -27,6 +47,7 @@
     /* SCROLL */
     max-height: calc(100vh - 120px);
     overflow-y: auto;
+    position: relative;
 }
 
 .closeBtn {

@@ -316,6 +316,9 @@ a.c 588.5062.609`
 
     return (
         <>
+            <div className={styles.layarpenawarankeluar}
+                onClick={() => setLayangPenawaran(false)}
+            ></div>
             <div className={styles.overlay}>
                 <div className={styles.layangPenawaran}>
                     <button
@@ -395,7 +398,7 @@ a.c 588.5062.609`
                                 <button onClick={() => updateQty(index, item.qty - 1)}>−</button>
                                 <input
                                     type="number"
-                                    value={item.qty}
+                                    value={item.qty || 1}
                                     min="1"
                                     onChange={(e) =>
                                         updateQty(index, Number(e.target.value))

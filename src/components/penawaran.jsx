@@ -56,7 +56,7 @@ a.c 588.5062.609`
             "Franco Jabodetabek",
             "Surat penawaran berlaku selama 3 (Tiga) minggu sejak surat penawaran di buat."
         ],
-        jumlahBarang: '',
+        jumlahBarang: 1,
         nameSales: '',
         numberSales: '',
 
