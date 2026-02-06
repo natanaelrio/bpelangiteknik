@@ -22,7 +22,7 @@ export const GetFilterProduct = async () => {
 
 export const GetListProduct = async (page, take, m, search) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/elasticSearch/elasticSearchAdmin?page=${page ? page : 1}&limit=${take}&m=${m ? m : 'undefined'}&query=${search}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/get/listProduct?page=${page ? page : 1}&take=${take}&m=${m ? m : 'undefined'}&search=${search}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,6 +38,24 @@ export const GetListProduct = async (page, take, m, search) => {
     }
     revalidatePath('/')
 }
+// export const GetListProduct = async (page, take, m, search) => {
+//     try {
+//         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/elasticSearch/elasticSearchAdmin?page=${page ? page : 1}&limit=${take}&m=${m ? m : 'undefined'}&query=${search}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `${process.env.NEXT_PUBLIC_SECREET}`
+//             },
+//             cache: 'no-store'
+//         });
+//         const data = await res.json()
+//         return data
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
+//     revalidatePath('/')
+// }
 
 export const GetProduct = async (id) => {
     try {

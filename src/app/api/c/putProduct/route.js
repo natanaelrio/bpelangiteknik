@@ -11,8 +11,6 @@ export async function PUT(req) {
     const {
         productID,
     } = await req.json();
-
-    console.log(productID);
     
     BigInt.prototype.toJSON = function () {
         return this.toString();

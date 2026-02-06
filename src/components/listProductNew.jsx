@@ -95,7 +95,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                 const res = await GetListProduct(currentPage, ITEMS_PER_PAGE, m, query)
                 setTotalMaxProduct(res?.totalMaxProduct)
                 setTotalProduct(res?.totalProduct)
-                setDataProduct(res?.data.data)
+                setDataProduct(res?.data)
             }
 
             fetchDataShop()
@@ -333,7 +333,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
         toast.success('Harga berhasil diupdate')
         setIsSuccess()
         router.refresh()
-        window.location.reload()
+        // window.location.reload()
         setLoadingStockPrice(true)
         setEditPriceId(null)
     }
@@ -361,7 +361,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                 <Image
                                     width={56}
                                     height={56}
-                                    src={item?.imageProductUtama || '/notfoundicon.jpg'}
+                                    src={item?.imageProductUtama?.secure_url || '/notfoundicon.jpg'}
                                     alt={item?.productName}
                                     className={styles.image}
                                 />
