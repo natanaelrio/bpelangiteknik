@@ -411,8 +411,8 @@ export default function ListProductNew({ session, query, dataKategori }) {
                             {/* ====== STOK ====== */}
                             <div className={styles.center}>
                                 {
-                                    editStockId === item.id && isLoadingStockPrice ? <span>Loading...</span>
-                                        :
+                                    // editStockId === item.id && isLoadingStockPrice ? <span>Loading...</span>
+                                    //     :
                                         editStockId === item.id ? (
                                             <input
                                                 type="number"
