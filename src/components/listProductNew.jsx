@@ -253,23 +253,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
         setLoadingStockPrice(true)
 
-        // const abc = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {
-        //     method: 'PUT',
-        //     body: JSON.stringify({
-        //         slugProduct: item.slugProduct,
-        //         stockProduct: newValue,
-        //         username: spv ? item?.username : session?.username,
-        //         updateDate: spv ? item?.updateDate : new Date()
-        //     }),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': process.env.NEXT_PUBLIC_SECREET
-        //     },
-        //     cache: 'no-store'
-        // })
-        console.time('PUT')
-
-        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {
+        const abc = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putStock`, {
             method: 'PUT',
             body: JSON.stringify({
                 slugProduct: item.slugProduct,
@@ -280,8 +264,10 @@ export default function ListProductNew({ session, query, dataKategori }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': process.env.NEXT_PUBLIC_SECREET
-            }, cache: 'no-store'
+            },
+            cache: 'no-store'
         })
+
 
         await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
             method: 'DELETE',
@@ -291,16 +277,12 @@ export default function ListProductNew({ session, query, dataKategori }) {
                     product: `product:${item.slugProduct}`,
                     listProduct: 'data:productList'
                 }
-            }), cache: 'no-store'
+            }),
         })
-        console.timeEnd('PUT')
 
-        console.time('REFRESH')
         toast.success('Stok berhasil diupdate')
         setIsSuccess()
-        // window.location.reload()
         router.refresh()
-        console.timeEnd('REFRESH')
         setLoadingStockPrice(false)
         setEditStockId(null)
     }
@@ -352,7 +334,6 @@ export default function ListProductNew({ session, query, dataKategori }) {
         toast.success('Harga berhasil diupdate')
         setIsSuccess()
         router.refresh()
-        // window.location.reload()
         setLoadingStockPrice(true)
         setEditPriceId(null)
     }
