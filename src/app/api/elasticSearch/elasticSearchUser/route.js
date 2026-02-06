@@ -59,18 +59,18 @@ export async function GET(req) {
                             lenient: true
                         }
                     },
-                    {
-                        multi_match: {
-                            query: normalizedQuery,
-                            fields: [
-                                "productName^4",
-                                "tagProduct^2",
-                                "productType"
-                            ],
-                            fuzziness: "AUTO",
-                            lenient: true
-                        }
-                    }
+                    // {
+                    //     multi_match: {
+                    //         query: normalizedQuery,
+                    //         fields: [
+                    //             "productName^4",
+                    //             "tagProduct^2",
+                    //             "productType"
+                    //         ],
+                    //         fuzziness: "AUTO",
+                    //         lenient: true
+                    //     }
+                    // }
                 ],
                 minimum_should_match: 1
             }

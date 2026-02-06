@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(req) {
     try {
+        // await esClient.indices.delete({ index: "products" });
         // Ambil semua produk dari Prisma
         const products = await prisma.listProduct.findMany({
             include: {
@@ -55,6 +56,8 @@ export async function GET(req) {
 
         // Bulk indexing lebih cepat
         await esClient.bulk({ refresh: true, body });
+        // const bulkResponse = await esClient.bulk({ body });
+        // console.log(bulkResponse);
 
         // Response
         const authorization = req.headers.get('authorization');
