@@ -37,7 +37,7 @@ export const GetListProduct = async (page, take, m, search) => {
         console.log(err);
     }
     revalidatePath('/')
-}
+}   
 // export const GetListProduct = async (page, take, m, search) => {
 //     try {
 //         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/elasticSearch/elasticSearchAdmin?page=${page ? page : 1}&limit=${take}&m=${m ? m : 'undefined'}&query=${search}`, {

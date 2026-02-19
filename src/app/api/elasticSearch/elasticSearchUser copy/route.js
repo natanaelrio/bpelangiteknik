@@ -25,13 +25,9 @@ export async function GET(req) {
     // ================================
     const normalizedQuery = query.replace(/[\s-]+/g, " ").trim()
     const noSpaceQuery = normalizedQuery.replace(/\s+/g, "")
-    const alphaNumericSplit = normalizedQuery
-        .replace(/([a-zA-Z])(\d)/g, "$1 $2")
-        .replace(/(\d)([a-zA-Z])/g, "$1 $2")
 
-    // console.log(normalizedQuery);
-    // console.log(noSpaceQuery);
-    // console.log("alphaNumericSplit:", alphaNumericSplit);
+    console.log(normalizedQuery);
+    console.log(noSpaceQuery);
 
     // ================================
     // SEARCH QUERY (FUZZY BOLEH)
@@ -65,24 +61,7 @@ export async function GET(req) {
                             type: "best_fields",
                             lenient: true
                         }
-                    }, {
-                        multi_match: {
-                            query: alphaNumericSplit,
-                            fields: [
-                                "productName",
-                                "productName._2gram",
-                                "productName._3gram"
-                            ],
-                            type: "bool_prefix"
-                        }
                     },
-                    // {
-                    //     multi_match: {
-                    //         query: alphaNumericSplit,
-                    //         fields: ["productName"],
-                    //         type: "bool_prefix"
-                    //     }
-                    // },
                     // {
                     //     multi_match: {
                     //         query: normalizedQuery,
@@ -94,35 +73,7 @@ export async function GET(req) {
                     //         fuzziness: "AUTO",
                     //         lenient: true
                     //     }
-                    // },
-                    {
-                        prefix: {
-                            productName: {
-                                value: normalizedQuery.toLowerCase()
-                            }
-                        }
-                    },
-                    {
-                        prefix: {
-                            productName: {
-                                value: noSpaceQuery.toLowerCase()
-                            }
-                        }
-                    },
-                    {
-                        prefix: {
-                            productType: {
-                                value: normalizedQuery.toLowerCase()
-                            }
-                        }
-                    },
-                    {
-                        prefix: {
-                            productType: {
-                                value: noSpaceQuery.toLowerCase()
-                            }
-                        }
-                    }
+                    // }
                 ],
                 minimum_should_match: 1
             }
@@ -277,52 +228,19 @@ export async function GET(req) {
     const rawSuggest =
         result.suggest?.did_you_mean?.[0]?.options?.map(o => o.text) || []
 
-    const firstProductType = hits.length > 0
-        ? hits[0].productType
-        : null
-
     const validatedSuggest = []
 
     for (const s of rawSuggest) {
-
-        const boolQuery = {
-            must: [
-                {
-                    match_phrase: {
-                        productName: {
-                            query: s,
-                            slop: 0
-                        }
-                    }
-                }
-            ]
-        }
-
-        // if (firstProductType) {
-        //     boolQuery.filter = [
-        //         {
-        //             match_phrase: {
-        //                 productType: firstProductType
-        //             }
-        //         }
-        //     ]
-        // }
-
-        if (firstProductType) {
-            boolQuery.filter = [
-                {
-                    term: {
-                        "productType.keyword": firstProductType
-                    }
-                }
-            ]
-        }
-
         const check = await esClient.search({
             index: "products",
             size: 1,
             query: {
-                bool: boolQuery
+                match_phrase: {
+                    productName: {
+                        query: s,
+                        slop: 0
+                    }
+                }
             }
         })
 
@@ -330,8 +248,6 @@ export async function GET(req) {
             validatedSuggest.push(s)
         }
     }
-
-
 
     // ================================
     // FINAL SUGGEST (JIKA HIGHLIGHT ADA → KOSONG)
@@ -343,9 +259,6 @@ export async function GET(req) {
     )
         ? []
         : validatedSuggest
-
-    console.log(finalSuggest);
-
     // ================================
     // PREVIEW MEREK
     // ================================
