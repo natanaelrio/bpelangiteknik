@@ -12,6 +12,7 @@ import { useCon } from '@/zustand/useCon';
 import LoadingNew from './loadingNew';
 import Layangpenawaran from './layangpenawaran';
 import { signOut } from "next-auth/react"
+import { useEffect } from 'react';
 
 export default function HeaderNew({ session }) {
     const router = useRouter()
