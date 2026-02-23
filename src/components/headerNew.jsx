@@ -19,9 +19,15 @@ export default function HeaderNew({ session }) {
     const loading = useCon((state) => state.loading)
     const setLayangPenawaran = useCon((state) => state.setLayangPenawaran)
     const layangPenawaran = useCon((state) => state.layangPenawaran)
-    const total = JSON.parse(
-        localStorage.getItem('DataPenawaran') || '[]'
-    ).length;
+
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        const data = JSON.parse(
+            localStorage.getItem('DataPenawaran') || '[]'
+        );
+        setTotal(data.length);
+    }, []);
 
     const TotalPenawaran = useCon((state) => state.TotalPenawaran) || total
 
