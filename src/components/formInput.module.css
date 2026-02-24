@@ -52,6 +52,7 @@
     position: sticky;
     /* top: 60px; */
     z-index: 19;
+    top: 0;
 }
 
 .atas .kiri {
