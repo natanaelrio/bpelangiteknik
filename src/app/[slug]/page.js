@@ -25,7 +25,7 @@ export default async function Home({ params }) {
 
     return (
         <>
-            <HeaderNew session={session} />
+            {/* <HeaderNew session={session} /> */}
             {dataProductDetail?.data[0] ?
                 <FormInput
                     session={session}

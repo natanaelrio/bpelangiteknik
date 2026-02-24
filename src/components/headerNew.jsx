@@ -13,8 +13,11 @@ import LoadingNew from './loadingNew';
 import Layangpenawaran from './layangpenawaran';
 import { signOut } from "next-auth/react"
 import { useEffect } from 'react';
+import { useSession } from "next-auth/react"
 
-export default function HeaderNew({ session }) {
+export default function HeaderNew() {
+
+    const { data: session, status } = useSession()
     const router = useRouter()
     const setLoading = useCon((state) => state.setLoading)
     const loading = useCon((state) => state.loading)
@@ -66,17 +69,19 @@ export default function HeaderNew({ session }) {
             <div className={styles.atas} >
                 <Link href={'/'} className={styles.judul}><MdHome size={30} />PelangiTeknik</Link>
 
-                <Link href={'/order'}> <button className={styles.searchP}>Orders<FaBorderAll />
-                </button></Link>
+                <button className={styles.searchP}>
+                    <Link href={'/order'}>Orders</Link><FaBorderAll />
+                </button>
 
-                <Link href={'/penawaran'}> <button className={styles.searchP}>Penawaran  <MdOutlineLocalOffer size={15} />
-                </button></Link>
-
-                <Link href={'/post'}> <button className={styles.searchP}>+ Product <MdLibraryAdd />
-                </button></Link>
+                <button className={styles.searchP}>
+                    <Link href={'/penawaran'}> Penawaran  <MdOutlineLocalOffer size={15} /> </Link>
+                </button>
+                <button className={styles.searchP}>
+                    <Link href={'/post'}>  + Product <MdLibraryAdd /> </Link>
+                </button>
                 {session?.user?.email == 'rio@pelangiteknik.com' &&
-                    <Link href={'/postartikel'}> <button className={styles.searchP}>+Artikel <MdLibraryAdd />
-                    </button></Link>
+                    <button className={styles.searchP}><Link href={'/postartikel'}>+Artikel</Link> <MdLibraryAdd />
+                    </button>
                 }
 
                 <button onClick={handlePenawaran} className={styles.searchP}>+ Buat Penawaran <MdLibraryAdd /> {TotalPenawaran > 0 && <span className={styles.totalP}>{TotalPenawaran}</span>}

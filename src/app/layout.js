@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import NextTopLoader from "nextjs-toploader";
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+import Provider from "@/lib/provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,7 +35,9 @@ export default function RootLayout({ children }) {
           }}
         />
         <NextTopLoader />
-        {children}
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   );
