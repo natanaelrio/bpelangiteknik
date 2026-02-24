@@ -798,7 +798,7 @@ export default function FormInput({ data, text, kondisi, session }) {
                         <div className={styles.container}>
                             <div className={styles.dalamcontainer}>
                                 <div className={styles.form}>
-                                    <div className={styles.atas} style={pathname == '/post' ? { top: '0' } : { top: '65px' }}>
+                                    <div className={styles.atas}>
                                         <Link target='_blank' href={'/'} className={styles.kiri}>
                                             {data ? data?.productName : 'PelangiTeknik'}
                                         </Link>
