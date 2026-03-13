@@ -8,7 +8,7 @@ export async function GET(req) {
     const pageSizeID = searchParams.get('pageSize')
 
     const page = parseInt(pageID) || 1;
-    const pageSize = pageSizeID > 5 ? 5 : parseInt(pageSizeID) || 5;
+    const pageSize = pageSizeID > 8 ? 8 : parseInt(pageSizeID) || 8;
 
     const data = await prisma.listProduct.findMany({
         // skip: (page - 1) * pageSize,
@@ -40,7 +40,8 @@ export async function GET(req) {
                     asset_id: true,
                     public_id: true,
                 }
-            }
+            },
+            fMerek: true,
         }
     })
 
