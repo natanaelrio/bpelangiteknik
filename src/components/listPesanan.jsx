@@ -15,7 +15,7 @@ import TTD from '@/components/logo/ttd';
 import toast from 'react-hot-toast';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { DeleteDataPesanan, GetDataPesanan } from '@/service/handleGetDataPesanan';
+import { DeleteDataPesanan, GetDataPesanan, RetrieveDataPesanan } from '@/service/handleGetDataPesanan';
 import Image from 'next/image';
 import { FaShippingFast } from "react-icons/fa";
 export default function ListPesanan({ session, data, month, year, payment }) {
@@ -370,6 +370,16 @@ export default function ListPesanan({ session, data, month, year, payment }) {
         setDeletePesanan(false);
         router.refresh();
     };
+    const HandleRetrieveOrder = async (e) => {
+        console.log(e);
+
+        const confirmRetrieve = confirm("Yakin ingin mengambil kembali pesanan ini?");
+        if (!confirmRetrieve) return; // kalau user batal, stop fungsi
+        setDeletePesanan(true);
+        await RetrieveDataPesanan(e);
+        setDeletePesanan(false);
+        router.refresh();
+    };
 
     return (
         <>
@@ -696,7 +706,14 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                                 </div>
                                                             ))}
                                                         </td>
-                                                        {UserSPV && <td><button disabled={deletePesanan} onClick={() => HandleDeleteOrder(pesanan.id)}>{deletePesanan ? 'Loading..' : 'DELETE'}</button></td>}
+                                                        {UserSPV && <td>
+                                                            <button disabled={deletePesanan} onClick={() => HandleDeleteOrder(pesanan.id)}>{deletePesanan ? 'Loading..' : 'DELETE'}</button>
+                                                            <br />
+                                                            <br />
+                                                            <button disabled={deletePesanan} onClick={() => HandleRetrieveOrder(pesanan.reference)}>Retrieve - {pesanan.reference}</button>
+                                                        </td>}
+
+
                                                     </tr>
                                                 );
                                             })}

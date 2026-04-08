@@ -39,3 +39,22 @@ export async function DeleteDataPesanan(id) {
 
     revalidatePath('/')
 }
+export async function RetrieveDataPesanan(id) {
+    try {
+        const res = await fetch(`https://open-api.paper.id/api/v1/payment/request/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'client_id': `${process.env.SERVER_CLIENTID_PAPERID}`,
+                'client_secret': `${process.env.SERVER_SECRETID_PAPERID}`
+            },
+            next: { revalidate: 0 },
+        })
+
+        return res.json()
+    } catch (error) {
+        console.error(error)
+    }
+
+    revalidatePath('/')
+}
