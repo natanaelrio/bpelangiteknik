@@ -172,33 +172,34 @@ export default function ListProductNew({ session, query, dataKategori }) {
     const AddFormPenawaran = (data) => {
         setIsPenawaran(true);
 
-        // ambil data lama
         const existing = JSON.parse(
             localStorage.getItem('DataPenawaran') || '[]'
         );
 
-        // cek id sudah ada atau belum
-        const isExist = existing.some(
+        // cek index produk
+        const index = existing.findIndex(
             (item) => item.id === data.id
         );
 
-        if (isExist) {
-            alert('Produk sudah ada di penawaran');
-            return;
+        if (index !== -1) {
+            // kalau sudah ada → tambah qty
+            existing[index].qty = (existing[index].qty || 1) + 1;
+            toast.success('Produk berhasil ditambahkan + 1');
+        } else {
+            // kalau belum ada → tambah baru + qty 1
+            existing.push({
+                ...data,
+                qty: 1
+            });
+            toast.success('Produk berhasil ditambahkan');
         }
 
-        // tambah data
-        const updated = [...existing, data];
-
-        // simpan ke localStorage
         localStorage.setItem(
             'DataPenawaran',
-            JSON.stringify(updated)
+            JSON.stringify(existing)
         );
 
-        updateTotal(); // ← realtime
-        // optional: update state
-        // setDataPenawaran(updated);
+        updateTotal();
     };
 
     const UpdatePublish = async (slug, draf) => {
@@ -413,32 +414,32 @@ export default function ListProductNew({ session, query, dataKategori }) {
                                 {
                                     // editStockId === item.id && isLoadingStockPrice ? <span>Loading...</span>
                                     //     :
-                                        editStockId === item.id ? (
-                                            <input
-                                                type="number"
-                                                className={styles.stockInput}
-                                                value={stockValue}
-                                                autoFocus
-                                                onChange={(e) => setStockValue(e.target.value)}
-                                                onBlur={() => saveStock(item)} // 👈 klik kiri = SIMPAN
-                                                onKeyDown={(e) => {
-                                                    if (e.key === 'Enter') saveStock(item)
-                                                    if (e.key === 'Escape') setEditStockId(null)
-                                                }}
-                                            />
-                                        ) : (
-                                            <span
-                                                className={`${styles.bold} ${styles.stockText}`}
-                                                style={{ cursor: 'pointer' }}
-                                                title="Klik untuk edit stok"
-                                                onClick={() => {
-                                                    setEditStockId(item.id)
-                                                    setStockValue(item.stockProduct ?? 0)
-                                                }}
-                                            >
-                                                {item?.stockProduct}
-                                            </span>
-                                        )}
+                                    editStockId === item.id ? (
+                                        <input
+                                            type="number"
+                                            className={styles.stockInput}
+                                            value={stockValue}
+                                            autoFocus
+                                            onChange={(e) => setStockValue(e.target.value)}
+                                            onBlur={() => saveStock(item)} // 👈 klik kiri = SIMPAN
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') saveStock(item)
+                                                if (e.key === 'Escape') setEditStockId(null)
+                                            }}
+                                        />
+                                    ) : (
+                                        <span
+                                            className={`${styles.bold} ${styles.stockText}`}
+                                            style={{ cursor: 'pointer' }}
+                                            title="Klik untuk edit stok"
+                                            onClick={() => {
+                                                setEditStockId(item.id)
+                                                setStockValue(item.stockProduct ?? 0)
+                                            }}
+                                        >
+                                            {item?.stockProduct}
+                                        </span>
+                                    )}
                             </div>
 
                             {/* ====== HARGA ====== */}

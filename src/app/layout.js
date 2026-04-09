@@ -28,6 +28,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <GoogleAnalytics gaId="G-7TXR2L5D2J" />
         <Toaster
+          position="top-right"
           toastOptions={{
             style: {
               fontSize: '0.6rem'

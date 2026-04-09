@@ -36,6 +36,8 @@ a.c 588.5062.609`
         }
     ];
 
+    console.log(dataPenawaran);
+
     const defaultNotes = [
         "Garansi servise 1 tahun",
         "Harga Include ppn",
@@ -52,16 +54,17 @@ a.c 588.5062.609`
     const [selectedBank, setSelectedBank] = useState(null);
     const [newNote, setNewNote] = useState('');
     const [notes, setNotes] = useState(defaultNotes);
+    const [errorMsg, setErrorMsg] = useState("");
 
     // Hitung total harga satuan & total keseluruhan
     const totalHargaSatuan = dataPenawaran.reduce((acc, item) => acc + Number(item.productPriceFinal), 0);
-    const totalKeseluruhan = dataPenawaran.reduce((acc, item) => acc + (Number(item.productPriceFinal) * Number(item.qty)), 0);
-    const totalQty = dataPenawaran.reduce((acc, item) => acc + (Number(item.qty)), 0);
+    const totalKeseluruhan = dataPenawaran.reduce((acc, item) => acc + (Number(item.productPriceFinal) * Number(item.qty || 1)), 0);
+    const totalQty = dataPenawaran.reduce((acc, item) => acc + (Number(item.qty || 1)), 0);
 
     const updateQty = (index, value) => {
         if (value < 1) return;
         const updated = [...dataPenawaran];
-        updated[index] = { ...updated[index], qty: value };
+        updated[index] = { ...updated[index], qty: value || 1 };
         setDataPenawaran(updated);
     };
 
@@ -102,6 +105,26 @@ a.c 588.5062.609`
 
 
     const handleSubmitPenawaran = async () => {
+
+        setErrorMsg("");
+
+        // Validasi input kosong
+        if (!customerName || customerName.trim() === "") {
+            setErrorMsg("Nama customer tidak boleh kosong.");
+            return;
+        }
+        if (!nameSales) {
+            setErrorMsg("Silakan pilih sales terlebih dahulu.");
+            return;
+        }
+        if (!selectedBank) {
+            setErrorMsg("Silakan pilih rekening pembayaran.");
+            return;
+        }
+        if (dataPenawaran.length === 0) {
+            setErrorMsg("List penawaran belum ada. Tambahkan minimal 1 item.");
+            return;
+        }
         try {
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
@@ -313,6 +336,34 @@ a.c 588.5062.609`
         }
     };
 
+    const [manualName, setManualName] = useState('');
+    const [manualQty, setManualQty] = useState(1);
+    const [manualPrice, setManualPrice] = useState('');
+    const addManualItem = () => {
+        if (!manualName.trim()) {
+            alert('Nama produk tidak boleh kosong');
+            return;
+        }
+        if (!manualPrice || Number(manualPrice) <= 0) {
+            alert('Harga harus diisi');
+            return;
+        }
+
+        const newItem = {
+            productName: manualName,
+            qty: Number(manualQty) || 1,
+            productPriceFinal: Number(manualPrice),
+            spekNew: []
+        };
+
+        const updated = [...dataPenawaran, newItem];
+        setDataPenawaran(updated);
+
+        // reset input
+        setManualName('');
+        setManualQty(1);
+        setManualPrice('');
+    };
 
     return (
         <>
@@ -333,17 +384,28 @@ a.c 588.5062.609`
                    CUSTOMER & SALES
                 ===================== */}
                     <div className={styles.formGroup}>
-                        <label>Nama Customer</label>
+                        <label>Nama Customer <span style={{ color: 'red' }}>*</span></label>
                         <input
                             value={customerName}
-                            onChange={(e) => setCustomerName(e.target.value)}
+                            onChange={(e) => {
+                                setCustomerName(e.target.value);
+                                setErrorMsg(""); // Hapus pesan error saat mulai mengetik
+                            }}
                             placeholder="Nama customer"
+                            className={!customerName && errorMsg ? styles.inputError : ''}
                         />
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label>Sales</label>
-                        <select onChange={handleContactChange} defaultValue="">
+                        <label>Sales <span style={{ color: 'red' }}>*</span></label>
+                        <select
+                            onChange={(e) => {
+                                handleContactChange(e);
+                                setErrorMsg(""); // Hapus pesan error saat memilih
+                            }}
+                            defaultValue=""
+                            className={!nameSales && errorMsg ? styles.inputError : ''}
+                        >
                             <option value="" disabled>Pilih sales</option>
                             {phoneNumbers.map((item, i) => (
                                 <option key={i} value={item.sales}>
@@ -364,12 +426,14 @@ a.c 588.5062.609`
                    BANK LIST
                 ===================== */}
                     <div className={styles.formGroup}>
-                        <label>Rekening Pembayaran</label>
+                        <label>Rekening Pembayaran <span style={{ color: 'red' }}>*</span></label>
                         <select
-                            onChange={(e) =>
-                                setSelectedBank(bankList[e.target.value])
-                            }
+                            onChange={(e) => {
+                                setSelectedBank(bankList[e.target.value]);
+                                setErrorMsg(""); // Hapus pesan error saat memilih
+                            }}
                             defaultValue=""
+                            className={!selectedBank && errorMsg ? styles.inputError : ''}
                         >
                             <option value="" disabled>
                                 Pilih rekening
@@ -417,6 +481,36 @@ a.c 588.5062.609`
                         </div>
                     ))}
 
+                    <div className={styles.manualBox}>
+                        <h4>Tambah Manual</h4>
+
+                        <input
+                            placeholder="Nama Produk"
+                            value={manualName}
+                            onChange={(e) => setManualName(e.target.value)}
+                        />
+
+                        <div className={styles.row}>
+                            <input
+                                type="number"
+                                placeholder="Qty"
+                                min="1"
+                                value={manualQty}
+                                onChange={(e) => setManualQty(Number(e.target.value))}
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Harga"
+                                value={manualPrice}
+                                onChange={(e) => setManualPrice(e.target.value)}
+                            />
+                        </div>
+
+                        <button onClick={addManualItem}>Tambah Produk</button>
+                    </div>
+
+
                     {/* =====================
                    NOTES
                 ===================== */}
@@ -444,12 +538,20 @@ a.c 588.5062.609`
                             <button onClick={addNote}>+</button>
                         </div>
 
+                        {/* PESAN ERROR DITAMPILKAN DI SINI */}
+                        {errorMsg && (
+                            <div style={{ color: "red", marginTop: "15px", fontSize: "14px", fontWeight: "bold", textAlign: "center" }}>
+                                {errorMsg}
+                            </div>
+                        )}
+
                         {/* =====================
-    SUBMIT
-===================== */}
+                        SUBMIT
+                        ===================== */}
                         <button
                             className={styles.submitBtn}
                             onClick={handleSubmitPenawaran}
+                            style={{ marginTop: errorMsg ? "10px" : "20px" }} // Menyesuaikan jarak jika error muncul
                         >
                             Buat Penawaran
                         </button>
@@ -457,6 +559,6 @@ a.c 588.5062.609`
                 </div>
             </div>
         </>
-
     );
+
 }

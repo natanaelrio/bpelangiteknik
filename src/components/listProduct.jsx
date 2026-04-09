@@ -247,7 +247,6 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
             setLoading(false)
             setIsPenawaran()
         }
-
     }
 
     const HandleFillter = async (id, e) => {
