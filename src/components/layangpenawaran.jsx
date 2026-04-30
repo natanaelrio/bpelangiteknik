@@ -16,6 +16,7 @@ export default function Layangpenawaran({ dataPenawaran, setDataPenawaran }) {
     const logoBase64 = LogoAtas()
     const logoTTD = TTD()
     const phoneNumbers = GetRandomPhoneNumber();
+    const setLayangPenawaran = useCon((state) => state.setLayangPenawaran)
 
     const bankList = [
         {
@@ -36,25 +37,26 @@ a.c 588.5062.609`
         }
     ];
 
-    console.log(dataPenawaran);
 
-    const defaultNotes = [
+    const getDefaultNotes = (isPT) => [
         "Garansi servise 1 tahun",
-        "Harga Include ppn",
+        isPT ? "Harga Include ppn" : "Harga Exclude ppn",
         "Pembayaran cash before shipping",
         "Franco Jabodetabek",
         "Surat penawaran berlaku selama 3 (Tiga) minggu sejak surat penawaran di buat."
     ];
 
-    const setTotalPenawaran = useCon((state) => state.setTotalPenawaran)
-    const setLayangPenawaran = useCon((state) => state.setLayangPenawaran)
+    const [notes, setNotes] = useState(getDefaultNotes(true));
+    const [errorMsg, setErrorMsg] = useState("");
     const [customerName, setCustomerName] = useState('');
+    const [PICcustomerName, PICsetCustomerName] = useState('');
+    const [showPIC, setShowPIC] = useState(false);
     const [nameSales, setNameSales] = useState('');
     const [numberSales, setNumberSales] = useState('');
     const [selectedBank, setSelectedBank] = useState(null);
     const [newNote, setNewNote] = useState('');
-    const [notes, setNotes] = useState(defaultNotes);
-    const [errorMsg, setErrorMsg] = useState("");
+    const [includePPN, setIncludePPN] = useState(true);
+    const [manualPPN, setManualPPN] = useState(false);
 
     // Hitung total harga satuan & total keseluruhan
     const totalHargaSatuan = dataPenawaran.reduce((acc, item) => acc + Number(item.productPriceFinal), 0);
@@ -66,6 +68,11 @@ a.c 588.5062.609`
         const updated = [...dataPenawaran];
         updated[index] = { ...updated[index], qty: value || 1 };
         setDataPenawaran(updated);
+    };
+
+    const togglePPN = (checked) => {
+        setIncludePPN(checked);
+        setNotes(getDefaultNotes(checked));
     };
 
     const handleContactChange = (e) => {
@@ -163,6 +170,7 @@ a.c 588.5062.609`
                     { text: '\n' },
                     { text: 'Kepada Yth,', style: 'Blode' },
                     { text: `${customerName}`, style: 'Blode' },
+                    ...(PICcustomerName ? [{ text: `PIC: ${PICcustomerName}`, style: 'Blode' }] : []),
                     { text: '\n' },
                     { text: `Perihal       : Surat Penawaran`, style: 'Blode' },
                     { text: '\n' },
@@ -225,10 +233,54 @@ a.c 588.5062.609`
                                 [
                                     { text: totalQty, style: "tableHeader", alignment: 'center' },
                                     { text: "", style: "tableHeader" },
-                                    { text: FormatRupiah(totalHargaSatuan), style: "tableHeader" },
-                                    { text: FormatRupiah(totalKeseluruhan), style: "tableHeader" },
-
+                                    { text: "", style: "tableHeader" },
+                                    { text: "", style: "tableHeader" },
                                 ],
+                                ...(includePPN
+                                    ? [
+                                        [
+                                            {
+                                                text: "",
+                                                colSpan: 2,
+                                                border: [false, false, false, false]
+                                            },
+                                            {},
+                                            { text: 'SUBTOTAL', style: "tableHeader" },
+                                            { text: FormatRupiah(totalKeseluruhan), style: "tableHeader" },
+                                        ],
+                                        [
+                                            {
+                                                text: "",
+                                                colSpan: 2,
+                                                border: [false, false, false, false]
+                                            },
+                                            {},
+                                            { text: 'TAX (11%)', style: "tableHeader" },
+                                            { text: FormatRupiah((totalKeseluruhan * 11) / 100), style: "tableHeader" },
+                                        ],
+                                        [
+                                            {
+                                                text: "",
+                                                colSpan: 2,
+                                                border: [false, false, false, false]
+                                            },
+                                            {},
+                                            { text: 'GRANDTOTAL', style: "tableHeader" },
+                                            { text: FormatRupiah(totalKeseluruhan + (totalKeseluruhan * 11) / 100), style: "tableHeader" },
+                                        ]
+                                    ]
+                                    : [
+                                        [
+                                            {
+                                                text: "",
+                                                colSpan: 2,
+                                                border: [false, false, false, false]
+                                            },
+                                            {},
+                                            { text: 'GRANDTOTAL', style: "tableHeader" },
+                                            { text: FormatRupiah(totalKeseluruhan), style: "tableHeader" },
+                                        ]
+                                    ])
                             ]
                         }, layout: {
                             hLineWidth: () => 0.5,
@@ -353,6 +405,7 @@ a.c 588.5062.609`
             productName: manualName,
             qty: Number(manualQty) || 1,
             productPriceFinal: Number(manualPrice),
+            includePPN: manualPPN,
             spekNew: []
         };
 
@@ -369,7 +422,8 @@ a.c 588.5062.609`
         <>
             <div className={styles.layarpenawarankeluar}
                 onClick={() => setLayangPenawaran(false)}
-            ></div>
+            >
+            </div>
             <div className={styles.overlay}>
                 <div className={styles.layangPenawaran}>
                     <button
@@ -382,7 +436,7 @@ a.c 588.5062.609`
 
                     {/* =====================
                    CUSTOMER & SALES
-                ===================== */}
+                     ===================== */}
                     <div className={styles.formGroup}>
                         <label>Nama Customer <span style={{ color: 'red' }}>*</span></label>
                         <input
@@ -391,10 +445,32 @@ a.c 588.5062.609`
                                 setCustomerName(e.target.value);
                                 setErrorMsg(""); // Hapus pesan error saat mulai mengetik
                             }}
-                            placeholder="Nama customer"
+                            placeholder="Ex: Mbah Ridwan / PT RIDWAN SEJAHTERA"
                             className={!customerName && errorMsg ? styles.inputError : ''}
                         />
                     </div>
+
+                    <label className={styles.ppnToggle}>
+                        <input
+                            type="checkbox"
+                            checked={showPIC}
+                            onChange={(e) => setShowPIC(e.target.checked)}
+                        />
+                        <span>Tambah PIC (Opsional)</span>
+                    </label>
+
+                    {showPIC && (
+                        <div className={styles.formGroup}>
+                            <label>PIC (opsional)</label>
+                            <input
+                                value={PICcustomerName}
+                                onChange={(e) => {
+                                    PICsetCustomerName(e.target.value);
+                                }}
+                                placeholder="Ex: Mbah Ridwan"
+                            />
+                        </div>
+                    )}
 
                     <div className={styles.formGroup}>
                         <label>Sales <span style={{ color: 'red' }}>*</span></label>
@@ -424,13 +500,16 @@ a.c 588.5062.609`
 
                     {/* =====================
                    BANK LIST
-                ===================== */}
+                    ===================== */}
                     <div className={styles.formGroup}>
                         <label>Rekening Pembayaran <span style={{ color: 'red' }}>*</span></label>
                         <select
                             onChange={(e) => {
-                                setSelectedBank(bankList[e.target.value]);
-                                setErrorMsg(""); // Hapus pesan error saat memilih
+                                const selectedIndex = Number(e.target.value);
+                                if (isNaN(selectedIndex)) return;
+                                setSelectedBank(bankList[selectedIndex]);
+                                setIncludePPN(selectedIndex === 0);
+                                setErrorMsg("");
                             }}
                             defaultValue=""
                             className={!selectedBank && errorMsg ? styles.inputError : ''}
@@ -447,17 +526,30 @@ a.c 588.5062.609`
                     </div>
 
                     {selectedBank && (
-                        <pre className={styles.bankDetail}>
-                            {selectedBank.detail}
-                        </pre>
+                        <>
+                            <pre className={styles.bankDetail}>
+                                {selectedBank.detail}
+                            </pre>
+                            <label className={styles.ppnToggle}>
+                                <input
+                                    type="checkbox"
+                                    checked={includePPN}
+                                    onChange={(e) => togglePPN(e.target.checked)}
+                                />
+                                <span>Harga Include PPN</span>
+                            </label>
+                        </>
                     )}
 
                     {/* =====================
                    LIST PENAWARAN
-                ===================== */}
+                     ===================== */}
                     {dataPenawaran.map((item, index) => (
                         <div key={index} className={styles.penawaranItem}>
-                            <span className={styles.nama}>{item.productName}</span>
+                            <div className={styles.penawaranItemLeft}>
+                                <span className={styles.nama}>{item.productName}</span>
+                                <span className={styles.priceFinal}>{FormatRupiah(item.productPriceFinal)}</span>
+                            </div>
                             <div className={styles.qtyControl}>
                                 <button onClick={() => updateQty(index, item.qty - 1)}>−</button>
                                 <input
@@ -469,7 +561,6 @@ a.c 588.5062.609`
                                     }
                                 />
                                 <button onClick={() => updateQty(index, item.qty + 1)}>+</button>
-                                {/* HAPUS */}
                                 <button
                                     onClick={() => removePenawaran(index)}
                                     className={styles.deleteBtn}
@@ -507,13 +598,22 @@ a.c 588.5062.609`
                             />
                         </div>
 
+                        <label className={styles.ppnToggle}>
+                            <input
+                                type="checkbox"
+                                checked={manualPPN}
+                                onChange={(e) => setManualPPN(e.target.checked)}
+                            />
+                            <span>Include PPN</span>
+                        </label>
+
                         <button onClick={addManualItem}>Tambah Produk</button>
                     </div>
 
 
                     {/* =====================
                    NOTES
-                ===================== */}
+                      ===================== */}
                     <div className={styles.notesBox}>
                         <h4>Catatan</h4>
                         {notes.map((note, index) => (
@@ -560,5 +660,4 @@ a.c 588.5062.609`
             </div>
         </>
     );
-
 }
