@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import toast from 'react-hot-totoast'
+import toast from 'react-hot-toast'
 
 // Icons
 import { MdHome, MdOutlineSimCardDownload, MdDeleteOutline, MdLibraryAdd, FaBorderAll, MdOutlineLocalOffer, IoIosArrowDropright } from 'react-icons/md'
