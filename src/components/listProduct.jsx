@@ -1,53 +1,332 @@
 'use client'
 
-import styles from '@/components/listProduct.module.css'
-import { useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { FormatRupiah } from '@/utils/formatRupiah';
+import { useEffect, useState, useCallback, useMemo } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import dynamic from 'next/dynamic'
+import toast from 'react-hot-totoast'
+
+// Icons
+import { MdHome, MdOutlineSimCardDownload, MdDeleteOutline, MdLibraryAdd, FaBorderAll, MdOutlineLocalOffer, IoIosArrowDropright } from 'react-icons/md'
+
+// Utils & Services
+import { FormatRupiah } from '@/utils/formatRupiah'
+import { TimeConverter } from '@/utils/formatMoment'
+import { handleDetailProduct } from '@/service/handleDetailProduct'
 import { HandleDraf } from '@/service/handleDraf'
-import { MdHome } from "react-icons/md";
-import { MdOutlineSimCardDownload } from "react-icons/md";
-import { IoIosArrowDropright } from "react-icons/io";
-import { MdDeleteOutline } from "react-icons/md";
-import { MdLibraryAdd } from "react-icons/md";
-import { FaBorderAll } from "react-icons/fa";
-import { MdOutlineLocalOffer } from "react-icons/md";
-import { useCon } from '@/zustand/useCon';
-import toast from 'react-hot-toast';
-import Logout from '@/components/logout';
-import Penawaran from '@/components/penawaran';
-import LoadingList from '@/components/skleton/skletonList';
-import { handleDetailProduct } from '@/service/handleDetailProduct';
-import { HandleDrafArtikel } from '@/service/artikel/handleDraf';
-import { HandleDetailArtikel } from '@/service/artikel/handleDetail';
-import { HandleDeleteArtikel } from '@/service/artikel/handleDelete';
-import { HandleDeleteProduct } from '@/service/handleDeleteProduct';
-import { useSearchParams } from 'next/navigation'
-import { GetListProduct, GetFilterProduct, GetProduct } from "@/service/n";
+import { HandleDrafArtikel } from '@/service/artikel/handleDraf'
+import { HandleDetailArtikel } from '@/service/artikel/handleDetail'
+import { HandleDeleteArtikel } from '@/service/artikel/handleDelete'
+import { HandleDeleteProduct } from '@/service/handleDeleteProduct'
+import { GetListProduct, GetFilterProduct, GetProduct } from '@/service/n'
 
-import dynamic from 'next/dynamic';
-import { TimeConverter } from '@/utils/formatMoment';
+// Components
+import { useCon } from '@/zustand/useCon'
+import Logout from '@/components/logout'
+import Penawaran from '@/components/penawaran'
+import LoadingList from '@/components/skleton/skletonList'
 
+import styles from '@/components/listProduct.module.css'
+
+// Dynamic imports
 const FormInput = dynamic(() => import('@/components/FormInput'), {
-    loading: () => <p>Loading Form...</p>, // Optional: loading state while the component is being loaded
-    ssr: false // Disable server-side rendering for this component
-});
+    loading: () => <p>Loading Form...</p>,
+    ssr: false
+})
 
+// Constants
+const SALES_NAMES = {
+    'sales01': 'alma',
+    'sales02': 'sifa',
+    'sales03': 'ina',
+    'sales05': 'dhita'
+}
 
+const ADMIN_EMAIL = 'rio@pelangiteknik.com'
+
+// ================================
+// Product Card Component
+// ================================
+function ProductCard({ data, userSPV, onUpdatePublish, onDelete, onGetDetail, onPenawaran }) {
+    return (
+        <article className={styles.kotak}>
+            <header className={styles.indiatas}>
+                <div className={styles.username}>
+                    <strong>
+                        {data.username} - {SALES_NAMES[data.username] || data.username}
+                    </strong>
+                    <time dateTime={data?.start}>{TimeConverter(data?.start)}</time>
+                </div>
+                <div className={styles.switchdelete}>
+                    <label className={styles.switch}>
+                        <input
+                            type="checkbox"
+                            checked={!data?.saveDraf}
+                            onChange={() => onUpdatePublish(data?.slugProduct, !data?.saveDraf)}
+                        />
+                        <span className={styles.slider}></span>
+                    </label>
+                    {userSPV && (
+                        <button
+                            onClick={() => onDelete(data?.id, data?.slugProduct)}
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                color: 'var(--colormain)',
+                                padding: 0,
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                            title="Delete Product"
+                        >
+                            <MdDeleteOutline size={30} />
+                        </button>
+                    )}
+                </div>
+            </header>
+
+            <div onClick={() => onGetDetail(data?.slugProduct)} style={{ cursor: 'pointer' }}>
+                <a href={`/product/${data?.slugProduct}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <figure>
+                        <div className={styles.gambarbawah}>
+                            <Image
+                                src={data?.imageProductUtama?.secure_url}
+                                alt={data?.productName}
+                                width={250}
+                                height={250}
+                                style={{ objectFit: 'cover' }}
+                            />
+                        </div>
+                    </figure>
+
+                    <div className={styles.detailproduct}>
+                        <div className={styles.plt}>
+                            <span>Dimensi: </span>
+                            {data?.lengthProduct || data?.widthProduct || data?.heightProduct
+                                ? `${data?.lengthProduct}cm x ${data?.widthProduct}cm x ${data?.heightProduct}cm`
+                                : <span style={{ color: 'red' }}>Belum Ada Dimensi</span>
+                            }
+                        </div>
+                        <div className={styles.berat}>
+                            <span>Berat:</span> {data?.weightProduct}kg
+                        </div>
+                    </div>
+
+                    <div className={styles.name}>
+                        {data?.fMerek?.map((brand, idx) => (
+                            <div key={idx} className={styles.merek}>
+                                {brand?.name || 'Belum ada Merek'}
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.name}>
+                        {data?.productName}
+                    </div>
+
+                    <div className={styles.price}>
+                        {FormatRupiah(Number(data?.productPriceFinal))}
+                    </div>
+                </a>
+            </div>
+
+            <footer className={styles.bawahdetail}>
+                <button className={styles.penawaran} onClick={() => onPenawaran(data)}>
+                    <MdOutlineSimCardDownload />
+                    <span>&nbsp;Surat Penawaran</span>
+                </button>
+
+                <button className={styles.penawaran} onClick={() => onGetDetail(data?.slugProduct)}>
+                    Edit Product
+                </button>
+            </footer>
+        </article>
+    )
+}
+
+// ================================
+// Load More Button Component
+// ================================
+function LoadMoreButton({ onClick, loading, isTop = false }) {
+    return (
+        <div className={styles.kotak} onClick={onClick}>
+            <div className={styles.loadmore}>
+                <div style={{ transform: isTop ? 'rotate(-95deg)' : 'rotate(0)' }}>
+                    <IoIosArrowDropright size={40} />
+                </div>
+                <div>
+                    {loading ? 'Loading...' : isTop ? 'Kembali Ke atas' : 'Load More'}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+// ================================
+// Loading Overlay Component
+// ================================
+function LoadingOverlay({ loading }) {
+    if (!loading) return null
+    
+    return (
+        <div className={styles.loading}>
+            <div className={styles.kotak}>
+                LOADING...
+            </div>
+            <div className={styles.kotakmelayang}></div>
+        </div>
+    )
+}
+
+// ================================
+// Update Modal Component
+// ================================
+function UpdateModal({ layang, loading, setLayang, data, dataKategori, text }) {
+    if (!layang || loading) return null
+
+    return (
+        <>
+            <div className={styles.bghitam} onClick={() => setLayang()}></div>
+            <div className={styles.containerupdate}>
+                <FormInput
+                    kondisi={true}
+                    data={data}
+                    text={text}
+                    dataKategori={dataKategori} />
+            </div>
+        </>
+    )
+}
+
+// ================================
+// Navigation Bar Component
+// ================================
+function NavigationBar({ session, onSetLoading }) {
+    const isAdmin = session?.user?.email === ADMIN_EMAIL
+
+    return (
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1 }}>
+            <Link href={'/'} className={styles.judul}>
+                <MdHome size={30} />
+                <span>PelangiTeknik</span>
+            </Link>
+
+            <div style={{ display: 'flex', gap: '0.5rem', marginLeft: 'auto' }}>
+                <Link href={'/order'} onClick={() => onSetLoading(true)}>
+                    <button className={styles.searchP}>
+                        <FaBorderAll style={{ marginRight: '6px' }} />
+                        Orders
+                    </button>
+                </Link>
+
+                <Link href={'/penawaran'} onClick={() => onSetLoading(true)}>
+                    <button className={styles.searchP}>
+                        <MdOutlineLocalOffer style={{ marginRight: '6px' }} />
+                        Penawaran
+                    </button>
+                </Link>
+
+                <Link href={'/post'} onClick={() => onSetLoading(true)}>
+                    <button className={styles.searchP}>
+                        <MdLibraryAdd style={{ marginRight: '6px' }} />
+                        + Product
+                    </button>
+                </Link>
+
+                {isAdmin && (
+                    <Link href={'/postartikel'} onClick={() => onSetLoading(true)}>
+                        <button className={styles.searchP}>
+                            <MdLibraryAdd style={{ marginRight: '6px' }} />
+                            +Artikel
+                        </button>
+                    </Link>
+                )}
+            </div>
+        </nav>
+    )
+}
+
+// ================================
+// Search Bar Component
+// ================================
+function SearchBar({ search, onSearchChange, onSubmit, onLogout }) {
+    return (
+        <div className={styles.ataskanan}>
+            <div className={styles.search}>
+                <form onSubmit={onSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        onChange={(e) => onSearchChange(e.target.value)}
+                        value={search}
+                    />
+                    <button className={styles.searchB} type="submit">Search</button>
+                </form>
+            </div>
+            <span onClick={onLogout}>
+                <Logout />
+            </span>
+        </div>
+    )
+}
+
+// ================================
+// Articles Table Component
+// ================================
+function ArticlesTable({ articles, onUpdatePublish, onDelete, onGetDetail }) {
+    if (!articles?.length) return null
+
+    return (
+        <table className={styles.producttable}>
+            <thead>
+                <tr>
+                    <th>Judul Artikel</th>
+                    <th>Publish</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {articles.map((artikel, index) => (
+                    <tr key={index}>
+                        <td onClick={() => onGetDetail(artikel?.slug)}>
+                            {artikel?.title}
+                        </td>
+                        <td style={{ width: '100px' }}>
+                            <label className={styles.switch}>
+                                <input
+                                    type="checkbox"
+                                    checked={!artikel?.saveDraf}
+                                    onChange={() => onUpdatePublish(artikel?.slug, !artikel?.saveDraf)}
+                                />
+                                <span className={styles.slider}></span>
+                            </label>
+                        </td>
+                        <td style={{ width: '50px', cursor: 'pointer', color: 'var(--colormain)' }} onClick={() => onDelete(artikel?.id)}>
+                            <MdDeleteOutline size={30} />
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    )
+}
+
+// ================================
+// Main Component
+// ================================
 export default function ListProduct({ session, dataList, query, dataKategori, dataArtikel, dataKategoriArtikel, dataTagsArtikel }) {
-
-    // console.log('ARTIKELLL', dataArtikel);
-    const UserSPV = session?.user?.email === 'rio@pelangiteknik.com'
+    // Router & Navigation
     const pathname = usePathname()
     const router = useRouter()
-    const KondisiPencarian = pathname.startsWith('/s/')
     const searchParams = useSearchParams()
+    const KondisiPencarian = pathname.startsWith('/s/')
     const m = searchParams.get('m')
 
+    // User check
+    const isAdmin = session?.user?.email === ADMIN_EMAIL
+
+    // Zustand store
     const setLayang = useCon((state) => state.setLayang)
     const layang = useCon((state) => state.layang)
     const setLayangArtikel = useCon((state) => state.setLayangArtikel)
@@ -57,45 +336,40 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
     const setDataPenawaran = useCon((state) => state.setDataPenawaran)
     const DataPenawaran = useCon((state) => state.DataPenawaran)
 
-
+    // Local state
     const [dataProduct, setDataProduct] = useState([])
-    const [dataFilterMerek, setDataFilterMerek] = useState([])
     const [take, setTake] = useState(1)
     const [totalMaxProduct, setTotalMaxProduct] = useState(null)
     const [totalProduct, setTotalProduct] = useState(null)
-
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState(null)
     const [dataArtikelUpdate, setDataArtikelUpdate] = useState(null)
     const [search, setSearch] = useState(query)
     const [dataSlugUpdatePublish, setDataAtaSlugUpdatePublish] = useState(null)
     const [dataSlugProduct, setDataSlugProduct] = useState(null)
-    const [kategori, setKategori] = useState(true)
 
+    // ================================
+    // Data Fetching
+    // ================================
     useEffect(() => {
-        try {
-            // const fetchDataFilter = async () => {
-            //     const res = await GetFilterProduct()
-            //     setDataFilterMerek(res)
-            // }
-            // fetchDataFilter()
-
-            const fetchDataShop = async () => {
+        const fetchDataShop = async () => {
+            try {
                 const res = await GetListProduct(take, 7, m, query)
                 setLoading(false)
                 setTotalMaxProduct(res?.totalMaxProduct)
                 setTotalProduct(res?.totalProduct)
                 setDataProduct(res?.data)
+            } catch (e) {
+                console.log(e)
             }
-            fetchDataShop()
         }
-        catch (e) {
-            console.log(e)
-        }
+        fetchDataShop()
     }, [take, m, search, dataSlugUpdatePublish, dataSlugProduct])
 
-
-    const GetDetailProduct = async (id) => {
+    // ================================
+    // Handlers
+    // ================================
+    const GetDetailProduct = useCallback(async (id) => {
         setLoading(true)
         try {
             setLayang()
@@ -104,10 +378,11 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
             setLoading(false)
         } catch {
             setLoading(false)
-            toast.error(`Error Internet`);
+            toast.error(`Error Internet`)
         }
-    }
-    const GetDetailProductArtikel = async (id) => {
+    }, [setLayang])
+
+    const GetDetailProductArtikel = useCallback(async (id) => {
         setLoading(true)
         try {
             setLayangArtikel()
@@ -116,11 +391,11 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
             setLoading(false)
         } catch {
             setLoading(false)
-            toast.error(`Error Internet`);
+            toast.error(`Error Internet`)
         }
-    }
+    }, [setLayangArtikel])
 
-    const UpdatePublish = async (slug, draf) => {
+    const UpdatePublish = useCallback(async (slug, draf) => {
         setLoading(true)
         try {
             await HandleDraf(slug, draf)
@@ -129,11 +404,11 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
             toast.success('Successfully!')
         } catch {
             setLoading(false)
-            toast.error(`Error Internet`);
+            toast.error(`Error Internet`)
         }
+    }, [])
 
-    }
-    const UpdatePublishArtikel = async (slug, draf) => {
+    const UpdatePublishArtikel = useCallback(async (slug, draf) => {
         setLoading(true)
         try {
             await HandleDrafArtikel(slug, draf)
@@ -141,395 +416,189 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
             toast.success('Successfully!')
         } catch {
             setLoading(false)
-            toast.error(`Error Internet`);
+            toast.error(`Error Internet`)
         }
         router.refresh()
-    }
+    }, [router])
 
-    const handleSearch = (e) => {
+    const handleSearch = useCallback((e) => {
         e.preventDefault()
         setLoading(true)
         router.push(`/s/${search}`, { scroll: false })
-        // localStorage.setItem('searchLocal', search)
-    }
+    }, [router, search])
 
-    const HandleDeleteProducts = async (e, slug) => {
-        if (confirm('Apakah yakin hapus?')) {
-            // Save it!
-            setLoading(true)
-            try {
-                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ids: {
-                            product: `product:${slug || 'abcdefghijklmnopzrefekekwkwk'}`,
-                        },
-                    }),
-                });
-                await HandleDeleteProduct(e)
-                setLoading(false)
-                setDataSlugProduct(e)
-                toast.success('Successfully!')
-            } catch {
-                setLoading(false)
-                toast.error(`Error Internet`);
-            }
-        } else {
-            // Do nothing!
-            console.log('Thing was not saved to the database.');
-        }
-    }
-
-    const HandleDeleteArtikels = async (e) => {
-        if (confirm('Apakah yakin hapus?')) {
-            // Save it!
-            setLoading(true)
-            try {
-                await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ids: {
-                            blogMeta: `blogMeta:${slug || 'abcdefghijklmnopzrefekekwkwk'}`,
-                            blog: `blog:${slug || 'abcdefghijklmnopzrefekekwkwk'}`,
-                        },
-                    }),
-                });
-                await HandleDeleteArtikel(e)
-                setLoading(false)
-            } catch {
-                setLoading(false)
-                toast.error(`Error Internet`);
-            }
+    const HandleDeleteProducts = useCallback(async (id, slug) => {
+        if (!confirm('Apakah yakin hapus?')) return
+        
+        setLoading(true)
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ids: { product: `product:${slug || 'abcdefghijklmnopzrefekekwkwk'}` },
+                }),
+            })
+            await HandleDeleteProduct(slug)
+            setLoading(false)
+            setDataSlugProduct(slug)
             toast.success('Successfully!')
-        } else {
-            // Do nothing!
-            console.log('Thing was not saved to the database.');
+        } catch {
+            setLoading(false)
+            toast.error(`Error Internet`)
         }
-    }
+    }, [])
 
-    const handleKategori = () => {
-        setKategori(!kategori)
-    }
-
-
-    const HandleLoadMore = () => {
+    const HandleDeleteArtikels = useCallback(async (id) => {
+        if (!confirm('Apakah yakin hapus?')) return
+        
         setLoading(true)
-        setTake(take + 1)
-    }
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ids: {
+                        blogMeta: `blogMeta:${id || 'abcdefghijklmnopzrefekekwkwk'}`,
+                        blog: `blog:${id || 'abcdefghijklmnopzrefekekwkwk'}`,
+                    },
+                }),
+            })
+            await HandleDeleteArticle(id)
+            setLoading(false)
+            toast.success('Successfully!')
+        } catch {
+            setLoading(false)
+            toast.error(`Error Internet`)
+        }
+    }, [])
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         setLoading(true)
-    }
+    }, [])
 
-    const HandleTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
+    const HandleTop = useCallback(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [])
 
-
-    const HandlePenawaran = async (e) => {
+    const HandlePenawaran = useCallback(async (e) => {
         setLoading(true)
         try {
             const dataku = await GetProduct(e.slugProduct)
-            setDataPenawaran(dataku[0])
+            setDataPenwaan(dataku[0])
             setIsPenawaran()
             setLoading(false)
-        }
-        catch {
+        } catch {
             setLoading(false)
             setIsPenawaran()
         }
-    }
+    }, [setDataPenawaran, setIsPenwaan])
 
-    const HandleFillter = async (id, e) => {
-        pathname == '/' && router.push(`/?${id == 'idM' && `m=${e}`}`)
-        KondisiPencarian && router.push(`/s/${search}?${id == 'idM' && `m=${e}`}`)
-        // baseCategory == '/category/' && router.push(`${pathname}?${id == 'idM' && `m=${e}`}`)
-        pathname == '/shop' && router.push(`/shop?${id == 'idM' && `m=${e}`}`)
-    }
+    const HandleLoadMore = useCallback(() => {
+        setLoading(true)
+        setTake(prev => prev + 1)
+    }, [])
 
-    const HandleCloseFillter = async (id) => {
-        pathname == '/' && router.push(`/?${id == 'idM' && `m=${''}`}`)
-        KondisiPencarian && router.push(`/s/${search}?${id == 'idM' && `m=${''}`}`)
-        // baseCategory == '/category/' && router.push(`${pathname}?${id == 'idM' && `m=${''}`}`)
-        pathname == '/shop' && router.push(`/shop?${id == 'idM' && `m=${''}`}`)
-    }
-
+    // ================================
+    // Render
+    // ================================
     return (
         <>
             <div className="mobile">hanya digunakan di laptop/komputer</div>
             <div className="desktop">
-
                 <div className={styles.container}>
                     {isPenawaran && <Penawaran data={DataPenawaran} />}
+                    
                     <div className={styles.dalamcontainer}>
-                        <div className={styles.atas} style={{ zIndex: loading ? 0 : 99 }}>
-                            <Link href={'/'} className={styles.judul}><MdHome size={30} />PelangiTeknik</Link>
+                        {/* Header Section */}
+                        <header className={styles.atas} style={{ zIndex: loading ? 0 : 99 }}>
+                            <NavigationBar 
+                                session={session} 
+                                onSetLoading={setLoading} 
+                            />
+                            <SearchBar 
+                                search={search}
+                                onSearchChange={setSearch}
+                                onSubmit={handleSearch}
+                                onLogout={handleLogout}
+                            />
+                        </header>
 
-                            <Link href={'/order'} onClick={() => setLoading(true)}> <button className={styles.searchP}>Orders<FaBorderAll />
-                            </button></Link>
-
-                            <Link href={'/penawaran'} onClick={() => setLoading(true)}> <button className={styles.searchP}>Penawaran  <MdOutlineLocalOffer size={15} />
-                            </button></Link>
-
-                            <Link href={'/post'} onClick={() => setLoading(true)}> <button className={styles.searchP}>+ Product <MdLibraryAdd />
-                            </button></Link>
-                            {session?.user?.email == 'rio@pelangiteknik.com' &&
-                                <Link href={'/postartikel'} onClick={() => setLoading(true)}> <button className={styles.searchP}>+Artikel <MdLibraryAdd />
-                                </button></Link>
-                            }
-
-                            <div className={styles.ataskanan}>
-                                <div className={styles.search}>
-                                    <form onSubmit={handleSearch}>
-                                        <input
-                                            type="text"
-                                            placeholder="Search..."
-                                            onChange={(e) => setSearch(e.target.value)}
-                                            value={search}
-                                        />
-
-                                        <button className={styles.searchB} type="submit">Search</button>
-                                    </form>
-                                </div>
-                                <span onClick={handleLogout}>
-                                    <Logout />
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className={styles.bawah}>
-                            {/* {
-                                <div className={styles.filter}>
-                                    <div className={styles.dalamfilter}>
-                                        <div className={styles.judul} onClick={handleKategori}>
-                                            <div className={styles.text}>Merek</div>
-                                            <div className={styles.icon}><CiFilter /></div>
-                                        </div>
-                                        {m ?
-                                            <div className={styles.filternya}>
-                                                <div className={styles.box}>{m}</div>
-                                                <div className={styles.close} onClick={() => HandleCloseFillter('idM')}>x</div>
-                                            </div> :
-                                            kategori &&
-                                            <div className={styles.kategori}>
-                                                {dataFilterMerek?.map((data, i) => {
-                                                    if (!data?.name) return null; // Sembunyikan jika nama kosong
-                                                    return (
-                                                        <div className={styles.list} key={i} onClick={(e) => HandleFillter('idM', data?.name)}>
-                                                            <label className={styles.checkboxLabel}>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    className={styles.checkbox}
-                                                                    onChange={(e) => HandleFillter('idM', data?.name, e.target.checked)}
-                                                                />
-                                                                <span className={styles.text}>{data?.name}
-                                                                    {!KondisiPencarian && `(` + `${data._count.Merek}` + `)`}
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-
-                                        }
-                                    </div>
-                                </div>
-                            } */}
-                            <div className={styles.listproduct}>
+                        {/* Main Content */}
+                        <main className={styles.bawah}>
+                            <section className={styles.listproduct}>
                                 <div className={styles.grid}>
-                                    {dataProduct?.length ?
-                                        dataProduct?.map((data, i) => {
-                                            return (
-                                                <div key={i} className={styles.kotak}>
-                                                    <div className={styles.indiatas}>
-                                                        <div className={styles.username}>
-                                                            <b> {data.username} - {data.username == 'sales01' && 'alma'}{data.username == 'sales02' && 'sifa'}{data.username == 'sales03' && 'ina'}{data.username == 'sales05' && 'dhita'} </b>
-                                                            <br />
-                                                            {TimeConverter(data?.start)}
-                                                        </div>
-                                                        <div className={styles.switchdelete} >
-                                                            <label className={styles.switch}>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={!data?.saveDraf}
-                                                                    onChange={() => UpdatePublish(data?.slugProduct, !data?.saveDraf)}
-                                                                />
-                                                                <span className={styles.slider}></span>
-                                                            </label>
-                                                            {UserSPV && <div style={{ width: '30px', cursor: 'pointer', color: 'var(--colormain)' }} onClick={() => HandleDeleteProducts(data?.id, data?.slugProduct)}><MdDeleteOutline size={30} /></div>}
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div onClick={() => GetDetailProduct(data?.slugProduct)}>
-                                                        <div href={`/product/${data?.slugProduct}`}>
-                                                            <div className={styles.gambarbawah}>
-                                                                <Image
-                                                                    src={data?.imageProductUtama?.secure_url}
-                                                                    alt={data?.productName}
-                                                                    width={250}
-                                                                    height={250}
-                                                                >
-                                                                </Image>
-
-                                                            </div>
-                                                            <div className={styles.detailproduct}>
-                                                                <div className={styles.plt}><span>Dimensi: </span>{data?.lengthProduct || data?.widthProduct || data?.heightProduct ? data?.lengthProduct + 'cm' + ' x ' + data?.widthProduct + 'cm' + ' x ' + data?.heightProduct + 'cm' : <span style={{ color: 'red' }}>'Belum Ada Dimensi'</span>}</div>
-                                                                <div className={styles.berat}><span> Berat:</span> {data?.weightProduct}kg</div>
-                                                            </div>
-                                                            <div className={styles.name}>
-                                                                {data?.fMerek?.map((data) => {
-                                                                    return (
-                                                                        <div className={styles.merek}>
-                                                                            {data?.name ? data?.name : 'Belum ada Merek'}
-                                                                        </div>
-                                                                    )
-                                                                })}
-                                                            </div>
-                                                            <div className={styles.name}>
-                                                                {data?.productName}
-                                                            </div>
-
-                                                            <div className={styles.price}>
-                                                                {FormatRupiah(Number(data?.productPriceFinal))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className={styles.bawahdetail}>
-                                                        <div className={styles.penawaran} onClick={() => HandlePenawaran(data)} >
-                                                            <MdOutlineSimCardDownload /> &nbsp;Surat Penawaran</div>
-
-                                                        <div className={styles.penawaran} onClick={() => GetDetailProduct(data?.slugProduct)}>Edit Product</div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                        : query == undefined ? <LoadingList /> : `tidak ada product ${query}`}
-                                    {Boolean(dataProduct?.length) &&
-                                        totalProduct > totalMaxProduct ?
-                                        <div className={styles.kotak} onClick={HandleTop}>
-                                            <div className={styles.loadmore}>
-                                                <div style={{ transform: 'rotate(-95deg)' }}>
-                                                    <IoIosArrowDropright size={40} />
-                                                </div>
-                                                <div>
-                                                    Kembali Ke atas
-                                                </div>
-                                            </div>
-                                        </div>
-                                        :
-                                        Boolean(dataProduct?.length) && <div className={styles.kotak} onClick={HandleLoadMore}>
-                                            <div className={styles.loadmore}>
-                                                <div>
-                                                    <IoIosArrowDropright size={40} />
-                                                </div>
-                                                <div>
-                                                    {loading ? 'Loading...' : 'Load More'}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-
+                                    {dataProduct?.length ? (
+                                        <>
+                                            {dataProduct.map((item, i) => (
+                                                <ProductCard
+                                                    key={i}
+                                                    data={item}
+                                                    userSPV={isAdmin}
+                                                    onUpdatePublish={UpdatePublish}
+                                                    onDelete={HandleDeleteProducts}
+                                                    onGetDetail={GetDetailProduct}
+                                                    onPenwaan={HandlePenawaran}
+                                                />
+                                            ))}
+                                            
+                                            {/* Load More / Back to Top */}
+                                            {totalProduct > totalMaxProduct ? (
+                                                <LoadMoreButton onClick={HandleTop} isTop />
+                                            ) : (
+                                                <LoadMoreButton onClick={HandleLoadMore} loading={loading} />
+                                            )}
+                                        </>
+                                    ) : (
+                                        query == undefined ? <LoadingList /> : `tidak ada product ${query}`
+                                    )}
                                 </div>
-                            </div>
-                        </div>
+                            </section>
+                        </main>
 
-                        {/* //PRODUCT */}
-
-
-                        {/* ARTIKEL */}
-                        {session?.user?.email == 'rio@pelangiteknik.com' &&
-                            <div className={styles.bawah}>
-                                <table
-                                    className={styles.producttable}>
-                                    <thead>
-                                        <tr>
-                                            <th>Judul Artikel</th>
-                                            <th>Publish</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {dataArtikel?.map((artikel, index) => {
-
-                                            return (<tr key={index} >
-                                                <td onClick={() => GetDetailProductArtikel(artikel?.slug)}>{artikel?.title}</td>
-                                                <td style={{ width: '100px' }}>
-                                                    <label className={styles.switch}>
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={!artikel?.saveDraf}
-                                                            onChange={() => UpdatePublishArtikel(artikel?.slug, !artikel?.saveDraf)}
-                                                        />
-                                                        <span className={styles.slider}></span>
-                                                    </label>
-                                                </td>
-                                                <td style={{ width: '50px', cursor: 'pointer', color: 'var(--colormain)' }} onClick={() => HandleDeleteArtikels(artikel?.id)}><MdDeleteOutline size={30} /></td>
-                                            </tr>)
-                                        }
-                                        )}
-                                    </tbody>
-                                </table>
-
+                        {/* Articles Section - Admin Only */}
+                        {isAdmin && (
+                            <section className={styles.bawah}>
+                                <ArticlesTable
+                                    articles={dataArtikel}
+                                    onUpdatePublish={UpdatePublishArtikel}
+                                    onDelete={HandleDeleteArtikels}
+                                    onGetDetail={GetDetailProductArtikel}
+                                />
                                 {KondisiPencarian && !dataList.length && <div>Data Tidak ada</div>}
-                            </div>
-                        }
+                            </section>
+                        )}
                     </div>
 
+                    {/* Loading Overlay */}
+                    <LoadingOverlay loading={loading} />
 
-                    {
-                        loading ?
-                            <div className={styles.loading}>
-                                <div className={styles.kotak} >
-                                    LOADING...
-                                </div>
-                                <div className={styles.kotakmelayang}>
+                    {/* Update Product Modal */}
+                    <UpdateModal
+                        layang={layang}
+                        loading={loading}
+                        setLayang={setLayang}
+                        data={data}
+                        dataKategori={dataKategori}
+                        text={'Update Product'}
+                    />
 
-                                </div>
-                            </div> :
-                            layang &&
-                            <>
-                                <div className={styles.bghitam} onClick={() => setLayang()}></div>
-                                <div className={styles.containerupdate}>
-                                    <FormInput
-                                        kondisi={true}
-                                        data={data}
-                                        text={'Update Product'}
-                                        dataKategori={dataKategori} />
-                                </div>
-                            </>
-                    }
-                    {
-                        loading ?
-                            <div className={styles.loading}>
-                                <div className={styles.kotak} >
-                                    LOADING...
-                                </div>
-                            </div> :
-                            layangArtikel &&
-                            <>
-                                <div className={styles.bghitam} onClick={() => setLayangArtikel()}></div>
-                                <div className={styles.containerupdate}>
-                                    <FormInputArtikel
-                                        kondisi={true}
-                                        data={dataArtikelUpdate}
-                                        dataKategori={dataKategoriArtikel}
-                                        dataTagsArtikel={dataTagsArtikel}
-                                        dataArtikel={dataArtikel}
-                                        text={'Update Artikel'} />
-                                </div>
-                            </>
-                    }
-                </div >
+                    {/* Update Artikel Modal */}
+                    {layangArtikel && !loading && (
+                        <>
+                            <div className={styles.bghitam} onClick={() => setLayangArtikel()}></div>
+                            <div className={styles.containerupdate}>
+                                <FormInput
+                                    kondisi={true}
+                                    data={dataArtikelUpdate}
+                                    dataKategori={dataKategoriArtikel}
+                                    dataTagsArtikel={dataTagsArtikel}
+                                    dataArtikel={dataArtikel}
+                                    text={'Update Artikel'} />
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         </>
     )

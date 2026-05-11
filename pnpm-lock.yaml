@@ -75,8 +75,8 @@ importers:
         specifier: ^0.2.15
         version: 0.2.15
       pnpm:
-        specifier: ^9.9.0
-        version: 9.10.0
+        specifier: ^10.33.0
+        version: 10.33.4
       qrcode:
         specifier: ^1.5.4
         version: 1.5.4
@@ -227,24 +227,28 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@next/swc-linux-arm64-musl@14.2.33':
     resolution: {integrity: sha512-Bm+QulsAItD/x6Ih8wGIMfRJy4G73tu1HJsrccPW6AfqdZd0Sfm5Imhgkgq2+kly065rYMnCOxTBvmvFY1BKfg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@next/swc-linux-x64-gnu@14.2.33':
     resolution: {integrity: sha512-FnFn+ZBgsVMbGDsTqo8zsnRzydvsGV8vfiWwUo1LD8FTmPTdV+otGSWKc4LJec0oSexFnCYVO4hX8P8qQKaSlg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@next/swc-linux-x64-musl@14.2.33':
     resolution: {integrity: sha512-345tsIWMzoXaQndUTDv1qypDRiebFxGYx9pYkhwY4hBRaOLt8UGfiWKr9FSSHs25dFIf8ZqIFaPdy5MljdoawA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@next/swc-win32-arm64-msvc@14.2.33':
     resolution: {integrity: sha512-nscpt0G6UCTkrT2ppnJnFsYbPDQwmum4GNXYTeoTIdsmMydSKFz9Iny2jpaRupTb+Wl298+Rh82WKzt9LCcqSQ==}
@@ -1112,8 +1116,8 @@ packages:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
 
-  pnpm@9.10.0:
-    resolution: {integrity: sha512-c6Ka+jag0JLs5Scd5Rd+y/gxjUVOzXATQxMbjrwMGpHEh9pGq3fI5ZbWrPFGHjWUztS+zt+JIbB0+9hlPtcFHA==}
+  pnpm@10.33.4:
+    resolution: {integrity: sha512-HGezs1my1AgRm6HtKJ80uPw8aHNBK+xv0mT73IJInlEPy+y5zp0i2ufzt2Jp2EQQRgFL3KU7mXnNelYa1jG4AA==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -2701,7 +2705,7 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  pnpm@9.10.0: {}
+  pnpm@10.33.4: {}
 
   postcss@8.4.31:
     dependencies:

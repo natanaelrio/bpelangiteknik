@@ -113,6 +113,16 @@ export type categoryArtikel = $Result.DefaultSelection<Prisma.$categoryArtikelPa
  * 
  */
 export type sales = $Result.DefaultSelection<Prisma.$salesPayload>
+/**
+ * Model salesPenawaran
+ * 
+ */
+export type salesPenawaran = $Result.DefaultSelection<Prisma.$salesPenawaranPayload>
+/**
+ * Model salesPenawaranItem
+ * 
+ */
+export type salesPenawaranItem = $Result.DefaultSelection<Prisma.$salesPenawaranItemPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -436,6 +446,26 @@ export class PrismaClient<
     * ```
     */
   get sales(): Prisma.salesDelegate<ExtArgs>;
+
+  /**
+   * `prisma.salesPenawaran`: Exposes CRUD operations for the **salesPenawaran** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SalesPenawarans
+    * const salesPenawarans = await prisma.salesPenawaran.findMany()
+    * ```
+    */
+  get salesPenawaran(): Prisma.salesPenawaranDelegate<ExtArgs>;
+
+  /**
+   * `prisma.salesPenawaranItem`: Exposes CRUD operations for the **salesPenawaranItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SalesPenawaranItems
+    * const salesPenawaranItems = await prisma.salesPenawaranItem.findMany()
+    * ```
+    */
+  get salesPenawaranItem(): Prisma.salesPenawaranItemDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -894,7 +924,9 @@ export namespace Prisma {
     tagArtikel: 'tagArtikel',
     imageProductArtikel: 'imageProductArtikel',
     categoryArtikel: 'categoryArtikel',
-    sales: 'sales'
+    sales: 'sales',
+    salesPenawaran: 'salesPenawaran',
+    salesPenawaranItem: 'salesPenawaranItem'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -910,7 +942,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "categoryProductUtama" | "categoryProduct" | "listProduct" | "fMerek" | "specProduct" | "imageProductUtama" | "imageProduct" | "voucher" | "cart" | "cartItem" | "formPembelian" | "ongkosKirim" | "dataPesananItem" | "dataPesanan" | "suratPenawaran" | "postArtikel" | "tagArtikel" | "imageProductArtikel" | "categoryArtikel" | "sales"
+      modelProps: "categoryProductUtama" | "categoryProduct" | "listProduct" | "fMerek" | "specProduct" | "imageProductUtama" | "imageProduct" | "voucher" | "cart" | "cartItem" | "formPembelian" | "ongkosKirim" | "dataPesananItem" | "dataPesanan" | "suratPenawaran" | "postArtikel" | "tagArtikel" | "imageProductArtikel" | "categoryArtikel" | "sales" | "salesPenawaran" | "salesPenawaranItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2314,6 +2346,146 @@ export namespace Prisma {
           }
         }
       }
+      salesPenawaran: {
+        payload: Prisma.$salesPenawaranPayload<ExtArgs>
+        fields: Prisma.salesPenawaranFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.salesPenawaranFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.salesPenawaranFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>
+          }
+          findFirst: {
+            args: Prisma.salesPenawaranFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.salesPenawaranFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>
+          }
+          findMany: {
+            args: Prisma.salesPenawaranFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>[]
+          }
+          create: {
+            args: Prisma.salesPenawaranCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>
+          }
+          createMany: {
+            args: Prisma.salesPenawaranCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.salesPenawaranCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>[]
+          }
+          delete: {
+            args: Prisma.salesPenawaranDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>
+          }
+          update: {
+            args: Prisma.salesPenawaranUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>
+          }
+          deleteMany: {
+            args: Prisma.salesPenawaranDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.salesPenawaranUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.salesPenawaranUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranPayload>
+          }
+          aggregate: {
+            args: Prisma.SalesPenawaranAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSalesPenawaran>
+          }
+          groupBy: {
+            args: Prisma.salesPenawaranGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SalesPenawaranGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.salesPenawaranCountArgs<ExtArgs>
+            result: $Utils.Optional<SalesPenawaranCountAggregateOutputType> | number
+          }
+        }
+      }
+      salesPenawaranItem: {
+        payload: Prisma.$salesPenawaranItemPayload<ExtArgs>
+        fields: Prisma.salesPenawaranItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.salesPenawaranItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.salesPenawaranItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>
+          }
+          findFirst: {
+            args: Prisma.salesPenawaranItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.salesPenawaranItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>
+          }
+          findMany: {
+            args: Prisma.salesPenawaranItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>[]
+          }
+          create: {
+            args: Prisma.salesPenawaranItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>
+          }
+          createMany: {
+            args: Prisma.salesPenawaranItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.salesPenawaranItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>[]
+          }
+          delete: {
+            args: Prisma.salesPenawaranItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>
+          }
+          update: {
+            args: Prisma.salesPenawaranItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.salesPenawaranItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.salesPenawaranItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.salesPenawaranItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$salesPenawaranItemPayload>
+          }
+          aggregate: {
+            args: Prisma.SalesPenawaranItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSalesPenawaranItem>
+          }
+          groupBy: {
+            args: Prisma.salesPenawaranItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SalesPenawaranItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.salesPenawaranItemCountArgs<ExtArgs>
+            result: $Utils.Optional<SalesPenawaranItemCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2831,6 +3003,37 @@ export namespace Prisma {
    */
   export type CategoryArtikelCountOutputTypeCountPostArtikelArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: postArtikelWhereInput
+  }
+
+
+  /**
+   * Count Type SalesPenawaranCountOutputType
+   */
+
+  export type SalesPenawaranCountOutputType = {
+    items: number
+  }
+
+  export type SalesPenawaranCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | SalesPenawaranCountOutputTypeCountItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SalesPenawaranCountOutputType without action
+   */
+  export type SalesPenawaranCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesPenawaranCountOutputType
+     */
+    select?: SalesPenawaranCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SalesPenawaranCountOutputType without action
+   */
+  export type SalesPenawaranCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: salesPenawaranItemWhereInput
   }
 
 
@@ -24681,6 +24884,2123 @@ export namespace Prisma {
 
 
   /**
+   * Model salesPenawaran
+   */
+
+  export type AggregateSalesPenawaran = {
+    _count: SalesPenawaranCountAggregateOutputType | null
+    _avg: SalesPenawaranAvgAggregateOutputType | null
+    _sum: SalesPenawaranSumAggregateOutputType | null
+    _min: SalesPenawaranMinAggregateOutputType | null
+    _max: SalesPenawaranMaxAggregateOutputType | null
+  }
+
+  export type SalesPenawaranAvgAggregateOutputType = {
+    totalHargaSatuan: number | null
+    totalKeseluruhan: number | null
+    totalQty: number | null
+    ppn: number | null
+    grandTotal: number | null
+  }
+
+  export type SalesPenawaranSumAggregateOutputType = {
+    totalHargaSatuan: bigint | null
+    totalKeseluruhan: bigint | null
+    totalQty: number | null
+    ppn: bigint | null
+    grandTotal: bigint | null
+  }
+
+  export type SalesPenawaranMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    customerName: string | null
+    PICcustomerName: string | null
+    salesName: string | null
+    salesPhone: string | null
+    selectedBank: string | null
+    includePPN: boolean | null
+    totalHargaSatuan: bigint | null
+    totalKeseluruhan: bigint | null
+    totalQty: number | null
+    ppn: bigint | null
+    grandTotal: bigint | null
+  }
+
+  export type SalesPenawaranMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    customerName: string | null
+    PICcustomerName: string | null
+    salesName: string | null
+    salesPhone: string | null
+    selectedBank: string | null
+    includePPN: boolean | null
+    totalHargaSatuan: bigint | null
+    totalKeseluruhan: bigint | null
+    totalQty: number | null
+    ppn: bigint | null
+    grandTotal: bigint | null
+  }
+
+  export type SalesPenawaranCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    customerName: number
+    PICcustomerName: number
+    salesName: number
+    salesPhone: number
+    selectedBank: number
+    notes: number
+    includePPN: number
+    totalHargaSatuan: number
+    totalKeseluruhan: number
+    totalQty: number
+    ppn: number
+    grandTotal: number
+    _all: number
+  }
+
+
+  export type SalesPenawaranAvgAggregateInputType = {
+    totalHargaSatuan?: true
+    totalKeseluruhan?: true
+    totalQty?: true
+    ppn?: true
+    grandTotal?: true
+  }
+
+  export type SalesPenawaranSumAggregateInputType = {
+    totalHargaSatuan?: true
+    totalKeseluruhan?: true
+    totalQty?: true
+    ppn?: true
+    grandTotal?: true
+  }
+
+  export type SalesPenawaranMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    customerName?: true
+    PICcustomerName?: true
+    salesName?: true
+    salesPhone?: true
+    selectedBank?: true
+    includePPN?: true
+    totalHargaSatuan?: true
+    totalKeseluruhan?: true
+    totalQty?: true
+    ppn?: true
+    grandTotal?: true
+  }
+
+  export type SalesPenawaranMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    customerName?: true
+    PICcustomerName?: true
+    salesName?: true
+    salesPhone?: true
+    selectedBank?: true
+    includePPN?: true
+    totalHargaSatuan?: true
+    totalKeseluruhan?: true
+    totalQty?: true
+    ppn?: true
+    grandTotal?: true
+  }
+
+  export type SalesPenawaranCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    customerName?: true
+    PICcustomerName?: true
+    salesName?: true
+    salesPhone?: true
+    selectedBank?: true
+    notes?: true
+    includePPN?: true
+    totalHargaSatuan?: true
+    totalKeseluruhan?: true
+    totalQty?: true
+    ppn?: true
+    grandTotal?: true
+    _all?: true
+  }
+
+  export type SalesPenawaranAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which salesPenawaran to aggregate.
+     */
+    where?: salesPenawaranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawarans to fetch.
+     */
+    orderBy?: salesPenawaranOrderByWithRelationInput | salesPenawaranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: salesPenawaranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawarans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawarans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned salesPenawarans
+    **/
+    _count?: true | SalesPenawaranCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SalesPenawaranAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SalesPenawaranSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SalesPenawaranMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SalesPenawaranMaxAggregateInputType
+  }
+
+  export type GetSalesPenawaranAggregateType<T extends SalesPenawaranAggregateArgs> = {
+        [P in keyof T & keyof AggregateSalesPenawaran]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSalesPenawaran[P]>
+      : GetScalarType<T[P], AggregateSalesPenawaran[P]>
+  }
+
+
+
+
+  export type salesPenawaranGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: salesPenawaranWhereInput
+    orderBy?: salesPenawaranOrderByWithAggregationInput | salesPenawaranOrderByWithAggregationInput[]
+    by: SalesPenawaranScalarFieldEnum[] | SalesPenawaranScalarFieldEnum
+    having?: salesPenawaranScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SalesPenawaranCountAggregateInputType | true
+    _avg?: SalesPenawaranAvgAggregateInputType
+    _sum?: SalesPenawaranSumAggregateInputType
+    _min?: SalesPenawaranMinAggregateInputType
+    _max?: SalesPenawaranMaxAggregateInputType
+  }
+
+  export type SalesPenawaranGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    customerName: string
+    PICcustomerName: string | null
+    salesName: string
+    salesPhone: string
+    selectedBank: string | null
+    notes: string[]
+    includePPN: boolean
+    totalHargaSatuan: bigint
+    totalKeseluruhan: bigint
+    totalQty: number
+    ppn: bigint
+    grandTotal: bigint
+    _count: SalesPenawaranCountAggregateOutputType | null
+    _avg: SalesPenawaranAvgAggregateOutputType | null
+    _sum: SalesPenawaranSumAggregateOutputType | null
+    _min: SalesPenawaranMinAggregateOutputType | null
+    _max: SalesPenawaranMaxAggregateOutputType | null
+  }
+
+  type GetSalesPenawaranGroupByPayload<T extends salesPenawaranGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SalesPenawaranGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SalesPenawaranGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SalesPenawaranGroupByOutputType[P]>
+            : GetScalarType<T[P], SalesPenawaranGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type salesPenawaranSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    customerName?: boolean
+    PICcustomerName?: boolean
+    salesName?: boolean
+    salesPhone?: boolean
+    selectedBank?: boolean
+    notes?: boolean
+    includePPN?: boolean
+    totalHargaSatuan?: boolean
+    totalKeseluruhan?: boolean
+    totalQty?: boolean
+    ppn?: boolean
+    grandTotal?: boolean
+    items?: boolean | salesPenawaran$itemsArgs<ExtArgs>
+    _count?: boolean | SalesPenawaranCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesPenawaran"]>
+
+  export type salesPenawaranSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    customerName?: boolean
+    PICcustomerName?: boolean
+    salesName?: boolean
+    salesPhone?: boolean
+    selectedBank?: boolean
+    notes?: boolean
+    includePPN?: boolean
+    totalHargaSatuan?: boolean
+    totalKeseluruhan?: boolean
+    totalQty?: boolean
+    ppn?: boolean
+    grandTotal?: boolean
+  }, ExtArgs["result"]["salesPenawaran"]>
+
+  export type salesPenawaranSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    customerName?: boolean
+    PICcustomerName?: boolean
+    salesName?: boolean
+    salesPhone?: boolean
+    selectedBank?: boolean
+    notes?: boolean
+    includePPN?: boolean
+    totalHargaSatuan?: boolean
+    totalKeseluruhan?: boolean
+    totalQty?: boolean
+    ppn?: boolean
+    grandTotal?: boolean
+  }
+
+  export type salesPenawaranInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | salesPenawaran$itemsArgs<ExtArgs>
+    _count?: boolean | SalesPenawaranCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type salesPenawaranIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $salesPenawaranPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "salesPenawaran"
+    objects: {
+      items: Prisma.$salesPenawaranItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      customerName: string
+      PICcustomerName: string | null
+      salesName: string
+      salesPhone: string
+      selectedBank: string | null
+      notes: string[]
+      includePPN: boolean
+      totalHargaSatuan: bigint
+      totalKeseluruhan: bigint
+      totalQty: number
+      ppn: bigint
+      grandTotal: bigint
+    }, ExtArgs["result"]["salesPenawaran"]>
+    composites: {}
+  }
+
+  type salesPenawaranGetPayload<S extends boolean | null | undefined | salesPenawaranDefaultArgs> = $Result.GetResult<Prisma.$salesPenawaranPayload, S>
+
+  type salesPenawaranCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<salesPenawaranFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SalesPenawaranCountAggregateInputType | true
+    }
+
+  export interface salesPenawaranDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['salesPenawaran'], meta: { name: 'salesPenawaran' } }
+    /**
+     * Find zero or one SalesPenawaran that matches the filter.
+     * @param {salesPenawaranFindUniqueArgs} args - Arguments to find a SalesPenawaran
+     * @example
+     * // Get one SalesPenawaran
+     * const salesPenawaran = await prisma.salesPenawaran.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends salesPenawaranFindUniqueArgs>(args: SelectSubset<T, salesPenawaranFindUniqueArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SalesPenawaran that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {salesPenawaranFindUniqueOrThrowArgs} args - Arguments to find a SalesPenawaran
+     * @example
+     * // Get one SalesPenawaran
+     * const salesPenawaran = await prisma.salesPenawaran.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends salesPenawaranFindUniqueOrThrowArgs>(args: SelectSubset<T, salesPenawaranFindUniqueOrThrowArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SalesPenawaran that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranFindFirstArgs} args - Arguments to find a SalesPenawaran
+     * @example
+     * // Get one SalesPenawaran
+     * const salesPenawaran = await prisma.salesPenawaran.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends salesPenawaranFindFirstArgs>(args?: SelectSubset<T, salesPenawaranFindFirstArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SalesPenawaran that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranFindFirstOrThrowArgs} args - Arguments to find a SalesPenawaran
+     * @example
+     * // Get one SalesPenawaran
+     * const salesPenawaran = await prisma.salesPenawaran.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends salesPenawaranFindFirstOrThrowArgs>(args?: SelectSubset<T, salesPenawaranFindFirstOrThrowArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SalesPenawarans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SalesPenawarans
+     * const salesPenawarans = await prisma.salesPenawaran.findMany()
+     * 
+     * // Get first 10 SalesPenawarans
+     * const salesPenawarans = await prisma.salesPenawaran.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const salesPenawaranWithIdOnly = await prisma.salesPenawaran.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends salesPenawaranFindManyArgs>(args?: SelectSubset<T, salesPenawaranFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SalesPenawaran.
+     * @param {salesPenawaranCreateArgs} args - Arguments to create a SalesPenawaran.
+     * @example
+     * // Create one SalesPenawaran
+     * const SalesPenawaran = await prisma.salesPenawaran.create({
+     *   data: {
+     *     // ... data to create a SalesPenawaran
+     *   }
+     * })
+     * 
+     */
+    create<T extends salesPenawaranCreateArgs>(args: SelectSubset<T, salesPenawaranCreateArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SalesPenawarans.
+     * @param {salesPenawaranCreateManyArgs} args - Arguments to create many SalesPenawarans.
+     * @example
+     * // Create many SalesPenawarans
+     * const salesPenawaran = await prisma.salesPenawaran.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends salesPenawaranCreateManyArgs>(args?: SelectSubset<T, salesPenawaranCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SalesPenawarans and returns the data saved in the database.
+     * @param {salesPenawaranCreateManyAndReturnArgs} args - Arguments to create many SalesPenawarans.
+     * @example
+     * // Create many SalesPenawarans
+     * const salesPenawaran = await prisma.salesPenawaran.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SalesPenawarans and only return the `id`
+     * const salesPenawaranWithIdOnly = await prisma.salesPenawaran.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends salesPenawaranCreateManyAndReturnArgs>(args?: SelectSubset<T, salesPenawaranCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SalesPenawaran.
+     * @param {salesPenawaranDeleteArgs} args - Arguments to delete one SalesPenawaran.
+     * @example
+     * // Delete one SalesPenawaran
+     * const SalesPenawaran = await prisma.salesPenawaran.delete({
+     *   where: {
+     *     // ... filter to delete one SalesPenawaran
+     *   }
+     * })
+     * 
+     */
+    delete<T extends salesPenawaranDeleteArgs>(args: SelectSubset<T, salesPenawaranDeleteArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SalesPenawaran.
+     * @param {salesPenawaranUpdateArgs} args - Arguments to update one SalesPenawaran.
+     * @example
+     * // Update one SalesPenawaran
+     * const salesPenawaran = await prisma.salesPenawaran.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends salesPenawaranUpdateArgs>(args: SelectSubset<T, salesPenawaranUpdateArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SalesPenawarans.
+     * @param {salesPenawaranDeleteManyArgs} args - Arguments to filter SalesPenawarans to delete.
+     * @example
+     * // Delete a few SalesPenawarans
+     * const { count } = await prisma.salesPenawaran.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends salesPenawaranDeleteManyArgs>(args?: SelectSubset<T, salesPenawaranDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesPenawarans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SalesPenawarans
+     * const salesPenawaran = await prisma.salesPenawaran.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends salesPenawaranUpdateManyArgs>(args: SelectSubset<T, salesPenawaranUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SalesPenawaran.
+     * @param {salesPenawaranUpsertArgs} args - Arguments to update or create a SalesPenawaran.
+     * @example
+     * // Update or create a SalesPenawaran
+     * const salesPenawaran = await prisma.salesPenawaran.upsert({
+     *   create: {
+     *     // ... data to create a SalesPenawaran
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SalesPenawaran we want to update
+     *   }
+     * })
+     */
+    upsert<T extends salesPenawaranUpsertArgs>(args: SelectSubset<T, salesPenawaranUpsertArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SalesPenawarans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranCountArgs} args - Arguments to filter SalesPenawarans to count.
+     * @example
+     * // Count the number of SalesPenawarans
+     * const count = await prisma.salesPenawaran.count({
+     *   where: {
+     *     // ... the filter for the SalesPenawarans we want to count
+     *   }
+     * })
+    **/
+    count<T extends salesPenawaranCountArgs>(
+      args?: Subset<T, salesPenawaranCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SalesPenawaranCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SalesPenawaran.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesPenawaranAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SalesPenawaranAggregateArgs>(args: Subset<T, SalesPenawaranAggregateArgs>): Prisma.PrismaPromise<GetSalesPenawaranAggregateType<T>>
+
+    /**
+     * Group by SalesPenawaran.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends salesPenawaranGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: salesPenawaranGroupByArgs['orderBy'] }
+        : { orderBy?: salesPenawaranGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, salesPenawaranGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSalesPenawaranGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the salesPenawaran model
+   */
+  readonly fields: salesPenawaranFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for salesPenawaran.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__salesPenawaranClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    items<T extends salesPenawaran$itemsArgs<ExtArgs> = {}>(args?: Subset<T, salesPenawaran$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the salesPenawaran model
+   */ 
+  interface salesPenawaranFieldRefs {
+    readonly id: FieldRef<"salesPenawaran", 'String'>
+    readonly createdAt: FieldRef<"salesPenawaran", 'DateTime'>
+    readonly updatedAt: FieldRef<"salesPenawaran", 'DateTime'>
+    readonly customerName: FieldRef<"salesPenawaran", 'String'>
+    readonly PICcustomerName: FieldRef<"salesPenawaran", 'String'>
+    readonly salesName: FieldRef<"salesPenawaran", 'String'>
+    readonly salesPhone: FieldRef<"salesPenawaran", 'String'>
+    readonly selectedBank: FieldRef<"salesPenawaran", 'String'>
+    readonly notes: FieldRef<"salesPenawaran", 'String[]'>
+    readonly includePPN: FieldRef<"salesPenawaran", 'Boolean'>
+    readonly totalHargaSatuan: FieldRef<"salesPenawaran", 'BigInt'>
+    readonly totalKeseluruhan: FieldRef<"salesPenawaran", 'BigInt'>
+    readonly totalQty: FieldRef<"salesPenawaran", 'Int'>
+    readonly ppn: FieldRef<"salesPenawaran", 'BigInt'>
+    readonly grandTotal: FieldRef<"salesPenawaran", 'BigInt'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * salesPenawaran findUnique
+   */
+  export type salesPenawaranFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaran to fetch.
+     */
+    where: salesPenawaranWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaran findUniqueOrThrow
+   */
+  export type salesPenawaranFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaran to fetch.
+     */
+    where: salesPenawaranWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaran findFirst
+   */
+  export type salesPenawaranFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaran to fetch.
+     */
+    where?: salesPenawaranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawarans to fetch.
+     */
+    orderBy?: salesPenawaranOrderByWithRelationInput | salesPenawaranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for salesPenawarans.
+     */
+    cursor?: salesPenawaranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawarans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawarans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of salesPenawarans.
+     */
+    distinct?: SalesPenawaranScalarFieldEnum | SalesPenawaranScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaran findFirstOrThrow
+   */
+  export type salesPenawaranFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaran to fetch.
+     */
+    where?: salesPenawaranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawarans to fetch.
+     */
+    orderBy?: salesPenawaranOrderByWithRelationInput | salesPenawaranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for salesPenawarans.
+     */
+    cursor?: salesPenawaranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawarans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawarans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of salesPenawarans.
+     */
+    distinct?: SalesPenawaranScalarFieldEnum | SalesPenawaranScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaran findMany
+   */
+  export type salesPenawaranFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawarans to fetch.
+     */
+    where?: salesPenawaranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawarans to fetch.
+     */
+    orderBy?: salesPenawaranOrderByWithRelationInput | salesPenawaranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing salesPenawarans.
+     */
+    cursor?: salesPenawaranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawarans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawarans.
+     */
+    skip?: number
+    distinct?: SalesPenawaranScalarFieldEnum | SalesPenawaranScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaran create
+   */
+  export type salesPenawaranCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * The data needed to create a salesPenawaran.
+     */
+    data: XOR<salesPenawaranCreateInput, salesPenawaranUncheckedCreateInput>
+  }
+
+  /**
+   * salesPenawaran createMany
+   */
+  export type salesPenawaranCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many salesPenawarans.
+     */
+    data: salesPenawaranCreateManyInput | salesPenawaranCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * salesPenawaran createManyAndReturn
+   */
+  export type salesPenawaranCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many salesPenawarans.
+     */
+    data: salesPenawaranCreateManyInput | salesPenawaranCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * salesPenawaran update
+   */
+  export type salesPenawaranUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * The data needed to update a salesPenawaran.
+     */
+    data: XOR<salesPenawaranUpdateInput, salesPenawaranUncheckedUpdateInput>
+    /**
+     * Choose, which salesPenawaran to update.
+     */
+    where: salesPenawaranWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaran updateMany
+   */
+  export type salesPenawaranUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update salesPenawarans.
+     */
+    data: XOR<salesPenawaranUpdateManyMutationInput, salesPenawaranUncheckedUpdateManyInput>
+    /**
+     * Filter which salesPenawarans to update
+     */
+    where?: salesPenawaranWhereInput
+  }
+
+  /**
+   * salesPenawaran upsert
+   */
+  export type salesPenawaranUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * The filter to search for the salesPenawaran to update in case it exists.
+     */
+    where: salesPenawaranWhereUniqueInput
+    /**
+     * In case the salesPenawaran found by the `where` argument doesn't exist, create a new salesPenawaran with this data.
+     */
+    create: XOR<salesPenawaranCreateInput, salesPenawaranUncheckedCreateInput>
+    /**
+     * In case the salesPenawaran was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<salesPenawaranUpdateInput, salesPenawaranUncheckedUpdateInput>
+  }
+
+  /**
+   * salesPenawaran delete
+   */
+  export type salesPenawaranDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+    /**
+     * Filter which salesPenawaran to delete.
+     */
+    where: salesPenawaranWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaran deleteMany
+   */
+  export type salesPenawaranDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which salesPenawarans to delete
+     */
+    where?: salesPenawaranWhereInput
+  }
+
+  /**
+   * salesPenawaran.items
+   */
+  export type salesPenawaran$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    where?: salesPenawaranItemWhereInput
+    orderBy?: salesPenawaranItemOrderByWithRelationInput | salesPenawaranItemOrderByWithRelationInput[]
+    cursor?: salesPenawaranItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesPenawaranItemScalarFieldEnum | SalesPenawaranItemScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaran without action
+   */
+  export type salesPenawaranDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaran
+     */
+    select?: salesPenawaranSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model salesPenawaranItem
+   */
+
+  export type AggregateSalesPenawaranItem = {
+    _count: SalesPenawaranItemCountAggregateOutputType | null
+    _avg: SalesPenawaranItemAvgAggregateOutputType | null
+    _sum: SalesPenawaranItemSumAggregateOutputType | null
+    _min: SalesPenawaranItemMinAggregateOutputType | null
+    _max: SalesPenawaranItemMaxAggregateOutputType | null
+  }
+
+  export type SalesPenawaranItemAvgAggregateOutputType = {
+    qty: number | null
+    productPriceFinal: number | null
+  }
+
+  export type SalesPenawaranItemSumAggregateOutputType = {
+    qty: number | null
+    productPriceFinal: bigint | null
+  }
+
+  export type SalesPenawaranItemMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    productName: string | null
+    qty: number | null
+    productPriceFinal: bigint | null
+    salesPenawaranId: string | null
+  }
+
+  export type SalesPenawaranItemMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    productName: string | null
+    qty: number | null
+    productPriceFinal: bigint | null
+    salesPenawaranId: string | null
+  }
+
+  export type SalesPenawaranItemCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    productName: number
+    qty: number
+    productPriceFinal: number
+    spekNew: number
+    salesPenawaranId: number
+    _all: number
+  }
+
+
+  export type SalesPenawaranItemAvgAggregateInputType = {
+    qty?: true
+    productPriceFinal?: true
+  }
+
+  export type SalesPenawaranItemSumAggregateInputType = {
+    qty?: true
+    productPriceFinal?: true
+  }
+
+  export type SalesPenawaranItemMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    productName?: true
+    qty?: true
+    productPriceFinal?: true
+    salesPenawaranId?: true
+  }
+
+  export type SalesPenawaranItemMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    productName?: true
+    qty?: true
+    productPriceFinal?: true
+    salesPenawaranId?: true
+  }
+
+  export type SalesPenawaranItemCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    productName?: true
+    qty?: true
+    productPriceFinal?: true
+    spekNew?: true
+    salesPenawaranId?: true
+    _all?: true
+  }
+
+  export type SalesPenawaranItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which salesPenawaranItem to aggregate.
+     */
+    where?: salesPenawaranItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawaranItems to fetch.
+     */
+    orderBy?: salesPenawaranItemOrderByWithRelationInput | salesPenawaranItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: salesPenawaranItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawaranItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawaranItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned salesPenawaranItems
+    **/
+    _count?: true | SalesPenawaranItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SalesPenawaranItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SalesPenawaranItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SalesPenawaranItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SalesPenawaranItemMaxAggregateInputType
+  }
+
+  export type GetSalesPenawaranItemAggregateType<T extends SalesPenawaranItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateSalesPenawaranItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSalesPenawaranItem[P]>
+      : GetScalarType<T[P], AggregateSalesPenawaranItem[P]>
+  }
+
+
+
+
+  export type salesPenawaranItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: salesPenawaranItemWhereInput
+    orderBy?: salesPenawaranItemOrderByWithAggregationInput | salesPenawaranItemOrderByWithAggregationInput[]
+    by: SalesPenawaranItemScalarFieldEnum[] | SalesPenawaranItemScalarFieldEnum
+    having?: salesPenawaranItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SalesPenawaranItemCountAggregateInputType | true
+    _avg?: SalesPenawaranItemAvgAggregateInputType
+    _sum?: SalesPenawaranItemSumAggregateInputType
+    _min?: SalesPenawaranItemMinAggregateInputType
+    _max?: SalesPenawaranItemMaxAggregateInputType
+  }
+
+  export type SalesPenawaranItemGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    productName: string
+    qty: number
+    productPriceFinal: bigint
+    spekNew: JsonValue | null
+    salesPenawaranId: string
+    _count: SalesPenawaranItemCountAggregateOutputType | null
+    _avg: SalesPenawaranItemAvgAggregateOutputType | null
+    _sum: SalesPenawaranItemSumAggregateOutputType | null
+    _min: SalesPenawaranItemMinAggregateOutputType | null
+    _max: SalesPenawaranItemMaxAggregateOutputType | null
+  }
+
+  type GetSalesPenawaranItemGroupByPayload<T extends salesPenawaranItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SalesPenawaranItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SalesPenawaranItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SalesPenawaranItemGroupByOutputType[P]>
+            : GetScalarType<T[P], SalesPenawaranItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type salesPenawaranItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    productName?: boolean
+    qty?: boolean
+    productPriceFinal?: boolean
+    spekNew?: boolean
+    salesPenawaranId?: boolean
+    salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesPenawaranItem"]>
+
+  export type salesPenawaranItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    productName?: boolean
+    qty?: boolean
+    productPriceFinal?: boolean
+    spekNew?: boolean
+    salesPenawaranId?: boolean
+    salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesPenawaranItem"]>
+
+  export type salesPenawaranItemSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    productName?: boolean
+    qty?: boolean
+    productPriceFinal?: boolean
+    spekNew?: boolean
+    salesPenawaranId?: boolean
+  }
+
+  export type salesPenawaranItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
+  }
+  export type salesPenawaranItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
+  }
+
+  export type $salesPenawaranItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "salesPenawaranItem"
+    objects: {
+      salesPenawaran: Prisma.$salesPenawaranPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      productName: string
+      qty: number
+      productPriceFinal: bigint
+      spekNew: Prisma.JsonValue | null
+      salesPenawaranId: string
+    }, ExtArgs["result"]["salesPenawaranItem"]>
+    composites: {}
+  }
+
+  type salesPenawaranItemGetPayload<S extends boolean | null | undefined | salesPenawaranItemDefaultArgs> = $Result.GetResult<Prisma.$salesPenawaranItemPayload, S>
+
+  type salesPenawaranItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<salesPenawaranItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SalesPenawaranItemCountAggregateInputType | true
+    }
+
+  export interface salesPenawaranItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['salesPenawaranItem'], meta: { name: 'salesPenawaranItem' } }
+    /**
+     * Find zero or one SalesPenawaranItem that matches the filter.
+     * @param {salesPenawaranItemFindUniqueArgs} args - Arguments to find a SalesPenawaranItem
+     * @example
+     * // Get one SalesPenawaranItem
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends salesPenawaranItemFindUniqueArgs>(args: SelectSubset<T, salesPenawaranItemFindUniqueArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SalesPenawaranItem that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {salesPenawaranItemFindUniqueOrThrowArgs} args - Arguments to find a SalesPenawaranItem
+     * @example
+     * // Get one SalesPenawaranItem
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends salesPenawaranItemFindUniqueOrThrowArgs>(args: SelectSubset<T, salesPenawaranItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SalesPenawaranItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranItemFindFirstArgs} args - Arguments to find a SalesPenawaranItem
+     * @example
+     * // Get one SalesPenawaranItem
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends salesPenawaranItemFindFirstArgs>(args?: SelectSubset<T, salesPenawaranItemFindFirstArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SalesPenawaranItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranItemFindFirstOrThrowArgs} args - Arguments to find a SalesPenawaranItem
+     * @example
+     * // Get one SalesPenawaranItem
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends salesPenawaranItemFindFirstOrThrowArgs>(args?: SelectSubset<T, salesPenawaranItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SalesPenawaranItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SalesPenawaranItems
+     * const salesPenawaranItems = await prisma.salesPenawaranItem.findMany()
+     * 
+     * // Get first 10 SalesPenawaranItems
+     * const salesPenawaranItems = await prisma.salesPenawaranItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const salesPenawaranItemWithIdOnly = await prisma.salesPenawaranItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends salesPenawaranItemFindManyArgs>(args?: SelectSubset<T, salesPenawaranItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SalesPenawaranItem.
+     * @param {salesPenawaranItemCreateArgs} args - Arguments to create a SalesPenawaranItem.
+     * @example
+     * // Create one SalesPenawaranItem
+     * const SalesPenawaranItem = await prisma.salesPenawaranItem.create({
+     *   data: {
+     *     // ... data to create a SalesPenawaranItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends salesPenawaranItemCreateArgs>(args: SelectSubset<T, salesPenawaranItemCreateArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SalesPenawaranItems.
+     * @param {salesPenawaranItemCreateManyArgs} args - Arguments to create many SalesPenawaranItems.
+     * @example
+     * // Create many SalesPenawaranItems
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends salesPenawaranItemCreateManyArgs>(args?: SelectSubset<T, salesPenawaranItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SalesPenawaranItems and returns the data saved in the database.
+     * @param {salesPenawaranItemCreateManyAndReturnArgs} args - Arguments to create many SalesPenawaranItems.
+     * @example
+     * // Create many SalesPenawaranItems
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SalesPenawaranItems and only return the `id`
+     * const salesPenawaranItemWithIdOnly = await prisma.salesPenawaranItem.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends salesPenawaranItemCreateManyAndReturnArgs>(args?: SelectSubset<T, salesPenawaranItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SalesPenawaranItem.
+     * @param {salesPenawaranItemDeleteArgs} args - Arguments to delete one SalesPenawaranItem.
+     * @example
+     * // Delete one SalesPenawaranItem
+     * const SalesPenawaranItem = await prisma.salesPenawaranItem.delete({
+     *   where: {
+     *     // ... filter to delete one SalesPenawaranItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends salesPenawaranItemDeleteArgs>(args: SelectSubset<T, salesPenawaranItemDeleteArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SalesPenawaranItem.
+     * @param {salesPenawaranItemUpdateArgs} args - Arguments to update one SalesPenawaranItem.
+     * @example
+     * // Update one SalesPenawaranItem
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends salesPenawaranItemUpdateArgs>(args: SelectSubset<T, salesPenawaranItemUpdateArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SalesPenawaranItems.
+     * @param {salesPenawaranItemDeleteManyArgs} args - Arguments to filter SalesPenawaranItems to delete.
+     * @example
+     * // Delete a few SalesPenawaranItems
+     * const { count } = await prisma.salesPenawaranItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends salesPenawaranItemDeleteManyArgs>(args?: SelectSubset<T, salesPenawaranItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesPenawaranItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SalesPenawaranItems
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends salesPenawaranItemUpdateManyArgs>(args: SelectSubset<T, salesPenawaranItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SalesPenawaranItem.
+     * @param {salesPenawaranItemUpsertArgs} args - Arguments to update or create a SalesPenawaranItem.
+     * @example
+     * // Update or create a SalesPenawaranItem
+     * const salesPenawaranItem = await prisma.salesPenawaranItem.upsert({
+     *   create: {
+     *     // ... data to create a SalesPenawaranItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SalesPenawaranItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends salesPenawaranItemUpsertArgs>(args: SelectSubset<T, salesPenawaranItemUpsertArgs<ExtArgs>>): Prisma__salesPenawaranItemClient<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SalesPenawaranItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranItemCountArgs} args - Arguments to filter SalesPenawaranItems to count.
+     * @example
+     * // Count the number of SalesPenawaranItems
+     * const count = await prisma.salesPenawaranItem.count({
+     *   where: {
+     *     // ... the filter for the SalesPenawaranItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends salesPenawaranItemCountArgs>(
+      args?: Subset<T, salesPenawaranItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SalesPenawaranItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SalesPenawaranItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesPenawaranItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SalesPenawaranItemAggregateArgs>(args: Subset<T, SalesPenawaranItemAggregateArgs>): Prisma.PrismaPromise<GetSalesPenawaranItemAggregateType<T>>
+
+    /**
+     * Group by SalesPenawaranItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {salesPenawaranItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends salesPenawaranItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: salesPenawaranItemGroupByArgs['orderBy'] }
+        : { orderBy?: salesPenawaranItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, salesPenawaranItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSalesPenawaranItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the salesPenawaranItem model
+   */
+  readonly fields: salesPenawaranItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for salesPenawaranItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__salesPenawaranItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    salesPenawaran<T extends salesPenawaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, salesPenawaranDefaultArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the salesPenawaranItem model
+   */ 
+  interface salesPenawaranItemFieldRefs {
+    readonly id: FieldRef<"salesPenawaranItem", 'String'>
+    readonly createdAt: FieldRef<"salesPenawaranItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"salesPenawaranItem", 'DateTime'>
+    readonly productName: FieldRef<"salesPenawaranItem", 'String'>
+    readonly qty: FieldRef<"salesPenawaranItem", 'Int'>
+    readonly productPriceFinal: FieldRef<"salesPenawaranItem", 'BigInt'>
+    readonly spekNew: FieldRef<"salesPenawaranItem", 'Json'>
+    readonly salesPenawaranId: FieldRef<"salesPenawaranItem", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * salesPenawaranItem findUnique
+   */
+  export type salesPenawaranItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaranItem to fetch.
+     */
+    where: salesPenawaranItemWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaranItem findUniqueOrThrow
+   */
+  export type salesPenawaranItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaranItem to fetch.
+     */
+    where: salesPenawaranItemWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaranItem findFirst
+   */
+  export type salesPenawaranItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaranItem to fetch.
+     */
+    where?: salesPenawaranItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawaranItems to fetch.
+     */
+    orderBy?: salesPenawaranItemOrderByWithRelationInput | salesPenawaranItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for salesPenawaranItems.
+     */
+    cursor?: salesPenawaranItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawaranItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawaranItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of salesPenawaranItems.
+     */
+    distinct?: SalesPenawaranItemScalarFieldEnum | SalesPenawaranItemScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaranItem findFirstOrThrow
+   */
+  export type salesPenawaranItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaranItem to fetch.
+     */
+    where?: salesPenawaranItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawaranItems to fetch.
+     */
+    orderBy?: salesPenawaranItemOrderByWithRelationInput | salesPenawaranItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for salesPenawaranItems.
+     */
+    cursor?: salesPenawaranItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawaranItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawaranItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of salesPenawaranItems.
+     */
+    distinct?: SalesPenawaranItemScalarFieldEnum | SalesPenawaranItemScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaranItem findMany
+   */
+  export type salesPenawaranItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * Filter, which salesPenawaranItems to fetch.
+     */
+    where?: salesPenawaranItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of salesPenawaranItems to fetch.
+     */
+    orderBy?: salesPenawaranItemOrderByWithRelationInput | salesPenawaranItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing salesPenawaranItems.
+     */
+    cursor?: salesPenawaranItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` salesPenawaranItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` salesPenawaranItems.
+     */
+    skip?: number
+    distinct?: SalesPenawaranItemScalarFieldEnum | SalesPenawaranItemScalarFieldEnum[]
+  }
+
+  /**
+   * salesPenawaranItem create
+   */
+  export type salesPenawaranItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a salesPenawaranItem.
+     */
+    data: XOR<salesPenawaranItemCreateInput, salesPenawaranItemUncheckedCreateInput>
+  }
+
+  /**
+   * salesPenawaranItem createMany
+   */
+  export type salesPenawaranItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many salesPenawaranItems.
+     */
+    data: salesPenawaranItemCreateManyInput | salesPenawaranItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * salesPenawaranItem createManyAndReturn
+   */
+  export type salesPenawaranItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many salesPenawaranItems.
+     */
+    data: salesPenawaranItemCreateManyInput | salesPenawaranItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * salesPenawaranItem update
+   */
+  export type salesPenawaranItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a salesPenawaranItem.
+     */
+    data: XOR<salesPenawaranItemUpdateInput, salesPenawaranItemUncheckedUpdateInput>
+    /**
+     * Choose, which salesPenawaranItem to update.
+     */
+    where: salesPenawaranItemWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaranItem updateMany
+   */
+  export type salesPenawaranItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update salesPenawaranItems.
+     */
+    data: XOR<salesPenawaranItemUpdateManyMutationInput, salesPenawaranItemUncheckedUpdateManyInput>
+    /**
+     * Filter which salesPenawaranItems to update
+     */
+    where?: salesPenawaranItemWhereInput
+  }
+
+  /**
+   * salesPenawaranItem upsert
+   */
+  export type salesPenawaranItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the salesPenawaranItem to update in case it exists.
+     */
+    where: salesPenawaranItemWhereUniqueInput
+    /**
+     * In case the salesPenawaranItem found by the `where` argument doesn't exist, create a new salesPenawaranItem with this data.
+     */
+    create: XOR<salesPenawaranItemCreateInput, salesPenawaranItemUncheckedCreateInput>
+    /**
+     * In case the salesPenawaranItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<salesPenawaranItemUpdateInput, salesPenawaranItemUncheckedUpdateInput>
+  }
+
+  /**
+   * salesPenawaranItem delete
+   */
+  export type salesPenawaranItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    /**
+     * Filter which salesPenawaranItem to delete.
+     */
+    where: salesPenawaranItemWhereUniqueInput
+  }
+
+  /**
+   * salesPenawaranItem deleteMany
+   */
+  export type salesPenawaranItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which salesPenawaranItems to delete
+     */
+    where?: salesPenawaranItemWhereInput
+  }
+
+  /**
+   * salesPenawaranItem without action
+   */
+  export type salesPenawaranItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -25082,6 +27402,41 @@ export namespace Prisma {
   export type SalesScalarFieldEnum = (typeof SalesScalarFieldEnum)[keyof typeof SalesScalarFieldEnum]
 
 
+  export const SalesPenawaranScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    customerName: 'customerName',
+    PICcustomerName: 'PICcustomerName',
+    salesName: 'salesName',
+    salesPhone: 'salesPhone',
+    selectedBank: 'selectedBank',
+    notes: 'notes',
+    includePPN: 'includePPN',
+    totalHargaSatuan: 'totalHargaSatuan',
+    totalKeseluruhan: 'totalKeseluruhan',
+    totalQty: 'totalQty',
+    ppn: 'ppn',
+    grandTotal: 'grandTotal'
+  };
+
+  export type SalesPenawaranScalarFieldEnum = (typeof SalesPenawaranScalarFieldEnum)[keyof typeof SalesPenawaranScalarFieldEnum]
+
+
+  export const SalesPenawaranItemScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    productName: 'productName',
+    qty: 'qty',
+    productPriceFinal: 'productPriceFinal',
+    spekNew: 'spekNew',
+    salesPenawaranId: 'salesPenawaranId'
+  };
+
+  export type SalesPenawaranItemScalarFieldEnum = (typeof SalesPenawaranItemScalarFieldEnum)[keyof typeof SalesPenawaranItemScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -25114,34 +27469,6 @@ export namespace Prisma {
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
-  export const categoryProductUtamaOrderByRelevanceFieldEnum: {
-    category: 'category',
-    slugCategory: 'slugCategory',
-    image: 'image',
-    icon: 'icon',
-    urlYoutube: 'urlYoutube',
-    title: 'title',
-    desc: 'desc',
-    tags: 'tags'
-  };
-
-  export type categoryProductUtamaOrderByRelevanceFieldEnum = (typeof categoryProductUtamaOrderByRelevanceFieldEnum)[keyof typeof categoryProductUtamaOrderByRelevanceFieldEnum]
-
-
-  export const categoryProductOrderByRelevanceFieldEnum: {
-    category: 'category',
-    slugCategory: 'slugCategory',
-    image: 'image',
-    icon: 'icon',
-    urlYoutube: 'urlYoutube',
-    title: 'title',
-    desc: 'desc',
-    tags: 'tags'
-  };
-
-  export type categoryProductOrderByRelevanceFieldEnum = (typeof categoryProductOrderByRelevanceFieldEnum)[keyof typeof categoryProductOrderByRelevanceFieldEnum]
-
-
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -25149,238 +27476,6 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-  export const listProductOrderByRelevanceFieldEnum: {
-    slugProduct: 'slugProduct',
-    descProduct: 'descProduct',
-    productName: 'productName',
-    descMetaProduct: 'descMetaProduct',
-    subKategoriProduct: 'subKategoriProduct',
-    productType: 'productType',
-    tagProduct: 'tagProduct',
-    urlYoutube: 'urlYoutube',
-    username: 'username'
-  };
-
-  export type listProductOrderByRelevanceFieldEnum = (typeof listProductOrderByRelevanceFieldEnum)[keyof typeof listProductOrderByRelevanceFieldEnum]
-
-
-  export const fMerekOrderByRelevanceFieldEnum: {
-    id: 'id',
-    name: 'name'
-  };
-
-  export type fMerekOrderByRelevanceFieldEnum = (typeof fMerekOrderByRelevanceFieldEnum)[keyof typeof fMerekOrderByRelevanceFieldEnum]
-
-
-  export const specProductOrderByRelevanceFieldEnum: {
-    phase_spec: 'phase_spec',
-    frequency_spec: 'frequency_spec',
-    gensetPower_spec: 'gensetPower_spec',
-    ratedPower_spec: 'ratedPower_spec',
-    maxPower_spec: 'maxPower_spec',
-    ratedACVoltage_spec: 'ratedACVoltage_spec',
-    starting_spec: 'starting_spec',
-    fuelConsumption_spec: 'fuelConsumption_spec',
-    dimension_spec: 'dimension_spec'
-  };
-
-  export type specProductOrderByRelevanceFieldEnum = (typeof specProductOrderByRelevanceFieldEnum)[keyof typeof specProductOrderByRelevanceFieldEnum]
-
-
-  export const imageProductUtamaOrderByRelevanceFieldEnum: {
-    asset_id: 'asset_id',
-    public_id: 'public_id',
-    version_id: 'version_id',
-    signature: 'signature',
-    format: 'format',
-    resource_type: 'resource_type',
-    type: 'type',
-    etag: 'etag',
-    url: 'url',
-    secure_url: 'secure_url',
-    asset_folder: 'asset_folder',
-    display_name: 'display_name',
-    original_filename: 'original_filename',
-    api_key: 'api_key'
-  };
-
-  export type imageProductUtamaOrderByRelevanceFieldEnum = (typeof imageProductUtamaOrderByRelevanceFieldEnum)[keyof typeof imageProductUtamaOrderByRelevanceFieldEnum]
-
-
-  export const imageProductOrderByRelevanceFieldEnum: {
-    asset_id: 'asset_id',
-    public_id: 'public_id',
-    version_id: 'version_id',
-    signature: 'signature',
-    format: 'format',
-    resource_type: 'resource_type',
-    type: 'type',
-    etag: 'etag',
-    url: 'url',
-    secure_url: 'secure_url',
-    asset_folder: 'asset_folder',
-    display_name: 'display_name',
-    original_filename: 'original_filename',
-    api_key: 'api_key'
-  };
-
-  export type imageProductOrderByRelevanceFieldEnum = (typeof imageProductOrderByRelevanceFieldEnum)[keyof typeof imageProductOrderByRelevanceFieldEnum]
-
-
-  export const voucherOrderByRelevanceFieldEnum: {
-    id: 'id',
-    kode: 'kode',
-    tipe: 'tipe'
-  };
-
-  export type voucherOrderByRelevanceFieldEnum = (typeof voucherOrderByRelevanceFieldEnum)[keyof typeof voucherOrderByRelevanceFieldEnum]
-
-
-  export const cartOrderByRelevanceFieldEnum: {
-    IDCart: 'IDCart',
-    email: 'email',
-    name: 'name',
-    avatar: 'avatar',
-    voucherId: 'voucherId'
-  };
-
-  export type cartOrderByRelevanceFieldEnum = (typeof cartOrderByRelevanceFieldEnum)[keyof typeof cartOrderByRelevanceFieldEnum]
-
-
-  export const cartItemOrderByRelevanceFieldEnum: {
-    cartId: 'cartId',
-    note: 'note'
-  };
-
-  export type cartItemOrderByRelevanceFieldEnum = (typeof cartItemOrderByRelevanceFieldEnum)[keyof typeof cartItemOrderByRelevanceFieldEnum]
-
-
-  export const formPembelianOrderByRelevanceFieldEnum: {
-    nama_lengkap_user: 'nama_lengkap_user',
-    alamat_lengkap_user: 'alamat_lengkap_user',
-    catatan_pengiriman: 'catatan_pengiriman',
-    cartID: 'cartID',
-    city: 'city',
-    province: 'province',
-    alamat_detail: 'alamat_detail'
-  };
-
-  export type formPembelianOrderByRelevanceFieldEnum = (typeof formPembelianOrderByRelevanceFieldEnum)[keyof typeof formPembelianOrderByRelevanceFieldEnum]
-
-
-  export const ongkosKirimOrderByRelevanceFieldEnum: {
-    productName: 'productName',
-    cartID: 'cartID'
-  };
-
-  export type ongkosKirimOrderByRelevanceFieldEnum = (typeof ongkosKirimOrderByRelevanceFieldEnum)[keyof typeof ongkosKirimOrderByRelevanceFieldEnum]
-
-
-  export const dataPesananItemOrderByRelevanceFieldEnum: {
-    note: 'note',
-    productName: 'productName',
-    methodPayment: 'methodPayment',
-    image: 'image',
-    slugProduct: 'slugProduct',
-    merchantOrderId: 'merchantOrderId',
-    status: 'status',
-    noResi: 'noResi'
-  };
-
-  export type dataPesananItemOrderByRelevanceFieldEnum = (typeof dataPesananItemOrderByRelevanceFieldEnum)[keyof typeof dataPesananItemOrderByRelevanceFieldEnum]
-
-
-  export const dataPesananOrderByRelevanceFieldEnum: {
-    reference: 'reference',
-    merchantOrderId: 'merchantOrderId',
-    cartID: 'cartID',
-    alamat_lengkap_user: 'alamat_lengkap_user',
-    catatan_pengiriman: 'catatan_pengiriman',
-    nama_lengkap_user: 'nama_lengkap_user',
-    kode: 'kode',
-    alamat_detail: 'alamat_detail',
-    nota_url: 'nota_url',
-    payment_info: 'payment_info'
-  };
-
-  export type dataPesananOrderByRelevanceFieldEnum = (typeof dataPesananOrderByRelevanceFieldEnum)[keyof typeof dataPesananOrderByRelevanceFieldEnum]
-
-
-  export const suratPenawaranOrderByRelevanceFieldEnum: {
-    id: 'id',
-    name: 'name',
-    email: 'email',
-    nameProduct: 'nameProduct',
-    note: 'note',
-    slugProduct: 'slugProduct',
-    sales: 'sales'
-  };
-
-  export type suratPenawaranOrderByRelevanceFieldEnum = (typeof suratPenawaranOrderByRelevanceFieldEnum)[keyof typeof suratPenawaranOrderByRelevanceFieldEnum]
-
-
-  export const postArtikelOrderByRelevanceFieldEnum: {
-    title: 'title',
-    slug: 'slug',
-    content: 'content',
-    description: 'description'
-  };
-
-  export type postArtikelOrderByRelevanceFieldEnum = (typeof postArtikelOrderByRelevanceFieldEnum)[keyof typeof postArtikelOrderByRelevanceFieldEnum]
-
-
-  export const tagArtikelOrderByRelevanceFieldEnum: {
-    id: 'id',
-    name: 'name'
-  };
-
-  export type tagArtikelOrderByRelevanceFieldEnum = (typeof tagArtikelOrderByRelevanceFieldEnum)[keyof typeof tagArtikelOrderByRelevanceFieldEnum]
-
-
-  export const imageProductArtikelOrderByRelevanceFieldEnum: {
-    asset_id: 'asset_id',
-    public_id: 'public_id',
-    version_id: 'version_id',
-    signature: 'signature',
-    format: 'format',
-    resource_type: 'resource_type',
-    type: 'type',
-    etag: 'etag',
-    url: 'url',
-    secure_url: 'secure_url',
-    asset_folder: 'asset_folder',
-    display_name: 'display_name',
-    original_filename: 'original_filename',
-    api_key: 'api_key'
-  };
-
-  export type imageProductArtikelOrderByRelevanceFieldEnum = (typeof imageProductArtikelOrderByRelevanceFieldEnum)[keyof typeof imageProductArtikelOrderByRelevanceFieldEnum]
-
-
-  export const categoryArtikelOrderByRelevanceFieldEnum: {
-    category: 'category',
-    slugCategory: 'slugCategory',
-    image: 'image',
-    icon: 'icon',
-    urlYoutube: 'urlYoutube',
-    title: 'title',
-    desc: 'desc',
-    tags: 'tags'
-  };
-
-  export type categoryArtikelOrderByRelevanceFieldEnum = (typeof categoryArtikelOrderByRelevanceFieldEnum)[keyof typeof categoryArtikelOrderByRelevanceFieldEnum]
-
-
-  export const salesOrderByRelevanceFieldEnum: {
-    id: 'id',
-    name: 'name',
-    numberForm: 'numberForm',
-    numberWA: 'numberWA'
-  };
-
-  export type salesOrderByRelevanceFieldEnum = (typeof salesOrderByRelevanceFieldEnum)[keyof typeof salesOrderByRelevanceFieldEnum]
 
 
   /**
@@ -25506,7 +27601,6 @@ export namespace Prisma {
     desc?: SortOrderInput | SortOrder
     tags?: SortOrderInput | SortOrder
     categoryProduct?: categoryProductOrderByRelationAggregateInput
-    _relevance?: categoryProductUtamaOrderByRelevanceInput
   }
 
   export type categoryProductUtamaWhereUniqueInput = Prisma.AtLeast<{
@@ -25598,7 +27692,6 @@ export namespace Prisma {
     categoryProductUtamaId?: SortOrderInput | SortOrder
     categoryProductUtama?: categoryProductUtamaOrderByWithRelationInput
     listProducts?: listProductOrderByRelationAggregateInput
-    _relevance?: categoryProductOrderByRelevanceInput
   }
 
   export type categoryProductWhereUniqueInput = Prisma.AtLeast<{
@@ -25732,7 +27825,6 @@ export namespace Prisma {
     spec_product?: specProductOrderByWithRelationInput
     relatedArticles?: postArtikelOrderByRelationAggregateInput
     fMerek?: fMerekOrderByRelationAggregateInput
-    _relevance?: listProductOrderByRelevanceInput
   }
 
   export type listProductWhereUniqueInput = Prisma.AtLeast<{
@@ -25857,7 +27949,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Merek?: listProductOrderByRelationAggregateInput
-    _relevance?: fMerekOrderByRelevanceInput
   }
 
   export type fMerekWhereUniqueInput = Prisma.AtLeast<{
@@ -25928,7 +28019,6 @@ export namespace Prisma {
     dimension_spec?: SortOrderInput | SortOrder
     IdProduct?: SortOrder
     user?: listProductOrderByWithRelationInput
-    _relevance?: specProductOrderByRelevanceInput
   }
 
   export type specProductWhereUniqueInput = Prisma.AtLeast<{
@@ -26057,7 +28147,6 @@ export namespace Prisma {
     overwritten?: SortOrderInput | SortOrder
     IdProduct?: SortOrder
     user?: listProductOrderByWithRelationInput
-    _relevance?: imageProductUtamaOrderByRelevanceInput
   }
 
   export type imageProductUtamaWhereUniqueInput = Prisma.AtLeast<{
@@ -26225,7 +28314,6 @@ export namespace Prisma {
     overwritten?: SortOrderInput | SortOrder
     IdProduct?: SortOrder
     user?: listProductOrderByWithRelationInput
-    _relevance?: imageProductOrderByRelevanceInput
   }
 
   export type imageProductWhereUniqueInput = Prisma.AtLeast<{
@@ -26353,7 +28441,6 @@ export namespace Prisma {
     tipe?: SortOrderInput | SortOrder
     harga?: SortOrderInput | SortOrder
     carts?: cartOrderByRelationAggregateInput
-    _relevance?: voucherOrderByRelevanceInput
   }
 
   export type voucherWhereUniqueInput = Prisma.AtLeast<{
@@ -26431,7 +28518,6 @@ export namespace Prisma {
     dataPesanan?: dataPesananOrderByRelationAggregateInput
     formData?: formPembelianOrderByWithRelationInput
     ongkosKirim?: ongkosKirimOrderByWithRelationInput
-    _relevance?: cartOrderByRelevanceInput
   }
 
   export type cartWhereUniqueInput = Prisma.AtLeast<{
@@ -26510,7 +28596,6 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     cart?: cartOrderByWithRelationInput
     product?: listProductOrderByWithRelationInput
-    _relevance?: cartItemOrderByRelevanceInput
   }
 
   export type cartItemWhereUniqueInput = Prisma.AtLeast<{
@@ -26592,7 +28677,6 @@ export namespace Prisma {
     province?: SortOrderInput | SortOrder
     alamat_detail?: SortOrderInput | SortOrder
     user?: cartOrderByWithRelationInput
-    _relevance?: formPembelianOrderByRelevanceInput
   }
 
   export type formPembelianWhereUniqueInput = Prisma.AtLeast<{
@@ -26675,7 +28759,6 @@ export namespace Prisma {
     quantity?: SortOrderInput | SortOrder
     cartID?: SortOrder
     user?: cartOrderByWithRelationInput
-    _relevance?: ongkosKirimOrderByRelevanceInput
   }
 
   export type ongkosKirimWhereUniqueInput = Prisma.AtLeast<{
@@ -26759,7 +28842,6 @@ export namespace Prisma {
     noResi?: SortOrderInput | SortOrder
     dataPesananId?: SortOrderInput | SortOrder
     dataPesanan?: dataPesananOrderByWithRelationInput
-    _relevance?: dataPesananItemOrderByRelevanceInput
   }
 
   export type dataPesananItemWhereUniqueInput = Prisma.AtLeast<{
@@ -26875,7 +28957,6 @@ export namespace Prisma {
     diskon_nominal?: SortOrderInput | SortOrder
     cart?: cartOrderByWithRelationInput
     dataPesananItems?: dataPesananItemOrderByRelationAggregateInput
-    _relevance?: dataPesananOrderByRelevanceInput
   }
 
   export type dataPesananWhereUniqueInput = Prisma.AtLeast<{
@@ -26981,7 +29062,6 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     slugProduct?: SortOrderInput | SortOrder
     sales?: SortOrderInput | SortOrder
-    _relevance?: suratPenawaranOrderByRelevanceInput
   }
 
   export type suratPenawaranWhereUniqueInput = Prisma.AtLeast<{
@@ -27073,7 +29153,6 @@ export namespace Prisma {
     categoryArtikel?: categoryArtikelOrderByWithRelationInput
     tagsArtikel?: tagArtikelOrderByRelationAggregateInput
     relatedProducts?: listProductOrderByRelationAggregateInput
-    _relevance?: postArtikelOrderByRelevanceInput
   }
 
   export type postArtikelWhereUniqueInput = Prisma.AtLeast<{
@@ -27153,7 +29232,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     articles?: postArtikelOrderByRelationAggregateInput
-    _relevance?: tagArtikelOrderByRelevanceInput
   }
 
   export type tagArtikelWhereUniqueInput = Prisma.AtLeast<{
@@ -27250,7 +29328,6 @@ export namespace Prisma {
     overwritten?: SortOrderInput | SortOrder
     IdProductArtikel?: SortOrder
     userd?: postArtikelOrderByWithRelationInput
-    _relevance?: imageProductArtikelOrderByRelevanceInput
   }
 
   export type imageProductArtikelWhereUniqueInput = Prisma.AtLeast<{
@@ -27386,7 +29463,6 @@ export namespace Prisma {
     desc?: SortOrderInput | SortOrder
     tags?: SortOrderInput | SortOrder
     postArtikel?: postArtikelOrderByRelationAggregateInput
-    _relevance?: categoryArtikelOrderByRelevanceInput
   }
 
   export type categoryArtikelWhereUniqueInput = Prisma.AtLeast<{
@@ -27466,7 +29542,6 @@ export namespace Prisma {
     numberWA?: SortOrder
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
-    _relevance?: salesOrderByRelevanceInput
   }
 
   export type salesWhereUniqueInput = Prisma.AtLeast<{
@@ -27511,6 +29586,185 @@ export namespace Prisma {
     numberWA?: StringWithAggregatesFilter<"sales"> | string
     clickCountForm?: IntWithAggregatesFilter<"sales"> | number
     clickCountWA?: IntWithAggregatesFilter<"sales"> | number
+  }
+
+  export type salesPenawaranWhereInput = {
+    AND?: salesPenawaranWhereInput | salesPenawaranWhereInput[]
+    OR?: salesPenawaranWhereInput[]
+    NOT?: salesPenawaranWhereInput | salesPenawaranWhereInput[]
+    id?: StringFilter<"salesPenawaran"> | string
+    createdAt?: DateTimeFilter<"salesPenawaran"> | Date | string
+    updatedAt?: DateTimeFilter<"salesPenawaran"> | Date | string
+    customerName?: StringFilter<"salesPenawaran"> | string
+    PICcustomerName?: StringNullableFilter<"salesPenawaran"> | string | null
+    salesName?: StringFilter<"salesPenawaran"> | string
+    salesPhone?: StringFilter<"salesPenawaran"> | string
+    selectedBank?: StringNullableFilter<"salesPenawaran"> | string | null
+    notes?: StringNullableListFilter<"salesPenawaran">
+    includePPN?: BoolFilter<"salesPenawaran"> | boolean
+    totalHargaSatuan?: BigIntFilter<"salesPenawaran"> | bigint | number
+    totalKeseluruhan?: BigIntFilter<"salesPenawaran"> | bigint | number
+    totalQty?: IntFilter<"salesPenawaran"> | number
+    ppn?: BigIntFilter<"salesPenawaran"> | bigint | number
+    grandTotal?: BigIntFilter<"salesPenawaran"> | bigint | number
+    items?: SalesPenawaranItemListRelationFilter
+  }
+
+  export type salesPenawaranOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    customerName?: SortOrder
+    PICcustomerName?: SortOrderInput | SortOrder
+    salesName?: SortOrder
+    salesPhone?: SortOrder
+    selectedBank?: SortOrderInput | SortOrder
+    notes?: SortOrder
+    includePPN?: SortOrder
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+    items?: salesPenawaranItemOrderByRelationAggregateInput
+  }
+
+  export type salesPenawaranWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: salesPenawaranWhereInput | salesPenawaranWhereInput[]
+    OR?: salesPenawaranWhereInput[]
+    NOT?: salesPenawaranWhereInput | salesPenawaranWhereInput[]
+    createdAt?: DateTimeFilter<"salesPenawaran"> | Date | string
+    updatedAt?: DateTimeFilter<"salesPenawaran"> | Date | string
+    customerName?: StringFilter<"salesPenawaran"> | string
+    PICcustomerName?: StringNullableFilter<"salesPenawaran"> | string | null
+    salesName?: StringFilter<"salesPenawaran"> | string
+    salesPhone?: StringFilter<"salesPenawaran"> | string
+    selectedBank?: StringNullableFilter<"salesPenawaran"> | string | null
+    notes?: StringNullableListFilter<"salesPenawaran">
+    includePPN?: BoolFilter<"salesPenawaran"> | boolean
+    totalHargaSatuan?: BigIntFilter<"salesPenawaran"> | bigint | number
+    totalKeseluruhan?: BigIntFilter<"salesPenawaran"> | bigint | number
+    totalQty?: IntFilter<"salesPenawaran"> | number
+    ppn?: BigIntFilter<"salesPenawaran"> | bigint | number
+    grandTotal?: BigIntFilter<"salesPenawaran"> | bigint | number
+    items?: SalesPenawaranItemListRelationFilter
+  }, "id">
+
+  export type salesPenawaranOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    customerName?: SortOrder
+    PICcustomerName?: SortOrderInput | SortOrder
+    salesName?: SortOrder
+    salesPhone?: SortOrder
+    selectedBank?: SortOrderInput | SortOrder
+    notes?: SortOrder
+    includePPN?: SortOrder
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+    _count?: salesPenawaranCountOrderByAggregateInput
+    _avg?: salesPenawaranAvgOrderByAggregateInput
+    _max?: salesPenawaranMaxOrderByAggregateInput
+    _min?: salesPenawaranMinOrderByAggregateInput
+    _sum?: salesPenawaranSumOrderByAggregateInput
+  }
+
+  export type salesPenawaranScalarWhereWithAggregatesInput = {
+    AND?: salesPenawaranScalarWhereWithAggregatesInput | salesPenawaranScalarWhereWithAggregatesInput[]
+    OR?: salesPenawaranScalarWhereWithAggregatesInput[]
+    NOT?: salesPenawaranScalarWhereWithAggregatesInput | salesPenawaranScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"salesPenawaran"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"salesPenawaran"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"salesPenawaran"> | Date | string
+    customerName?: StringWithAggregatesFilter<"salesPenawaran"> | string
+    PICcustomerName?: StringNullableWithAggregatesFilter<"salesPenawaran"> | string | null
+    salesName?: StringWithAggregatesFilter<"salesPenawaran"> | string
+    salesPhone?: StringWithAggregatesFilter<"salesPenawaran"> | string
+    selectedBank?: StringNullableWithAggregatesFilter<"salesPenawaran"> | string | null
+    notes?: StringNullableListFilter<"salesPenawaran">
+    includePPN?: BoolWithAggregatesFilter<"salesPenawaran"> | boolean
+    totalHargaSatuan?: BigIntWithAggregatesFilter<"salesPenawaran"> | bigint | number
+    totalKeseluruhan?: BigIntWithAggregatesFilter<"salesPenawaran"> | bigint | number
+    totalQty?: IntWithAggregatesFilter<"salesPenawaran"> | number
+    ppn?: BigIntWithAggregatesFilter<"salesPenawaran"> | bigint | number
+    grandTotal?: BigIntWithAggregatesFilter<"salesPenawaran"> | bigint | number
+  }
+
+  export type salesPenawaranItemWhereInput = {
+    AND?: salesPenawaranItemWhereInput | salesPenawaranItemWhereInput[]
+    OR?: salesPenawaranItemWhereInput[]
+    NOT?: salesPenawaranItemWhereInput | salesPenawaranItemWhereInput[]
+    id?: StringFilter<"salesPenawaranItem"> | string
+    createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    productName?: StringFilter<"salesPenawaranItem"> | string
+    qty?: IntFilter<"salesPenawaranItem"> | number
+    productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
+    spekNew?: JsonNullableFilter<"salesPenawaranItem">
+    salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+    salesPenawaran?: XOR<SalesPenawaranRelationFilter, salesPenawaranWhereInput>
+  }
+
+  export type salesPenawaranItemOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productName?: SortOrder
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
+    spekNew?: SortOrderInput | SortOrder
+    salesPenawaranId?: SortOrder
+    salesPenawaran?: salesPenawaranOrderByWithRelationInput
+  }
+
+  export type salesPenawaranItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: salesPenawaranItemWhereInput | salesPenawaranItemWhereInput[]
+    OR?: salesPenawaranItemWhereInput[]
+    NOT?: salesPenawaranItemWhereInput | salesPenawaranItemWhereInput[]
+    createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    productName?: StringFilter<"salesPenawaranItem"> | string
+    qty?: IntFilter<"salesPenawaranItem"> | number
+    productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
+    spekNew?: JsonNullableFilter<"salesPenawaranItem">
+    salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+    salesPenawaran?: XOR<SalesPenawaranRelationFilter, salesPenawaranWhereInput>
+  }, "id">
+
+  export type salesPenawaranItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productName?: SortOrder
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
+    spekNew?: SortOrderInput | SortOrder
+    salesPenawaranId?: SortOrder
+    _count?: salesPenawaranItemCountOrderByAggregateInput
+    _avg?: salesPenawaranItemAvgOrderByAggregateInput
+    _max?: salesPenawaranItemMaxOrderByAggregateInput
+    _min?: salesPenawaranItemMinOrderByAggregateInput
+    _sum?: salesPenawaranItemSumOrderByAggregateInput
+  }
+
+  export type salesPenawaranItemScalarWhereWithAggregatesInput = {
+    AND?: salesPenawaranItemScalarWhereWithAggregatesInput | salesPenawaranItemScalarWhereWithAggregatesInput[]
+    OR?: salesPenawaranItemScalarWhereWithAggregatesInput[]
+    NOT?: salesPenawaranItemScalarWhereWithAggregatesInput | salesPenawaranItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"salesPenawaranItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"salesPenawaranItem"> | Date | string
+    productName?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
+    qty?: IntWithAggregatesFilter<"salesPenawaranItem"> | number
+    productPriceFinal?: BigIntWithAggregatesFilter<"salesPenawaranItem"> | bigint | number
+    spekNew?: JsonNullableWithAggregatesFilter<"salesPenawaranItem">
+    salesPenawaranId?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
   }
 
   export type categoryProductUtamaCreateInput = {
@@ -29833,6 +32087,212 @@ export namespace Prisma {
     clickCountWA?: IntFieldUpdateOperationsInput | number
   }
 
+  export type salesPenawaranCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerName: string
+    PICcustomerName?: string | null
+    salesName: string
+    salesPhone: string
+    selectedBank?: string | null
+    notes?: salesPenawaranCreatenotesInput | string[]
+    includePPN: boolean
+    totalHargaSatuan: bigint | number
+    totalKeseluruhan: bigint | number
+    totalQty: number
+    ppn: bigint | number
+    grandTotal: bigint | number
+    items?: salesPenawaranItemCreateNestedManyWithoutSalesPenawaranInput
+  }
+
+  export type salesPenawaranUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerName: string
+    PICcustomerName?: string | null
+    salesName: string
+    salesPhone: string
+    selectedBank?: string | null
+    notes?: salesPenawaranCreatenotesInput | string[]
+    includePPN: boolean
+    totalHargaSatuan: bigint | number
+    totalKeseluruhan: bigint | number
+    totalQty: number
+    ppn: bigint | number
+    grandTotal: bigint | number
+    items?: salesPenawaranItemUncheckedCreateNestedManyWithoutSalesPenawaranInput
+  }
+
+  export type salesPenawaranUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesName?: StringFieldUpdateOperationsInput | string
+    salesPhone?: StringFieldUpdateOperationsInput | string
+    selectedBank?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: salesPenawaranUpdatenotesInput | string[]
+    includePPN?: BoolFieldUpdateOperationsInput | boolean
+    totalHargaSatuan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalKeseluruhan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalQty?: IntFieldUpdateOperationsInput | number
+    ppn?: BigIntFieldUpdateOperationsInput | bigint | number
+    grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
+    items?: salesPenawaranItemUpdateManyWithoutSalesPenawaranNestedInput
+  }
+
+  export type salesPenawaranUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesName?: StringFieldUpdateOperationsInput | string
+    salesPhone?: StringFieldUpdateOperationsInput | string
+    selectedBank?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: salesPenawaranUpdatenotesInput | string[]
+    includePPN?: BoolFieldUpdateOperationsInput | boolean
+    totalHargaSatuan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalKeseluruhan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalQty?: IntFieldUpdateOperationsInput | number
+    ppn?: BigIntFieldUpdateOperationsInput | bigint | number
+    grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
+    items?: salesPenawaranItemUncheckedUpdateManyWithoutSalesPenawaranNestedInput
+  }
+
+  export type salesPenawaranCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerName: string
+    PICcustomerName?: string | null
+    salesName: string
+    salesPhone: string
+    selectedBank?: string | null
+    notes?: salesPenawaranCreatenotesInput | string[]
+    includePPN: boolean
+    totalHargaSatuan: bigint | number
+    totalKeseluruhan: bigint | number
+    totalQty: number
+    ppn: bigint | number
+    grandTotal: bigint | number
+  }
+
+  export type salesPenawaranUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesName?: StringFieldUpdateOperationsInput | string
+    salesPhone?: StringFieldUpdateOperationsInput | string
+    selectedBank?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: salesPenawaranUpdatenotesInput | string[]
+    includePPN?: BoolFieldUpdateOperationsInput | boolean
+    totalHargaSatuan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalKeseluruhan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalQty?: IntFieldUpdateOperationsInput | number
+    ppn?: BigIntFieldUpdateOperationsInput | bigint | number
+    grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type salesPenawaranUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesName?: StringFieldUpdateOperationsInput | string
+    salesPhone?: StringFieldUpdateOperationsInput | string
+    selectedBank?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: salesPenawaranUpdatenotesInput | string[]
+    includePPN?: BoolFieldUpdateOperationsInput | boolean
+    totalHargaSatuan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalKeseluruhan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalQty?: IntFieldUpdateOperationsInput | number
+    ppn?: BigIntFieldUpdateOperationsInput | bigint | number
+    grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type salesPenawaranItemCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    salesPenawaran: salesPenawaranCreateNestedOneWithoutItemsInput
+  }
+
+  export type salesPenawaranItemUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    salesPenawaranId: string
+  }
+
+  export type salesPenawaranItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    salesPenawaran?: salesPenawaranUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type salesPenawaranItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    salesPenawaranId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type salesPenawaranItemCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    salesPenawaranId: string
+  }
+
+  export type salesPenawaranItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type salesPenawaranItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    salesPenawaranId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -29866,7 +32326,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
@@ -29882,7 +32341,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
@@ -29900,12 +32358,6 @@ export namespace Prisma {
 
   export type categoryProductOrderByRelationAggregateInput = {
     _count?: SortOrder
-  }
-
-  export type categoryProductUtamaOrderByRelevanceInput = {
-    fields: categoryProductUtamaOrderByRelevanceFieldEnum | categoryProductUtamaOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type categoryProductUtamaCountOrderByAggregateInput = {
@@ -29999,7 +32451,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
@@ -30018,7 +32469,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     mode?: QueryMode
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
@@ -30050,12 +32500,6 @@ export namespace Prisma {
 
   export type listProductOrderByRelationAggregateInput = {
     _count?: SortOrder
-  }
-
-  export type categoryProductOrderByRelevanceInput = {
-    fields: categoryProductOrderByRelevanceFieldEnum | categoryProductOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type categoryProductCountOrderByAggregateInput = {
@@ -30222,12 +32666,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type listProductOrderByRelevanceInput = {
-    fields: listProductOrderByRelevanceFieldEnum | listProductOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type listProductCountOrderByAggregateInput = {
     id?: SortOrder
     start?: SortOrder
@@ -30392,12 +32830,6 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
-  export type fMerekOrderByRelevanceInput = {
-    fields: fMerekOrderByRelevanceFieldEnum | fMerekOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type fMerekCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -30422,12 +32854,6 @@ export namespace Prisma {
   export type ListProductRelationFilter = {
     is?: listProductWhereInput
     isNot?: listProductWhereInput
-  }
-
-  export type specProductOrderByRelevanceInput = {
-    fields: specProductOrderByRelevanceFieldEnum | specProductOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type specProductCountOrderByAggregateInput = {
@@ -30496,12 +32922,6 @@ export namespace Prisma {
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type imageProductUtamaOrderByRelevanceInput = {
-    fields: imageProductUtamaOrderByRelevanceFieldEnum | imageProductUtamaOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type imageProductUtamaCountOrderByAggregateInput = {
@@ -30618,12 +33038,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
-  export type imageProductOrderByRelevanceInput = {
-    fields: imageProductOrderByRelevanceFieldEnum | imageProductOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type imageProductCountOrderByAggregateInput = {
@@ -30744,12 +33158,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type voucherOrderByRelevanceInput = {
-    fields: voucherOrderByRelevanceFieldEnum | voucherOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type voucherCountOrderByAggregateInput = {
     id?: SortOrder
     kode?: SortOrder
@@ -30828,12 +33236,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type cartOrderByRelevanceInput = {
-    fields: cartOrderByRelevanceFieldEnum | cartOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type cartCountOrderByAggregateInput = {
     IDCart?: SortOrder
     email?: SortOrder
@@ -30894,12 +33296,6 @@ export namespace Prisma {
     isNot?: cartWhereInput
   }
 
-  export type cartItemOrderByRelevanceInput = {
-    fields: cartItemOrderByRelevanceFieldEnum | cartItemOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type cartItemCountOrderByAggregateInput = {
     id?: SortOrder
     start?: SortOrder
@@ -30943,12 +33339,6 @@ export namespace Prisma {
     id?: SortOrder
     productId?: SortOrder
     quantity?: SortOrder
-  }
-
-  export type formPembelianOrderByRelevanceInput = {
-    fields: formPembelianOrderByRelevanceFieldEnum | formPembelianOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type formPembelianCountOrderByAggregateInput = {
@@ -31008,12 +33398,6 @@ export namespace Prisma {
     no_hp_user?: SortOrder
   }
 
-  export type ongkosKirimOrderByRelevanceInput = {
-    fields: ongkosKirimOrderByRelevanceFieldEnum | ongkosKirimOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type ongkosKirimCountOrderByAggregateInput = {
     id?: SortOrder
     start?: SortOrder
@@ -31059,12 +33443,6 @@ export namespace Prisma {
   export type DataPesananNullableRelationFilter = {
     is?: dataPesananWhereInput | null
     isNot?: dataPesananWhereInput | null
-  }
-
-  export type dataPesananItemOrderByRelevanceInput = {
-    fields: dataPesananItemOrderByRelevanceFieldEnum | dataPesananItemOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type dataPesananItemCountOrderByAggregateInput = {
@@ -31147,12 +33525,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type dataPesananOrderByRelevanceInput = {
-    fields: dataPesananOrderByRelevanceFieldEnum | dataPesananOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type dataPesananCountOrderByAggregateInput = {
     id?: SortOrder
     start?: SortOrder
@@ -31232,12 +33604,6 @@ export namespace Prisma {
     diskon_nominal?: SortOrder
   }
 
-  export type suratPenawaranOrderByRelevanceInput = {
-    fields: suratPenawaranOrderByRelevanceFieldEnum | suratPenawaranOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type suratPenawaranCountOrderByAggregateInput = {
     id?: SortOrder
     start?: SortOrder
@@ -31310,12 +33676,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type postArtikelOrderByRelevanceInput = {
-    fields: postArtikelOrderByRelevanceFieldEnum | postArtikelOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type postArtikelCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -31373,12 +33733,6 @@ export namespace Prisma {
     categoryArtikelId?: SortOrder
   }
 
-  export type tagArtikelOrderByRelevanceInput = {
-    fields: tagArtikelOrderByRelevanceFieldEnum | tagArtikelOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type tagArtikelCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -31403,12 +33757,6 @@ export namespace Prisma {
   export type PostArtikelRelationFilter = {
     is?: postArtikelWhereInput
     isNot?: postArtikelWhereInput
-  }
-
-  export type imageProductArtikelOrderByRelevanceInput = {
-    fields: imageProductArtikelOrderByRelevanceFieldEnum | imageProductArtikelOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
   }
 
   export type imageProductArtikelCountOrderByAggregateInput = {
@@ -31519,12 +33867,6 @@ export namespace Prisma {
     IdProductArtikel?: SortOrder
   }
 
-  export type categoryArtikelOrderByRelevanceInput = {
-    fields: categoryArtikelOrderByRelevanceFieldEnum | categoryArtikelOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type categoryArtikelCountOrderByAggregateInput = {
     id?: SortOrder
     start?: SortOrder
@@ -31575,12 +33917,6 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type salesOrderByRelevanceInput = {
-    fields: salesOrderByRelevanceFieldEnum | salesOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
   export type salesCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -31622,6 +33958,165 @@ export namespace Prisma {
   export type salesSumOrderByAggregateInput = {
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type SalesPenawaranItemListRelationFilter = {
+    every?: salesPenawaranItemWhereInput
+    some?: salesPenawaranItemWhereInput
+    none?: salesPenawaranItemWhereInput
+  }
+
+  export type salesPenawaranItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type salesPenawaranCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    customerName?: SortOrder
+    PICcustomerName?: SortOrder
+    salesName?: SortOrder
+    salesPhone?: SortOrder
+    selectedBank?: SortOrder
+    notes?: SortOrder
+    includePPN?: SortOrder
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+  }
+
+  export type salesPenawaranAvgOrderByAggregateInput = {
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+  }
+
+  export type salesPenawaranMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    customerName?: SortOrder
+    PICcustomerName?: SortOrder
+    salesName?: SortOrder
+    salesPhone?: SortOrder
+    selectedBank?: SortOrder
+    includePPN?: SortOrder
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+  }
+
+  export type salesPenawaranMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    customerName?: SortOrder
+    PICcustomerName?: SortOrder
+    salesName?: SortOrder
+    salesPhone?: SortOrder
+    selectedBank?: SortOrder
+    includePPN?: SortOrder
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+  }
+
+  export type salesPenawaranSumOrderByAggregateInput = {
+    totalHargaSatuan?: SortOrder
+    totalKeseluruhan?: SortOrder
+    totalQty?: SortOrder
+    ppn?: SortOrder
+    grandTotal?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type SalesPenawaranRelationFilter = {
+    is?: salesPenawaranWhereInput
+    isNot?: salesPenawaranWhereInput
+  }
+
+  export type salesPenawaranItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productName?: SortOrder
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
+    spekNew?: SortOrder
+    salesPenawaranId?: SortOrder
+  }
+
+  export type salesPenawaranItemAvgOrderByAggregateInput = {
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
+  }
+
+  export type salesPenawaranItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productName?: SortOrder
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
+    salesPenawaranId?: SortOrder
+  }
+
+  export type salesPenawaranItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productName?: SortOrder
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
+    salesPenawaranId?: SortOrder
+  }
+
+  export type salesPenawaranItemSumOrderByAggregateInput = {
+    qty?: SortOrder
+    productPriceFinal?: SortOrder
   }
 
   export type categoryProductCreateNestedManyWithoutCategoryProductUtamaInput = {
@@ -32650,6 +35145,79 @@ export namespace Prisma {
     deleteMany?: postArtikelScalarWhereInput | postArtikelScalarWhereInput[]
   }
 
+  export type salesPenawaranCreatenotesInput = {
+    set: string[]
+  }
+
+  export type salesPenawaranItemCreateNestedManyWithoutSalesPenawaranInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput> | salesPenawaranItemCreateWithoutSalesPenawaranInput[] | salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput | salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput[]
+    createMany?: salesPenawaranItemCreateManySalesPenawaranInputEnvelope
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+  }
+
+  export type salesPenawaranItemUncheckedCreateNestedManyWithoutSalesPenawaranInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput> | salesPenawaranItemCreateWithoutSalesPenawaranInput[] | salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput | salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput[]
+    createMany?: salesPenawaranItemCreateManySalesPenawaranInputEnvelope
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+  }
+
+  export type salesPenawaranUpdatenotesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
+  export type salesPenawaranItemUpdateManyWithoutSalesPenawaranNestedInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput> | salesPenawaranItemCreateWithoutSalesPenawaranInput[] | salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput | salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput[]
+    upsert?: salesPenawaranItemUpsertWithWhereUniqueWithoutSalesPenawaranInput | salesPenawaranItemUpsertWithWhereUniqueWithoutSalesPenawaranInput[]
+    createMany?: salesPenawaranItemCreateManySalesPenawaranInputEnvelope
+    set?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    disconnect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    delete?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    update?: salesPenawaranItemUpdateWithWhereUniqueWithoutSalesPenawaranInput | salesPenawaranItemUpdateWithWhereUniqueWithoutSalesPenawaranInput[]
+    updateMany?: salesPenawaranItemUpdateManyWithWhereWithoutSalesPenawaranInput | salesPenawaranItemUpdateManyWithWhereWithoutSalesPenawaranInput[]
+    deleteMany?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+  }
+
+  export type salesPenawaranItemUncheckedUpdateManyWithoutSalesPenawaranNestedInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput> | salesPenawaranItemCreateWithoutSalesPenawaranInput[] | salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput | salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput[]
+    upsert?: salesPenawaranItemUpsertWithWhereUniqueWithoutSalesPenawaranInput | salesPenawaranItemUpsertWithWhereUniqueWithoutSalesPenawaranInput[]
+    createMany?: salesPenawaranItemCreateManySalesPenawaranInputEnvelope
+    set?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    disconnect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    delete?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    update?: salesPenawaranItemUpdateWithWhereUniqueWithoutSalesPenawaranInput | salesPenawaranItemUpdateWithWhereUniqueWithoutSalesPenawaranInput[]
+    updateMany?: salesPenawaranItemUpdateManyWithWhereWithoutSalesPenawaranInput | salesPenawaranItemUpdateManyWithWhereWithoutSalesPenawaranInput[]
+    deleteMany?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+  }
+
+  export type salesPenawaranCreateNestedOneWithoutItemsInput = {
+    create?: XOR<salesPenawaranCreateWithoutItemsInput, salesPenawaranUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: salesPenawaranCreateOrConnectWithoutItemsInput
+    connect?: salesPenawaranWhereUniqueInput
+  }
+
+  export type salesPenawaranUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<salesPenawaranCreateWithoutItemsInput, salesPenawaranUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: salesPenawaranCreateOrConnectWithoutItemsInput
+    upsert?: salesPenawaranUpsertWithoutItemsInput
+    connect?: salesPenawaranWhereUniqueInput
+    update?: XOR<XOR<salesPenawaranUpdateToOneWithWhereWithoutItemsInput, salesPenawaranUpdateWithoutItemsInput>, salesPenawaranUncheckedUpdateWithoutItemsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -32683,7 +35251,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
@@ -32698,7 +35265,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
@@ -32754,7 +35320,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
@@ -32772,7 +35337,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
@@ -32915,6 +35479,33 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type categoryProductCreateWithoutCategoryProductUtamaInput = {
@@ -35807,6 +38398,154 @@ export namespace Prisma {
     data: XOR<postArtikelUpdateManyMutationInput, postArtikelUncheckedUpdateManyWithoutCategoryArtikelInput>
   }
 
+  export type salesPenawaranItemCreateWithoutSalesPenawaranInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput = {
+    where: salesPenawaranItemWhereUniqueInput
+    create: XOR<salesPenawaranItemCreateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput>
+  }
+
+  export type salesPenawaranItemCreateManySalesPenawaranInputEnvelope = {
+    data: salesPenawaranItemCreateManySalesPenawaranInput | salesPenawaranItemCreateManySalesPenawaranInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type salesPenawaranItemUpsertWithWhereUniqueWithoutSalesPenawaranInput = {
+    where: salesPenawaranItemWhereUniqueInput
+    update: XOR<salesPenawaranItemUpdateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedUpdateWithoutSalesPenawaranInput>
+    create: XOR<salesPenawaranItemCreateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput>
+  }
+
+  export type salesPenawaranItemUpdateWithWhereUniqueWithoutSalesPenawaranInput = {
+    where: salesPenawaranItemWhereUniqueInput
+    data: XOR<salesPenawaranItemUpdateWithoutSalesPenawaranInput, salesPenawaranItemUncheckedUpdateWithoutSalesPenawaranInput>
+  }
+
+  export type salesPenawaranItemUpdateManyWithWhereWithoutSalesPenawaranInput = {
+    where: salesPenawaranItemScalarWhereInput
+    data: XOR<salesPenawaranItemUpdateManyMutationInput, salesPenawaranItemUncheckedUpdateManyWithoutSalesPenawaranInput>
+  }
+
+  export type salesPenawaranItemScalarWhereInput = {
+    AND?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+    OR?: salesPenawaranItemScalarWhereInput[]
+    NOT?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+    id?: StringFilter<"salesPenawaranItem"> | string
+    createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    productName?: StringFilter<"salesPenawaranItem"> | string
+    qty?: IntFilter<"salesPenawaranItem"> | number
+    productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
+    spekNew?: JsonNullableFilter<"salesPenawaranItem">
+    salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+  }
+
+  export type salesPenawaranCreateWithoutItemsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerName: string
+    PICcustomerName?: string | null
+    salesName: string
+    salesPhone: string
+    selectedBank?: string | null
+    notes?: salesPenawaranCreatenotesInput | string[]
+    includePPN: boolean
+    totalHargaSatuan: bigint | number
+    totalKeseluruhan: bigint | number
+    totalQty: number
+    ppn: bigint | number
+    grandTotal: bigint | number
+  }
+
+  export type salesPenawaranUncheckedCreateWithoutItemsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerName: string
+    PICcustomerName?: string | null
+    salesName: string
+    salesPhone: string
+    selectedBank?: string | null
+    notes?: salesPenawaranCreatenotesInput | string[]
+    includePPN: boolean
+    totalHargaSatuan: bigint | number
+    totalKeseluruhan: bigint | number
+    totalQty: number
+    ppn: bigint | number
+    grandTotal: bigint | number
+  }
+
+  export type salesPenawaranCreateOrConnectWithoutItemsInput = {
+    where: salesPenawaranWhereUniqueInput
+    create: XOR<salesPenawaranCreateWithoutItemsInput, salesPenawaranUncheckedCreateWithoutItemsInput>
+  }
+
+  export type salesPenawaranUpsertWithoutItemsInput = {
+    update: XOR<salesPenawaranUpdateWithoutItemsInput, salesPenawaranUncheckedUpdateWithoutItemsInput>
+    create: XOR<salesPenawaranCreateWithoutItemsInput, salesPenawaranUncheckedCreateWithoutItemsInput>
+    where?: salesPenawaranWhereInput
+  }
+
+  export type salesPenawaranUpdateToOneWithWhereWithoutItemsInput = {
+    where?: salesPenawaranWhereInput
+    data: XOR<salesPenawaranUpdateWithoutItemsInput, salesPenawaranUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type salesPenawaranUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesName?: StringFieldUpdateOperationsInput | string
+    salesPhone?: StringFieldUpdateOperationsInput | string
+    selectedBank?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: salesPenawaranUpdatenotesInput | string[]
+    includePPN?: BoolFieldUpdateOperationsInput | boolean
+    totalHargaSatuan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalKeseluruhan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalQty?: IntFieldUpdateOperationsInput | number
+    ppn?: BigIntFieldUpdateOperationsInput | bigint | number
+    grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type salesPenawaranUncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesName?: StringFieldUpdateOperationsInput | string
+    salesPhone?: StringFieldUpdateOperationsInput | string
+    selectedBank?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: salesPenawaranUpdatenotesInput | string[]
+    includePPN?: BoolFieldUpdateOperationsInput | boolean
+    totalHargaSatuan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalKeseluruhan?: BigIntFieldUpdateOperationsInput | bigint | number
+    totalQty?: IntFieldUpdateOperationsInput | number
+    ppn?: BigIntFieldUpdateOperationsInput | bigint | number
+    grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
   export type categoryProductCreateManyCategoryProductUtamaInput = {
     id?: number
     start?: Date | string
@@ -36882,6 +39621,46 @@ export namespace Prisma {
     start?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type salesPenawaranItemCreateManySalesPenawaranInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type salesPenawaranItemUpdateWithoutSalesPenawaranInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type salesPenawaranItemUncheckedUpdateWithoutSalesPenawaranInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type salesPenawaranItemUncheckedUpdateManyWithoutSalesPenawaranInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+  }
+
 
 
   /**
@@ -36927,6 +39706,10 @@ export namespace Prisma {
      * @deprecated Use CategoryArtikelCountOutputTypeDefaultArgs instead
      */
     export type CategoryArtikelCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CategoryArtikelCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SalesPenawaranCountOutputTypeDefaultArgs instead
+     */
+    export type SalesPenawaranCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesPenawaranCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use categoryProductUtamaDefaultArgs instead
      */
@@ -37007,6 +39790,14 @@ export namespace Prisma {
      * @deprecated Use salesDefaultArgs instead
      */
     export type salesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = salesDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use salesPenawaranDefaultArgs instead
+     */
+    export type salesPenawaranArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = salesPenawaranDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use salesPenawaranItemDefaultArgs instead
+     */
+    export type salesPenawaranItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = salesPenawaranItemDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

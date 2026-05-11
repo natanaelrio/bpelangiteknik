@@ -345,7 +345,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
 
             <div className={styles.wrapper}>
                 {/* HEADER */}
-                <div className={`${styles.row} ${styles.header}`}>
+                <div className={styles.header}>
                     <div>Produk</div>
                     <div>Penjualan</div>
                     <div>Stok</div>
@@ -354,9 +354,10 @@ export default function ListProductNew({ session, query, dataKategori }) {
                     <div>Aksi</div>
                 </div>
                 {/* DATA */}
-                {DataProduct?.map((item, index) => {
-                    return (
-                        <div className={styles.row} key={index}>
+                <div className={styles.dataList}>
+                    {DataProduct?.map((item, index) => {
+                        return (
+                            <div className={styles.row} key={index}>
                             {/* Produk */}
                             <div className={styles.product}>
                                 <Image
@@ -521,6 +522,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                         </div>
                     )
                 })}
+                </div>
                 <div className={styles.pagination}>
                     <button
                         onClick={handlePrev}

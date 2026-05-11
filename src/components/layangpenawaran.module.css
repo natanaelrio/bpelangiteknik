@@ -52,17 +52,18 @@
    Manual Product Input
 ========================= */
 .manualBox {
-    margin-top: 14px;
-    padding: 10px;
-    border: 1px dashed #d1d5db;
-    border-radius: 10px;
-    background: #f9fafb;
+    margin-top: 18px;
+    padding: 16px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
 .manualBox h4 {
-    font-size: 13px;
-    margin-bottom: 8px;
-    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #334155;
 }
 
 .manualBox input {
@@ -134,12 +135,12 @@
    Box utama
 ========================= */
 .layangPenawaran {
-    width: 360px;
+    width: 380px;
     max-width: 94vw;
     background: #ffffff;
-    border-radius: 14px;
-    padding: 18px 16px 20px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding: 24px 20px 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 
     /* SCROLL */
     max-height: calc(100vh - 120px);
@@ -149,22 +150,26 @@
 
 .closeBtn {
     position: absolute;
-    top: 10px;
+    top: 14px;
     right: 14px;
-    background: #c8302f;
-    color: white;
+    background: #f3f4f6;
+    color: #6b7280;
     border: none;
-    border-radius: 6px;
-    width: 54px;
-    height: 42px;
-    /* font-size: 18px; */
+    border-radius: 10px;
+    width: 36px;
+    height: 36px;
     cursor: pointer;
     z-index: 999999;
-    font-size: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
 .closeBtn:hover {
-    background: #d1d5db;
+    background: #fee2e2;
+    color: #dc2626;
 }
 
 
@@ -173,10 +178,14 @@
 ========================= */
 .layangPenawaran h2 {
     text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
     color: #111827;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* =========================
@@ -185,29 +194,38 @@
 .formGroup {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .formGroup label {
-    font-size: 12px;
+    font-size: 13px;
     color: #374151;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .formGroup input,
 .formGroup select {
-    height: 36px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    padding: 0 10px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 0 14px;
     font-size: 13px;
     outline: none;
+    transition: all 0.2s ease;
+    background: #f9fafb;
 }
 
 .formGroup input:focus,
 .formGroup select:focus {
-    border-color: #2563eb;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.inputError {
+    border-color: #ef4444 !important;
+    background: #fef2f2 !important;
 }
 
 .bankDetail {
@@ -241,12 +259,16 @@
 }
 
 .notesBox {
-    margin-top: 14px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e7eb;
 }
 
 .notesBox h4 {
-    font-size: 13px;
-    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #374151;
 }
 
 .noteItem {
@@ -311,18 +333,50 @@
 .submitBtn {
     width: 100%;
     margin-top: 16px;
-    height: 40px;
-    border-radius: 10px;
+    height: 44px;
+    border-radius: 12px;
     border: none;
-    background: #2563eb;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.submitBtn:hover {
-    background: #1e40af;
+.submitBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.submitBtn:disabled {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.loadingWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 
@@ -332,12 +386,13 @@
 .salesInfo {
     display: flex;
     justify-content: space-between;
-    background: #f9fafb;
-    border-radius: 8px;
-    padding: 8px 10px;
-    margin-bottom: 14px;
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
     font-size: 12px;
-    color: #111827;
+    color: #3730a3;
+    border: 1px solid #c7d2fe;
 }
 
 /* =========================
@@ -346,12 +401,19 @@
 .penawaranItem {
     display: flex;
     align-items: flex-start;
-    padding: 12px 10px;
+    padding: 14px 12px;
     border-bottom: 1px solid #e5e7eb;
-    gap: 10px;
-    background: #fafafa;
-    border-radius: 8px;
-    margin-bottom: 8px;
+    gap: 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.penawaranItem:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .penawaranItem:last-child {
@@ -393,33 +455,40 @@
 .qtyControl {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 
 .qtyControl button {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     border: none;
-    border-radius: 5px;
-    background: #e5e7eb;
-    font-size: 14px;
+    border-radius: 8px;
+    background: #667eea;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     line-height: 1;
-    color: #374151;
+    color: white;
+    transition: all 0.2s ease;
 }
 
 .qtyControl button:hover {
-    background: #d1d5db;
+    background: #5a67d8;
+    transform: scale(1.05);
+}
+
+.qtyControl button:first-child:hover {
+    background: #dc2626;
 }
 
 .qtyControl input {
-    width: 40px;
-    height: 24px;
+    width: 48px;
+    height: 28px;
     text-align: center;
-    border-radius: 5px;
-    border: 1px solid #d1d5db;
-    font-size: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /* Hilangkan spinner input number */

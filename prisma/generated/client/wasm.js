@@ -447,6 +447,35 @@ exports.Prisma.SalesScalarFieldEnum = {
   clickCountWA: 'clickCountWA'
 };
 
+exports.Prisma.SalesPenawaranScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  customerName: 'customerName',
+  PICcustomerName: 'PICcustomerName',
+  salesName: 'salesName',
+  salesPhone: 'salesPhone',
+  selectedBank: 'selectedBank',
+  notes: 'notes',
+  includePPN: 'includePPN',
+  totalHargaSatuan: 'totalHargaSatuan',
+  totalKeseluruhan: 'totalKeseluruhan',
+  totalQty: 'totalQty',
+  ppn: 'ppn',
+  grandTotal: 'grandTotal'
+};
+
+exports.Prisma.SalesPenawaranItemScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  productName: 'productName',
+  qty: 'qty',
+  productPriceFinal: 'productPriceFinal',
+  spekNew: 'spekNew',
+  salesPenawaranId: 'salesPenawaranId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -467,210 +496,10 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
-exports.Prisma.categoryProductUtamaOrderByRelevanceFieldEnum = {
-  category: 'category',
-  slugCategory: 'slugCategory',
-  image: 'image',
-  icon: 'icon',
-  urlYoutube: 'urlYoutube',
-  title: 'title',
-  desc: 'desc',
-  tags: 'tags'
-};
-
-exports.Prisma.categoryProductOrderByRelevanceFieldEnum = {
-  category: 'category',
-  slugCategory: 'slugCategory',
-  image: 'image',
-  icon: 'icon',
-  urlYoutube: 'urlYoutube',
-  title: 'title',
-  desc: 'desc',
-  tags: 'tags'
-};
-
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.listProductOrderByRelevanceFieldEnum = {
-  slugProduct: 'slugProduct',
-  descProduct: 'descProduct',
-  productName: 'productName',
-  descMetaProduct: 'descMetaProduct',
-  subKategoriProduct: 'subKategoriProduct',
-  productType: 'productType',
-  tagProduct: 'tagProduct',
-  urlYoutube: 'urlYoutube',
-  username: 'username'
-};
-
-exports.Prisma.fMerekOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.specProductOrderByRelevanceFieldEnum = {
-  phase_spec: 'phase_spec',
-  frequency_spec: 'frequency_spec',
-  gensetPower_spec: 'gensetPower_spec',
-  ratedPower_spec: 'ratedPower_spec',
-  maxPower_spec: 'maxPower_spec',
-  ratedACVoltage_spec: 'ratedACVoltage_spec',
-  starting_spec: 'starting_spec',
-  fuelConsumption_spec: 'fuelConsumption_spec',
-  dimension_spec: 'dimension_spec'
-};
-
-exports.Prisma.imageProductUtamaOrderByRelevanceFieldEnum = {
-  asset_id: 'asset_id',
-  public_id: 'public_id',
-  version_id: 'version_id',
-  signature: 'signature',
-  format: 'format',
-  resource_type: 'resource_type',
-  type: 'type',
-  etag: 'etag',
-  url: 'url',
-  secure_url: 'secure_url',
-  asset_folder: 'asset_folder',
-  display_name: 'display_name',
-  original_filename: 'original_filename',
-  api_key: 'api_key'
-};
-
-exports.Prisma.imageProductOrderByRelevanceFieldEnum = {
-  asset_id: 'asset_id',
-  public_id: 'public_id',
-  version_id: 'version_id',
-  signature: 'signature',
-  format: 'format',
-  resource_type: 'resource_type',
-  type: 'type',
-  etag: 'etag',
-  url: 'url',
-  secure_url: 'secure_url',
-  asset_folder: 'asset_folder',
-  display_name: 'display_name',
-  original_filename: 'original_filename',
-  api_key: 'api_key'
-};
-
-exports.Prisma.voucherOrderByRelevanceFieldEnum = {
-  id: 'id',
-  kode: 'kode',
-  tipe: 'tipe'
-};
-
-exports.Prisma.cartOrderByRelevanceFieldEnum = {
-  IDCart: 'IDCart',
-  email: 'email',
-  name: 'name',
-  avatar: 'avatar',
-  voucherId: 'voucherId'
-};
-
-exports.Prisma.cartItemOrderByRelevanceFieldEnum = {
-  cartId: 'cartId',
-  note: 'note'
-};
-
-exports.Prisma.formPembelianOrderByRelevanceFieldEnum = {
-  nama_lengkap_user: 'nama_lengkap_user',
-  alamat_lengkap_user: 'alamat_lengkap_user',
-  catatan_pengiriman: 'catatan_pengiriman',
-  cartID: 'cartID',
-  city: 'city',
-  province: 'province',
-  alamat_detail: 'alamat_detail'
-};
-
-exports.Prisma.ongkosKirimOrderByRelevanceFieldEnum = {
-  productName: 'productName',
-  cartID: 'cartID'
-};
-
-exports.Prisma.dataPesananItemOrderByRelevanceFieldEnum = {
-  note: 'note',
-  productName: 'productName',
-  methodPayment: 'methodPayment',
-  image: 'image',
-  slugProduct: 'slugProduct',
-  merchantOrderId: 'merchantOrderId',
-  status: 'status',
-  noResi: 'noResi'
-};
-
-exports.Prisma.dataPesananOrderByRelevanceFieldEnum = {
-  reference: 'reference',
-  merchantOrderId: 'merchantOrderId',
-  cartID: 'cartID',
-  alamat_lengkap_user: 'alamat_lengkap_user',
-  catatan_pengiriman: 'catatan_pengiriman',
-  nama_lengkap_user: 'nama_lengkap_user',
-  kode: 'kode',
-  alamat_detail: 'alamat_detail',
-  nota_url: 'nota_url',
-  payment_info: 'payment_info'
-};
-
-exports.Prisma.suratPenawaranOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  nameProduct: 'nameProduct',
-  note: 'note',
-  slugProduct: 'slugProduct',
-  sales: 'sales'
-};
-
-exports.Prisma.postArtikelOrderByRelevanceFieldEnum = {
-  title: 'title',
-  slug: 'slug',
-  content: 'content',
-  description: 'description'
-};
-
-exports.Prisma.tagArtikelOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.imageProductArtikelOrderByRelevanceFieldEnum = {
-  asset_id: 'asset_id',
-  public_id: 'public_id',
-  version_id: 'version_id',
-  signature: 'signature',
-  format: 'format',
-  resource_type: 'resource_type',
-  type: 'type',
-  etag: 'etag',
-  url: 'url',
-  secure_url: 'secure_url',
-  asset_folder: 'asset_folder',
-  display_name: 'display_name',
-  original_filename: 'original_filename',
-  api_key: 'api_key'
-};
-
-exports.Prisma.categoryArtikelOrderByRelevanceFieldEnum = {
-  category: 'category',
-  slugCategory: 'slugCategory',
-  image: 'image',
-  icon: 'icon',
-  urlYoutube: 'urlYoutube',
-  title: 'title',
-  desc: 'desc',
-  tags: 'tags'
-};
-
-exports.Prisma.salesOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  numberForm: 'numberForm',
-  numberWA: 'numberWA'
 };
 
 
@@ -694,7 +523,9 @@ exports.Prisma.ModelName = {
   tagArtikel: 'tagArtikel',
   imageProductArtikel: 'imageProductArtikel',
   categoryArtikel: 'categoryArtikel',
-  sales: 'sales'
+  sales: 'sales',
+  salesPenawaran: 'salesPenawaran',
+  salesPenawaranItem: 'salesPenawaranItem'
 };
 
 /**

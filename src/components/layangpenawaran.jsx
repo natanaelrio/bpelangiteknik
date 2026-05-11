@@ -114,6 +114,7 @@ a.c 588.5062.609`
     const handleSubmitPenawaran = async () => {
 
         setErrorMsg("");
+        setIsLoading(true);
 
         // Validasi input kosong
         if (!customerName || customerName.trim() === "") {
@@ -132,7 +133,63 @@ a.c 588.5062.609`
             setErrorMsg("List penawaran belum ada. Tambahkan minimal 1 item.");
             return;
         }
+
+        // Log data yang akan dikirim ke API
+        const payloadPenawaran = {
+            customerName,
+            PICcustomerName: PICcustomerName || null,
+            sales: {
+                name: nameSales,
+                phone: numberSales
+            },
+            selectedBank: selectedBank ? selectedBank.nama : null,
+            items: dataPenawaran.map(item => ({
+                productName: item.productName,
+                qty: Number(item.qty || 1),
+                productPriceFinal: Number(item.productPriceFinal),
+                spekNew: item.spekNew || []
+            })),
+            notes,
+            includePPN,
+            totals: {
+                totalHargaSatuan,
+                totalKeseluruhan,
+                totalQty,
+                ppn: includePPN ? (totalKeseluruhan * 11) / 100 : 0,
+                grandTotal: includePPN ? totalKeseluruhan + (totalKeseluruhan * 11) / 100 : totalKeseluruhan
+            },
+            createdAt: new Date().toISOString()
+        };
+
+        console.log("📤 DATA PENAWARAN UNTUK API:", payloadPenawaran);
+
         try {
+            // Kirim data ke API
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/createSalesPenawaran`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': process.env.NEXT_PUBLIC_SECREET
+                },
+                body: JSON.stringify({
+                    customerName: payloadPenawaran.customerName,
+                    PICcustomerName: payloadPenawaran.PICcustomerName,
+                    salesName: payloadPenawaran.sales.name,
+                    salesPhone: payloadPenawaran.sales.phone,
+                    selectedBank: payloadPenawaran.selectedBank,
+                    notes: payloadPenawaran.notes,
+                    includePPN: payloadPenawaran.includePPN,
+                    totalHargaSatuan: payloadPenawaran.totals.totalHargaSatuan,
+                    totalKeseluruhan: payloadPenawaran.totals.totalKeseluruhan,
+                    totalQty: payloadPenawaran.totals.totalQty,
+                    ppn: payloadPenawaran.totals.ppn,
+                    grandTotal: payloadPenawaran.totals.grandTotal,
+                    items: payloadPenawaran.items
+                })
+            });
+
+            const result = await response.json();
+            console.log("✅ RESPONSE API PENAWARAN:", result);
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
                 customer_penawaran_admin: customerName,
@@ -359,8 +416,10 @@ a.c 588.5062.609`
                 `Surat_Penawaran_${customerName}.pdf`
             );
             setLayangPenawaran(false);
+            setIsLoading(false);
         } catch (err) {
             console.error(err);
+            setIsLoading(false);
         }
     };
 
@@ -391,6 +450,8 @@ a.c 588.5062.609`
     const [manualName, setManualName] = useState('');
     const [manualQty, setManualQty] = useState(1);
     const [manualPrice, setManualPrice] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const addManualItem = () => {
         if (!manualName.trim()) {
             alert('Nama produk tidak boleh kosong');
@@ -651,9 +712,15 @@ a.c 588.5062.609`
                         <button
                             className={styles.submitBtn}
                             onClick={handleSubmitPenawaran}
-                            style={{ marginTop: errorMsg ? "10px" : "20px" }} // Menyesuaikan jarak jika error muncul
+                            disabled={isLoading}
+                            style={{ marginTop: errorMsg ? "10px" : "20px" }}
                         >
-                            Buat Penawaran
+                            {isLoading ? (
+                                <span className={styles.loadingWrapper}>
+                                    <span className={styles.spinner}></span>
+                                    Memproses...
+                                </span>
+                            ) : 'Buat Penawaran'}
                         </button>
                     </div>
                 </div>
