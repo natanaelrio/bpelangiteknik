@@ -385,6 +385,7 @@ model salesPenawaran {
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
   customerName     String
+  customerPhone    BigInt
   PICcustomerName  String?
   salesName        String
   salesPhone       String

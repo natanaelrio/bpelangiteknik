@@ -49,6 +49,7 @@ a.c 588.5062.609`
     const [notes, setNotes] = useState(getDefaultNotes(true));
     const [errorMsg, setErrorMsg] = useState("");
     const [customerName, setCustomerName] = useState('');
+    const [customerPhone, setCustomerPhone] = useState('');
     const [PICcustomerName, PICsetCustomerName] = useState('');
     const [showPIC, setShowPIC] = useState(false);
     const [nameSales, setNameSales] = useState('');
@@ -119,24 +120,34 @@ a.c 588.5062.609`
         // Validasi input kosong
         if (!customerName || customerName.trim() === "") {
             setErrorMsg("Nama customer tidak boleh kosong.");
+            setIsLoading(false);
+            return;
+        }
+        if (!customerPhone || customerPhone.trim() === "") {
+            setErrorMsg("Nomor customer tidak boleh kosong.");
+            setIsLoading(false);
             return;
         }
         if (!nameSales) {
             setErrorMsg("Silakan pilih sales terlebih dahulu.");
+            setIsLoading(false);
             return;
         }
         if (!selectedBank) {
             setErrorMsg("Silakan pilih rekening pembayaran.");
+            setIsLoading(false);
             return;
         }
         if (dataPenawaran.length === 0) {
             setErrorMsg("List penawaran belum ada. Tambahkan minimal 1 item.");
+            setIsLoading(false);
             return;
         }
 
         // Log data yang akan dikirim ke API
         const payloadPenawaran = {
             customerName,
+            customerPhone,
             PICcustomerName: PICcustomerName || null,
             sales: {
                 name: nameSales,
@@ -173,6 +184,7 @@ a.c 588.5062.609`
                 },
                 body: JSON.stringify({
                     customerName: payloadPenawaran.customerName,
+                    customerPhone: payloadPenawaran.customerPhone,
                     PICcustomerName: payloadPenawaran.PICcustomerName,
                     salesName: payloadPenawaran.sales.name,
                     salesPhone: payloadPenawaran.sales.phone,
@@ -532,6 +544,19 @@ a.c 588.5062.609`
                             />
                         </div>
                     )}
+                    <div className={styles.formGroup}>
+                        <label>Nomer Customer <span style={{ color: 'red' }}>*</span></label>
+                        <input
+                            value={customerPhone}
+                            onChange={(e) => {
+                                setCustomerPhone(e.target.value);
+                                setErrorMsg(""); // Hapus pesan error saat mulai mengetik
+                            }}
+                            placeholder="Ex: 0897xxxxxx"
+                            type='number'
+                            className={!customerPhone && errorMsg ? styles.inputError : ''}
+                        />
+                    </div>
 
                     <div className={styles.formGroup}>
                         <label>Sales <span style={{ color: 'red' }}>*</span></label>

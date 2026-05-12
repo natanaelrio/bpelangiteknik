@@ -6,6 +6,7 @@ export async function POST(req) {
 
     const {
         customerName,
+        customerPhone,
         PICcustomerName,
         salesName,
         salesPhone,
@@ -19,6 +20,8 @@ export async function POST(req) {
         grandTotal,
         items
     } = await req.json()
+
+    console.log(customerPhone);
 
     BigInt.prototype.toJSON = function () {
         return this.toString();
@@ -39,6 +42,7 @@ export async function POST(req) {
                 totalQty,
                 ppn: BigInt(ppn),
                 grandTotal: BigInt(grandTotal),
+                customerPhone: BigInt(customerPhone),
                 items: {
                     create: items.map(item => ({
                         productName: item.productName,

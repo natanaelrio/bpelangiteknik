@@ -452,6 +452,7 @@ exports.Prisma.SalesPenawaranScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   customerName: 'customerName',
+  customerPhone: 'customerPhone',
   PICcustomerName: 'PICcustomerName',
   salesName: 'salesName',
   salesPhone: 'salesPhone',

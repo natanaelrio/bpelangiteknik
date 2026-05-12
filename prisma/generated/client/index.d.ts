@@ -24896,6 +24896,7 @@ export namespace Prisma {
   }
 
   export type SalesPenawaranAvgAggregateOutputType = {
+    customerPhone: number | null
     totalHargaSatuan: number | null
     totalKeseluruhan: number | null
     totalQty: number | null
@@ -24904,6 +24905,7 @@ export namespace Prisma {
   }
 
   export type SalesPenawaranSumAggregateOutputType = {
+    customerPhone: bigint | null
     totalHargaSatuan: bigint | null
     totalKeseluruhan: bigint | null
     totalQty: number | null
@@ -24916,6 +24918,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     customerName: string | null
+    customerPhone: bigint | null
     PICcustomerName: string | null
     salesName: string | null
     salesPhone: string | null
@@ -24933,6 +24936,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     customerName: string | null
+    customerPhone: bigint | null
     PICcustomerName: string | null
     salesName: string | null
     salesPhone: string | null
@@ -24950,6 +24954,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     customerName: number
+    customerPhone: number
     PICcustomerName: number
     salesName: number
     salesPhone: number
@@ -24966,6 +24971,7 @@ export namespace Prisma {
 
 
   export type SalesPenawaranAvgAggregateInputType = {
+    customerPhone?: true
     totalHargaSatuan?: true
     totalKeseluruhan?: true
     totalQty?: true
@@ -24974,6 +24980,7 @@ export namespace Prisma {
   }
 
   export type SalesPenawaranSumAggregateInputType = {
+    customerPhone?: true
     totalHargaSatuan?: true
     totalKeseluruhan?: true
     totalQty?: true
@@ -24986,6 +24993,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     customerName?: true
+    customerPhone?: true
     PICcustomerName?: true
     salesName?: true
     salesPhone?: true
@@ -25003,6 +25011,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     customerName?: true
+    customerPhone?: true
     PICcustomerName?: true
     salesName?: true
     salesPhone?: true
@@ -25020,6 +25029,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     customerName?: true
+    customerPhone?: true
     PICcustomerName?: true
     salesName?: true
     salesPhone?: true
@@ -25125,6 +25135,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     customerName: string
+    customerPhone: bigint
     PICcustomerName: string | null
     salesName: string
     salesPhone: string
@@ -25162,6 +25173,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customerName?: boolean
+    customerPhone?: boolean
     PICcustomerName?: boolean
     salesName?: boolean
     salesPhone?: boolean
@@ -25182,6 +25194,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customerName?: boolean
+    customerPhone?: boolean
     PICcustomerName?: boolean
     salesName?: boolean
     salesPhone?: boolean
@@ -25200,6 +25213,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customerName?: boolean
+    customerPhone?: boolean
     PICcustomerName?: boolean
     salesName?: boolean
     salesPhone?: boolean
@@ -25229,6 +25243,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       customerName: string
+      customerPhone: bigint
       PICcustomerName: string | null
       salesName: string
       salesPhone: string
@@ -25638,6 +25653,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"salesPenawaran", 'DateTime'>
     readonly updatedAt: FieldRef<"salesPenawaran", 'DateTime'>
     readonly customerName: FieldRef<"salesPenawaran", 'String'>
+    readonly customerPhone: FieldRef<"salesPenawaran", 'BigInt'>
     readonly PICcustomerName: FieldRef<"salesPenawaran", 'String'>
     readonly salesName: FieldRef<"salesPenawaran", 'String'>
     readonly salesPhone: FieldRef<"salesPenawaran", 'String'>
@@ -27407,6 +27423,7 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     customerName: 'customerName',
+    customerPhone: 'customerPhone',
     PICcustomerName: 'PICcustomerName',
     salesName: 'salesName',
     salesPhone: 'salesPhone',
@@ -29596,6 +29613,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaran"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaran"> | Date | string
     customerName?: StringFilter<"salesPenawaran"> | string
+    customerPhone?: BigIntFilter<"salesPenawaran"> | bigint | number
     PICcustomerName?: StringNullableFilter<"salesPenawaran"> | string | null
     salesName?: StringFilter<"salesPenawaran"> | string
     salesPhone?: StringFilter<"salesPenawaran"> | string
@@ -29615,6 +29633,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customerName?: SortOrder
+    customerPhone?: SortOrder
     PICcustomerName?: SortOrderInput | SortOrder
     salesName?: SortOrder
     salesPhone?: SortOrder
@@ -29637,6 +29656,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaran"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaran"> | Date | string
     customerName?: StringFilter<"salesPenawaran"> | string
+    customerPhone?: BigIntFilter<"salesPenawaran"> | bigint | number
     PICcustomerName?: StringNullableFilter<"salesPenawaran"> | string | null
     salesName?: StringFilter<"salesPenawaran"> | string
     salesPhone?: StringFilter<"salesPenawaran"> | string
@@ -29656,6 +29676,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customerName?: SortOrder
+    customerPhone?: SortOrder
     PICcustomerName?: SortOrderInput | SortOrder
     salesName?: SortOrder
     salesPhone?: SortOrder
@@ -29682,6 +29703,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"salesPenawaran"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"salesPenawaran"> | Date | string
     customerName?: StringWithAggregatesFilter<"salesPenawaran"> | string
+    customerPhone?: BigIntWithAggregatesFilter<"salesPenawaran"> | bigint | number
     PICcustomerName?: StringNullableWithAggregatesFilter<"salesPenawaran"> | string | null
     salesName?: StringWithAggregatesFilter<"salesPenawaran"> | string
     salesPhone?: StringWithAggregatesFilter<"salesPenawaran"> | string
@@ -32092,6 +32114,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customerName: string
+    customerPhone: bigint | number
     PICcustomerName?: string | null
     salesName: string
     salesPhone: string
@@ -32111,6 +32134,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customerName: string
+    customerPhone: bigint | number
     PICcustomerName?: string | null
     salesName: string
     salesPhone: string
@@ -32130,6 +32154,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
     salesName?: StringFieldUpdateOperationsInput | string
     salesPhone?: StringFieldUpdateOperationsInput | string
@@ -32149,6 +32174,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
     salesName?: StringFieldUpdateOperationsInput | string
     salesPhone?: StringFieldUpdateOperationsInput | string
@@ -32168,6 +32194,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customerName: string
+    customerPhone: bigint | number
     PICcustomerName?: string | null
     salesName: string
     salesPhone: string
@@ -32186,6 +32213,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
     salesName?: StringFieldUpdateOperationsInput | string
     salesPhone?: StringFieldUpdateOperationsInput | string
@@ -32204,6 +32232,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
     salesName?: StringFieldUpdateOperationsInput | string
     salesPhone?: StringFieldUpdateOperationsInput | string
@@ -33960,14 +33989,6 @@ export namespace Prisma {
     clickCountWA?: SortOrder
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type BigIntFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
@@ -33977,6 +33998,14 @@ export namespace Prisma {
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
   }
 
   export type SalesPenawaranItemListRelationFilter = {
@@ -33994,6 +34023,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customerName?: SortOrder
+    customerPhone?: SortOrder
     PICcustomerName?: SortOrder
     salesName?: SortOrder
     salesPhone?: SortOrder
@@ -34008,6 +34038,7 @@ export namespace Prisma {
   }
 
   export type salesPenawaranAvgOrderByAggregateInput = {
+    customerPhone?: SortOrder
     totalHargaSatuan?: SortOrder
     totalKeseluruhan?: SortOrder
     totalQty?: SortOrder
@@ -34020,6 +34051,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customerName?: SortOrder
+    customerPhone?: SortOrder
     PICcustomerName?: SortOrder
     salesName?: SortOrder
     salesPhone?: SortOrder
@@ -34037,6 +34069,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customerName?: SortOrder
+    customerPhone?: SortOrder
     PICcustomerName?: SortOrder
     salesName?: SortOrder
     salesPhone?: SortOrder
@@ -34050,6 +34083,7 @@ export namespace Prisma {
   }
 
   export type salesPenawaranSumOrderByAggregateInput = {
+    customerPhone?: SortOrder
     totalHargaSatuan?: SortOrder
     totalKeseluruhan?: SortOrder
     totalQty?: SortOrder
@@ -35163,17 +35197,17 @@ export namespace Prisma {
     connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
   }
 
-  export type salesPenawaranUpdatenotesInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
   export type BigIntFieldUpdateOperationsInput = {
     set?: bigint | number
     increment?: bigint | number
     decrement?: bigint | number
     multiply?: bigint | number
     divide?: bigint | number
+  }
+
+  export type salesPenawaranUpdatenotesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type salesPenawaranItemUpdateManyWithoutSalesPenawaranNestedInput = {
@@ -38463,6 +38497,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customerName: string
+    customerPhone: bigint | number
     PICcustomerName?: string | null
     salesName: string
     salesPhone: string
@@ -38481,6 +38516,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customerName: string
+    customerPhone: bigint | number
     PICcustomerName?: string | null
     salesName: string
     salesPhone: string
@@ -38515,6 +38551,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
     salesName?: StringFieldUpdateOperationsInput | string
     salesPhone?: StringFieldUpdateOperationsInput | string
@@ -38533,6 +38570,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
     salesName?: StringFieldUpdateOperationsInput | string
     salesPhone?: StringFieldUpdateOperationsInput | string

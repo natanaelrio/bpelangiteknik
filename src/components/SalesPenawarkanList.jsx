@@ -5,12 +5,6 @@ import moment from 'moment';
 import 'moment/locale/id'
 import styles from './SalesPenawarkanList.module.css';
 
-//filter date penawaran sales
-//filter sales date penawaran user
-//pagination  per 10 data
-//desain navbar
-//filter date penawaran sales, pagination  per 10 data SalesPenawaranList.jsx dan penawaran.jsx, desain navbar lebih modern 
-
 export default function SalesPenawarkanList() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -240,6 +234,7 @@ export default function SalesPenawarkanList() {
                                         >
                                             <div className={styles.customerInfo}>
                                                 <div className={styles.customerName}>{item.customerName}</div>
+                                                <div className={styles.customerPhone}>{item.customerPhone}</div>
                                                 <div className={styles.customerMeta}>
                                                     {moment(item.createdAt).format('DD MMM YYYY')} • {moment(item.createdAt).format('HH:mm')}
                                                 </div>
@@ -287,6 +282,7 @@ export default function SalesPenawarkanList() {
                                                     <div className={styles.detailCard}>
                                                         <h4>Informasi Customer</h4>
                                                         <p><strong>Customer:</strong> {item.customerName}</p>
+                                                        <p><strong>Nomor Customer:</strong> {item.customerPhone}</p>
                                                         <p><strong>PIC:</strong> {item.PICcustomerName || '-'}</p>
                                                         <p><strong>Sales:</strong> {item.salesName} ({item.salesPhone})</p>
                                                     </div>

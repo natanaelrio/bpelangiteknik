@@ -138,6 +138,11 @@
     color: #1f2937;
     font-size: 15px;
 }
+.customerPhone {
+    /* font-weight: 600; */
+    color: #51555b;
+    font-size: 15px;
+}
 
 .customerMeta {
     font-size: 12px;

@@ -381,32 +381,33 @@ model sales {
 }
 
 model salesPenawaran {
-  id              String            @id @default(uuid())
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  customerName   String
-  PICcustomerName String?
-  salesName      String
-  salesPhone     String
-  selectedBank   String?
-  notes          String[]
-  includePPN     Boolean
+  id               String               @id @default(uuid())
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  customerName     String
+  customerPhone    BigInt
+  PICcustomerName  String?
+  salesName        String
+  salesPhone       String
+  selectedBank     String?
+  notes            String[]
+  includePPN       Boolean
   totalHargaSatuan BigInt
   totalKeseluruhan BigInt
-  totalQty       Int
-  ppn            BigInt
-  grandTotal     BigInt
-  items          salesPenawaranItem[]
+  totalQty         Int
+  ppn              BigInt
+  grandTotal       BigInt
+  items            salesPenawaranItem[]
 }
 
 model salesPenawaranItem {
-  id                 String          @id @default(uuid())
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
-  productName        String
-  qty                Int
-  productPriceFinal  BigInt
-  spekNew            Json?
-  salesPenawaranId   String
-  salesPenawaran     salesPenawaran  @relation(fields: [salesPenawaranId], references: [id], onDelete: Cascade)
+  id                String         @id @default(uuid())
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  productName       String
+  qty               Int
+  productPriceFinal BigInt
+  spekNew           Json?
+  salesPenawaranId  String
+  salesPenawaran    salesPenawaran @relation(fields: [salesPenawaranId], references: [id], onDelete: Cascade)
 }
