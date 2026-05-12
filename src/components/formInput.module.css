@@ -4,180 +4,215 @@
     flex-direction: column;
     align-items: center;
     font-size: 0.7rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
 }
 
-
 .tombol {
-    height: 40px;
-    padding: 0 18px;
-    border-radius: var(--border-radius);
-    font-weight: 500;
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 10px;
+    font-weight: 600;
     cursor: pointer;
     width: fit-content;
     display: flex;
     align-items: center;
-    background-color: var(--colorbggreyutama);
-    font-size: 0.6rem;
+    background: linear-gradient(135deg, rgba(30, 90, 150, 0.1) 0%, transparent 100%);
+    border: 2px solid var(--colorbggreyutama);
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
 }
 
 .tombol:hover {
-    background-color: var(--hovercolorbggreyutama);
+    background: linear-gradient(135deg, rgba(30, 90, 150, 0.2) 0%, rgba(30, 90, 150, 0.1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .container button {
-    height: 40px;
-    padding: 0 18px;
-    border-radius: var(--border-radius);
-    font-weight: 500;
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 10px;
+    font-weight: 600;
     cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
 }
 
 .container .save {
-    background-color: var(--colormain) !important;
-    color: var(--colorsekunder) !important;
+    background: linear-gradient(135deg, var(--colormain) 0%, #1e5a96 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 90, 150, 0.25);
 }
 
 .container .save:hover {
-    background-color: var(--hovercolormain) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 90, 150, 0.35);
 }
 
 .atas {
     display: flex;
-    padding: 0 30px;
+    padding: 20px 40px;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
-    width: var(--max-width);
-    background-color: var(--colorsekunder);
+    background: linear-gradient(135deg, var(--colormain) 0%, #1e5a96 100%);
     position: sticky;
-    /* top: 60px; */
     z-index: 19;
     top: 0;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .atas .kiri {
-    font-weight: 1000;
+    font-weight: 900;
+    font-size: 24px;
+    color: white;
 }
 
 .atas .kanan {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
 }
 
-
-
-
 .dalamcontainer {
-    width: var(--max-width);
-    font-size: 0.7rem;
+    width: 100%;
+    max-width: 1200px;
+    font-size: 0.75rem;
 }
 
 .bawah {
     margin-top: 20px;
     display: flex;
     gap: 20px;
-    padding: 0 30px;
+    padding: 20px 40px;
 }
 
 .bawah .judul {
-    /* padding: 20px 0 ; */
     padding: 20px 0 0 0;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 18px;
+    color: #1f2937;
 }
 
 .bawah hr {
     margin: 10px 0 20px 0 !important;
+    border: none;
+    border-top: 2px solid #e5e7eb;
 }
-
-/* .bawah .isi {
-    padding-bottom: 40px;
-} */
-
-
 
 .bawah .labeltag {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--colorbggreyutama);
-    padding: 10px;
-    border-radius: var(--border-radius);
+    border: 2px dashed #cbd5e1;
+    padding: 20px;
+    border-radius: 12px;
     cursor: pointer;
-    height: 70px;
+    height: 120px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    transition: all 0.3s ease;
 }
 
 .bawah .labeltag:hover {
-    transition: all ease 0.2s;
-    background-color: var(--colorbggreyutama);
+    border-color: var(--colormain);
+    background: linear-gradient(135deg, #ecf0f6 0%, #dce6f0 100%);
 }
 
 .bawah .productImage {
     width: 30%;
-    background-color: var(--colorsekunder);
-    border-radius: var(--border-radius);
-    /* height: 500px !important; */
-    height: fit-content !important;
+    background-color: white;
+    border-radius: 12px;
+    height: fit-content;
     position: sticky;
-    top: 90px;
-    padding: 0 20px;
+    top: 100px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .bawah .productImage .isi {
-    font-size: 0.6rem !important;
+    font-size: 0.75rem;
 }
 
 .bawah .judulsamping {
     padding: 10px 0;
+    font-weight: 600;
+    color: #374151;
 }
 
 .bawah .detail {
-    width: 735px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: var(--colorsekunder);
-    border-radius: var(--border-radius);
-    padding: 0 40px 30px 40px;
-    border: 1px solid black;
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .bawah .tag {
     display: flex;
     flex-direction: column;
-    border: 1px solid;
-    padding: 10px;
-    margin-bottom: 10px;
+    border: 2px solid #e5e7eb;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    background: #f9fafb;
+    transition: all 0.3s ease;
 }
 
+.bawah .tag:focus-within {
+    border-color: var(--colormain);
+    background: white;
+}
 
 .bawah .tag label {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     display: flex;
+    font-weight: 600;
+    color: #374151;
+    font-size: 13px;
 }
 
 .bawah .tag input {
-    padding: 10px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--colorbggreyutama);
-    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #d1d5db;
+    margin-bottom: 0;
+    background-color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.bawah .tag input:focus {
+    border-color: var(--colormain);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
 }
 
 .bawah textarea {
-    padding: 10px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--colorbggreyutama);
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #d1d5db;
     margin-bottom: 10px;
-    /* height: 130px; */
     field-sizing: content;
-    min-height: 4rem;
-    /* Optional: Sets a minimum height */
+    min-height: 100px;
     resize: none;
-    /* Optional: Disables manual user resize handle */
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.bawah textarea:focus {
+    border-color: var(--colormain);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
 }
 
 .satubaris {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .bariskan {
@@ -188,11 +223,14 @@
 
 .tambahkategoriklik {
     font-weight: 700;
+    color: var(--colormain);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .tambahkategoriklik:hover {
     font-weight: 800;
-    cursor: pointer;
+    text-decoration: underline;
 }
 
 .bariskankategori {
@@ -206,46 +244,72 @@
     position: absolute;
     top: 0;
     width: 100%;
-    height: 100%;
-    background-color: var(--colorsekunder);
-    border: 2px solid var(--colorthrid);
+    background-color: white;
+    border: 2px solid var(--colormain);
     z-index: 999;
-    border-radius: var(--border-radius);
-    padding: 5px;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .ataskategori {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
 }
 
 .closekategori {
     font-weight: 700;
-    width: 20px;
+    width: 24px;
     cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
+.closekategori:hover {
+    color: #ef4444;
+    transform: scale(1.2);
+}
 
 .bawah select {
-    padding: 10px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--colorbggreyutama);
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #d1d5db;
     margin-bottom: 10px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.bawah select:focus {
+    border-color: var(--colormain);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
 }
 
 .bawah .detail .isi {
     display: flex;
     flex-direction: column;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
 }
 
-
 .bawah input {
-    padding: 10px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--colorbggreyutama);
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #d1d5db;
     margin-bottom: 10px;
+    background-color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.bawah input:focus {
+    border-color: var(--colormain);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
 }
 
 .bawah .detail .isi label {

@@ -1,92 +1,151 @@
 .bghitam {
     position: fixed;
     top: 0;
-    background-color: black;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     width: 100vw;
     height: 100dvh;
-    opacity: 0.8;
     z-index: 999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .container {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
     background-color: var(--colorsekunder);
-    height: fit-content;
+    max-height: 90vh;
     z-index: 9999;
-    padding: 30px;
-    text-align: center;
+    padding: 40px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
-    border-radius: var(--border-radius);
-    gap: 10px;
+    border-radius: 16px;
+    gap: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+    animation: slideUp 0.3s ease-out;
 }
 
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
 
 .suratpenawaran {
-    font-weight: 1000;
-    border: 1px solid var(--colormain);
-    padding: 10px 30px;
+    font-weight: 700;
+    border: 2px solid var(--colormain);
+    padding: 14px 28px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(30, 90, 150, 0.1) 0%, transparent 100%);
+    color: var(--colormain);
+    font-size: 16px;
 }
 
 .judul {
-    font-weight: 1000;
-    font-size: var(--font1);
+    font-weight: 700;
+    font-size: 18px;
     text-align: left;
-    margin: 5px 0;
+    margin: 0;
+    color: #1f2937;
 }
 
 .tombol {
-    margin-top: 20px;
-    background-color: var(--colorthrid);
-    color: var(--colorsekunder);
+    margin-top: 12px;
+    background: linear-gradient(135deg, var(--colorthrid) 0%, #0d7fc1 100%);
+    color: white;
     width: fit-content;
-    border-radius: var(--border-radius);
-    height: 60px;
-    padding: 0 18px;
+    border-radius: 10px;
+    height: 44px;
+    padding: 0 24px;
     display: flex;
     align-items: center;
-    font-size: 25px;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .tombol:hover {
-    background-color: var(--colorgrey);
-    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tombol:active {
+    transform: translateY(0);
 }
 
 .container form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 18px;
 }
 
-.container input {
+.container input,
+.container select {
     width: 100%;
-    border: 1px solid var(--colorthrid);
-    border-radius: var(--border-radius);
-    font-size: var(--font1);
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 12px 16px;
+    background-color: #f9fafb;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.container input:focus,
+.container select:focus {
+    outline: none;
+    border-color: var(--colormain);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
 }
 
 .container button {
     width: 100%;
-    height: 50px;
-    background-color: var(--colormain);
-    color: var(--colorsekunder);
-    border-radius: var(--border-radius);
-    font-size: var(--font1);
+    height: 48px;
+    background: linear-gradient(135deg, var(--colormain) 0%, #1e5a96 100%);
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(30, 90, 150, 0.25);
+    margin-top: 10px;
 }
 
 .container button:hover {
-    background-color: var(--hovercolormain);
-    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 90, 150, 0.35);
+}
+
+.container button:active {
+    transform: translateY(0);
 }
 
 .container .input {
@@ -94,52 +153,63 @@
     align-items: flex-start;
     flex-direction: column;
     position: relative;
+    gap: 8px;
 }
-
 
 .container .input label {
     display: flex;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 14px;
 }
 
 .container .er {
-    color: red;
-}
-
-.container input {
-    padding: 10px;
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: -5px;
 }
 
 .container select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--colorthrid);
+    cursor: pointer;
 }
 
 .salles {
-    background-color: yellowgreen;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px solid #86efac;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.salles b {
+    color: #15803d;
+    font-weight: 700;
 }
 
 .custumer {
-    background-color: rgb(30, 27, 28);
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
 }
 
 .custumer b {
     color: white;
+    font-weight: 700;
 }
 
 .gambar {
     width: 100%;
     display: flex;
     justify-content: center;
-    height: 200px;
+    height: 220px;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 2px dashed #e5e7eb;
 }
 
 .gambar img {

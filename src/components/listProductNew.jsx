@@ -350,7 +350,7 @@ export default function ListProductNew({ session, query, dataKategori }) {
                     <div>Penjualan</div>
                     <div>Stok</div>
                     <div>Harga</div>
-                    <div>Selesai</div>
+                    {spv && <div>Selesai</div>}
                     <div>Aksi</div>
                 </div>
                 {/* DATA */}
@@ -358,170 +358,171 @@ export default function ListProductNew({ session, query, dataKategori }) {
                     {DataProduct?.map((item, index) => {
                         return (
                             <div className={styles.row} key={index}>
-                            {/* Produk */}
-                            <div className={styles.product}>
-                                <Image
-                                    width={56}
-                                    height={56}
-                                    src={item?.imageProductUtama?.secure_url || '/notfoundicon.jpg'}
-                                    alt={item?.productName}
-                                    className={styles.image}
-                                />
-                                <div className={styles.productInfo}>
-                                    <h4 className={styles.title}>
-                                        <a
-                                            href={`${process.env.NEXT_PUBLIC_URL2}/product/${item?.slugProduct}`}  // ganti dengan link tujuan produk
-                                            target="_blank"
-                                            rel="noopener noreferrer"   // aman untuk membuka di tab baru
-                                            className={styles.titleLink} // optional styling khusus link
-                                        >
-                                            <span className={styles.name}
-                                                dangerouslySetInnerHTML={{
-                                                    __html: item?.highlight?.productName || item?.productName
-                                                }}
+                                {/* Produk */}
+                                <div className={styles.product}>
+                                    <Image
+                                        width={56}
+                                        height={56}
+                                        src={item?.imageProductUtama?.secure_url || '/notfoundicon.jpg'}
+                                        alt={item?.productName}
+                                        className={styles.image}
+                                    />
+                                    <div className={styles.productInfo}>
+                                        <h4 className={styles.title}>
+                                            <a
+                                                href={`${process.env.NEXT_PUBLIC_URL2}/product/${item?.slugProduct}`}  // ganti dengan link tujuan produk
+                                                target="_blank"
+                                                rel="noopener noreferrer"   // aman untuk membuka di tab baru
+                                                className={styles.titleLink} // optional styling khusus link
                                             >
-                                            </span>
-                                            <span>
-                                                <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
-                                            </span>
-                                            {/* {item?.productName} */}
+                                                <span className={styles.name}
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: item?.highlight?.productName || item?.productName
+                                                    }}
+                                                >
+                                                </span>
+                                                <span>
+                                                    <FiExternalLink style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
+                                                </span>
+                                                {/* {item?.productName} */}
 
 
-                                        </a>
-                                    </h4>
-                                    <div className={styles.meta}>
-                                        <span className={styles.id}>ID: {item?.id}</span>
-                                        <span className={styles.dimension}>
-                                            Dimensi: {item?.lengthProduct}×{item?.widthProduct}×{item?.heightProduct} cm
-                                        </span>
-                                        <span className={styles.dimension}>
-                                            Berat: {item?.weightProduct} kg
-                                        </span>
-                                        <span className={styles.dimension}>
-                                            Type: {item?.productType}
-                                        </span>
+                                            </a>
+                                        </h4>
+                                        <div className={styles.meta}>
+                                            <span className={styles.id}>ID: {item?.id}</span>
+                                            <span className={styles.dimension}>
+                                                Dimensi: {item?.lengthProduct}×{item?.widthProduct}×{item?.heightProduct} cm
+                                            </span>
+                                            <span className={styles.dimension}>
+                                                Berat: {item?.weightProduct} kg
+                                            </span>
+                                            <span className={styles.dimension}>
+                                                Type: {item?.productType}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Penjualan */}
-                            <div className={styles.center}>
-                                <span>{item?.sold} produk terjual</span>
-                                <small>Tayang: {item?.viewProduct}</small>
-                            </div>
+                                {/* Penjualan */}
+                                <div className={styles.center}>
+                                    <span>{item?.sold} produk terjual</span>
+                                    <small>Tayang: {item?.viewProduct}</small>
+                                </div>
 
-                            {/* ====== STOK ====== */}
-                            <div className={styles.center}>
-                                {
-                                    // editStockId === item.id && isLoadingStockPrice ? <span>Loading...</span>
-                                    //     :
-                                    editStockId === item.id ? (
-                                        <input
-                                            type="number"
-                                            className={styles.stockInput}
-                                            value={stockValue}
-                                            autoFocus
-                                            onChange={(e) => setStockValue(e.target.value)}
-                                            onBlur={() => saveStock(item)} // 👈 klik kiri = SIMPAN
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') saveStock(item)
-                                                if (e.key === 'Escape') setEditStockId(null)
-                                            }}
-                                        />
-                                    ) : (
-                                        <span
-                                            className={`${styles.bold} ${styles.stockText}`}
-                                            style={{ cursor: 'pointer' }}
-                                            title="Klik untuk edit stok"
-                                            onClick={() => {
-                                                setEditStockId(item.id)
-                                                setStockValue(item.stockProduct ?? 0)
-                                            }}
-                                        >
-                                            {item?.stockProduct}
-                                        </span>
-                                    )}
-                            </div>
-
-                            {/* ====== HARGA ====== */}
-                            <div className={styles.price}>
-                                {
-                                    editPriceId === item.id && isLoadingStockPrice ? <span>Loading...</span>
-                                        :
-                                        editPriceId === item.id ? (
+                                {/* ====== STOK ====== */}
+                                <div className={styles.center}>
+                                    {
+                                        // editStockId === item.id && isLoadingStockPrice ? <span>Loading...</span>
+                                        //     :
+                                        editStockId === item.id ? (
                                             <input
                                                 type="number"
-                                                className={styles.priceInput}
-                                                value={priceValue}
+                                                className={styles.stockInput}
+                                                value={stockValue}
                                                 autoFocus
-                                                onChange={(e) => setPriceValue(e.target.value)}
-                                                onBlur={() => savePrice(item)} // 👈 klik kiri = SIMPAN
+                                                onChange={(e) => setStockValue(e.target.value)}
+                                                onBlur={() => saveStock(item)} // 👈 klik kiri = SIMPAN
                                                 onKeyDown={(e) => {
-                                                    if (e.key === 'Enter') savePrice(item)
-                                                    if (e.key === 'Escape') setEditPriceId(null)
+                                                    if (e.key === 'Enter') saveStock(item)
+                                                    if (e.key === 'Escape') setEditStockId(null)
                                                 }}
                                             />
                                         ) : (
                                             <span
-                                                className={styles.normalPrice}
+                                                className={`${styles.bold} ${styles.stockText}`}
                                                 style={{ cursor: 'pointer' }}
-                                                title="Klik untuk edit harga"
+                                                title="Klik untuk edit stok"
                                                 onClick={() => {
-                                                    setEditPriceId(item.id)
-                                                    setPriceValue(item.productPriceFinal ?? 0)
+                                                    setEditStockId(item.id)
+                                                    setStockValue(item.stockProduct ?? 0)
                                                 }}
                                             >
-                                                {FormatRupiah(item?.productPriceFinal)}
+                                                {item?.stockProduct}
                                             </span>
                                         )}
-                            </div>
+                                </div>
+
+                                {/* ====== HARGA ====== */}
+                                <div className={styles.price}>
+                                    {
+                                        editPriceId === item.id && isLoadingStockPrice ? <span>Loading...</span>
+                                            :
+                                            editPriceId === item.id ? (
+                                                <input
+                                                    type="number"
+                                                    className={styles.priceInput}
+                                                    value={priceValue}
+                                                    autoFocus
+                                                    onChange={(e) => setPriceValue(e.target.value)}
+                                                    onBlur={() => savePrice(item)} // 👈 klik kiri = SIMPAN
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') savePrice(item)
+                                                        if (e.key === 'Escape') setEditPriceId(null)
+                                                    }}
+                                                />
+                                            ) : (
+                                                <span
+                                                    className={styles.normalPrice}
+                                                    style={{ cursor: 'pointer' }}
+                                                    title="Klik untuk edit harga"
+                                                    onClick={() => {
+                                                        setEditPriceId(item.id)
+                                                        setPriceValue(item.productPriceFinal ?? 0)
+                                                    }}
+                                                >
+                                                    {FormatRupiah(item?.productPriceFinal)}
+                                                </span>
+                                            )}
+                                </div>
 
 
-                            {/* Selesai */}
-                            <div className={styles.center}>
-                                <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'}{item?.username == 'sales05' && 'dhita'}</b>
-                                <span className={styles.time}>
-                                    {TimeConverter(item?.updateDate)}
-                                </span>
-                            </div>
+                                {/* Selesai */}
+                                {spv &&
+                                    <div className={styles.center}>
+                                        <b>{item?.username} - {item?.username == 'sales01' && 'alma'}{item?.username == 'sales02' && 'sifa'}{item?.username == 'sales03' && 'ina'}{item?.username == 'sales05' && 'dhita'}</b>
+                                        <span className={styles.time}>
+                                            {TimeConverter(item?.updateDate)}
+                                        </span>
+                                    </div>}
 
-                            {/* Aksi */}
-                            <div className={styles.action}>
-                                <button className={styles.iconBtn}>
-                                    <a
-                                        href={`${process.env.NEXT_PUBLIC_URL}/${item?.slugProduct}`}  // ganti dengan link tujuan produk
-                                        target="_blank"
-                                        rel="noopener noreferrer"   // aman untuk membuka di tab baru
-                                    >
-                                        <FaEdit />
-                                    </a>
-                                </button>
-                                <button onClick={() => AddFormPenawaran(item)} className={styles.iconBtn}>
-                                    <FaPlus />
-                                </button>
-                                {session?.user?.email == 'rio@pelangiteknik.com' &&
-                                    <button
-                                        className={`${styles.iconBtn} ${styles.deleteBtn}`}
-                                        onClick={() => HandleDeleteProducts(item?.id, item?.slugProduct)}
-                                        title="Hapus produk"
-                                    >
-                                        <FaTrash />
-                                    </button>}
-                                <div className={styles.switchdelete} >
-                                    <label className={styles.switch}>
-                                        <input
-                                            disabled={loading}
-                                            type="checkbox"
-                                            checked={!item?.saveDraf}
-                                            onChange={() => UpdatePublish(item?.slugProduct, !item?.saveDraf)}
-                                        />
-                                        <span className={styles.slider}></span>
-                                    </label>
+                                {/* Aksi */}
+                                <div className={styles.action}>
+                                    <button className={styles.iconBtn}>
+                                        <a
+                                            href={`${process.env.NEXT_PUBLIC_URL}/${item?.slugProduct}`}  // ganti dengan link tujuan produk
+                                            target="_blank"
+                                            rel="noopener noreferrer"   // aman untuk membuka di tab baru
+                                        >
+                                            <FaEdit />
+                                        </a>
+                                    </button>
+                                    <button onClick={() => AddFormPenawaran(item)} className={styles.iconBtn}>
+                                        <FaPlus />
+                                    </button>
+                                    {session?.user?.email == 'rio@pelangiteknik.com' &&
+                                        <button
+                                            className={`${styles.iconBtn} ${styles.deleteBtn}`}
+                                            onClick={() => HandleDeleteProducts(item?.id, item?.slugProduct)}
+                                            title="Hapus produk"
+                                        >
+                                            <FaTrash />
+                                        </button>}
+                                    <div className={styles.switchdelete} >
+                                        <label className={styles.switch}>
+                                            <input
+                                                disabled={loading}
+                                                type="checkbox"
+                                                checked={!item?.saveDraf}
+                                                onChange={() => UpdatePublish(item?.slugProduct, !item?.saveDraf)}
+                                            />
+                                            <span className={styles.slider}></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
                 </div>
                 <div className={styles.pagination}>
                     <button

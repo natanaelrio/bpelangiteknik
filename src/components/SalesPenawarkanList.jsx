@@ -5,6 +5,12 @@ import moment from 'moment';
 import 'moment/locale/id'
 import styles from './SalesPenawarkanList.module.css';
 
+//filter date penawaran sales
+//filter sales date penawaran user
+//pagination  per 10 data
+//desain navbar
+//filter date penawaran sales, pagination  per 10 data SalesPenawaranList.jsx dan penawaran.jsx, desain navbar lebih modern 
+
 export default function SalesPenawarkanList() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,6 +20,11 @@ export default function SalesPenawarkanList() {
     const [salesNameFilter, setSalesNameFilter] = useState('');
     const [ppnFilter, setPpnFilter] = useState('all');
     const [qtyFilter, setQtyFilter] = useState({ min: '', max: '' });
+    const [dateFilter, setDateFilter] = useState({ start: '', end: '' });
+
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     // Get unique sales names for dropdown
     const uniqueSalesNames = [...new Set(data.map(item => item.salesName))];
@@ -31,12 +42,38 @@ export default function SalesPenawarkanList() {
         if (qtyFilter.min && item.totalQty < parseInt(qtyFilter.min)) return false;
         if (qtyFilter.max && item.totalQty > parseInt(qtyFilter.max)) return false;
 
+        // Filter by date range
+        if (dateFilter.start) {
+            const itemDate = new Date(item.createdAt);
+            const startDate = new Date(dateFilter.start);
+            startDate.setHours(0, 0, 0, 0);
+            if (itemDate < startDate) return false;
+        }
+        if (dateFilter.end) {
+            const itemDate = new Date(item.createdAt);
+            const endDate = new Date(dateFilter.end);
+            endDate.setHours(23, 59, 59, 999);
+            if (itemDate > endDate) return false;
+        }
+
         return true;
     });
+
+    // Pagination logic
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const paginatedData = filteredData.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     useEffect(() => {
         fetchData();
     }, []);
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [salesNameFilter, ppnFilter, qtyFilter, dateFilter]);
 
     const fetchData = async () => {
         try {
@@ -154,12 +191,29 @@ export default function SalesPenawarkanList() {
                                 onChange={(e) => setQtyFilter({ ...qtyFilter, max: e.target.value })}
                             />
                         </div>
+                        <div className={styles.filterGroup}>
+                            <label className={styles.filterLabel}>Tanggal:</label>
+                            <input
+                                type="date"
+                                className={styles.filterInput}
+                                value={dateFilter.start}
+                                onChange={(e) => setDateFilter({ ...dateFilter, start: e.target.value })}
+                            />
+                            <span style={{ color: '#9ca3af' }}>-</span>
+                            <input
+                                type="date"
+                                className={styles.filterInput}
+                                value={dateFilter.end}
+                                onChange={(e) => setDateFilter({ ...dateFilter, end: e.target.value })}
+                            />
+                        </div>
                         <button
                             className={styles.filterReset}
                             onClick={() => {
                                 setSalesNameFilter('');
                                 setPpnFilter('all');
                                 setQtyFilter({ min: '', max: '' });
+                                setDateFilter({ start: '', end: '' });
                             }}
                         >
                             Reset Filter
@@ -174,7 +228,7 @@ export default function SalesPenawarkanList() {
                             </div>
                         ) : (
                             <div className={styles.list}>
-                                {filteredData.map((item, i) => (
+                                {paginatedData.map((item, i) => (
                                     <div
                                         key={i}
                                         className={`${styles.itemCard} ${expandedId === item.id ? styles.itemCardExpanded : ''}`}
@@ -289,6 +343,48 @@ export default function SalesPenawarkanList() {
                                         )}
                                     </div>
                                 ))}
+                            </div>
+                        )}
+
+                        {/* Pagination */}
+                        {filteredData.length > 0 && (
+                            <div className={styles.pagination}>
+                                <div className={styles.paginationInfo}>
+                                    Menampilkan {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filteredData.length)} dari {filteredData.length} data
+                                </div>
+                                <div className={styles.paginationControls}>
+                                    <button
+                                        className={styles.paginationButton}
+                                        onClick={() => setCurrentPage(1)}
+                                        disabled={currentPage === 1}
+                                    >
+                                        ««
+                                    </button>
+                                    <button
+                                        className={styles.paginationButton}
+                                        onClick={() => setCurrentPage(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                    >
+                                        «
+                                    </button>
+                                    <span className={styles.paginationPage}>
+                                        Halaman {currentPage} dari {totalPages}
+                                    </span>
+                                    <button
+                                        className={styles.paginationButton}
+                                        onClick={() => setCurrentPage(currentPage + 1)}
+                                        disabled={currentPage === totalPages}
+                                    >
+                                        »
+                                    </button>
+                                    <button
+                                        className={styles.paginationButton}
+                                        onClick={() => setCurrentPage(totalPages)}
+                                        disabled={currentPage === totalPages}
+                                    >
+                                        »»
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>

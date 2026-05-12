@@ -1,308 +1,906 @@
-    .container {
-        display: flex;
-        justify-content: center;
-        position: relative;
-        flex-direction: column;
-        align-items: center;
+/* ===== BASE STYLES ===== */
+.container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: #f8f9fa;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+
+/* ===== FILTER CONTROLS ===== */
+.filtercontrols {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 16px 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filtercontrols select,
+.filtercontrols .year-input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    color: #495057;
+}
+
+.filtercontrols select:hover,
+.filtercontrols .year-input:hover {
+    border-color: #6c757d;
+}
+
+.filtercontrols select:focus,
+.filtercontrols .year-input:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 2px rgba(108, 117, 125, 0.1);
+}
+
+
+/* ===== MAIN CONTAINER ===== */
+.dalamcontainer {
+    width: 100%;
+    max-width: 1400px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.atas {
+    display: flex;
+    padding: 20px 24px;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+.atas .judul {
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    color: #212529;
+    text-decoration: none;
+}
+
+/* ===== TABLE ===== */
+.bawah {
+    font-size: 14px;
+    padding: 0;
+    overflow-x: auto;
+}
+
+.orderTable {
+    width: auto;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 14px;
+    text-align: left;
+}
+
+.orderTable th,
+.orderTable td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+    width: auto;
+}
+
+.orderTable th {
+    background: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.orderTable tr:hover td {
+    background: #f8f9fa;
+}
+
+.orderTable tr:nth-child(even) td {
+    background-color: #fafbfc;
+}
+
+.orderTable tr:nth-child(even):hover td {
+    background-color: #f8f9fa;
+}
+
+.orderTable select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    width: 100%;
+    border: 1px solid #dee2e6;
+    background: white;
+    cursor: pointer;
+    outline: none;
+    font-size: 13px;
+}
+
+.orderTable button {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 6px;
+    background: #6c757d;
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+}
+
+.orderTable button:hover {
+    background: #5a6268;
+}
+
+.orderTable input {
+    height: 32px;
+    border: 1px solid #dee2e6;
+    padding: 6px 10px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 13px;
+}
+
+/* ===== ORDER ITEMS COLUMN ===== */
+.orderItems {
+    min-width: 320px;
+    width: 38%;
+}
+
+.orderSummary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    margin-bottom: 12px;
+}
+
+.orderPreviewText {
+    font-weight: 600;
+    color: #212529;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.orderPreviewMeta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.orderPreviewActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.orderPreviewActionGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.transactionInfoBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 12px 50px rgba(15, 23, 42, 0.05);
+    max-width: 760px;
+    width: 100%;
+    min-width: 320px;
+}
+
+.transactionInfoHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: flex-start;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eff2f7;
+}
+
+.transactionInfoHeader > div:first-child {
+    min-width: 220px;
+    max-width: 520px;
+}
+
+.transactionInfoActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.transactionInfoBlock .infoRow {
+    display: grid;
+    grid-template-columns: minmax(110px, max-content) minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.transactionInfoBlock .infoRow:last-child {
+    border-bottom: none;
+}
+
+.transactionInfoBlock .infoLabel {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.transactionInfoBlock .infoValue {
+    font-weight: 700;
+    color: #111827;
+    max-width: 100%;
+    word-break: break-word;
+}
+
+.primaryButton,
+.secondaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+    text-decoration: none;
+}
+
+.primaryButton {
+    border: none;
+    background: #2563eb;
+    color: white;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.18);
+}
+
+.primaryButton:hover {
+    transform: translateY(-1px);
+    background: #1d4ed8;
+}
+
+.secondaryButton {
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    background: #f8fafc;
+    color: #111827;
+}
+
+.secondaryButton:hover {
+    transform: translateY(-1px);
+    background: #eef2ff;
+}
+
+.paymentBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.paymentBadgePaid {
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+
+.paymentBadgeUnpaid {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.paymentBadgeInfo {
+    background: #eef2ff;
+    color: #3730a3;
+    border: 1px solid #c7d2fe;
+}
+
+.orderDetailPanel {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    animation: fadeInPanel 0.2s ease;
+}
+
+.summaryRow td {
+    padding: 16px 14px;
+    vertical-align: top;
+}
+
+.expandedRow td {
+    padding: 0;
+    border-top: none;
+}
+
+.orderDetailGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.orderDetailColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.detailHeading {
+    font-size: 14px;
+    font-weight: 700;
+    color: #212529;
+    margin: 0;
+}
+
+.statusItemRow,
+.noteItemRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.statusLabel {
+    font-size: 13px;
+    color: #495057;
+    flex: 1;
+}
+
+.noteButtonSmall {
+    background: #6c757d;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.noteButtonSmall:hover {
+    background: #5a6268;
+}
+
+.transactionSummary,
+.statusSummary,
+.noteSummary {
+    padding: 16px;
+    vertical-align: top;
+}
+
+.summaryLabel {
+    display: block;
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.summaryValue {
+    font-size: 13px;
+    color: #212529;
+    margin-bottom: 8px;
+}
+
+.orderPreviewMeta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: #6c757d;
+    font-size: 13px;
+}
+
+@keyframes fadeInPanel {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
     }
-
-
-    .filtercontrols {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        padding: 20px 0;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 
-    .filtercontrols select,
-    .filtercontrols .year-input {
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        background: white;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
+.containeritemWrapper {
+    list-style-type: none;
+}
 
-    .filtercontrols select:hover,
-    .filtercontrols .year-input:hover {
-        border-color: #0070f3;
-    }
+.itemWrapper {
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
 
+.itemImage {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .filtercontrols input,
-    .filtercontrols .year-input {
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        background: white;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
+.itemImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-    .filtercontrols input:hover,
-    .filtercontrols .year-input:hover {
-        border-color: #0070f3;
-    }
+.itemDetails {
+    flex: 1;
+    min-width: 0;
+}
 
+.itemLink {
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    color: #212529;
+    font-size: 13px;
+    display: block;
+}
 
-    .dalamcontainer {
-        width: 80vw;
-        background-color: var(--colorsekunder);
-    }
+.itemLink:hover {
+    color: #0d6efd;
+    text-decoration: underline;
+}
 
+.itemNote {
+    color: #6c757d;
+    font-size: 12px;
+}
 
-    .atas {
-        display: flex;
-        padding: 30px 30px;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-        width: 80vw;
-        background-color: var(--colorsekunder);
-        position: sticky;
-        top: 0;
-        z-index: 99;
-    }
+.itemMeta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 1.4;
+}
 
-    .atas .judul {
-        font-weight: 1000;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
+.diskonText {
+    color: #198754;
+    font-weight: 600;
+    font-size: 11px;
+    background: #d1e7dd;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 4px;
+}
 
-    .atas .judul:hover {
-        opacity: 0.9;
-    }
+.totalharga {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    background: #fff3cd;
+    border-radius: 8px;
+    border: 1px solid #ffecb5;
+    color: #664d03;
+}
 
-    .atas .judulkanan {
-        font-weight: 700;
-    }
+.totalharga strong {
+    font-weight: 600;
+}
 
-    .atas .search {
-        border: 1px solid var(--colorthrid);
-        border-radius: var(--border-radius);
-        padding: 1px;
-        display: flex;
-    }
+/* ===== TRANSACTION COLUMN ===== */
+.transaction {
+    min-width: 260px;
+    width: 42%;
+}
 
-    .atas .search input {
-        padding: 10px;
-    }
+.transactionHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
 
-    .atas .search input:focus {
-        border: transparent;
-        outline: 0;
-    }
+.orderId {
+    font-weight: 600;
+    color: #dc3545;
+    font-size: 13px;
+}
 
-    .atas .search .searchB {
-        height: 100%;
-        padding: 10px;
-        border-radius: var(--border-radius);
-        cursor: pointer;
-        font-weight: 700;
-    }
+.notaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
 
-    .atas .searchP {
-        height: 40px;
-        padding: 0 18px;
-        border-radius: var(--border-radius);
-        cursor: pointer;
-        font-weight: 700;
-    }
+.notaButtonSuccess {
+    background: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
 
-    .atas button {
-        background-color: var(--colorbggreyutama);
-    }
+.notaButtonSuccess:hover {
+    background: #c3e6cb;
+}
 
-    .atas button:hover {
-        background-color: var(--hovercolorbggreyutama);
-    }
+.notaButtonSuccess {
+    background: #212529;
+    color: white;
+    border: none;
+}
 
-    .ataskanan {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
+.orderPreviewActions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
 
-    /* Styling untuk tabel */
-    .bawah {
-        font-size: 0.7rem;
-    }
+.paymentBadgePaid {
+    background: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
 
+.paymentBadgeUnpaid {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.transactionInfo {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.paymentBadge {
+    display: inline-flex;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #e9ecef;
+    color: #495057;
+}
+
+.tanggalSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.infoRow {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 2px;
+}
+
+.infoLabel {
+    color: #6c757d;
+    min-width: 60px;
+    flex-shrink: 0;
+}
+
+.infoValue {
+    font-weight: 500;
+    color: #212529;
+}
+
+.separator {
+    margin: 8px 0;
+    border: none;
+    border-top: 1px dashed #dee2e6;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+}
+
+/* ===== STATUS COLUMN ===== */
+.statusColumn {
+    min-width: 100px;
+    width: 10%;
+}
+
+.statusSelect {
+    padding: 6px 10px;
+    border-radius: 6px;
+    width: 100%;
+    border: 1px solid #dee2e6;
+    background: white;
+    cursor: pointer;
+    outline: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.statusSelectPaid {
+    border-color: #198754;
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.statusSelectShipped {
+    border-color: #0d6efd;
+    background: #cff4fc;
+    color: #055160;
+}
+
+.statusSelectPending {
+    border-color: #ffc107;
+    background: #fff3cd;
+    color: #664d03;
+}
+
+/* ===== NOTE COLUMN ===== */
+.noteColumn {
+    min-width: 120px;
+    width: 10%;
+    font-size: 12px;
+    color: #495057;
+}
+
+.noteColumn button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: white;
+    color: #495057;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s ease;
+}
+
+.noteColumn button:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+/* ===== DELETE COLUMN ===== */
+.deleteColumn {
+    min-width: 50px;
+    width: 5%;
+    text-align: center;
+}
+
+.deleteButton {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #fee2e2;
+    color: #dc3545;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.deleteButton:hover {
+    background: #fecaca;
+}
+
+/* ===== RESI INPUT ===== */
+.noresi {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 6px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.noresi input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 11px;
+    outline: none;
+    min-width: 80px;
+}
+
+.noresi input:focus {
+    border-color: #6c757d;
+}
+
+.noresi button {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+    background: #6c757d;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.close {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: #fee2e2;
+    color: #dc3545;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.close:hover {
+    background: #fecaca;
+}
+
+/* ===== BUTTONS ===== */
+.atasb {
+    padding: 8px 16px;
+    background: #198754;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+}
+
+.atasb:hover {
+    background: #157347;
+    color: white;
+}
+
+.totalpesanan {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #fff3cd;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #664d03;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+/* ===== LOADING ===== */
+.loading {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
     .orderTable {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 0.9em;
-        text-align: left;
+        font-size: 13px;
     }
 
     .orderTable th,
     .orderTable td {
-        padding: 12px 15px;
-        border: 1px solid #ddd;
+        padding: 10px 12px;
     }
+}
 
-    .orderTable th {
-        background-color: #f4f4f4;
-    }
-
-    .orderTable tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    .orderTable select {
-        padding: 5px;
-        border-radius: 5px;
-        width: 100%;
-        border: 1px solid black;
-    }
-
-    .orderTable button {
-        height: 40px;
-        width: fit-content;
-        padding: 0 18px;
-    }
-
-    .orderTable input {
-        height: 40px;
-        border: 1px solid black;
-        padding: 5px;
-    }
-
-    .orderTable span {
-        font-weight: 700;
-    }
-
-    .containeritemWrapper {
-        list-style-type: none;
-        display: flex;
-    }
-
-    .itemWrapper {
-        margin-bottom: 14px;
+@media (max-width: 768px) {
+    .container {
         padding: 12px;
-        border-radius: 10px;
-        background: #fafafa;
-        border: 1px solid #eee;
     }
 
-    .itemLink {
-        font-weight: 700;
-        text-decoration: underline;
-        cursor: pointer;
-        color: #222;
+    .filtercontrols {
+        padding: 12px 16px;
+        gap: 8px;
     }
 
-    .itemNote {
-        color: #777;
-        font-weight: 400;
+    .dalamcontainer {
+        border-radius: 8px;
     }
 
-    .itemMeta {
-        margin-top: 6px;
-        display: flex;
+    .atas {
+        padding: 14px 16px;
         flex-direction: column;
-        gap: 2px;
-        font-size: 14px;
+        gap: 10px;
     }
 
-    .diskonText {
-        color: #009688;
-        font-weight: 600;
+    .transaction,
+    .orderItems,
+    .statusColumn,
+    .noteColumn {
+        min-width: unset;
+        width: auto;
     }
-
-    .totalharga {
-        margin-top: 20px;
-        padding-top: 12px;
-        border-top: 2px solid #e5e5e5;
-        font-size: 15px;
-        line-height: 1.6;
-    }
-
-    /* LOADING */
-
-    .loading {
-        position: absolute;
-        top: 0;
-        width: 100vw;
-        height: 100vh;
-    }
-
-    .loading .kotak {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* background-color: var(--colorsekunder); */
-        font-size: 2rem;
-        font-weight: 1000;
-    }
-
-
-
-    /* Container utama transaksi */
-    .orderTable td.transaction {
-        line-height: 1.4;
-        padding: 20px;
-        vertical-align: top;
-    }
-
-    /* ID Transaksi / Reference */
-    .transaction .reference {
-        font-weight: 600;
-        color: #1d4ed8;
-        padding: 10px;
-        border-radius: 5px;
-        /* biru */
-        cursor: pointer;
-        text-decoration: underline;
-        display: inline-block;
-        margin-bottom: 4px;
-    }
-
-    /* Tanggal */
-    .transaction .tanggal {
-        color: #6b7280;
-        /* abu abu */
-        margin-bottom: 6px;
-    }
-
-    /* Label informasi */
-    .transaction .label {
-        color: #6b7280;
-        /* abu abu */
-        display: inline-block;
-        min-width: 80px;
-        /* supaya rapi rata */
-    }
-
-    /* Value informasi */
-    .transaction .value {
-        font-weight: 500;
-        color: #111827;
-    }
-
-    .orderTable ul li {
-        list-style-position: inside;
-    }
-
-    .atasb {
-        padding: 10px;
-        background-color: #111827;
-        color: white;
-        border-radius: 15px;
-    }
-
-    .atasb:hover {
-        padding: 10px;
-        background-color: #111827d4;
-        color: white;
-        border-radius: 15px;
-    }
+}

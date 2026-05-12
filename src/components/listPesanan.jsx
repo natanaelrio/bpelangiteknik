@@ -50,9 +50,15 @@ export default function ListPesanan({ session, data, month, year, payment }) {
     const [idItemResi, setIDitemResi] = useState('')
     const [resi, setResi] = useState('')
     const [openResi, setOpenResi] = useState(false)
+    const [expandedOrder, setExpandedOrder] = useState(null)
+
+    const toggleOrderDetails = (orderId) => {
+        setExpandedOrder(prev => prev === orderId ? null : orderId)
+    }
 
     const handleSaveTracking = async (id) => {
         setLoading(true)
+        console.log(id);
         await UpdateDataPesanan({
             id: id,
             noResi: resi,
@@ -414,307 +420,297 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                     <thead>
                                         <tr>
                                             <th>Data Transaksi</th>
-                                            <th>Pesanan</th>
-                                            <th>Status</th>
-                                            {/* <th>Item</th> */}
-                                            {/* <th>Nota</th> */}
-                                            <th>Note</th>
                                             {UserSPV && <th>Delete</th>}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <Fragment >
                                             {data?.data?.map((pesanan, j) => {
+                                                console.log(pesanan.nota_url)
+
+                                                const items = pesanan?.dataPesananItems || []
+                                                const productItems = items.filter(item => item.note !== 'ongkir')
+                                                const shippingItems = items.filter(item => item.note === 'ongkir')
+                                                const previewItems = productItems.slice(0, 2)
+                                                const moreCount = Math.max(productItems.length - previewItems.length, 0)
+                                                const previewText = previewItems.map(item => item.productName).join(', ') + (moreCount > 0 ? ` + ${moreCount} lainnya` : '')
+                                                const totalProductCount = productItems.reduce((sum, item) => sum + item.quantity, 0)
+                                                const totalBeforeDiscount = items.reduce((sum, item) => sum + (item.priceOriginal * item.quantity), 0)
+                                                let totalAfterDiscount = totalBeforeDiscount
+                                                if (pesanan.diskon) {
+                                                    totalAfterDiscount = totalBeforeDiscount - (totalBeforeDiscount * pesanan.diskon / 100)
+                                                } else if (pesanan.diskon_nominal) {
+                                                    totalAfterDiscount = totalBeforeDiscount - pesanan.diskon_nominal
+                                                }
+                                                const orderTotalValue = FormatRupiah(totalAfterDiscount)
+                                                const shippingItem = shippingItems[0]
+                                                const paymentStatusText = pesanan?.payment ? 'Sudah Bayar' : 'Belum Bayar'
+                                                const uniqueStatuses = [...new Set(productItems.map(item => item.status).filter(Boolean))]
+                                                const selectValue = uniqueStatuses.length === 1 ? uniqueStatuses[0] : ""
+                                                const statusSummaryText = uniqueStatuses.join(', ') || 'Belum Diproses'
+                                                const noteSummaryText = shippingItems.length > 0
+                                                    ? `${shippingItems.length} ongkir item${shippingItems.length > 1 ? 's' : ''}`
+                                                    : pesanan?.catatan_pengiriman || '-'
+                                                const expanded = expandedOrder === pesanan.id
+
                                                 return (
-                                                    <tr key={j}>
-                                                        {/* Data Transaksi */}
-                                                        <td className={styles.transaction}>
-
-                                                            {/* {pesanan?.payment &&
-                                                                <div
-                                                                    style={{ background: !pesanan.payment ? 'yellow' : 'green', color: !pesanan.payment ? 'green' : 'white' }}
-                                                                    className={styles.reference}
-                                                                    onClick={() => HandleNota(pesanan?.merchantOrderId)}
-                                                                >
-                                                                    Download Nota Official
-                                                                </div>} */}
-                                                            {pesanan?.payment && <br />}
-                                                            {pesanan?.payment &&
-                                                                <div
-                                                                    style={{ background: !pesanan.payment ? 'yellow' : 'green', color: !pesanan.payment ? 'green' : 'white' }}
-                                                                    className={styles.reference}
-                                                                    onClick={() => router.push('https://' + pesanan?.nota_url)}
-                                                                >
-                                                                    Download Nota PaperID
-                                                                </div>}
-                                                            {pesanan?.payment && <br />}
-                                                            ID: <span style={{ color: 'red' }}>{pesanan?.merchantOrderId}</span>
-                                                            {pesanan?.payment &&
-                                                                <>
-                                                                    <div> <span className={styles.label}>channel: </span> <span> {JSON.parse(pesanan?.payment_info)?.channel.toUpperCase()} </span>  </div>
-                                                                    <div> <span className={styles.label}>method: </span> <span> {JSON.parse(pesanan?.payment_info)?.method.toUpperCase()} </span> </div>
-                                                                    <div> <span className={styles.label}>status: </span> <span> {JSON.parse(pesanan?.payment_info)?.status.toUpperCase()} </span> </div>
-                                                                </>
-                                                            }
-                                                            <div className={styles.tanggal}>
-                                                                <div>
-                                                                    <span className={styles.label}> dipesan:</span><span> {moment((pesanan?.start).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('LL | LT')}</span>
-                                                                </div>
-                                                                <div>
-                                                                    {pesanan.payment && <>
-                                                                        <span className={styles.label}>lunas :</span> <span>{moment((pesanan?.end).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('LL | LT')}</span></>}
-                                                                </div>
-                                                            </div>
-                                                            {pesanan?.payment && "========================"}
-                                                            <div><span className={styles.label}>Nama:</span> <span className="value">{pesanan?.nama_lengkap_user}</span></div>
-                                                            <div><span className={styles.label}>HP:</span> <span className="value">{pesanan?.no_hp_user}</span></div>
-                                                            <div><span className={styles.label}>Alamat:</span> <span className="value">{pesanan?.alamat_lengkap_user}</span></div>
-                                                            <div><span className={styles.label}>Kode Pos:</span> <span className="value">{pesanan?.kode_pos_user}</span></div>
-                                                            <div><span className={styles.label}>Catatan:</span> <span className="value">{pesanan?.catatan_pengiriman}</span></div>
-                                                            <div><span className={styles.label}>Kode Kupon:</span> <span className="value">{pesanan?.kode ? pesanan?.kode : 'NOVOUCHER'}</span></div>
-                                                        </td>
-
-                                                        {/* Produk dalam 1 kolom */}
-                                                        <td>
-                                                            <ul className={styles.listitem}>
-                                                                <div className={styles.itemproduk}>
-                                                                    {pesanan?.dataPesananItems?.filter(item => item.note !== 'ongkir')
-                                                                        ?.map((item, k) => {
-
-                                                                            const isOngkir = item?.note === "ongkir";
-                                                                            const priceAfterDiscount = isOngkir
-                                                                                ? item.price
-                                                                                : item.price - (item.price * pesanan.diskon) / 100;
-
-                                                                            return (
-                                                                                <li key={k} className={styles.containeritemWrapper} >
-                                                                                    <div className={styles.itemWrapper}>
-                                                                                        {item?.image ? (
-                                                                                            <Link
-                                                                                                target="_blank"
-                                                                                                href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
-                                                                                                className={styles.itemLink}
-                                                                                            >  <Image
-                                                                                                    src={item.image}
-                                                                                                    width={100}
-                                                                                                    height={100}
-                                                                                                    alt={item.productName || ""}
-                                                                                                    unoptimized
-                                                                                                />
-                                                                                            </Link>
-                                                                                        ) : <FaShippingFast size={100} />}
-                                                                                    </div>
-                                                                                    <div className={styles.itemWrapper}>
-                                                                                        <Link
-                                                                                            target="_blank"
-                                                                                            href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
-                                                                                            className={styles.itemLink}
-                                                                                        >
-                                                                                            {item.productName}
-                                                                                            {item?.note && (
-                                                                                                <span className={styles.itemNote}> ({item.note})</span>
-                                                                                            )}
-                                                                                        </Link>
-
-                                                                                        <div className={styles.itemMeta}>
-                                                                                            <span>Qty: {item.quantity}x</span>
-                                                                                            <span>Harga: {FormatRupiah(item.price)}</span>
-
-                                                                                            {!isOngkir && (
-                                                                                                <span className={styles.diskonText}>
-                                                                                                    Setelah Diskon ({pesanan.diskon}%): {FormatRupiah(priceAfterDiscount)}
-                                                                                                </span>
-                                                                                            )}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-
-
-                                                                    {pesanan?.dataPesananItems?.filter(item => item.note === 'ongkir')
-                                                                        ?.map((item, k) => {
-
-                                                                            const isOngkir = item?.note === "ongkir";
-                                                                            const priceAfterDiscount = isOngkir
-                                                                                ? item.price
-                                                                                : item.price - (item.price * pesanan.diskon) / 100;
-
-                                                                            return (
-                                                                                <li key={k} className={styles.containeritemWrapper} >
-                                                                                    <div className={styles.itemWrapper}>
-                                                                                        {item?.image ? (
-                                                                                            <Link
-                                                                                                target="_blank"
-                                                                                                href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
-                                                                                                className={styles.itemLink}
-                                                                                            >  <Image
-                                                                                                    src={item.image}
-                                                                                                    width={100}
-                                                                                                    height={100}
-                                                                                                    alt={item.productName || ""}
-                                                                                                    unoptimized
-                                                                                                />
-                                                                                            </Link>
-                                                                                        ) : <FaShippingFast size={100} />}
-                                                                                    </div>
-                                                                                    <div className={styles.itemWrapper}>
-                                                                                        <Link
-                                                                                            target="_blank"
-                                                                                            href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
-                                                                                            className={styles.itemLink}
-                                                                                        >
-                                                                                            {item.productName}
-                                                                                            {item?.note && (
-                                                                                                <span className={styles.itemNote}> ({item.note})</span>
-                                                                                            )}
-                                                                                        </Link>
-
-                                                                                        <div className={styles.itemMeta}>
-                                                                                            <span>Qty: {item.quantity}x</span>
-                                                                                            <span>Harga: {FormatRupiah(item.price)}</span>
-
-                                                                                            {!isOngkir && (
-                                                                                                <span className={styles.diskonText}>
-                                                                                                    Setelah Diskon ({pesanan.diskon}%): {FormatRupiah(priceAfterDiscount)}
-                                                                                                </span>
-                                                                                            )}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                </div>
-
-                                                                <div className={styles.totalharga}>
-                                                                    <div>
-                                                                        Total Produk:
-                                                                        <strong>
-                                                                            {" "}
-                                                                            {pesanan?.dataPesananItems?.reduce(
-                                                                                (total, item) => total + item.quantity,
-                                                                                0
-                                                                            ) - 1}
-                                                                        </strong>{" "}
-                                                                        items
-                                                                    </div>
-                                                                    {Boolean(Number(pesanan?.diskon_nominal)) &&
+                                                    <Fragment key={j}>
+                                                        <tr className={styles.summaryRow}>
+                                                            <td className={styles.transactionSummary}>
+                                                                <div className={styles.transactionInfoBlock}>
+                                                                    <div className={styles.transactionInfoHeader}>
                                                                         <div>
-                                                                            sub Harga:{" "}
-                                                                            <strong>
-
-                                                                                {FormatRupiah(pesanan?.dataPesananItems?.reduce((total, item) => {
-                                                                                    const priceAfterDiscount = item.note !== 'ongkir' ? item.price - (item.price * pesanan.diskon) / 100 : item.price;
-                                                                                    return priceAfterDiscount + total;
-                                                                                }, 0))}
-                                                                            </strong>
-                                                                        </div>}
-                                                                    {Boolean(Number(pesanan?.diskon_nominal)) &&
-                                                                        <div>
-                                                                            Diskon Nominal:{""}
-                                                                            <strong>
-                                                                                {FormatRupiah(Number(pesanan?.diskon_nominal))}
-                                                                            </strong>
+                                                                            <div className={styles.orderPreviewText}>
+                                                                                {previewText || 'Pesanan belum memiliki produk.'}
+                                                                            </div>
+                                                                            <div className={styles.orderPreviewMeta}>
+                                                                                <span>{totalProductCount} item</span>
+                                                                                <span>{orderTotalValue}</span>
+                                                                            </div>
                                                                         </div>
-                                                                    }
-
-                                                                    <div>
-                                                                        Total Harga:{" "}
-                                                                        <strong>
-                                                                            {FormatRupiah(
-                                                                                pesanan?.dataPesananItems?.reduce((total, item) => {
-                                                                                    const price = Number(item.price); // pastikan number
-
-                                                                                    const priceAfterDiscount =
-                                                                                        item.note !== 'ongkir'
-                                                                                            ? price - (price * pesanan.diskon) / 100
-                                                                                            : price;
-
-                                                                                    return total + priceAfterDiscount;
-                                                                                }, 0) - Number(pesanan?.diskon_nominal)
+                                                                        <div className={styles.transactionInfoActions}>
+                                                                            {pesanan?.payment && (
+                                                                                <span className={`${styles.paymentBadge} ${styles.paymentBadgeInfo}`}>
+                                                                                    {JSON.parse(pesanan?.payment_info)?.channel?.toUpperCase()} - {JSON.parse(pesanan?.payment_info)?.method?.toUpperCase()}
+                                                                                </span>
                                                                             )}
-                                                                        </strong>
-                                                                    </div>
-                                                                </div>
-                                                            </ul>
-                                                        </td>
-
-                                                        {/* Status */}
-                                                        <td>
-                                                            {pesanan?.dataPesananItems?.map((item, k) => {
-
-                                                                return (
-                                                                    <div key={k} style={{ marginBottom: "8px" }}>
-                                                                        {iditem === item?.id && loading ? (
-                                                                            <BeatLoader size={10} />
-                                                                        ) : (
-                                                                            <select
-                                                                                style={
-
-                                                                                    item?.status === "Dikirim"
-                                                                                        ? { background: 'yellow' }
-                                                                                        : item?.status === "Selesai"
-                                                                                            ? { background: 'green', color: 'white' }
-                                                                                            : item?.status === "Diproses"
-                                                                                                ? { background: 'grey', color: 'white' }
-                                                                                                : item?.productName == "Ongkos Kirim" ? { display: 'none' }
-                                                                                                    : {}
-                                                                                }
-                                                                                value={item?.status}
-                                                                                onChange={(e) => handleStatusChange(e.target.value, pesanan)}
+                                                                            <span className={`${styles.paymentBadge} ${pesanan?.payment ? styles.paymentBadgePaid : styles.paymentBadgeUnpaid}`}>
+                                                                                {paymentStatusText}
+                                                                            </span>
+                                                                            {pesanan?.payment && pesanan?.nota_url && (
+                                                                                <Link
+                                                                                    href={`https://` + pesanan.nota_url}
+                                                                                    target="_blank"
+                                                                                    rel="noopener noreferrer"
+                                                                                    className={styles.primaryButton}
+                                                                                >
+                                                                                    Buka Nota
+                                                                                </Link>
+                                                                            )}
+                                                                            <button
+                                                                                type="button"
+                                                                                className={styles.secondaryButton}
+                                                                                onClick={() => toggleOrderDetails(pesanan.id)}
                                                                             >
-                                                                                <option value="">Belum Diproses</option>
-                                                                                <option value="Diproses">Diproses</option>
-                                                                                <option value="Dikirim">Dikirim</option>
-                                                                                <option value="Selesai">Selesai</option>
-                                                                            </select>
-                                                                        )}
-                                                                    </div>
-                                                                )
-                                                            })}
-                                                        </td>
-
-                                                        {/* Note / Resi */}
-                                                        <td>
-                                                            {pesanan?.dataPesananItems?.map((item, k) => (
-                                                                <div key={k} style={{ marginBottom: "8px" }}>
-                                                                    {!openResi && item?.status === "Dikirim" && (
-                                                                        <button onClick={() => handleTrackingNumberChange(item?.id)}>
-                                                                            {item?.noResi ? item?.noResi : 'Tambahkan Resi'}
-                                                                        </button>
-                                                                    )}
-                                                                    {openResi && idItemResi === item?.id && item?.status === "Dikirim" && (
-                                                                        <div className={styles.noresi}>
-                                                                            <input
-                                                                                type="text"
-                                                                                placeholder="Masukkan nomor resi"
-                                                                                value={resi}
-                                                                                onChange={(e) => setResi(e.target.value)}
-                                                                                disabled={loading}
-                                                                            />
-                                                                            <button disabled={loading} onClick={() => handleSaveTracking(item?.id)}>
-                                                                                {idItemResi === item?.id && loading
-                                                                                    ? 'Loading'
-                                                                                    : item?.noResi
-                                                                                        ? 'Update'
-                                                                                        : 'Simpan'}
+                                                                                {expanded ? 'Sembunyikan detail' : 'Lihat detail'}
                                                                             </button>
-                                                                            <div className={styles.close} onClick={() => setOpenResi(false)}>x</div>
                                                                         </div>
-                                                                    )}
-                                                                    {item?.status === "Selesai" && <span>Pesanan selesai</span>}
+                                                                    </div>
+                                                                    <div className={styles.infoRow}>
+                                                                        <span className={styles.infoLabel}>ID:</span>
+                                                                        <span className={styles.infoValue}>{pesanan?.merchantOrderId}</span>
+                                                                    </div>
+                                                                    <div className={styles.infoRow}>
+                                                                        <span className={styles.infoLabel}>Tanggal:</span>
+                                                                        <span className={styles.infoValue}>{moment((pesanan?.start).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('DD MMM YYYY')}</span>
+                                                                    </div>
                                                                 </div>
-                                                            ))}
-                                                        </td>
-                                                        {UserSPV && <td>
-                                                            <button disabled={deletePesanan} onClick={() => HandleDeleteOrder(pesanan.id)}>{deletePesanan ? 'Loading..' : 'DELETE'}</button>
-                                                            <br />
-                                                            <br />
-                                                            <button disabled={deletePesanan} onClick={() => HandleRetrieveOrder(pesanan.reference)}>Retrieve - {pesanan.reference}</button>
-                                                        </td>}
+                                                            </td>
 
+                                                            {UserSPV && <td className={styles.deleteColumn}>
+                                                                <button className={styles.deleteButton} disabled={deletePesanan} onClick={() => HandleDeleteOrder(pesanan.id)}>{deletePesanan ? '...' : 'X'}</button>
+                                                            </td>}
+                                                        </tr>
 
-                                                    </tr>
+                                                        {expanded && (
+                                                            <tr className={styles.expandedRow}>
+                                                                <td colSpan={UserSPV ? 2 : 1}>
+                                                                    <div className={styles.orderDetailPanel}>
+                                                                        <div className={styles.orderDetailGrid}>
+                                                                            <div className={styles.orderDetailColumn}>
+                                                                                <h4 className={styles.detailHeading}>Produk</h4>
+                                                                                <ul className={styles.listitem}>
+                                                                                    <div className={styles.itemproduk}>
+                                                                                        {productItems.map((item, k) => {
+                                                                                            const isOngkir = item?.note === 'ongkir'
+                                                                                            const priceAfterDiscount = isOngkir
+                                                                                                ? item.price
+                                                                                                : item.price - (item.price * pesanan.diskon) / 100
+
+                                                                                            return (
+                                                                                                <li key={k} className={styles.containeritemWrapper}>
+                                                                                                    <div className={styles.itemWrapper}>
+                                                                                                        <div className={styles.itemImage}>
+                                                                                                            {item?.image ? (
+                                                                                                                <Link
+                                                                                                                    target="_blank"
+                                                                                                                    href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
+                                                                                                                >
+                                                                                                                    <Image
+                                                                                                                        src={item.image}
+                                                                                                                        width={60}
+                                                                                                                        height={60}
+                                                                                                                        alt={item.productName || ""}
+                                                                                                                        unoptimized
+                                                                                                                    />
+                                                                                                                </Link>
+                                                                                                            ) : <FaShippingFast size={30} />}
+                                                                                                        </div>
+                                                                                                        <div className={styles.itemDetails}>
+                                                                                                            <Link
+                                                                                                                target="_blank"
+                                                                                                                href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
+                                                                                                                className={styles.itemLink}
+                                                                                                            >
+                                                                                                                {item.productName}
+                                                                                                                {item?.note && (
+                                                                                                                    <span className={styles.itemNote}> ({item.note})</span>
+                                                                                                                )}
+                                                                                                            </Link>
+
+                                                                                                            <div className={styles.itemMeta}>
+                                                                                                                <span>Qty: {item.quantity}x</span>
+                                                                                                                <span>Harga: {FormatRupiah(item.price)}</span>
+                                                                                                                {!isOngkir && (
+                                                                                                                    <span className={styles.diskonText}>
+                                                                                                                        Setelah Diskon ({pesanan.diskon}%): {FormatRupiah(priceAfterDiscount)}
+                                                                                                                    </span>
+                                                                                                                )}
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            )
+                                                                                        })}
+
+                                                                                        {shippingItems.map((item, k) => (
+                                                                                            <li key={`ongkir-${k}`} className={styles.containeritemWrapper}>
+                                                                                                <div className={styles.itemWrapper}>
+                                                                                                    <div className={styles.itemImage}>
+                                                                                                        {item?.image ? (
+                                                                                                            <Link
+                                                                                                                target="_blank"
+                                                                                                                href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
+                                                                                                            >
+                                                                                                                <Image
+                                                                                                                    src={item.image}
+                                                                                                                    width={60}
+                                                                                                                    height={60}
+                                                                                                                    alt={item.productName || ""}
+                                                                                                                    unoptimized
+                                                                                                                />
+                                                                                                            </Link>
+                                                                                                        ) : <FaShippingFast size={30} />}
+                                                                                                    </div>
+                                                                                                    <div className={styles.itemDetails}>
+                                                                                                        <Link
+                                                                                                            target="_blank"
+                                                                                                            href={`${process.env.NEXT_PUBLIC_URL2}/product/${item.slugProduct}`}
+                                                                                                            className={styles.itemLink}
+                                                                                                        >
+                                                                                                            {item.productName}
+                                                                                                            {item?.note && (
+                                                                                                                <span className={styles.itemNote}> ({item.note})</span>
+                                                                                                            )}
+                                                                                                        </Link>
+
+                                                                                                        <div className={styles.itemMeta}>
+                                                                                                            <span>Qty: {item.quantity}x</span>
+                                                                                                            <span>Harga: {FormatRupiah(item.price)}</span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        ))}
+                                                                                    </div>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div className={styles.orderDetailColumn}>
+                                                                                <h4 className={styles.detailHeading}>Transaksi</h4>
+                                                                                <div className={styles.transactionInfoBlock}>
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>ID:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.merchantOrderId}</span>
+                                                                                    </div>
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Status Pembayaran:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.payment ? 'Lunas' : 'Belum Bayar'}</span>
+                                                                                    </div>
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Dipesan:</span>
+                                                                                        <span className={styles.infoValue}>{moment((pesanan?.start).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('DD MMM YYYY | HH:mm')}</span>
+                                                                                    </div>
+                                                                                    {pesanan.payment && (
+                                                                                        <div className={styles.infoRow}>
+                                                                                            <span className={styles.infoLabel}>Lunas:</span>
+                                                                                            <span className={styles.infoValue}>{moment((pesanan?.end).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('DD MMM YYYY | HH:mm')}</span>
+                                                                                        </div>
+                                                                                    )}
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Nama:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.nama_lengkap_user}</span>
+                                                                                    </div>
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Alamat:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.alamat_lengkap_user}</span>
+                                                                                    </div>
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Catatan:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.catatan_pengiriman || '-'}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div className={styles.orderDetailGrid}>
+                                                                            <div className={styles.orderDetailColumn}>
+                                                                                <h4 className={styles.detailHeading}>Status</h4>
+                                                                                <div className={styles.statusItemRow}>
+                                                                                    <div className={styles.statusLabel}>Status Pesanan</div>
+                                                                                    <select
+                                                                                        className={`${styles.statusSelect} ${selectValue === 'Selesai' ? styles.statusSelectPaid : selectValue === 'Dikirim' ? styles.statusSelectShipped : selectValue === 'Diproses' ? styles.statusSelectPending : ''}`}
+                                                                                        value={selectValue}
+                                                                                        onChange={(e) => handleStatusChange(e.target.value, pesanan)}
+                                                                                    >
+                                                                                        <option value="">Belum Diproses</option>
+                                                                                        <option value="Diproses">Diproses</option>
+                                                                                        <option value="Dikirim">Dikirim</option>
+                                                                                        <option value="Selesai">Selesai</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className={styles.orderDetailColumn}>
+                                                                                <h4 className={styles.detailHeading}>Note / Resi</h4>
+                                                                                {/* <div className={styles.noteItemRow}>
+                                                                                    <div className={styles.statusLabel}>Catatan Pesanan</div>
+                                                                                    <div className={styles.summaryValue}>{pesanan?.catatan_pengiriman || '-'}</div>
+                                                                                </div> */}
+                                                                                {selectValue === "Dikirim" && shippingItem && (
+                                                                                    <div className={styles.noteItemRow}>
+                                                                                        <div className={styles.statusLabel}>{shippingItem.productName}</div>
+                                                                                        {!openResi && (
+                                                                                            <button onClick={() => handleTrackingNumberChange(shippingItem?.id)} className={styles.noteButtonSmall}>
+                                                                                                {shippingItem?.noResi ? shippingItem?.noResi : 'Tambahkan Resi'}
+                                                                                            </button>
+                                                                                        )}
+                                                                                        {openResi && idItemResi === shippingItem?.id && (
+                                                                                            <div className={styles.noresi}>
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    placeholder="Masukkan nomor resi"
+                                                                                                    value={resi}
+                                                                                                    onChange={(e) => setResi(e.target.value)}
+                                                                                                    disabled={loading}
+                                                                                                />
+                                                                                                <button disabled={loading} onClick={() => handleSaveTracking(shippingItem?.id)}>
+                                                                                                    {idItemResi === shippingItem?.id && loading
+                                                                                                        ? 'Loading'
+                                                                                                        : shippingItem?.noResi
+                                                                                                            ? 'Update'
+                                                                                                            : 'Simpan'}
+                                                                                                </button>
+                                                                                                <div className={styles.close} onClick={() => setOpenResi(false)}>x</div>
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )}
+                                                    </Fragment>
                                                 );
                                             })}
                                         </Fragment>

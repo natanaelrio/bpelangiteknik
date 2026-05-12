@@ -67,24 +67,24 @@ export default function HeaderNew() {
         <>
             <LoadingNew />
             <div className={styles.atas} >
-                <Link href={'/'} className={styles.judul}><MdHome size={30} />PelangiTeknik</Link>
+                <Link href={'/'} className={styles.judul}><MdHome size={28} /><span>PelangiTeknik</span></Link>
 
                 <button className={styles.searchP}>
-                    <Link href={'/order'}>Orders</Link><FaBorderAll />
+                    <Link href={'/order'}><FaBorderAll /><span>Orders</span></Link>
                 </button>
 
                 <button className={styles.searchP}>
-                    <Link href={'/penawaran'}> Penawaran  <MdOutlineLocalOffer size={15} /> </Link>
+                    <Link href={'/penawaran'}><MdOutlineLocalOffer size={16} /><span>Penawaran</span></Link>
                 </button>
                 <button className={styles.searchP}>
-                    <Link href={'/post'}>  + Product <MdLibraryAdd /> </Link>
+                    <Link href={'/post'}><MdLibraryAdd size={16} /><span>+ Product</span></Link>
                 </button>
                 {session?.user?.email == 'rio@pelangiteknik.com' &&
-                    <button className={styles.searchP}><Link href={'/postartikel'}>+Artikel</Link> <MdLibraryAdd />
+                    <button className={styles.searchP}><Link href={'/postartikel'}><MdLibraryAdd size={16} /><span>+Artikel</span></Link>
                     </button>
                 }
 
-                <button onClick={handlePenawaran} className={styles.searchP}>+ Buat Penawaran <MdLibraryAdd /> {TotalPenawaran > 0 && <span className={styles.totalP}>{TotalPenawaran}</span>}
+                <button onClick={handlePenawaran} className={styles.searchP}><MdLibraryAdd size={16} /><span>Buat Penawaran</span> {TotalPenawaran > 0 && <span className={styles.totalP}>{TotalPenawaran}</span>}
                 </button>
 
                 <div className={styles.ataskanan}>

@@ -3,55 +3,79 @@
     position: sticky;
     top: 0;
     width: 100%;
-    min-height: 64px;
-    background: #fff;
+    min-height: 72px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 0 16px;
-    border-bottom: 1px solid #e5e7eb;
+    gap: 16px;
+    padding: 0 24px;
     z-index: 500;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .totalP {
-    background: #ef4444;
+    background: #ff6b6b;
     color: #fff;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 50%;
+    padding: 3px 8px;
+    border-radius: 12px;
     margin-left: 4px;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
 }
 
 /* ===== LOGO ===== */
 .judul {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #111827;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00d9ff, #00fff5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-decoration: none;
     white-space: nowrap;
+    letter-spacing: -0.5px;
+}
+
+.judul svg {
+    color: #00d9ff;
+    filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.5));
 }
 
 /* ===== BUTTON MENU ===== */
 .searchP {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
+    gap: 8px;
+    padding: 10px 18px;
     font-size: 13px;
-    border-radius: 6px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
+    font-weight: 600;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
 }
 
 .searchP:hover {
-    background: #111827;
+    background: rgba(255, 255, 255, 0.18);
     color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    border-color: rgba(0, 217, 255, 0.4);
+}
+
+.searchP a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 /* ===== RIGHT AREA ===== */
@@ -59,42 +83,69 @@
     margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
 /* ===== SEARCH ===== */
+.search {
+    position: relative;
+}
+
 .search form {
     display: flex;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
     overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.search form:focus-within {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(0, 217, 255, 0.5);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
 }
 
 .search input {
     border: none;
     outline: none;
-    padding: 8px 10px;
-    width: 180px;
-    font-size: 13px;
+    padding: 12px 16px;
+    width: 220px;
+    font-size: 14px;
+    background: transparent;
+    color: #fff;
+}
+
+.search input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .searchB {
     border: none;
-    background: #111827;
-    color: #fff;
-    padding: 8px 14px;
+    background: linear-gradient(135deg, #00d9ff, #00b4d8);
+    color: #1a1a2e;
+    padding: 12px 20px;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+.searchB:hover {
+    background: linear-gradient(135deg, #00fff5, #00d9ff);
+    box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
 }
 
 /* ===== LOGOUT ===== */
 .ataskanan span {
     cursor: pointer;
-    padding: 6px;
-    border-radius: 6px;
+    padding: 8px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
 
 .ataskanan span:hover {
-    background: #f3f4f6;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 
@@ -102,30 +153,30 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 18px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #ff4d4f, #ff7875);
+    padding: 12px 24px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
     color: #fff;
     font-size: 14px;
-    font-weight: 600;
-    letter-spacing: .3px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
     border: none;
     outline: none;
     user-select: none;
-    transition: all .25s ease;
-    box-shadow: 0 4px 10px rgba(255, 77, 79, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.35);
 }
 
 /* Hover */
 .logout:hover {
-    background: linear-gradient(135deg, #ff7875, #ff4d4f);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(255, 77, 79, 0.35);
+    background: linear-gradient(135deg, #ff8787, #ff6b6b);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
 }
 
 /* Active / Click */
 .logout:active {
-    transform: scale(.96);
+    transform: scale(0.96);
 }
 
 /* Loading state */
@@ -138,7 +189,7 @@
 /* Mobile responsive */
 @media (max-width: 640px) {
     .logout {
-        padding: 8px 14px;
+        padding: 10px 18px;
         font-size: 13px;
     }
 }
@@ -150,11 +201,11 @@
 /* =================== */
 @media (max-width: 1024px) {
     .search input {
-        width: 140px;
+        width: 160px;
     }
 
     .searchP {
-        padding: 7px 10px;
+        padding: 8px 14px;
         font-size: 12px;
     }
 }
@@ -166,17 +217,18 @@
     .atas {
         flex-wrap: wrap;
         min-height: auto;
-        padding: 10px 14px;
+        padding: 12px 16px;
+        gap: 12px;
     }
 
     .judul {
-        font-size: 16px;
+        font-size: 18px;
         width: 100%;
     }
 
     .searchP {
-        padding: 6px 10px;
-        font-size: 12px;
+        padding: 8px 12px;
+        font-size: 11px;
     }
 
     .search {
@@ -208,11 +260,16 @@
     }
 
     .search input {
-        padding: 10px;
+        padding: 12px;
     }
 
     .searchP {
         gap: 4px;
+        padding: 8px 10px;
+    }
+
+    .searchP span {
+        display: none;
     }
 
     .judul span {
