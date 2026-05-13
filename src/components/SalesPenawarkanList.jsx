@@ -4,24 +4,38 @@ import toast from 'react-hot-toast';
 import moment from 'moment';
 import 'moment/locale/id'
 import styles from './SalesPenawarkanList.module.css';
+import { useRouter } from "next/navigation";
+import { FaTrashCan } from "react-icons/fa6";
+import { HandleDeleteSalesPenawaran } from '@/service/handleSalesPenawaran';
 
-export default function SalesPenawarkanList() {
+export default function SalesPenawarkanList({ userSales }) {
+
+    // const userSalesNew = ['Sifa', 'Ina', 'Alma']
+    const router = useRouter();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [expandedId, setExpandedId] = useState(null);
 
     // Filter states
     const [salesNameFilter, setSalesNameFilter] = useState('');
+    const [salesNameOptions, setSalesNameOptions] = useState(false);
     const [ppnFilter, setPpnFilter] = useState('all');
     const [qtyFilter, setQtyFilter] = useState({ min: '', max: '' });
     const [dateFilter, setDateFilter] = useState({ start: '', end: '' });
+
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     // Get unique sales names for dropdown
-    const uniqueSalesNames = [...new Set(data.map(item => item.salesName))];
+    const userSalesNew = userSales.map((item) => item.name)
+
+    const dataSales = new Set(data.map(item => item.salesName));
+
+    const uniqueSalesNames = userSalesNew.filter(
+        name => dataSales.has(name) || userSalesNew.includes(name)
+    );
 
     // Filtered data
     const filteredData = data.filter(item => {
@@ -62,7 +76,7 @@ export default function SalesPenawarkanList() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [salesNameOptions]);
 
     // Reset to page 1 when filters change
     useEffect(() => {
@@ -91,24 +105,47 @@ export default function SalesPenawarkanList() {
         }
     };
 
+    const DeleteData = async (id) => {
+        const isConfirm = confirm("Yakin ingin menghapus data ini?");
+
+        if (!isConfirm) return;
+        try {
+            console.log('delete start')
+
+            await HandleDeleteSalesPenawaran(id)
+
+            console.log('delete success')
+            setSalesNameOptions(!salesNameOptions)
+            router.refresh()
+
+            console.log('refresh called')
+        } catch (error) {
+            toast.error("Error Internet");
+        } finally {
+            toast.success("Data berhasil dihapus");
+            setLoading(false);
+        }
+    };
+
+
     const toggleExpand = (id) => {
         setExpandedId(expandedId === id ? null : id);
     };
 
-    if (loading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.wrapper}>
-                    <div className={styles.card}>
-                        <div className={styles.loading}>
-                            <div className={styles.spinner}></div>
-                            <p>Memuat data...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <div className={styles.container}>
+    //             <div className={styles.wrapper}>
+    //                 <div className={styles.card}>
+    //                     <div className={styles.loading}>
+    //                         <div className={styles.spinner}></div>
+    //                         <p>Memuat data...</p>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className={styles.container}>
@@ -116,7 +153,8 @@ export default function SalesPenawarkanList() {
                 <div className={styles.card}>
                     {/* Header */}
                     <div className={styles.header}>
-                        <h1>Data Sales Penawaran</h1>
+                        <h2><b>{salesNameFilter}</b></h2>
+                        <h1>Data Sales Penawaran {dateFilter.start ? moment(dateFilter.start).format('dddd, DD MMMM YYYY') : ''} {dateFilter.end ? ' - ' + moment(dateFilter.end).format('dddd, DD MMMM YYYY') : ''}</h1>
                         <p>Kelola dan lihat semua penawaran sales</p>
                     </div>
 
@@ -151,7 +189,9 @@ export default function SalesPenawarkanList() {
                             >
                                 <option value="">Semua Sales</option>
                                 {uniqueSalesNames.map(name => (
-                                    <option key={name} value={name}>{name}</option>
+                                    <option key={name} value={name}>
+                                        {name}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -227,6 +267,9 @@ export default function SalesPenawarkanList() {
                                         key={i}
                                         className={`${styles.itemCard} ${expandedId === item.id ? styles.itemCardExpanded : ''}`}
                                     >
+                                        <div className={styles.deleteButton} onClick={() => DeleteData(item.id)}>
+                                            <FaTrashCan color='red' size={15} />
+                                        </div>
                                         {/* Main Row */}
                                         <div
                                             className={`${styles.mainRow} ${expandedId === item.id ? styles.mainRowExpanded : ''}`}

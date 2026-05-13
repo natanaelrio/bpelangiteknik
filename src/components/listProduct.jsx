@@ -168,7 +168,7 @@ function LoadMoreButton({ onClick, loading, isTop = false }) {
 // ================================
 function LoadingOverlay({ loading }) {
     if (!loading) return null
-    
+
     return (
         <div className={styles.loading}>
             <div className={styles.kotak}>
@@ -429,7 +429,7 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
 
     const HandleDeleteProducts = useCallback(async (id, slug) => {
         if (!confirm('Apakah yakin hapus?')) return
-        
+
         setLoading(true)
         try {
             await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
@@ -451,7 +451,7 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
 
     const HandleDeleteArtikels = useCallback(async (id) => {
         if (!confirm('Apakah yakin hapus?')) return
-        
+
         setLoading(true)
         try {
             await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
@@ -508,15 +508,15 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
             <div className="desktop">
                 <div className={styles.container}>
                     {isPenawaran && <Penawaran data={DataPenawaran} />}
-                    
+
                     <div className={styles.dalamcontainer}>
                         {/* Header Section */}
                         <header className={styles.atas} style={{ zIndex: loading ? 0 : 99 }}>
-                            <NavigationBar 
-                                session={session} 
-                                onSetLoading={setLoading} 
+                            <NavigationBar
+                                session={session}
+                                onSetLoading={setLoading}
                             />
-                            <SearchBar 
+                            <SearchBar
                                 search={search}
                                 onSearchChange={setSearch}
                                 onSubmit={handleSearch}
@@ -541,7 +541,7 @@ export default function ListProduct({ session, dataList, query, dataKategori, da
                                                     onPenwaan={HandlePenawaran}
                                                 />
                                             ))}
-                                            
+
                                             {/* Load More / Back to Top */}
                                             {totalProduct > totalMaxProduct ? (
                                                 <LoadMoreButton onClick={HandleTop} isTop />

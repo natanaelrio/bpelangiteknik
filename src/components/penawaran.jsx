@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { FormatRupiah } from '@/utils/formatRupiah';
-import toast from 'react-hot-toast';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import LogoAtas from './logo/logoAtas';
@@ -24,7 +23,6 @@ export default function Penawaran({ data }) {
     const [loading, setLoading] = useState(false)
     const setIsPenawaran = useCon((state) => state.setIsPenawaran)
 
-    // <<< BANK ADDED: list bank >>>
     const bankList = [
         {
             nama: "Bank BCA - PT Pelangi Teknik Indonesia",
@@ -44,7 +42,6 @@ a.c 588.5062.609`
         }
     ];
 
-    // <<< UPDATED INITIAL VALUES >>>
     const initialValues = {
         name: '',
         number: '',
@@ -59,8 +56,6 @@ a.c 588.5062.609`
         jumlahBarang: 1,
         nameSales: '',
         numberSales: '',
-
-        // <<< BANK ADDED >>>
         bank: '',
         bankDetail: '',
     };
@@ -68,10 +63,10 @@ a.c 588.5062.609`
     const validationSchema = Yup.object({
         name: Yup.string()
             .max(300, 'max 300 karakter')
-            .required('Name is required'),
+            .required('Nama customer wajib diisi'),
         jumlahBarang: Yup.number()
             .max(300, 'max 300 karakter')
-            .required('Jumlah Barang is required'),
+            .required('Jumlah Barang wajib diisi'),
         notes: Yup.array().of(
             Yup.string().max(300, "Maks 300 karakter")
         )
@@ -95,7 +90,6 @@ a.c 588.5062.609`
         }
     };
 
-    // <<< BANK ADDED: handler >>>
     const handleBankChange = (e, setFieldValue) => {
         const selected = bankList.find(item => item.nama === e.target.value);
         if (selected) {
@@ -105,13 +99,10 @@ a.c 588.5062.609`
     };
 
     const handleSubmit = async (values) => {
-
         try {
             setLoading(true)
 
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}/product/${data.slugProduct}`);
-
-            const allNotesText = values.notes.filter(n => n.trim() !== "").join("\n");
 
             const docDefinitionv = {
                 content: [
@@ -156,7 +147,6 @@ a.c 588.5062.609`
                                     { text: "Deskripsi Barang", style: "tableHeader" },
                                     { text: "Harga Satuan", style: "tableHeader" },
                                     { text: "Total", style: "tableHeader" },
-
                                 ],
                                 [
                                     { text: `${values.jumlahBarang}`, style: "subheader" },
@@ -179,7 +169,6 @@ a.c 588.5062.609`
                                     },
                                     { text: `${FormatRupiah(Number(data.productPriceFinal))}`, style: "subheader", fontSize: 10 },
                                     { text: `${FormatRupiah(Number(data.productPriceFinal * Number(values.jumlahBarang)))}`, style: "subheader", fontSize: 10 },
-
                                 ]],
                         },
                         layout: {
@@ -197,9 +186,7 @@ a.c 588.5062.609`
                         stack: [
                             { text: 'NOTE:', bold: true, margin: [0, 0, 0, 5] },
                             {
-                                ul: values.notes
-                                    .filter(n => n.trim() !== "")   // buang note kosong
-                                    .map(n => n)                    // isi UL
+                                ul: values.notes.filter(n => n.trim() !== "").map(n => n)
                             }
                         ],
                         style: 'defaultStyle'
@@ -207,7 +194,6 @@ a.c 588.5062.609`
 
                     { text: '\n' },
 
-                    // <<< BANK ADDED IN PDF >>>
                     {
                         text: [
                             { text: 'PEMBAYARAN:\n', bold: true },
@@ -260,66 +246,79 @@ a.c 588.5062.609`
 
     return (
         <>
-            <div className={styles.bghitam} onClick={() => setIsPenawaran()}>LoginGoogle</div>
+            <div className={styles.bghitam} onClick={() => setIsPenawaran()} />
             <div className={styles.container}>
-                <div className={styles.dalamcontainer}>
-                    <div className={styles.text}>
-                        Surat Penawaran <b>{data?.productName}</b>
+                <div className={styles.header}>
+                    <div className={styles.headerContent}>
+                        <div className={styles.headerText}>
+                            <span className={styles.headerLabel}>Formulir Penawaran</span>
+                            <h2 className={styles.headerTitle}>{data?.productName}</h2>
+                        </div>
+                        <button className={styles.closeBtn} onClick={() => setIsPenawaran()}>
+                            ✕
+                        </button>
                     </div>
+                </div>
 
+                <div className={styles.dalamcontainer}>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
                         {({ values, setFieldValue }) => (
                             <Form>
 
-                                {/* JUMLAH BARANG */}
-                                <div className={styles.jumlahbarang}>
-                                    <b>Jumlah Barang</b>
+                                <div className={`${styles.section} ${styles.jumlahbarang}`}>
+                                    <div className={styles.sectionHeader}>
+                                        <div className={styles.sectionIcon}>📦</div>
+                                        <h3 className={styles.sectionTitle}>Jumlah Pesanan</h3>
+                                    </div>
                                     <div className={styles.input}>
                                         <ErrorMessage name="jumlahBarang" className={styles.er} component="div" />
-                                        <Field type="text" name="jumlahBarang" placeholder="ex 10" disabled={loading} />
+                                        <Field type="number" name="jumlahBarang" placeholder="Contoh: 10" disabled={loading} />
                                     </div>
                                 </div>
 
-                                {/* CUSTOMER */}
-                                <div className={styles.custumer}>
-                                    <b>Informasi Customer</b>
+                                <div className={`${styles.section} ${styles.custumer}`}>
+                                    <div className={styles.sectionHeader}>
+                                        <div className={styles.sectionIcon}>👤</div>
+                                        <h3 className={styles.sectionTitle}>Informasi Customer</h3>
+                                    </div>
                                     <div className={styles.input}>
                                         <ErrorMessage name="name" className={styles.er} component="div" />
-                                        <Field type="text" name="name" placeholder="Nama Lengap" disabled={loading} />
+                                        <Field type="text" name="name" placeholder="Nama Lengkap Customer" disabled={loading} />
                                     </div>
                                 </div>
 
-                                {/* SALES */}
-                                <div className={styles.salles}>
-                                    <b>Informasi Sales</b>
+                                <div className={`${styles.section} ${styles.salles}`}>
+                                    <div className={styles.sectionHeader}>
+                                        <div className={styles.sectionIcon}>💼</div>
+                                        <h3 className={styles.sectionTitle}>Sales & Pembayaran</h3>
+                                    </div>
 
                                     <div className={styles.input}>
+                                        <label>Pilih Sales</label>
                                         <Field
                                             as="select"
                                             name="contact"
                                             onChange={(e) => handleContactChange(e, setFieldValue)}
                                             disabled={loading}
                                         >
-                                            <option value="">Pilih Kontak Sales</option>
+                                            <option value="">Pilih Sales</option>
                                             {phoneNumbers.map((contact, index) => (
                                                 <option key={index} value={contact.sales}>
-                                                    {contact.sales} ( {contact.numberForm} )
+                                                    {contact.sales} ({contact.numberForm})
                                                 </option>
                                             ))}
                                         </Field>
                                     </div>
 
-                                    {/* ===================== BANK SELECT ====================== */}
-                                    <b>Pembayaran</b>
-
                                     <div className={styles.input}>
+                                        <label>Metode Pembayaran</label>
                                         <Field
                                             as="select"
                                             name="bank"
                                             onChange={(e) => handleBankChange(e, setFieldValue)}
                                             disabled={loading}
                                         >
-                                            <option value="">Pilih Metode Pembayaran</option>
+                                            <option value="">Pilih Bank</option>
                                             {bankList.map((item, index) => (
                                                 <option key={index} value={item.nama}>
                                                     {item.nama}
@@ -328,56 +327,51 @@ a.c 588.5062.609`
                                         </Field>
                                     </div>
 
-                                    {/* TAMPILKAN DETAIL BANK */}
                                     {values.bankDetail && (
                                         <div className={styles.bankdetailbox}>
                                             <pre>{values.bankDetail}</pre>
                                         </div>
                                     )}
-                                    {/* ========================================================= */}
 
-                                    {/* ===================== NOTE DINAMIS ===================== */}
-                                    <b>Note Tambahan</b>
-                                    <FieldArray name="notes">
-                                        {({ push, remove }) => (
-                                            <div className={styles.notecontainer}>
-                                                {values.notes.map((note, index) => (
-                                                    <div key={index} className={styles.inputnote}>
-                                                        <Field
-                                                            type="text"
-                                                            name={`notes[${index}]`}
-                                                            placeholder="Note"
-                                                            disabled={loading}
-                                                        />
-                                                        {
+                                    <div className={styles.input}>
+                                        <label>Catatan Tambahan</label>
+                                        <FieldArray name="notes">
+                                            {({ push, remove }) => (
+                                                <div className={styles.notecontainer}>
+                                                    {values.notes.map((note, index) => (
+                                                        <div key={index} className={styles.inputnote}>
+                                                            <Field
+                                                                type="text"
+                                                                name={`notes[${index}]`}
+                                                                placeholder="Tambah catatan..."
+                                                                disabled={loading}
+                                                            />
                                                             <div className={styles.deletenote} onClick={() => remove(index)}>
-                                                                -
+                                                                ✕
                                                             </div>
-                                                        }
-                                                    </div>
-                                                ))}
+                                                        </div>
+                                                    ))}
 
-                                                <button
-                                                    type="button"
-                                                    onClick={() => push("")}
-                                                    className={styles.addBtn}
-                                                >
-                                                    + Tambah Note
-                                                </button>
-                                            </div>
-                                        )}
-                                    </FieldArray>
-                                    {/* ========================================================== */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => push("")}
+                                                        className={styles.addBtn}
+                                                    >
+                                                        + Tambah Catatan
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </FieldArray>
+                                    </div>
 
                                 </div>
 
                                 <button type="submit" disabled={loading}>
-                                    {loading ? 'Loading...' : 'Download Surat'}
+                                    {loading ? '⏳ Menghasilkan PDF...' : '📥 Download Surat Penawaran'}
                                 </button>
                             </Form>
                         )}
                     </Formik>
-
                 </div>
             </div>
         </>
