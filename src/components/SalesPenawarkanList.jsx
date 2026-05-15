@@ -363,18 +363,46 @@ export default function SalesPenawarkanList({ userSales }) {
                                                                 <th className={styles.center}>Qty</th>
                                                                 <th className={styles.right}>Harga</th>
                                                                 <th className={styles.right}>Subtotal</th>
+                                                                <th className={styles.right}>PPN</th>
+                                                                <th className={styles.right}>GrandTotal</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {item.items.map((child, idx) => (
-                                                                <tr key={idx}>
-                                                                    <td>{idx + 1}</td>
-                                                                    <td className={styles.bold}>{child.productName}</td>
-                                                                    <td className={styles.center}>{child.qty}</td>
-                                                                    <td className={styles.right}>Rp {Number(child.productPriceFinal).toLocaleString('id-ID')}</td>
-                                                                    <td className={styles.right}>Rp {(Number(child.productPriceFinal) * child.qty).toLocaleString('id-ID')}</td>
-                                                                </tr>
-                                                            ))}
+                                                            {item.items.map((child, idx) => {
+                                                                const subtotal =
+                                                                    Number(child.productPriceFinal) * Number(child.qty);
+
+                                                                const ppn = item.includePPN
+                                                                    ? (subtotal * 11) / 100
+                                                                    : 0;
+
+                                                                const grandTotal = subtotal + ppn;
+
+                                                                return (
+                                                                    <tr key={idx}>
+                                                                        <td>{idx + 1}</td>
+                                                                        <td className={styles.bold}>
+                                                                            {child.productName}
+                                                                        </td>
+                                                                        <td className={styles.center}>
+                                                                            {child.qty}
+                                                                        </td>
+                                                                        <td className={styles.right}>
+                                                                            Rp {Number(child.productPriceFinal).toLocaleString("id-ID")}
+                                                                        </td>
+                                                                        <td className={styles.right}>
+                                                                            Rp {subtotal.toLocaleString("id-ID")}
+                                                                        </td>
+                                                                        <td className={styles.right}>
+                                                                            Rp {ppn.toLocaleString("id-ID")}
+                                                                        </td>
+                                                                        <td className={styles.right}>
+                                                                            Rp {grandTotal.toLocaleString("id-ID")}
+                                                                        </td>
+                                                                    </tr>
+                                                                );
+                                                            })}
+
                                                         </tbody>
                                                     </table>
                                                 </div>
