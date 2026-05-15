@@ -637,8 +637,16 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                                                         </div>
                                                                                     )}
                                                                                     <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Kode VOUCHER:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.kode}</span>
+                                                                                    </div>
+                                                                                    <div className={styles.infoRow}>
                                                                                         <span className={styles.infoLabel}>Nama:</span>
                                                                                         <span className={styles.infoValue}>{pesanan?.nama_lengkap_user}</span>
+                                                                                    </div>
+                                                                                    <div className={styles.infoRow}>
+                                                                                        <span className={styles.infoLabel}>Nomer Telepon:</span>
+                                                                                        <span className={styles.infoValue}>{pesanan?.no_hp_user}</span>
                                                                                     </div>
                                                                                     <div className={styles.infoRow}>
                                                                                         <span className={styles.infoLabel}>Alamat:</span>
