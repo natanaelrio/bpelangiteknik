@@ -52,7 +52,8 @@ export default function HeaderNew() {
     }
 
     const handlePenawaran = () => {
-        if (TotalPenawaran > 0) {
+        // TotalPenawaran > 0
+        if (true) {
             setLoading(true);
             const data = JSON.parse(localStorage.getItem('DataPenawaran') || '[]');
             setDataPenawaran(data);

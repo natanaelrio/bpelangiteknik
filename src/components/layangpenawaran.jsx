@@ -11,6 +11,7 @@ import TTD from './logo/ttd';
 import { FormatRupiah } from '@/utils/formatRupiah';
 import { useCon } from '@/zustand/useCon';
 import { sendGAEventL } from '@/lib/ga';
+import toast from 'react-hot-toast';
 
 export default function Layangpenawaran({ dataPenawaran, setDataPenawaran }) {
     const logoBase64 = LogoAtas()
@@ -144,6 +145,12 @@ a.c 588.5062.609`
             return;
         }
 
+        const formatRupiah = (value) =>
+            new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(value);
+
         // Log data yang akan dikirim ke API
         const payloadPenawaran = {
             customerName,
@@ -154,12 +161,39 @@ a.c 588.5062.609`
                 phone: numberSales
             },
             selectedBank: selectedBank ? selectedBank.nama : null,
-            items: dataPenawaran.map(item => ({
-                productName: item.productName,
-                qty: Number(item.qty || 1),
-                productPriceFinal: Number(item.productPriceFinal),
-                spekNew: item.spekNew || []
-            })),
+            items: dataPenawaran.map(item => {
+                const qty = Number(item.qty || 1);
+                const harga = Number(item.productPriceFinal || 0);
+
+                const subtotal = harga * qty;
+                const ppn = includePPN
+                    ? (subtotal * 11) / 100
+                    : 0;
+
+                const grandTotal = subtotal + ppn;
+
+                return {
+                    productName: item.productName,
+
+                    qty,
+
+                    productPriceFinal:
+                        formatRupiah(harga),
+
+                    spekNew: [],
+
+                    includePPN,
+
+                    subtotal:
+                        formatRupiah(subtotal),
+
+                    ppn:
+                        formatRupiah(ppn),
+
+                    grandTotal:
+                        formatRupiah(grandTotal)
+                };
+            }),
             notes,
             includePPN,
             totals: {
@@ -176,32 +210,102 @@ a.c 588.5062.609`
 
         try {
             // Kirim data ke API
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/createSalesPenawaran`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': process.env.NEXT_PUBLIC_SECREET
-                },
-                body: JSON.stringify({
-                    customerName: payloadPenawaran.customerName,
-                    customerPhone: payloadPenawaran.customerPhone,
-                    PICcustomerName: payloadPenawaran.PICcustomerName,
-                    salesName: payloadPenawaran.sales.name,
-                    salesPhone: payloadPenawaran.sales.phone,
-                    selectedBank: payloadPenawaran.selectedBank,
-                    notes: payloadPenawaran.notes,
-                    includePPN: payloadPenawaran.includePPN,
-                    totalHargaSatuan: payloadPenawaran.totals.totalHargaSatuan,
-                    totalKeseluruhan: payloadPenawaran.totals.totalKeseluruhan,
-                    totalQty: payloadPenawaran.totals.totalQty,
-                    ppn: payloadPenawaran.totals.ppn,
-                    grandTotal: payloadPenawaran.totals.grandTotal,
-                    items: payloadPenawaran.items
-                })
-            });
+            // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/createSalesPenawaran`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': process.env.NEXT_PUBLIC_SECREET
+            //     },
+            //     body: JSON.stringify({
+            //         customerName: payloadPenawaran.customerName,
+            //         customerPhone: payloadPenawaran.customerPhone,
+            //         PICcustomerName: payloadPenawaran.PICcustomerName,
+            //         salesName: payloadPenawaran.sales.name,
+            //         salesPhone: payloadPenawaran.sales.phone,
+            //         selectedBank: payloadPenawaran.selectedBank,
+            //         notes: payloadPenawaran.notes,
+            //         includePPN: payloadPenawaran.includePPN,
+            //         totalHargaSatuan: payloadPenawaran.totals.totalHargaSatuan,
+            //         totalKeseluruhan: payloadPenawaran.totals.totalKeseluruhan,
+            //         totalQty: payloadPenawaran.totals.totalQty,
+            //         ppn: payloadPenawaran.totals.ppn,
+            //         grandTotal: payloadPenawaran.totals.grandTotal,
+            //         items: payloadPenawaran.items
+            //     })
+            // });
+            // const result = await response.json();
+            // console.log("✅ RESPONSE API PENAWARAN:", result);
 
-            const result = await response.json();
-            console.log("✅ RESPONSE API PENAWARAN:", result);
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_URL}/api/c/createSheetGoogleSalesPenawaran`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization':
+                            process.env.NEXT_PUBLIC_SECREET
+                    },
+                    body: JSON.stringify({
+                        customerName:
+                            payloadPenawaran.customerName,
+
+                        customerPhone:
+                            payloadPenawaran.customerPhone,
+
+                        PICcustomerName:
+                            payloadPenawaran.PICcustomerName,
+
+                        salesName:
+                            payloadPenawaran.sales.name,
+
+                        salesPhone:
+                            payloadPenawaran.sales.phone,
+
+                        selectedBank:
+                            payloadPenawaran.selectedBank,
+
+                        notes:
+                            payloadPenawaran.notes,
+
+                        includePPN:
+                            payloadPenawaran.includePPN,
+
+                        totalHargaSatuan:
+                            payloadPenawaran.totals
+                                .totalHargaSatuan,
+
+                        totalKeseluruhan:
+                            payloadPenawaran.totals
+                                .totalKeseluruhan,
+
+                        totalQty:
+                            payloadPenawaran.totals
+                                .totalQty,
+
+                        ppn:
+                            payloadPenawaran.totals
+                                .ppn,
+
+                        grandTotal:
+                            payloadPenawaran.totals
+                                .grandTotal,
+
+                        items:
+                            payloadPenawaran.items
+                    })
+                }
+            );
+
+            const resultSalesPenawaran = await response.json();
+
+            console.log("✅ RESPONSE API PENAWARAN:", resultSalesPenawaran);
+
+            if (!resultSalesPenawaran.success) {
+                toast.error("Gagal membuat penawaran: " + resultSalesPenawaran.message);
+                throw new Error(resultSalesPenawaran.message);
+            }
+
+
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
                 customer_penawaran_admin: customerName,
