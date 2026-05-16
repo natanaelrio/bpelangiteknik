@@ -61,6 +61,27 @@ a.c 588.5062.609`
     const [includePPN, setIncludePPN] = useState(true);
     const [manualPPN, setManualPPN] = useState(false);
 
+    const inisial = nameSales
+        .split(" ")
+        .join("")
+        .toUpperCase();
+
+    const waktuWIB = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Jakarta',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    })
+        .format(new Date())
+        .replace(/[-,: ]/g, '');
+
+    const kodePenawaran = `PEN-${inisial}-${waktuWIB}`;
+
+
     // Hitung total harga satuan & total keseluruhan
     const totalHargaSatuan = dataPenawaran.reduce((acc, item) => acc + Number(item.productPriceFinal), 0);
     const totalKeseluruhan = dataPenawaran.reduce((acc, item) => acc + (Number(item.productPriceFinal) * Number(item.qty || 1)), 0);
@@ -154,6 +175,7 @@ a.c 588.5062.609`
             }).format(value);
 
         const payloadPenawaranDataBase = {
+            id: kodePenawaran,
             customerName,
             customerPhone,
             PICcustomerName: PICcustomerName || null,
@@ -166,7 +188,8 @@ a.c 588.5062.609`
                 productName: item.productName,
                 qty: Number(item.qty || 1),
                 productPriceFinal: Number(item.productPriceFinal),
-                spekNew: item.spekNew || []
+                spekNew: item.spekNew || [],
+                kodeProduk: item.productType || null
             })),
             notes,
             includePPN,
@@ -177,12 +200,13 @@ a.c 588.5062.609`
                 ppn: includePPN ? (totalKeseluruhan * 11) / 100 : 0,
                 grandTotal: includePPN ? totalKeseluruhan + (totalKeseluruhan * 11) / 100 : totalKeseluruhan
             },
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
         };
 
 
         // Log data yang akan dikirim ke API
         const payloadPenawaranSheet = {
+            id: kodePenawaran,
             customerName,
             customerPhone,
             PICcustomerName: PICcustomerName || null,
@@ -204,6 +228,8 @@ a.c 588.5062.609`
 
                 return {
                     productName: item.productName,
+
+                    kodeProduk: item.productType || null,
 
                     qty,
 
@@ -247,6 +273,7 @@ a.c 588.5062.609`
                     'Authorization': process.env.NEXT_PUBLIC_SECREET
                 },
                 body: JSON.stringify({
+                    id: payloadPenawaranDataBase.id,
                     customerName: payloadPenawaranDataBase.customerName,
                     customerPhone: payloadPenawaranDataBase.customerPhone,
                     PICcustomerName: payloadPenawaranDataBase.PICcustomerName,
@@ -278,6 +305,7 @@ a.c 588.5062.609`
                             process.env.NEXT_PUBLIC_SECREET
                     },
                     body: JSON.stringify({
+                        id: payloadPenawaranSheet.id,
                         customerName:
                             payloadPenawaranSheet.customerName,
 
@@ -343,9 +371,6 @@ a.c 588.5062.609`
                 throw new Error(resultSalesPenawaran.message);
             }
 
-
-
-
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
                 customer_penawaran_admin: customerName,
@@ -386,6 +411,7 @@ a.c 588.5062.609`
                     ...(PICcustomerName ? [{ text: `PIC: ${PICcustomerName}`, style: 'Blode' }] : []),
                     { text: '\n' },
                     { text: `Perihal       : Surat Penawaran`, style: 'Blode' },
+                    { text: `Nomer         : ${kodePenawaran}`, style: 'Blode' },
                     { text: '\n' },
                     { text: `Dengan hormat, demikian disampaikan informasi dari barang yang saudara butuhkan :`, style: 'defaultStyle' },
                     { text: '\n' },

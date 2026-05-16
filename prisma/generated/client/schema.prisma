@@ -384,6 +384,7 @@ model salesPenawaran {
   id               String               @id @default(uuid())
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
+  invoiceNumber    String?              @unique
   customerName     String
   customerPhone    BigInt
   PICcustomerName  String?
@@ -398,6 +399,8 @@ model salesPenawaran {
   ppn              BigInt
   grandTotal       BigInt
   items            salesPenawaranItem[]
+
+  @@index([invoiceNumber])
 }
 
 model salesPenawaranItem {
@@ -405,9 +408,12 @@ model salesPenawaranItem {
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
   productName       String
+  kodeProduk        String?
   qty               Int
   productPriceFinal BigInt
   spekNew           Json?
   salesPenawaranId  String
   salesPenawaran    salesPenawaran @relation(fields: [salesPenawaranId], references: [id], onDelete: Cascade)
+
+  @@index([salesPenawaranId])
 }

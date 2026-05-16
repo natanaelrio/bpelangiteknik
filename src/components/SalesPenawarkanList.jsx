@@ -360,6 +360,7 @@ export default function SalesPenawarkanList({ userSales }) {
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>Product Name</th>
+                                                                <th>Kode Barang</th>
                                                                 <th className={styles.center}>Qty</th>
                                                                 <th className={styles.right}>Harga</th>
                                                                 <th className={styles.right}>Subtotal</th>
@@ -383,6 +384,9 @@ export default function SalesPenawarkanList({ userSales }) {
                                                                         <td>{idx + 1}</td>
                                                                         <td className={styles.bold}>
                                                                             {child.productName}
+                                                                        </td>
+                                                                        <td className={styles.bold}>
+                                                                            {child.kodeProduk}
                                                                         </td>
                                                                         <td className={styles.center}>
                                                                             {child.qty}

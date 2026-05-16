@@ -5,6 +5,7 @@ export async function POST(req) {
     const authorization = req.headers.get('authorization')
 
     const {
+        id,
         customerName,
         customerPhone,
         PICcustomerName,
@@ -21,7 +22,7 @@ export async function POST(req) {
         items
     } = await req.json()
 
-    console.log(customerPhone);
+    console.log(id);
 
     BigInt.prototype.toJSON = function () {
         return this.toString();
@@ -30,6 +31,7 @@ export async function POST(req) {
     if (authorization == process.env.NEXT_PUBLIC_SECREET) {
         const CreatePenawaran = await prisma.salesPenawaran.create({
             data: {
+                id,
                 customerName,
                 PICcustomerName,
                 salesName,
@@ -48,7 +50,8 @@ export async function POST(req) {
                         productName: item.productName,
                         qty: item.qty,
                         productPriceFinal: BigInt(item.productPriceFinal),
-                        spekNew: item.spekNew || []
+                        spekNew: item.spekNew || [],
+                        kodeProduk: item.kodeProduk || null
                     }))
                 }
             },

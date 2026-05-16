@@ -24917,6 +24917,7 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    invoiceNumber: string | null
     customerName: string | null
     customerPhone: bigint | null
     PICcustomerName: string | null
@@ -24935,6 +24936,7 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    invoiceNumber: string | null
     customerName: string | null
     customerPhone: bigint | null
     PICcustomerName: string | null
@@ -24953,6 +24955,7 @@ export namespace Prisma {
     id: number
     createdAt: number
     updatedAt: number
+    invoiceNumber: number
     customerName: number
     customerPhone: number
     PICcustomerName: number
@@ -24992,6 +24995,7 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    invoiceNumber?: true
     customerName?: true
     customerPhone?: true
     PICcustomerName?: true
@@ -25010,6 +25014,7 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    invoiceNumber?: true
     customerName?: true
     customerPhone?: true
     PICcustomerName?: true
@@ -25028,6 +25033,7 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    invoiceNumber?: true
     customerName?: true
     customerPhone?: true
     PICcustomerName?: true
@@ -25134,6 +25140,7 @@ export namespace Prisma {
     id: string
     createdAt: Date
     updatedAt: Date
+    invoiceNumber: string | null
     customerName: string
     customerPhone: bigint
     PICcustomerName: string | null
@@ -25172,6 +25179,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    invoiceNumber?: boolean
     customerName?: boolean
     customerPhone?: boolean
     PICcustomerName?: boolean
@@ -25193,6 +25201,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    invoiceNumber?: boolean
     customerName?: boolean
     customerPhone?: boolean
     PICcustomerName?: boolean
@@ -25212,6 +25221,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    invoiceNumber?: boolean
     customerName?: boolean
     customerPhone?: boolean
     PICcustomerName?: boolean
@@ -25242,6 +25252,7 @@ export namespace Prisma {
       id: string
       createdAt: Date
       updatedAt: Date
+      invoiceNumber: string | null
       customerName: string
       customerPhone: bigint
       PICcustomerName: string | null
@@ -25652,6 +25663,7 @@ export namespace Prisma {
     readonly id: FieldRef<"salesPenawaran", 'String'>
     readonly createdAt: FieldRef<"salesPenawaran", 'DateTime'>
     readonly updatedAt: FieldRef<"salesPenawaran", 'DateTime'>
+    readonly invoiceNumber: FieldRef<"salesPenawaran", 'String'>
     readonly customerName: FieldRef<"salesPenawaran", 'String'>
     readonly customerPhone: FieldRef<"salesPenawaran", 'BigInt'>
     readonly PICcustomerName: FieldRef<"salesPenawaran", 'String'>
@@ -26040,6 +26052,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     productName: string | null
+    kodeProduk: string | null
     qty: number | null
     productPriceFinal: bigint | null
     salesPenawaranId: string | null
@@ -26050,6 +26063,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     productName: string | null
+    kodeProduk: string | null
     qty: number | null
     productPriceFinal: bigint | null
     salesPenawaranId: string | null
@@ -26060,6 +26074,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     productName: number
+    kodeProduk: number
     qty: number
     productPriceFinal: number
     spekNew: number
@@ -26083,6 +26098,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     productName?: true
+    kodeProduk?: true
     qty?: true
     productPriceFinal?: true
     salesPenawaranId?: true
@@ -26093,6 +26109,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     productName?: true
+    kodeProduk?: true
     qty?: true
     productPriceFinal?: true
     salesPenawaranId?: true
@@ -26103,6 +26120,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     productName?: true
+    kodeProduk?: true
     qty?: true
     productPriceFinal?: true
     spekNew?: true
@@ -26201,6 +26219,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     productName: string
+    kodeProduk: string | null
     qty: number
     productPriceFinal: bigint
     spekNew: JsonValue | null
@@ -26231,6 +26250,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productName?: boolean
+    kodeProduk?: boolean
     qty?: boolean
     productPriceFinal?: boolean
     spekNew?: boolean
@@ -26243,6 +26263,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productName?: boolean
+    kodeProduk?: boolean
     qty?: boolean
     productPriceFinal?: boolean
     spekNew?: boolean
@@ -26255,6 +26276,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productName?: boolean
+    kodeProduk?: boolean
     qty?: boolean
     productPriceFinal?: boolean
     spekNew?: boolean
@@ -26278,6 +26300,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       productName: string
+      kodeProduk: string | null
       qty: number
       productPriceFinal: bigint
       spekNew: Prisma.JsonValue | null
@@ -26680,6 +26703,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"salesPenawaranItem", 'DateTime'>
     readonly updatedAt: FieldRef<"salesPenawaranItem", 'DateTime'>
     readonly productName: FieldRef<"salesPenawaranItem", 'String'>
+    readonly kodeProduk: FieldRef<"salesPenawaranItem", 'String'>
     readonly qty: FieldRef<"salesPenawaranItem", 'Int'>
     readonly productPriceFinal: FieldRef<"salesPenawaranItem", 'BigInt'>
     readonly spekNew: FieldRef<"salesPenawaranItem", 'Json'>
@@ -27422,6 +27446,7 @@ export namespace Prisma {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    invoiceNumber: 'invoiceNumber',
     customerName: 'customerName',
     customerPhone: 'customerPhone',
     PICcustomerName: 'PICcustomerName',
@@ -27445,6 +27470,7 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     productName: 'productName',
+    kodeProduk: 'kodeProduk',
     qty: 'qty',
     productPriceFinal: 'productPriceFinal',
     spekNew: 'spekNew',
@@ -29612,6 +29638,7 @@ export namespace Prisma {
     id?: StringFilter<"salesPenawaran"> | string
     createdAt?: DateTimeFilter<"salesPenawaran"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaran"> | Date | string
+    invoiceNumber?: StringNullableFilter<"salesPenawaran"> | string | null
     customerName?: StringFilter<"salesPenawaran"> | string
     customerPhone?: BigIntFilter<"salesPenawaran"> | bigint | number
     PICcustomerName?: StringNullableFilter<"salesPenawaran"> | string | null
@@ -29632,6 +29659,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    invoiceNumber?: SortOrderInput | SortOrder
     customerName?: SortOrder
     customerPhone?: SortOrder
     PICcustomerName?: SortOrderInput | SortOrder
@@ -29650,6 +29678,7 @@ export namespace Prisma {
 
   export type salesPenawaranWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    invoiceNumber?: string
     AND?: salesPenawaranWhereInput | salesPenawaranWhereInput[]
     OR?: salesPenawaranWhereInput[]
     NOT?: salesPenawaranWhereInput | salesPenawaranWhereInput[]
@@ -29669,12 +29698,13 @@ export namespace Prisma {
     ppn?: BigIntFilter<"salesPenawaran"> | bigint | number
     grandTotal?: BigIntFilter<"salesPenawaran"> | bigint | number
     items?: SalesPenawaranItemListRelationFilter
-  }, "id">
+  }, "id" | "invoiceNumber">
 
   export type salesPenawaranOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    invoiceNumber?: SortOrderInput | SortOrder
     customerName?: SortOrder
     customerPhone?: SortOrder
     PICcustomerName?: SortOrderInput | SortOrder
@@ -29702,6 +29732,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"salesPenawaran"> | string
     createdAt?: DateTimeWithAggregatesFilter<"salesPenawaran"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"salesPenawaran"> | Date | string
+    invoiceNumber?: StringNullableWithAggregatesFilter<"salesPenawaran"> | string | null
     customerName?: StringWithAggregatesFilter<"salesPenawaran"> | string
     customerPhone?: BigIntWithAggregatesFilter<"salesPenawaran"> | bigint | number
     PICcustomerName?: StringNullableWithAggregatesFilter<"salesPenawaran"> | string | null
@@ -29725,6 +29756,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     productName?: StringFilter<"salesPenawaranItem"> | string
+    kodeProduk?: StringNullableFilter<"salesPenawaranItem"> | string | null
     qty?: IntFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
     spekNew?: JsonNullableFilter<"salesPenawaranItem">
@@ -29737,6 +29769,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
+    kodeProduk?: SortOrderInput | SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     spekNew?: SortOrderInput | SortOrder
@@ -29752,6 +29785,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     productName?: StringFilter<"salesPenawaranItem"> | string
+    kodeProduk?: StringNullableFilter<"salesPenawaranItem"> | string | null
     qty?: IntFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
     spekNew?: JsonNullableFilter<"salesPenawaranItem">
@@ -29764,6 +29798,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
+    kodeProduk?: SortOrderInput | SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     spekNew?: SortOrderInput | SortOrder
@@ -29783,6 +29818,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"salesPenawaranItem"> | Date | string
     productName?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
+    kodeProduk?: StringNullableWithAggregatesFilter<"salesPenawaranItem"> | string | null
     qty?: IntWithAggregatesFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntWithAggregatesFilter<"salesPenawaranItem"> | bigint | number
     spekNew?: JsonNullableWithAggregatesFilter<"salesPenawaranItem">
@@ -32113,6 +32149,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    invoiceNumber?: string | null
     customerName: string
     customerPhone: bigint | number
     PICcustomerName?: string | null
@@ -32133,6 +32170,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    invoiceNumber?: string | null
     customerName: string
     customerPhone: bigint | number
     PICcustomerName?: string | null
@@ -32153,6 +32191,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     customerName?: StringFieldUpdateOperationsInput | string
     customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32173,6 +32212,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     customerName?: StringFieldUpdateOperationsInput | string
     customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32193,6 +32233,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    invoiceNumber?: string | null
     customerName: string
     customerPhone: bigint | number
     PICcustomerName?: string | null
@@ -32212,6 +32253,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     customerName?: StringFieldUpdateOperationsInput | string
     customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32231,6 +32273,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     customerName?: StringFieldUpdateOperationsInput | string
     customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32251,6 +32294,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
+    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -32262,6 +32306,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
+    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -32273,6 +32318,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -32284,6 +32330,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -32295,6 +32342,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
+    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -32306,6 +32354,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -32316,6 +32365,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -34022,6 +34072,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    invoiceNumber?: SortOrder
     customerName?: SortOrder
     customerPhone?: SortOrder
     PICcustomerName?: SortOrder
@@ -34050,6 +34101,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    invoiceNumber?: SortOrder
     customerName?: SortOrder
     customerPhone?: SortOrder
     PICcustomerName?: SortOrder
@@ -34068,6 +34120,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    invoiceNumber?: SortOrder
     customerName?: SortOrder
     customerPhone?: SortOrder
     PICcustomerName?: SortOrder
@@ -34117,6 +34170,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
+    kodeProduk?: SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     spekNew?: SortOrder
@@ -34133,6 +34187,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
+    kodeProduk?: SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     salesPenawaranId?: SortOrder
@@ -34143,6 +34198,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
+    kodeProduk?: SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     salesPenawaranId?: SortOrder
@@ -38437,6 +38493,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
+    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -38447,6 +38504,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
+    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -38486,6 +38544,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     productName?: StringFilter<"salesPenawaranItem"> | string
+    kodeProduk?: StringNullableFilter<"salesPenawaranItem"> | string | null
     qty?: IntFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
     spekNew?: JsonNullableFilter<"salesPenawaranItem">
@@ -38496,6 +38555,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    invoiceNumber?: string | null
     customerName: string
     customerPhone: bigint | number
     PICcustomerName?: string | null
@@ -38515,6 +38575,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    invoiceNumber?: string | null
     customerName: string
     customerPhone: bigint | number
     PICcustomerName?: string | null
@@ -38550,6 +38611,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     customerName?: StringFieldUpdateOperationsInput | string
     customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38569,6 +38631,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     customerName?: StringFieldUpdateOperationsInput | string
     customerPhone?: BigIntFieldUpdateOperationsInput | bigint | number
     PICcustomerName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39664,6 +39727,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
+    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -39674,6 +39738,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -39684,6 +39749,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue
@@ -39694,6 +39760,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
+    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
     spekNew?: NullableJsonNullValueInput | InputJsonValue

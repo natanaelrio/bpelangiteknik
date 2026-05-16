@@ -8,7 +8,8 @@ export async function POST(request) {
         if (
             !body.customerName ||
             !body.customerPhone ||
-            !body.salesName
+            !body.salesName ||
+            !body.id
         ) {
             return NextResponse.json(
                 {
@@ -19,12 +20,11 @@ export async function POST(request) {
             );
         }
 
-        console.log(body.items);
-
         // format item biar readable di sheet
         const formattedItems = body.items
             ?.map((item, index) =>
                 `${index + 1}. ${item.productName || item.title}
+kodeProduk: ${item.kodeProduk || '-'}
 PPN: ${item.includePPN ? 'Ya' : 'Tidak'}
 Qty: ${item.qty || 1}
 Harga: ${item.productPriceFinal || 0}
@@ -52,7 +52,7 @@ Grand Total: ${item.grandTotal || 0}`
                 minute: '2-digit',
                 second: '2-digit'
             })} WIB`,
-
+            id: body.id,
             customerName: body.customerName,
             customerPhone: body.customerPhone,
             PICcustomerName: body.PICcustomerName,
