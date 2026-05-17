@@ -472,10 +472,8 @@ exports.Prisma.SalesPenawaranItemScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   productName: 'productName',
-  kodeProduk: 'kodeProduk',
   qty: 'qty',
   productPriceFinal: 'productPriceFinal',
-  spekNew: 'spekNew',
   salesPenawaranId: 'salesPenawaranId'
 };
 

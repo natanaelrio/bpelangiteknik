@@ -370,6 +370,7 @@ export default function SalesPenawarkanList({ userSales }) {
                                                         </thead>
                                                         <tbody>
                                                             {item.items.map((child, idx) => {
+
                                                                 const subtotal =
                                                                     Number(child.productPriceFinal) * Number(child.qty);
 
@@ -379,6 +380,8 @@ export default function SalesPenawarkanList({ userSales }) {
 
                                                                 const grandTotal = subtotal + ppn;
 
+                                                                const kodeBarang = child?.relatedProducts[0]?.productType
+
                                                                 return (
                                                                     <tr key={idx}>
                                                                         <td>{idx + 1}</td>
@@ -386,7 +389,7 @@ export default function SalesPenawarkanList({ userSales }) {
                                                                             {child.productName}
                                                                         </td>
                                                                         <td className={styles.bold}>
-                                                                            {child.kodeProduk}
+                                                                            {kodeBarang}
                                                                         </td>
                                                                         <td className={styles.center}>
                                                                             {child.qty}

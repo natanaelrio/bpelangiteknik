@@ -50,8 +50,15 @@ export async function POST(req) {
                         productName: item.productName,
                         qty: item.qty,
                         productPriceFinal: BigInt(item.productPriceFinal),
-                        spekNew: item.spekNew || [],
-                        kodeProduk: item.kodeProduk || null
+                        // spekNew: item.spekNew || [],
+                        // kodeProduk: item.kodeProduk || null,
+                        relatedProducts: item.productIds?.length
+                            ? {
+                                connect: item.productIds.map((id) => ({
+                                    id: Number(id)
+                                }))
+                            }
+                            : undefined
                     }))
                 }
             },

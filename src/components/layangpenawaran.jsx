@@ -134,6 +134,8 @@ a.c 588.5062.609`
         }
     };
 
+    console.log(dataPenawaran);
+
 
     const handleSubmitPenawaran = async () => {
 
@@ -174,6 +176,7 @@ a.c 588.5062.609`
                 currency: 'IDR'
             }).format(value);
 
+
         const payloadPenawaranDataBase = {
             id: kodePenawaran,
             customerName,
@@ -188,8 +191,9 @@ a.c 588.5062.609`
                 productName: item.productName,
                 qty: Number(item.qty || 1),
                 productPriceFinal: Number(item.productPriceFinal),
-                spekNew: item.spekNew || [],
-                kodeProduk: item.productType || null
+                // spekNew: item.spekNew || [],
+                // kodeProduk: item.productType || null,
+                productIds: [item.id] || []
             })),
             notes,
             includePPN,
@@ -854,14 +858,14 @@ a.c 588.5062.609`
                             />
                         </div>
 
-                        <label className={styles.ppnToggle}>
+                        {/* <label className={styles.ppnToggle}>
                             <input
                                 type="checkbox"
                                 checked={manualPPN}
                                 onChange={(e) => setManualPPN(e.target.checked)}
                             />
                             <span>Include PPN</span>
-                        </label>
+                        </label> */}
 
                         <button onClick={addManualItem}>Tambah Produk</button>
                     </div>

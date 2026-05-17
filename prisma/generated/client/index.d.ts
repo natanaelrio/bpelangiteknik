@@ -2712,6 +2712,7 @@ export namespace Prisma {
     cartItem: number
     url_image_product: number
     relatedArticles: number
+    relatedSalesPenawaran: number
     fMerek: number
   }
 
@@ -2719,6 +2720,7 @@ export namespace Prisma {
     cartItem?: boolean | ListProductCountOutputTypeCountCartItemArgs
     url_image_product?: boolean | ListProductCountOutputTypeCountUrl_image_productArgs
     relatedArticles?: boolean | ListProductCountOutputTypeCountRelatedArticlesArgs
+    relatedSalesPenawaran?: boolean | ListProductCountOutputTypeCountRelatedSalesPenawaranArgs
     fMerek?: boolean | ListProductCountOutputTypeCountFMerekArgs
   }
 
@@ -2752,6 +2754,13 @@ export namespace Prisma {
    */
   export type ListProductCountOutputTypeCountRelatedArticlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: postArtikelWhereInput
+  }
+
+  /**
+   * ListProductCountOutputType without action
+   */
+  export type ListProductCountOutputTypeCountRelatedSalesPenawaranArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: salesPenawaranItemWhereInput
   }
 
   /**
@@ -3034,6 +3043,37 @@ export namespace Prisma {
    */
   export type SalesPenawaranCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: salesPenawaranItemWhereInput
+  }
+
+
+  /**
+   * Count Type SalesPenawaranItemCountOutputType
+   */
+
+  export type SalesPenawaranItemCountOutputType = {
+    relatedProducts: number
+  }
+
+  export type SalesPenawaranItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    relatedProducts?: boolean | SalesPenawaranItemCountOutputTypeCountRelatedProductsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SalesPenawaranItemCountOutputType without action
+   */
+  export type SalesPenawaranItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesPenawaranItemCountOutputType
+     */
+    select?: SalesPenawaranItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SalesPenawaranItemCountOutputType without action
+   */
+  export type SalesPenawaranItemCountOutputTypeCountRelatedProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: listProductWhereInput
   }
 
 
@@ -5603,6 +5643,7 @@ export namespace Prisma {
     user?: boolean | categoryProductDefaultArgs<ExtArgs>
     spec_product?: boolean | listProduct$spec_productArgs<ExtArgs>
     relatedArticles?: boolean | listProduct$relatedArticlesArgs<ExtArgs>
+    relatedSalesPenawaran?: boolean | listProduct$relatedSalesPenawaranArgs<ExtArgs>
     fMerek?: boolean | listProduct$fMerekArgs<ExtArgs>
     _count?: boolean | ListProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listProduct"]>
@@ -5673,6 +5714,7 @@ export namespace Prisma {
     user?: boolean | categoryProductDefaultArgs<ExtArgs>
     spec_product?: boolean | listProduct$spec_productArgs<ExtArgs>
     relatedArticles?: boolean | listProduct$relatedArticlesArgs<ExtArgs>
+    relatedSalesPenawaran?: boolean | listProduct$relatedSalesPenawaranArgs<ExtArgs>
     fMerek?: boolean | listProduct$fMerekArgs<ExtArgs>
     _count?: boolean | ListProductCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -5689,6 +5731,7 @@ export namespace Prisma {
       user: Prisma.$categoryProductPayload<ExtArgs>
       spec_product: Prisma.$specProductPayload<ExtArgs> | null
       relatedArticles: Prisma.$postArtikelPayload<ExtArgs>[]
+      relatedSalesPenawaran: Prisma.$salesPenawaranItemPayload<ExtArgs>[]
       fMerek: Prisma.$fMerekPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6088,6 +6131,7 @@ export namespace Prisma {
     user<T extends categoryProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, categoryProductDefaultArgs<ExtArgs>>): Prisma__categoryProductClient<$Result.GetResult<Prisma.$categoryProductPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     spec_product<T extends listProduct$spec_productArgs<ExtArgs> = {}>(args?: Subset<T, listProduct$spec_productArgs<ExtArgs>>): Prisma__specProductClient<$Result.GetResult<Prisma.$specProductPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     relatedArticles<T extends listProduct$relatedArticlesArgs<ExtArgs> = {}>(args?: Subset<T, listProduct$relatedArticlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$postArtikelPayload<ExtArgs>, T, "findMany"> | Null>
+    relatedSalesPenawaran<T extends listProduct$relatedSalesPenawaranArgs<ExtArgs> = {}>(args?: Subset<T, listProduct$relatedSalesPenawaranArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$salesPenawaranItemPayload<ExtArgs>, T, "findMany"> | Null>
     fMerek<T extends listProduct$fMerekArgs<ExtArgs> = {}>(args?: Subset<T, listProduct$fMerekArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fMerekPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6549,6 +6593,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostArtikelScalarFieldEnum | PostArtikelScalarFieldEnum[]
+  }
+
+  /**
+   * listProduct.relatedSalesPenawaran
+   */
+  export type listProduct$relatedSalesPenawaranArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the salesPenawaranItem
+     */
+    select?: salesPenawaranItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: salesPenawaranItemInclude<ExtArgs> | null
+    where?: salesPenawaranItemWhereInput
+    orderBy?: salesPenawaranItemOrderByWithRelationInput | salesPenawaranItemOrderByWithRelationInput[]
+    cursor?: salesPenawaranItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesPenawaranItemScalarFieldEnum | SalesPenawaranItemScalarFieldEnum[]
   }
 
   /**
@@ -26052,7 +26116,6 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     productName: string | null
-    kodeProduk: string | null
     qty: number | null
     productPriceFinal: bigint | null
     salesPenawaranId: string | null
@@ -26063,7 +26126,6 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     productName: string | null
-    kodeProduk: string | null
     qty: number | null
     productPriceFinal: bigint | null
     salesPenawaranId: string | null
@@ -26074,10 +26136,8 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     productName: number
-    kodeProduk: number
     qty: number
     productPriceFinal: number
-    spekNew: number
     salesPenawaranId: number
     _all: number
   }
@@ -26098,7 +26158,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     productName?: true
-    kodeProduk?: true
     qty?: true
     productPriceFinal?: true
     salesPenawaranId?: true
@@ -26109,7 +26168,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     productName?: true
-    kodeProduk?: true
     qty?: true
     productPriceFinal?: true
     salesPenawaranId?: true
@@ -26120,10 +26178,8 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     productName?: true
-    kodeProduk?: true
     qty?: true
     productPriceFinal?: true
-    spekNew?: true
     salesPenawaranId?: true
     _all?: true
   }
@@ -26219,10 +26275,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     productName: string
-    kodeProduk: string | null
     qty: number
     productPriceFinal: bigint
-    spekNew: JsonValue | null
     salesPenawaranId: string
     _count: SalesPenawaranItemCountAggregateOutputType | null
     _avg: SalesPenawaranItemAvgAggregateOutputType | null
@@ -26250,12 +26304,12 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productName?: boolean
-    kodeProduk?: boolean
     qty?: boolean
     productPriceFinal?: boolean
-    spekNew?: boolean
     salesPenawaranId?: boolean
+    relatedProducts?: boolean | salesPenawaranItem$relatedProductsArgs<ExtArgs>
     salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
+    _count?: boolean | SalesPenawaranItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesPenawaranItem"]>
 
   export type salesPenawaranItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -26263,10 +26317,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productName?: boolean
-    kodeProduk?: boolean
     qty?: boolean
     productPriceFinal?: boolean
-    spekNew?: boolean
     salesPenawaranId?: boolean
     salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesPenawaranItem"]>
@@ -26276,15 +26328,15 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productName?: boolean
-    kodeProduk?: boolean
     qty?: boolean
     productPriceFinal?: boolean
-    spekNew?: boolean
     salesPenawaranId?: boolean
   }
 
   export type salesPenawaranItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    relatedProducts?: boolean | salesPenawaranItem$relatedProductsArgs<ExtArgs>
     salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
+    _count?: boolean | SalesPenawaranItemCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type salesPenawaranItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     salesPenawaran?: boolean | salesPenawaranDefaultArgs<ExtArgs>
@@ -26293,6 +26345,7 @@ export namespace Prisma {
   export type $salesPenawaranItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "salesPenawaranItem"
     objects: {
+      relatedProducts: Prisma.$listProductPayload<ExtArgs>[]
       salesPenawaran: Prisma.$salesPenawaranPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -26300,10 +26353,8 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       productName: string
-      kodeProduk: string | null
       qty: number
       productPriceFinal: bigint
-      spekNew: Prisma.JsonValue | null
       salesPenawaranId: string
     }, ExtArgs["result"]["salesPenawaranItem"]>
     composites: {}
@@ -26669,6 +26720,7 @@ export namespace Prisma {
    */
   export interface Prisma__salesPenawaranItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    relatedProducts<T extends salesPenawaranItem$relatedProductsArgs<ExtArgs> = {}>(args?: Subset<T, salesPenawaranItem$relatedProductsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$listProductPayload<ExtArgs>, T, "findMany"> | Null>
     salesPenawaran<T extends salesPenawaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, salesPenawaranDefaultArgs<ExtArgs>>): Prisma__salesPenawaranClient<$Result.GetResult<Prisma.$salesPenawaranPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -26703,10 +26755,8 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"salesPenawaranItem", 'DateTime'>
     readonly updatedAt: FieldRef<"salesPenawaranItem", 'DateTime'>
     readonly productName: FieldRef<"salesPenawaranItem", 'String'>
-    readonly kodeProduk: FieldRef<"salesPenawaranItem", 'String'>
     readonly qty: FieldRef<"salesPenawaranItem", 'Int'>
     readonly productPriceFinal: FieldRef<"salesPenawaranItem", 'BigInt'>
-    readonly spekNew: FieldRef<"salesPenawaranItem", 'Json'>
     readonly salesPenawaranId: FieldRef<"salesPenawaranItem", 'String'>
   }
     
@@ -27023,6 +27073,26 @@ export namespace Prisma {
      * Filter which salesPenawaranItems to delete
      */
     where?: salesPenawaranItemWhereInput
+  }
+
+  /**
+   * salesPenawaranItem.relatedProducts
+   */
+  export type salesPenawaranItem$relatedProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the listProduct
+     */
+    select?: listProductSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: listProductInclude<ExtArgs> | null
+    where?: listProductWhereInput
+    orderBy?: listProductOrderByWithRelationInput | listProductOrderByWithRelationInput[]
+    cursor?: listProductWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ListProductScalarFieldEnum | ListProductScalarFieldEnum[]
   }
 
   /**
@@ -27470,10 +27540,8 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     productName: 'productName',
-    kodeProduk: 'kodeProduk',
     qty: 'qty',
     productPriceFinal: 'productPriceFinal',
-    spekNew: 'spekNew',
     salesPenawaranId: 'salesPenawaranId'
   };
 
@@ -27831,6 +27899,7 @@ export namespace Prisma {
     user?: XOR<CategoryProductRelationFilter, categoryProductWhereInput>
     spec_product?: XOR<SpecProductNullableRelationFilter, specProductWhereInput> | null
     relatedArticles?: PostArtikelListRelationFilter
+    relatedSalesPenawaran?: SalesPenawaranItemListRelationFilter
     fMerek?: FMerekListRelationFilter
   }
 
@@ -27867,6 +27936,7 @@ export namespace Prisma {
     user?: categoryProductOrderByWithRelationInput
     spec_product?: specProductOrderByWithRelationInput
     relatedArticles?: postArtikelOrderByRelationAggregateInput
+    relatedSalesPenawaran?: salesPenawaranItemOrderByRelationAggregateInput
     fMerek?: fMerekOrderByRelationAggregateInput
   }
 
@@ -27906,6 +27976,7 @@ export namespace Prisma {
     user?: XOR<CategoryProductRelationFilter, categoryProductWhereInput>
     spec_product?: XOR<SpecProductNullableRelationFilter, specProductWhereInput> | null
     relatedArticles?: PostArtikelListRelationFilter
+    relatedSalesPenawaran?: SalesPenawaranItemListRelationFilter
     fMerek?: FMerekListRelationFilter
   }, "id" | "slugProduct">
 
@@ -29756,11 +29827,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     productName?: StringFilter<"salesPenawaranItem"> | string
-    kodeProduk?: StringNullableFilter<"salesPenawaranItem"> | string | null
     qty?: IntFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
-    spekNew?: JsonNullableFilter<"salesPenawaranItem">
     salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+    relatedProducts?: ListProductListRelationFilter
     salesPenawaran?: XOR<SalesPenawaranRelationFilter, salesPenawaranWhereInput>
   }
 
@@ -29769,11 +29839,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
-    kodeProduk?: SortOrderInput | SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
-    spekNew?: SortOrderInput | SortOrder
     salesPenawaranId?: SortOrder
+    relatedProducts?: listProductOrderByRelationAggregateInput
     salesPenawaran?: salesPenawaranOrderByWithRelationInput
   }
 
@@ -29785,11 +29854,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
     productName?: StringFilter<"salesPenawaranItem"> | string
-    kodeProduk?: StringNullableFilter<"salesPenawaranItem"> | string | null
     qty?: IntFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
-    spekNew?: JsonNullableFilter<"salesPenawaranItem">
     salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+    relatedProducts?: ListProductListRelationFilter
     salesPenawaran?: XOR<SalesPenawaranRelationFilter, salesPenawaranWhereInput>
   }, "id">
 
@@ -29798,10 +29866,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
-    kodeProduk?: SortOrderInput | SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
-    spekNew?: SortOrderInput | SortOrder
     salesPenawaranId?: SortOrder
     _count?: salesPenawaranItemCountOrderByAggregateInput
     _avg?: salesPenawaranItemAvgOrderByAggregateInput
@@ -29818,10 +29884,8 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"salesPenawaranItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"salesPenawaranItem"> | Date | string
     productName?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
-    kodeProduk?: StringNullableWithAggregatesFilter<"salesPenawaranItem"> | string | null
     qty?: IntWithAggregatesFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntWithAggregatesFilter<"salesPenawaranItem"> | bigint | number
-    spekNew?: JsonNullableWithAggregatesFilter<"salesPenawaranItem">
     salesPenawaranId?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
   }
 
@@ -30060,6 +30124,7 @@ export namespace Prisma {
     user: categoryProductCreateNestedOneWithoutListProductsInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -30095,6 +30160,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -30129,6 +30195,7 @@ export namespace Prisma {
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -30164,6 +30231,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -32294,10 +32362,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
-    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    relatedProducts?: listProductCreateNestedManyWithoutRelatedSalesPenawaranInput
     salesPenawaran: salesPenawaranCreateNestedOneWithoutItemsInput
   }
 
@@ -32306,11 +32373,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
-    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
     salesPenawaranId: string
+    relatedProducts?: listProductUncheckedCreateNestedManyWithoutRelatedSalesPenawaranInput
   }
 
   export type salesPenawaranItemUpdateInput = {
@@ -32318,10 +32384,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    relatedProducts?: listProductUpdateManyWithoutRelatedSalesPenawaranNestedInput
     salesPenawaran?: salesPenawaranUpdateOneRequiredWithoutItemsNestedInput
   }
 
@@ -32330,11 +32395,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
     salesPenawaranId?: StringFieldUpdateOperationsInput | string
+    relatedProducts?: listProductUncheckedUpdateManyWithoutRelatedSalesPenawaranNestedInput
   }
 
   export type salesPenawaranItemCreateManyInput = {
@@ -32342,10 +32406,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
-    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
     salesPenawaranId: string
   }
 
@@ -32354,10 +32416,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type salesPenawaranItemUncheckedUpdateManyInput = {
@@ -32365,10 +32425,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
     salesPenawaranId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -32723,6 +32781,12 @@ export namespace Prisma {
     none?: postArtikelWhereInput
   }
 
+  export type SalesPenawaranItemListRelationFilter = {
+    every?: salesPenawaranItemWhereInput
+    some?: salesPenawaranItemWhereInput
+    none?: salesPenawaranItemWhereInput
+  }
+
   export type FMerekListRelationFilter = {
     every?: fMerekWhereInput
     some?: fMerekWhereInput
@@ -32738,6 +32802,10 @@ export namespace Prisma {
   }
 
   export type postArtikelOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type salesPenawaranItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -34058,16 +34126,6 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
-  export type SalesPenawaranItemListRelationFilter = {
-    every?: salesPenawaranItemWhereInput
-    some?: salesPenawaranItemWhereInput
-    none?: salesPenawaranItemWhereInput
-  }
-
-  export type salesPenawaranItemOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type salesPenawaranCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
@@ -34170,10 +34228,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
-    kodeProduk?: SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
-    spekNew?: SortOrder
     salesPenawaranId?: SortOrder
   }
 
@@ -34187,7 +34243,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
-    kodeProduk?: SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     salesPenawaranId?: SortOrder
@@ -34198,7 +34253,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productName?: SortOrder
-    kodeProduk?: SortOrder
     qty?: SortOrder
     productPriceFinal?: SortOrder
     salesPenawaranId?: SortOrder
@@ -34375,6 +34429,12 @@ export namespace Prisma {
     connect?: postArtikelWhereUniqueInput | postArtikelWhereUniqueInput[]
   }
 
+  export type salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutRelatedProductsInput, salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput> | salesPenawaranItemCreateWithoutRelatedProductsInput[] | salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput | salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput[]
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+  }
+
   export type fMerekCreateNestedManyWithoutMerekInput = {
     create?: XOR<fMerekCreateWithoutMerekInput, fMerekUncheckedCreateWithoutMerekInput> | fMerekCreateWithoutMerekInput[] | fMerekUncheckedCreateWithoutMerekInput[]
     connectOrCreate?: fMerekCreateOrConnectWithoutMerekInput | fMerekCreateOrConnectWithoutMerekInput[]
@@ -34411,6 +34471,12 @@ export namespace Prisma {
     create?: XOR<postArtikelCreateWithoutRelatedProductsInput, postArtikelUncheckedCreateWithoutRelatedProductsInput> | postArtikelCreateWithoutRelatedProductsInput[] | postArtikelUncheckedCreateWithoutRelatedProductsInput[]
     connectOrCreate?: postArtikelCreateOrConnectWithoutRelatedProductsInput | postArtikelCreateOrConnectWithoutRelatedProductsInput[]
     connect?: postArtikelWhereUniqueInput | postArtikelWhereUniqueInput[]
+  }
+
+  export type salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutRelatedProductsInput, salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput> | salesPenawaranItemCreateWithoutRelatedProductsInput[] | salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput | salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput[]
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
   }
 
   export type fMerekUncheckedCreateNestedManyWithoutMerekInput = {
@@ -34500,6 +34566,19 @@ export namespace Prisma {
     deleteMany?: postArtikelScalarWhereInput | postArtikelScalarWhereInput[]
   }
 
+  export type salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutRelatedProductsInput, salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput> | salesPenawaranItemCreateWithoutRelatedProductsInput[] | salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput | salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput[]
+    upsert?: salesPenawaranItemUpsertWithWhereUniqueWithoutRelatedProductsInput | salesPenawaranItemUpsertWithWhereUniqueWithoutRelatedProductsInput[]
+    set?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    disconnect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    delete?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    update?: salesPenawaranItemUpdateWithWhereUniqueWithoutRelatedProductsInput | salesPenawaranItemUpdateWithWhereUniqueWithoutRelatedProductsInput[]
+    updateMany?: salesPenawaranItemUpdateManyWithWhereWithoutRelatedProductsInput | salesPenawaranItemUpdateManyWithWhereWithoutRelatedProductsInput[]
+    deleteMany?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+  }
+
   export type fMerekUpdateManyWithoutMerekNestedInput = {
     create?: XOR<fMerekCreateWithoutMerekInput, fMerekUncheckedCreateWithoutMerekInput> | fMerekCreateWithoutMerekInput[] | fMerekUncheckedCreateWithoutMerekInput[]
     connectOrCreate?: fMerekCreateOrConnectWithoutMerekInput | fMerekCreateOrConnectWithoutMerekInput[]
@@ -34572,6 +34651,19 @@ export namespace Prisma {
     update?: postArtikelUpdateWithWhereUniqueWithoutRelatedProductsInput | postArtikelUpdateWithWhereUniqueWithoutRelatedProductsInput[]
     updateMany?: postArtikelUpdateManyWithWhereWithoutRelatedProductsInput | postArtikelUpdateManyWithWhereWithoutRelatedProductsInput[]
     deleteMany?: postArtikelScalarWhereInput | postArtikelScalarWhereInput[]
+  }
+
+  export type salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput = {
+    create?: XOR<salesPenawaranItemCreateWithoutRelatedProductsInput, salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput> | salesPenawaranItemCreateWithoutRelatedProductsInput[] | salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput[]
+    connectOrCreate?: salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput | salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput[]
+    upsert?: salesPenawaranItemUpsertWithWhereUniqueWithoutRelatedProductsInput | salesPenawaranItemUpsertWithWhereUniqueWithoutRelatedProductsInput[]
+    set?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    disconnect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    delete?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    connect?: salesPenawaranItemWhereUniqueInput | salesPenawaranItemWhereUniqueInput[]
+    update?: salesPenawaranItemUpdateWithWhereUniqueWithoutRelatedProductsInput | salesPenawaranItemUpdateWithWhereUniqueWithoutRelatedProductsInput[]
+    updateMany?: salesPenawaranItemUpdateManyWithWhereWithoutRelatedProductsInput | salesPenawaranItemUpdateManyWithWhereWithoutRelatedProductsInput[]
+    deleteMany?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
   }
 
   export type fMerekUncheckedUpdateManyWithoutMerekNestedInput = {
@@ -35294,10 +35386,35 @@ export namespace Prisma {
     deleteMany?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
   }
 
+  export type listProductCreateNestedManyWithoutRelatedSalesPenawaranInput = {
+    create?: XOR<listProductCreateWithoutRelatedSalesPenawaranInput, listProductUncheckedCreateWithoutRelatedSalesPenawaranInput> | listProductCreateWithoutRelatedSalesPenawaranInput[] | listProductUncheckedCreateWithoutRelatedSalesPenawaranInput[]
+    connectOrCreate?: listProductCreateOrConnectWithoutRelatedSalesPenawaranInput | listProductCreateOrConnectWithoutRelatedSalesPenawaranInput[]
+    connect?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+  }
+
   export type salesPenawaranCreateNestedOneWithoutItemsInput = {
     create?: XOR<salesPenawaranCreateWithoutItemsInput, salesPenawaranUncheckedCreateWithoutItemsInput>
     connectOrCreate?: salesPenawaranCreateOrConnectWithoutItemsInput
     connect?: salesPenawaranWhereUniqueInput
+  }
+
+  export type listProductUncheckedCreateNestedManyWithoutRelatedSalesPenawaranInput = {
+    create?: XOR<listProductCreateWithoutRelatedSalesPenawaranInput, listProductUncheckedCreateWithoutRelatedSalesPenawaranInput> | listProductCreateWithoutRelatedSalesPenawaranInput[] | listProductUncheckedCreateWithoutRelatedSalesPenawaranInput[]
+    connectOrCreate?: listProductCreateOrConnectWithoutRelatedSalesPenawaranInput | listProductCreateOrConnectWithoutRelatedSalesPenawaranInput[]
+    connect?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+  }
+
+  export type listProductUpdateManyWithoutRelatedSalesPenawaranNestedInput = {
+    create?: XOR<listProductCreateWithoutRelatedSalesPenawaranInput, listProductUncheckedCreateWithoutRelatedSalesPenawaranInput> | listProductCreateWithoutRelatedSalesPenawaranInput[] | listProductUncheckedCreateWithoutRelatedSalesPenawaranInput[]
+    connectOrCreate?: listProductCreateOrConnectWithoutRelatedSalesPenawaranInput | listProductCreateOrConnectWithoutRelatedSalesPenawaranInput[]
+    upsert?: listProductUpsertWithWhereUniqueWithoutRelatedSalesPenawaranInput | listProductUpsertWithWhereUniqueWithoutRelatedSalesPenawaranInput[]
+    set?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    disconnect?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    delete?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    connect?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    update?: listProductUpdateWithWhereUniqueWithoutRelatedSalesPenawaranInput | listProductUpdateWithWhereUniqueWithoutRelatedSalesPenawaranInput[]
+    updateMany?: listProductUpdateManyWithWhereWithoutRelatedSalesPenawaranInput | listProductUpdateManyWithWhereWithoutRelatedSalesPenawaranInput[]
+    deleteMany?: listProductScalarWhereInput | listProductScalarWhereInput[]
   }
 
   export type salesPenawaranUpdateOneRequiredWithoutItemsNestedInput = {
@@ -35306,6 +35423,19 @@ export namespace Prisma {
     upsert?: salesPenawaranUpsertWithoutItemsInput
     connect?: salesPenawaranWhereUniqueInput
     update?: XOR<XOR<salesPenawaranUpdateToOneWithWhereWithoutItemsInput, salesPenawaranUpdateWithoutItemsInput>, salesPenawaranUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type listProductUncheckedUpdateManyWithoutRelatedSalesPenawaranNestedInput = {
+    create?: XOR<listProductCreateWithoutRelatedSalesPenawaranInput, listProductUncheckedCreateWithoutRelatedSalesPenawaranInput> | listProductCreateWithoutRelatedSalesPenawaranInput[] | listProductUncheckedCreateWithoutRelatedSalesPenawaranInput[]
+    connectOrCreate?: listProductCreateOrConnectWithoutRelatedSalesPenawaranInput | listProductCreateOrConnectWithoutRelatedSalesPenawaranInput[]
+    upsert?: listProductUpsertWithWhereUniqueWithoutRelatedSalesPenawaranInput | listProductUpsertWithWhereUniqueWithoutRelatedSalesPenawaranInput[]
+    set?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    disconnect?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    delete?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    connect?: listProductWhereUniqueInput | listProductWhereUniqueInput[]
+    update?: listProductUpdateWithWhereUniqueWithoutRelatedSalesPenawaranInput | listProductUpdateWithWhereUniqueWithoutRelatedSalesPenawaranInput[]
+    updateMany?: listProductUpdateManyWithWhereWithoutRelatedSalesPenawaranInput | listProductUpdateManyWithWhereWithoutRelatedSalesPenawaranInput[]
+    deleteMany?: listProductScalarWhereInput | listProductScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -35733,6 +35863,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaCreateNestedOneWithoutUserInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -35767,6 +35898,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -36132,6 +36264,31 @@ export namespace Prisma {
     create: XOR<postArtikelCreateWithoutRelatedProductsInput, postArtikelUncheckedCreateWithoutRelatedProductsInput>
   }
 
+  export type salesPenawaranItemCreateWithoutRelatedProductsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    salesPenawaran: salesPenawaranCreateNestedOneWithoutItemsInput
+  }
+
+  export type salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productName: string
+    qty: number
+    productPriceFinal: bigint | number
+    salesPenawaranId: string
+  }
+
+  export type salesPenawaranItemCreateOrConnectWithoutRelatedProductsInput = {
+    where: salesPenawaranItemWhereUniqueInput
+    create: XOR<salesPenawaranItemCreateWithoutRelatedProductsInput, salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput>
+  }
+
   export type fMerekCreateWithoutMerekInput = {
     id?: string
     name: string
@@ -36414,6 +36571,35 @@ export namespace Prisma {
     start?: DateTimeFilter<"postArtikel"> | Date | string
   }
 
+  export type salesPenawaranItemUpsertWithWhereUniqueWithoutRelatedProductsInput = {
+    where: salesPenawaranItemWhereUniqueInput
+    update: XOR<salesPenawaranItemUpdateWithoutRelatedProductsInput, salesPenawaranItemUncheckedUpdateWithoutRelatedProductsInput>
+    create: XOR<salesPenawaranItemCreateWithoutRelatedProductsInput, salesPenawaranItemUncheckedCreateWithoutRelatedProductsInput>
+  }
+
+  export type salesPenawaranItemUpdateWithWhereUniqueWithoutRelatedProductsInput = {
+    where: salesPenawaranItemWhereUniqueInput
+    data: XOR<salesPenawaranItemUpdateWithoutRelatedProductsInput, salesPenawaranItemUncheckedUpdateWithoutRelatedProductsInput>
+  }
+
+  export type salesPenawaranItemUpdateManyWithWhereWithoutRelatedProductsInput = {
+    where: salesPenawaranItemScalarWhereInput
+    data: XOR<salesPenawaranItemUpdateManyMutationInput, salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsInput>
+  }
+
+  export type salesPenawaranItemScalarWhereInput = {
+    AND?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+    OR?: salesPenawaranItemScalarWhereInput[]
+    NOT?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
+    id?: StringFilter<"salesPenawaranItem"> | string
+    createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
+    productName?: StringFilter<"salesPenawaranItem"> | string
+    qty?: IntFilter<"salesPenawaranItem"> | number
+    productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
+    salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+  }
+
   export type fMerekUpsertWithWhereUniqueWithoutMerekInput = {
     where: fMerekWhereUniqueInput
     update: XOR<fMerekUpdateWithoutMerekInput, fMerekUncheckedUpdateWithoutMerekInput>
@@ -36471,6 +36657,7 @@ export namespace Prisma {
     user: categoryProductCreateNestedOneWithoutListProductsInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
   }
 
   export type listProductUncheckedCreateWithoutFMerekInput = {
@@ -36505,6 +36692,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
   }
 
   export type listProductCreateOrConnectWithoutFMerekInput = {
@@ -36558,6 +36746,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaCreateNestedOneWithoutUserInput
     user: categoryProductCreateNestedOneWithoutListProductsInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -36592,6 +36781,7 @@ export namespace Prisma {
     url_image_product?: imageProductUncheckedCreateNestedManyWithoutUserInput
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -36641,6 +36831,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUpdateOneWithoutUserNestedInput
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -36675,6 +36866,7 @@ export namespace Prisma {
     url_image_product?: imageProductUncheckedUpdateManyWithoutUserNestedInput
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -36708,6 +36900,7 @@ export namespace Prisma {
     user: categoryProductCreateNestedOneWithoutListProductsInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -36742,6 +36935,7 @@ export namespace Prisma {
     url_image_product?: imageProductUncheckedCreateNestedManyWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -36791,6 +36985,7 @@ export namespace Prisma {
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -36825,6 +37020,7 @@ export namespace Prisma {
     url_image_product?: imageProductUncheckedUpdateManyWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -36858,6 +37054,7 @@ export namespace Prisma {
     user: categoryProductCreateNestedOneWithoutListProductsInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -36892,6 +37089,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -36941,6 +37139,7 @@ export namespace Prisma {
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -36975,6 +37174,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -37421,6 +37621,7 @@ export namespace Prisma {
     user: categoryProductCreateNestedOneWithoutListProductsInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -37455,6 +37656,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
     relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -37543,6 +37745,7 @@ export namespace Prisma {
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -37577,6 +37780,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -38122,6 +38326,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaCreateNestedOneWithoutUserInput
     user: categoryProductCreateNestedOneWithoutListProductsInput
     spec_product?: specProductCreateNestedOneWithoutUserInput
+    relatedSalesPenawaran?: salesPenawaranItemCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekCreateNestedManyWithoutMerekInput
   }
 
@@ -38156,6 +38361,7 @@ export namespace Prisma {
     url_image_product?: imageProductUncheckedCreateNestedManyWithoutUserInput
     imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
     spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedCreateNestedManyWithoutRelatedProductsInput
     fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
   }
 
@@ -38493,10 +38699,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
-    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    relatedProducts?: listProductCreateNestedManyWithoutRelatedSalesPenawaranInput
   }
 
   export type salesPenawaranItemUncheckedCreateWithoutSalesPenawaranInput = {
@@ -38504,10 +38709,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
-    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    relatedProducts?: listProductUncheckedCreateNestedManyWithoutRelatedSalesPenawaranInput
   }
 
   export type salesPenawaranItemCreateOrConnectWithoutSalesPenawaranInput = {
@@ -38536,19 +38740,78 @@ export namespace Prisma {
     data: XOR<salesPenawaranItemUpdateManyMutationInput, salesPenawaranItemUncheckedUpdateManyWithoutSalesPenawaranInput>
   }
 
-  export type salesPenawaranItemScalarWhereInput = {
-    AND?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
-    OR?: salesPenawaranItemScalarWhereInput[]
-    NOT?: salesPenawaranItemScalarWhereInput | salesPenawaranItemScalarWhereInput[]
-    id?: StringFilter<"salesPenawaranItem"> | string
-    createdAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
-    updatedAt?: DateTimeFilter<"salesPenawaranItem"> | Date | string
-    productName?: StringFilter<"salesPenawaranItem"> | string
-    kodeProduk?: StringNullableFilter<"salesPenawaranItem"> | string | null
-    qty?: IntFilter<"salesPenawaranItem"> | number
-    productPriceFinal?: BigIntFilter<"salesPenawaranItem"> | bigint | number
-    spekNew?: JsonNullableFilter<"salesPenawaranItem">
-    salesPenawaranId?: StringFilter<"salesPenawaranItem"> | string
+  export type listProductCreateWithoutRelatedSalesPenawaranInput = {
+    start?: Date | string
+    end?: Date | string
+    slugProduct: string
+    saveDraf?: boolean
+    descProduct?: string | null
+    productName?: string | null
+    stockProduct?: number | null
+    descMetaProduct?: string | null
+    viewProduct?: number | null
+    subKategoriProduct?: string | null
+    productType?: string | null
+    tagProduct?: string | null
+    productPrice?: bigint | number | null
+    productDiscount?: number | null
+    productPriceFinal?: bigint | number | null
+    urlYoutube?: string | null
+    sold?: number | null
+    username?: string | null
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    weightProduct?: number | null
+    heightProduct?: number | null
+    lengthProduct?: number | null
+    widthProduct?: number | null
+    updateDate?: Date | string
+    cartItem?: cartItemCreateNestedManyWithoutProductInput
+    url_image_product?: imageProductCreateNestedManyWithoutUserInput
+    imageProductUtama?: imageProductUtamaCreateNestedOneWithoutUserInput
+    user: categoryProductCreateNestedOneWithoutListProductsInput
+    spec_product?: specProductCreateNestedOneWithoutUserInput
+    relatedArticles?: postArtikelCreateNestedManyWithoutRelatedProductsInput
+    fMerek?: fMerekCreateNestedManyWithoutMerekInput
+  }
+
+  export type listProductUncheckedCreateWithoutRelatedSalesPenawaranInput = {
+    id?: number
+    start?: Date | string
+    end?: Date | string
+    slugProduct: string
+    saveDraf?: boolean
+    descProduct?: string | null
+    productName?: string | null
+    stockProduct?: number | null
+    descMetaProduct?: string | null
+    viewProduct?: number | null
+    subKategoriProduct?: string | null
+    productType?: string | null
+    tagProduct?: string | null
+    productPrice?: bigint | number | null
+    productDiscount?: number | null
+    productPriceFinal?: bigint | number | null
+    urlYoutube?: string | null
+    productKategori: number
+    sold?: number | null
+    username?: string | null
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    weightProduct?: number | null
+    heightProduct?: number | null
+    lengthProduct?: number | null
+    widthProduct?: number | null
+    updateDate?: Date | string
+    cartItem?: cartItemUncheckedCreateNestedManyWithoutProductInput
+    url_image_product?: imageProductUncheckedCreateNestedManyWithoutUserInput
+    imageProductUtama?: imageProductUtamaUncheckedCreateNestedOneWithoutUserInput
+    spec_product?: specProductUncheckedCreateNestedOneWithoutUserInput
+    relatedArticles?: postArtikelUncheckedCreateNestedManyWithoutRelatedProductsInput
+    fMerek?: fMerekUncheckedCreateNestedManyWithoutMerekInput
+  }
+
+  export type listProductCreateOrConnectWithoutRelatedSalesPenawaranInput = {
+    where: listProductWhereUniqueInput
+    create: XOR<listProductCreateWithoutRelatedSalesPenawaranInput, listProductUncheckedCreateWithoutRelatedSalesPenawaranInput>
   }
 
   export type salesPenawaranCreateWithoutItemsInput = {
@@ -38594,6 +38857,22 @@ export namespace Prisma {
   export type salesPenawaranCreateOrConnectWithoutItemsInput = {
     where: salesPenawaranWhereUniqueInput
     create: XOR<salesPenawaranCreateWithoutItemsInput, salesPenawaranUncheckedCreateWithoutItemsInput>
+  }
+
+  export type listProductUpsertWithWhereUniqueWithoutRelatedSalesPenawaranInput = {
+    where: listProductWhereUniqueInput
+    update: XOR<listProductUpdateWithoutRelatedSalesPenawaranInput, listProductUncheckedUpdateWithoutRelatedSalesPenawaranInput>
+    create: XOR<listProductCreateWithoutRelatedSalesPenawaranInput, listProductUncheckedCreateWithoutRelatedSalesPenawaranInput>
+  }
+
+  export type listProductUpdateWithWhereUniqueWithoutRelatedSalesPenawaranInput = {
+    where: listProductWhereUniqueInput
+    data: XOR<listProductUpdateWithoutRelatedSalesPenawaranInput, listProductUncheckedUpdateWithoutRelatedSalesPenawaranInput>
+  }
+
+  export type listProductUpdateManyWithWhereWithoutRelatedSalesPenawaranInput = {
+    where: listProductScalarWhereInput
+    data: XOR<listProductUpdateManyMutationInput, listProductUncheckedUpdateManyWithoutRelatedSalesPenawaranInput>
   }
 
   export type salesPenawaranUpsertWithoutItemsInput = {
@@ -38762,6 +39041,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUpdateOneWithoutUserNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -38796,6 +39076,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -39029,6 +39310,36 @@ export namespace Prisma {
     start?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type salesPenawaranItemUpdateWithoutRelatedProductsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    salesPenawaran?: salesPenawaranUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type salesPenawaranItemUncheckedUpdateWithoutRelatedProductsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    salesPenawaranId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productName?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+    salesPenawaranId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type fMerekUpdateWithoutMerekInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -39081,6 +39392,7 @@ export namespace Prisma {
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
   }
 
   export type listProductUncheckedUpdateWithoutFMerekInput = {
@@ -39115,6 +39427,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
     relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
   }
 
   export type listProductUncheckedUpdateManyWithoutFMerekInput = {
@@ -39547,6 +39860,7 @@ export namespace Prisma {
     imageProductUtama?: imageProductUtamaUpdateOneWithoutUserNestedInput
     user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
     spec_product?: specProductUpdateOneWithoutUserNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUpdateManyWithoutMerekNestedInput
   }
 
@@ -39581,6 +39895,7 @@ export namespace Prisma {
     url_image_product?: imageProductUncheckedUpdateManyWithoutUserNestedInput
     imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
     spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
+    relatedSalesPenawaran?: salesPenawaranItemUncheckedUpdateManyWithoutRelatedProductsNestedInput
     fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
   }
 
@@ -39727,10 +40042,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productName: string
-    kodeProduk?: string | null
     qty: number
     productPriceFinal: bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type salesPenawaranItemUpdateWithoutSalesPenawaranInput = {
@@ -39738,10 +40051,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    relatedProducts?: listProductUpdateManyWithoutRelatedSalesPenawaranNestedInput
   }
 
   export type salesPenawaranItemUncheckedUpdateWithoutSalesPenawaranInput = {
@@ -39749,10 +40061,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
-    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    relatedProducts?: listProductUncheckedUpdateManyWithoutRelatedSalesPenawaranNestedInput
   }
 
   export type salesPenawaranItemUncheckedUpdateManyWithoutSalesPenawaranInput = {
@@ -39760,10 +40071,106 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productName?: StringFieldUpdateOperationsInput | string
-    kodeProduk?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     productPriceFinal?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type listProductUpdateWithoutRelatedSalesPenawaranInput = {
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    slugProduct?: StringFieldUpdateOperationsInput | string
+    saveDraf?: BoolFieldUpdateOperationsInput | boolean
+    descProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productName?: NullableStringFieldUpdateOperationsInput | string | null
+    stockProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    descMetaProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    viewProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    subKategoriProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productType?: NullableStringFieldUpdateOperationsInput | string | null
+    tagProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productPrice?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    productDiscount?: NullableIntFieldUpdateOperationsInput | number | null
+    productPriceFinal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    urlYoutube?: NullableStringFieldUpdateOperationsInput | string | null
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     spekNew?: NullableJsonNullValueInput | InputJsonValue
+    weightProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    heightProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    lengthProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    widthProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    cartItem?: cartItemUpdateManyWithoutProductNestedInput
+    url_image_product?: imageProductUpdateManyWithoutUserNestedInput
+    imageProductUtama?: imageProductUtamaUpdateOneWithoutUserNestedInput
+    user?: categoryProductUpdateOneRequiredWithoutListProductsNestedInput
+    spec_product?: specProductUpdateOneWithoutUserNestedInput
+    relatedArticles?: postArtikelUpdateManyWithoutRelatedProductsNestedInput
+    fMerek?: fMerekUpdateManyWithoutMerekNestedInput
+  }
+
+  export type listProductUncheckedUpdateWithoutRelatedSalesPenawaranInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    slugProduct?: StringFieldUpdateOperationsInput | string
+    saveDraf?: BoolFieldUpdateOperationsInput | boolean
+    descProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productName?: NullableStringFieldUpdateOperationsInput | string | null
+    stockProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    descMetaProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    viewProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    subKategoriProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productType?: NullableStringFieldUpdateOperationsInput | string | null
+    tagProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productPrice?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    productDiscount?: NullableIntFieldUpdateOperationsInput | number | null
+    productPriceFinal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    urlYoutube?: NullableStringFieldUpdateOperationsInput | string | null
+    productKategori?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    weightProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    heightProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    lengthProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    widthProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    cartItem?: cartItemUncheckedUpdateManyWithoutProductNestedInput
+    url_image_product?: imageProductUncheckedUpdateManyWithoutUserNestedInput
+    imageProductUtama?: imageProductUtamaUncheckedUpdateOneWithoutUserNestedInput
+    spec_product?: specProductUncheckedUpdateOneWithoutUserNestedInput
+    relatedArticles?: postArtikelUncheckedUpdateManyWithoutRelatedProductsNestedInput
+    fMerek?: fMerekUncheckedUpdateManyWithoutMerekNestedInput
+  }
+
+  export type listProductUncheckedUpdateManyWithoutRelatedSalesPenawaranInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    slugProduct?: StringFieldUpdateOperationsInput | string
+    saveDraf?: BoolFieldUpdateOperationsInput | boolean
+    descProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productName?: NullableStringFieldUpdateOperationsInput | string | null
+    stockProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    descMetaProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    viewProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    subKategoriProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productType?: NullableStringFieldUpdateOperationsInput | string | null
+    tagProduct?: NullableStringFieldUpdateOperationsInput | string | null
+    productPrice?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    productDiscount?: NullableIntFieldUpdateOperationsInput | number | null
+    productPriceFinal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    urlYoutube?: NullableStringFieldUpdateOperationsInput | string | null
+    productKategori?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    spekNew?: NullableJsonNullValueInput | InputJsonValue
+    weightProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    heightProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    lengthProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    widthProduct?: NullableIntFieldUpdateOperationsInput | number | null
+    updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
@@ -39815,6 +40222,10 @@ export namespace Prisma {
      * @deprecated Use SalesPenawaranCountOutputTypeDefaultArgs instead
      */
     export type SalesPenawaranCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesPenawaranCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SalesPenawaranItemCountOutputTypeDefaultArgs instead
+     */
+    export type SalesPenawaranItemCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesPenawaranItemCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use categoryProductUtamaDefaultArgs instead
      */

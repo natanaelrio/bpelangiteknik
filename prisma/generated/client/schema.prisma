@@ -43,39 +43,40 @@ model categoryProduct {
 }
 
 model listProduct {
-  id                 Int                @id @default(autoincrement())
-  start              DateTime           @default(now())
-  end                DateTime           @updatedAt
-  slugProduct        String             @unique
-  saveDraf           Boolean            @default(true)
-  descProduct        String?
-  productName        String?
-  stockProduct       Int?
-  descMetaProduct    String?
-  viewProduct        Int?               @default(1)
-  subKategoriProduct String?
-  productType        String?
-  tagProduct         String?
-  productPrice       BigInt?
-  productDiscount    Int?
-  productPriceFinal  BigInt?
-  urlYoutube         String?
-  productKategori    Int
-  sold               Int?               @default(0)
-  username           String?
-  spekNew            Json?
-  weightProduct      Int?
-  heightProduct      Int?
-  lengthProduct      Int?
-  widthProduct       Int?
-  updateDate         DateTime           @default(now())
-  cartItem           cartItem[]
-  url_image_product  imageProduct[]
-  imageProductUtama  imageProductUtama?
-  user               categoryProduct    @relation(fields: [productKategori], references: [id])
-  spec_product       specProduct?
-  relatedArticles    postArtikel[]      @relation("ArtikelProduk")
-  fMerek             fMerek[]           @relation("FMerek")
+  id                    Int                  @id @default(autoincrement())
+  start                 DateTime             @default(now())
+  end                   DateTime             @updatedAt
+  slugProduct           String               @unique
+  saveDraf              Boolean              @default(true)
+  descProduct           String?
+  productName           String?
+  stockProduct          Int?
+  descMetaProduct       String?
+  viewProduct           Int?                 @default(1)
+  subKategoriProduct    String?
+  productType           String?
+  tagProduct            String?
+  productPrice          BigInt?
+  productDiscount       Int?
+  productPriceFinal     BigInt?
+  urlYoutube            String?
+  productKategori       Int
+  sold                  Int?                 @default(0)
+  username              String?
+  spekNew               Json?
+  weightProduct         Int?
+  heightProduct         Int?
+  lengthProduct         Int?
+  widthProduct          Int?
+  updateDate            DateTime             @default(now())
+  cartItem              cartItem[]
+  url_image_product     imageProduct[]
+  imageProductUtama     imageProductUtama?
+  user                  categoryProduct      @relation(fields: [productKategori], references: [id])
+  spec_product          specProduct?
+  relatedArticles       postArtikel[]        @relation("ArtikelProduk")
+  relatedSalesPenawaran salesPenawaranItem[] @relation("ProdukSalesPenawaran")
+  fMerek                fMerek[]             @relation("FMerek")
 
   @@index([productKategori])
 }
@@ -408,10 +409,9 @@ model salesPenawaranItem {
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
   productName       String
-  kodeProduk        String?
   qty               Int
   productPriceFinal BigInt
-  spekNew           Json?
+  relatedProducts   listProduct[]  @relation("ProdukSalesPenawaran")
   salesPenawaranId  String
   salesPenawaran    salesPenawaran @relation(fields: [salesPenawaranId], references: [id], onDelete: Cascade)
 

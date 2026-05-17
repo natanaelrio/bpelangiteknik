@@ -14,7 +14,15 @@ export async function GET(req) {
                 createdAt: 'desc'
             },
             include: {
-                items: true
+                items: {
+                    include: {
+                        relatedProducts: {
+                            select: {
+                                productType: true
+                            }
+                        }
+                    }
+                }
             }
         })
 
