@@ -129,6 +129,7 @@
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .itemCardExpanded {
@@ -140,6 +141,7 @@
     grid-template-columns: 2fr 2fr 1.5fr 1.5fr 1.5fr 1fr 1fr;
     gap: 15px;
     padding: 20px 25px;
+    padding-right: 100px;
     align-items: center;
     cursor: pointer;
     background: white;
@@ -508,4 +510,163 @@
     .filterInput {
         flex: 1;
     }
+}
+
+.actionButtons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.updateInvButton {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.updateInvButton:hover {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1001;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modalHeader h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #1f2937;
+}
+
+.modalClose {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #9ca3af;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.modalClose:hover {
+    color: #374151;
+}
+
+.modalBody {
+    padding: 24px;
+}
+
+.modalLabel {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.modalInput {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.modalInput:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.modalFooter {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.modalButtonCancel,
+.modalButtonSave {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+}
+
+.modalButtonCancel {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.modalButtonCancel:hover:not(:disabled) {
+    background: #f3f4f6;
+}
+
+.modalButtonSave {
+    background: #667eea;
+    color: white;
+}
+
+.modalButtonSave:hover:not(:disabled) {
+    background: #5568d3;
+}
+
+.modalButtonCancel:disabled,
+.modalButtonSave:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

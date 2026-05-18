@@ -193,7 +193,7 @@ a.c 588.5062.609`
                 productPriceFinal: Number(item.productPriceFinal),
                 // spekNew: item.spekNew || [],
                 // kodeProduk: item.productType || null,
-                productIds: [item.id] || []
+                productIds: item.id ? [item.id] : []
             })),
             notes,
             includePPN,
@@ -653,7 +653,8 @@ a.c 588.5062.609`
             qty: Number(manualQty) || 1,
             productPriceFinal: Number(manualPrice),
             includePPN: manualPPN,
-            spekNew: []
+            // spekNew: [], 
+            id: null
         };
 
         const updated = [...dataPenawaran, newItem];

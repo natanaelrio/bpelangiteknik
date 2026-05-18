@@ -28,6 +28,7 @@ export const authOptions = {
                     { id: "4", email: "sales04@pelangiteknik.com", password: "sales04pelangi", username: "sales04" },
                     { id: "5", email: "rio@pelangiteknik.com", password: "rio12345", username: "rio" },
                     { id: "6", email: "sales01@tsuzumijapan.com", password: "sales01tsuzumi", username: "sales05" },
+                    { id: "7", email: "it@pelangiteknik.com", password: "itpelangiteknik", username: "sales05" },
                 ];
 
                 // Cari pengguna berdasarkan email dan password

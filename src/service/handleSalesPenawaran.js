@@ -56,3 +56,22 @@ export const HandleDeleteSalesPenawaran = async (id) => {
     }
     revalidatePath('/')
 }
+
+export const HandlePutInvoice = async ({ id, invoiceNumber }) => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/putINVsuratpenawaran`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${process.env.NEXT_PUBLIC_SECREET}`
+            },
+            body: JSON.stringify({ id, invoiceNumber }),
+            next: { revalidate: 0 }
+        });
+
+        return res.json();
+    } catch (err) {
+        console.error('HandlePutInvoice error:', err);
+        throw err;
+    }
+}

@@ -29,6 +29,12 @@ export async function POST(req) {
     };
 
     if (authorization == process.env.NEXT_PUBLIC_SECREET) {
+        const toSafeBigInt = (value) => {
+            const n = Number(value);
+            if (!isFinite(n)) return BigInt(0);
+            return BigInt(Math.round(n));
+        };
+
         const CreatePenawaran = await prisma.salesPenawaran.create({
             data: {
                 id,
@@ -39,26 +45,29 @@ export async function POST(req) {
                 selectedBank,
                 notes,
                 includePPN,
-                totalHargaSatuan: BigInt(totalHargaSatuan),
-                totalKeseluruhan: BigInt(totalKeseluruhan),
+                totalHargaSatuan: toSafeBigInt(totalHargaSatuan),
+                totalKeseluruhan: toSafeBigInt(totalKeseluruhan),
                 totalQty,
-                ppn: BigInt(ppn),
-                grandTotal: BigInt(grandTotal),
-                customerPhone: BigInt(customerPhone),
+                ppn: toSafeBigInt(ppn),
+                grandTotal: toSafeBigInt(grandTotal),
+                customerPhone: toSafeBigInt(customerPhone),
                 items: {
                     create: items.map(item => ({
                         productName: item.productName,
                         qty: item.qty,
-                        productPriceFinal: BigInt(item.productPriceFinal),
+                        productPriceFinal: toSafeBigInt(item.productPriceFinal),
                         // spekNew: item.spekNew || [],
                         // kodeProduk: item.kodeProduk || null,
-                        relatedProducts: item.productIds?.length
-                            ? {
-                                connect: item.productIds.map((id) => ({
-                                    id: Number(id)
-                                }))
-                            }
-                            : undefined
+                        relatedProducts: (() => {
+                            const productIds = item.productIds?.filter(id => id != null) ?? [];
+                            return productIds.length > 0
+                                ? {
+                                      connect: productIds.map(id => ({
+                                          id: Number(id)
+                                      }))
+                                  }
+                                : undefined;
+                        })()
                     }))
                 }
             },

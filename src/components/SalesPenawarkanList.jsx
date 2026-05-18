@@ -8,13 +8,17 @@ import { useRouter } from "next/navigation";
 import { FaTrashCan } from "react-icons/fa6";
 import { HandleDeleteSalesPenawaran } from '@/service/handleSalesPenawaran';
 
-export default function SalesPenawarkanList({ userSales }) {
+export default function SalesPenawarkanList({ userSales, session }) {
+
+    const spv = session?.user?.email === 'rio@pelangiteknik.com'
 
     // const userSalesNew = ['Sifa', 'Ina', 'Alma']
     const router = useRouter();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [expandedId, setExpandedId] = useState(null);
+    const [updateInvModal, setUpdateInvModal] = useState({ show: false, id: null, invoiceNumber: '' });
+    const [updatingInv, setUpdatingInv] = useState(false);
 
     // Filter states
     const [salesNameFilter, setSalesNameFilter] = useState('');
@@ -22,6 +26,9 @@ export default function SalesPenawarkanList({ userSales }) {
     const [ppnFilter, setPpnFilter] = useState('all');
     const [qtyFilter, setQtyFilter] = useState({ min: '', max: '' });
     const [dateFilter, setDateFilter] = useState({ start: '', end: '' });
+    const [invFilter, setInvFilter] = useState('all');
+
+    console.log(invFilter);
 
 
     // Pagination
@@ -45,6 +52,10 @@ export default function SalesPenawarkanList({ userSales }) {
         // Filter by PPN status
         if (ppnFilter === 'ppn' && !item.includePPN) return false;
         if (ppnFilter === 'non-ppn' && item.includePPN) return false;
+
+        // Filter by INV status
+        if (invFilter === 'has-inv' && !item.invoiceNumber) return false;
+        if (invFilter === 'no-inv' && item.invoiceNumber) return false;
 
         // Filter by qty range
         if (qtyFilter.min && item.totalQty < parseInt(qtyFilter.min)) return false;
@@ -81,7 +92,7 @@ export default function SalesPenawarkanList({ userSales }) {
     // Reset to page 1 when filters change
     useEffect(() => {
         setCurrentPage(1);
-    }, [salesNameFilter, ppnFilter, qtyFilter, dateFilter]);
+    }, [salesNameFilter, ppnFilter, qtyFilter, dateFilter, invFilter]);
 
     const fetchData = async () => {
         try {
@@ -132,6 +143,42 @@ export default function SalesPenawarkanList({ userSales }) {
         setExpandedId(expandedId === id ? null : id);
     };
 
+    const handleUpdateINV = async (id, invoiceNumber) => {
+        if (!invoiceNumber.trim()) {
+            toast.error('Nomor invoice tidak boleh kosong');
+            return;
+        }
+
+        setUpdatingInv(true);
+        try {
+            const response = await fetch('/api/c/putINVsuratpenawaran', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': process.env.NEXT_PUBLIC_SECREET
+                },
+                body: JSON.stringify({
+                    id,
+                    invoiceNumber: invoiceNumber.trim()
+                })
+            });
+
+            const result = await response.json();
+            if (result.isCreated) {
+                toast.success('INV berhasil diupdate');
+                setUpdateInvModal({ show: false, id: null, invoiceNumber: '' });
+                fetchData();
+            } else {
+                toast.error(result.message || 'Gagal mengupdate INV');
+            }
+        } catch (error) {
+            toast.error('Error Internet');
+            console.error('Update INV error:', error);
+        } finally {
+            setUpdatingInv(false);
+        }
+    };
+
     // if (loading) {
     //     return (
     //         <div className={styles.container}>
@@ -165,7 +212,15 @@ export default function SalesPenawarkanList({ userSales }) {
                             <div className={styles.statLabel}>Total Penawaran</div>
                         </div>
                         <div className={styles.statItem}>
-                            <div className={styles.statValue} style={{ color: '#10b981' }}>
+                            <div className={styles.statValue} style={{ color: '#359459' }}>{filteredData.filter(d => d.invoiceNumber).length}</div>
+                            <div className={styles.statLabel}>Invoice</div>
+                        </div>
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue} style={{ color: '#ea6666' }}>{filteredData.filter(d => !d.invoiceNumber).length}</div>
+                            <div className={styles.statLabel}>No Invoice</div>
+                        </div>
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue} style={{ color: '#191818' }}>
                                 {filteredData.filter(d => d.includePPN).length}
                             </div>
                             <div className={styles.statLabel}>Dengan PPN</div>
@@ -205,6 +260,18 @@ export default function SalesPenawarkanList({ userSales }) {
                                 <option value="all">Semua</option>
                                 <option value="ppn">Dengan PPN</option>
                                 <option value="non-ppn">Tanpa PPN</option>
+                            </select>
+                        </div>
+                        <div className={styles.filterGroup}>
+                            <label className={styles.filterLabel}>INV:</label>
+                            <select
+                                className={styles.filterSelect}
+                                value={invFilter}
+                                onChange={(e) => setInvFilter(e.target.value)}
+                            >
+                                <option value="all">Semua</option>
+                                <option value="has-inv">Sudah Ada INV</option>
+                                <option value="no-inv">Belum Ada INV</option>
                             </select>
                         </div>
                         <div className={styles.filterGroup}>
@@ -267,9 +334,24 @@ export default function SalesPenawarkanList({ userSales }) {
                                         key={i}
                                         className={`${styles.itemCard} ${expandedId === item.id ? styles.itemCardExpanded : ''}`}
                                     >
-                                        <div className={styles.deleteButton} onClick={() => DeleteData(item.id)}>
-                                            <FaTrashCan color='red' size={15} />
-                                        </div>
+                                        {spv && (
+                                            <div className={styles.actionButtons}>
+                                                <div
+                                                    className={styles.deleteButton}
+                                                    onClick={() => DeleteData(item.id)}
+                                                    title="Hapus"
+                                                >
+                                                    <FaTrashCan color='red' size={15} />
+                                                </div>
+                                                <button
+                                                    className={styles.updateInvButton}
+                                                    onClick={() => setUpdateInvModal({ show: true, id: item.id, invoiceNumber: item.invoiceNumber || '' })}
+                                                    title="Update Invoice Number"
+                                                >
+                                                    📄
+                                                </button>
+                                            </div>
+                                        )}
                                         {/* Main Row */}
                                         <div
                                             className={`${styles.mainRow} ${expandedId === item.id ? styles.mainRowExpanded : ''}`}
@@ -306,6 +388,11 @@ export default function SalesPenawarkanList({ userSales }) {
                                                 <span className={`${styles.badge} ${item.includePPN ? styles.badgePPN : styles.badgeNonPPN}`}>
                                                     {item.includePPN ? 'PPN' : 'Tanpa PPN'}
                                                 </span>
+                                                {item.invoiceNumber && (
+                                                    <span className={`${styles.badge} ${styles.badgeINV}`}>
+                                                        ✓ {item.invoiceNumber}
+                                                    </span>
+                                                )}
                                             </div>
                                             <div className={styles.grandTotal}>
                                                 <div className={styles.grandTotalValue}>
@@ -389,7 +476,7 @@ export default function SalesPenawarkanList({ userSales }) {
                                                                             {child.productName}
                                                                         </td>
                                                                         <td className={styles.bold}>
-                                                                            {kodeBarang}
+                                                                            {kodeBarang || '-'}
                                                                         </td>
                                                                         <td className={styles.center}>
                                                                             {child.qty}
@@ -463,6 +550,50 @@ export default function SalesPenawarkanList({ userSales }) {
                         )}
                     </div>
                 </div>
+
+                {/* Modal Update INV */}
+                {updateInvModal.show && (
+                    <div className={styles.modalOverlay} onClick={() => setUpdateInvModal({ show: false, id: null, invoiceNumber: '' })}>
+                        <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                            <div className={styles.modalHeader}>
+                                <h3>Update Invoice Number</h3>
+                                <button
+                                    className={styles.modalClose}
+                                    onClick={() => setUpdateInvModal({ show: false, id: null, invoiceNumber: '' })}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div className={styles.modalBody}>
+                                <label className={styles.modalLabel}>Nomor Invoice:</label>
+                                <input
+                                    type="text"
+                                    className={styles.modalInput}
+                                    value={updateInvModal.invoiceNumber}
+                                    onChange={(e) => setUpdateInvModal({ ...updateInvModal, invoiceNumber: e.target.value })}
+                                    placeholder="Contoh: INV-2024-001"
+                                    autoFocus
+                                />
+                            </div>
+                            <div className={styles.modalFooter}>
+                                <button
+                                    className={styles.modalButtonCancel}
+                                    onClick={() => setUpdateInvModal({ show: false, id: null, invoiceNumber: '' })}
+                                    disabled={updatingInv}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className={styles.modalButtonSave}
+                                    onClick={() => handleUpdateINV(updateInvModal.id, updateInvModal.invoiceNumber)}
+                                    disabled={updatingInv}
+                                >
+                                    {updatingInv ? 'Updating...' : 'Update'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )
