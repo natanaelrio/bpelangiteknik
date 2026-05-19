@@ -11,9 +11,16 @@ import TTD from './logo/ttd';
 import { FormatRupiah } from '@/utils/formatRupiah';
 import { useCon } from '@/zustand/useCon';
 import { sendGAEventL } from '@/lib/ga';
+import { CreateSalesPenawaran, CreateSheetGoogleSalesPenawaran, SendGroupReportPenawaran } from '@/service/handlePostPenawaran';
 import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
 
 export default function Layangpenawaran({ dataPenawaran, setDataPenawaran }) {
+
+    const { data: session, status } = useSession()
+
+    const spv = session?.user?.email === "rio@pelangiteknik.com";
+
     const logoBase64 = LogoAtas()
     const logoTTD = TTD()
     const phoneNumbers = GetRandomPhoneNumber();
@@ -134,9 +141,6 @@ a.c 588.5062.609`
         }
     };
 
-    console.log(dataPenawaran);
-
-
     const handleSubmitPenawaran = async () => {
 
         setErrorMsg("");
@@ -232,24 +236,16 @@ a.c 588.5062.609`
 
                 return {
                     productName: item.productName,
-
                     kodeProduk: item.productType || null,
-
                     qty,
-
                     productPriceFinal:
                         formatRupiah(harga),
-
                     spekNew: [],
-
                     includePPN,
-
                     subtotal:
                         formatRupiah(subtotal),
-
                     ppn:
                         formatRupiah(ppn),
-
                     grandTotal:
                         formatRupiah(grandTotal)
                 };
@@ -266,101 +262,101 @@ a.c 588.5062.609`
             createdAt: new Date().toISOString()
         };
 
-        console.log("📤 DATA PENAWARAN UNTUK API:", payloadPenawaranSheet);
+        const buildWhatsAppMessage = () => {
+            const now = new Date();
+            const formattedDateTime = new Intl.DateTimeFormat('id-ID', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Jakarta'
+            }).format(now);
+
+            const itemLines = dataPenawaran.map((item, index) => {
+                const qty = Number(item.qty || 1);
+                const harga = Number(item.productPriceFinal || 0);
+                const subtotal = harga * qty;
+
+                return `${index + 1}. ${item.productName} - Qty: ${qty} - Harga: ${formatRupiah(harga)} - Subtotal: ${formatRupiah(subtotal)}`;
+            }).join('\n');
+
+            const noteLines = notes
+                .filter((note) => note && note.trim())
+                .map((note, index) => `${index + 1}. ${note}`)
+                .join('\n');
+
+            return `== ${formattedDateTime} ==
+
+*Sales ${nameSales} (${numberSales})* telah membuat penawaran
+
+No. Penawaran: ${kodePenawaran}
+Customer: ${customerName}${PICcustomerName ? ` - ${PICcustomerName}` : ''}
+Nomor Customer: ${customerPhone}
+Bank Pembayaran: ${selectedBank?.nama || '-'}
+Include PPN: ${includePPN ? 'Ya' : 'Tidak'}
+
+*Detail Item:*
+${itemLines}
+
+Subtotal: ${formatRupiah(totalKeseluruhan)}
+PPN: ${formatRupiah(includePPN ? (totalKeseluruhan * 11) / 100 : 0)}
+Grand Total: ${formatRupiah(includePPN ? totalKeseluruhan + (totalKeseluruhan * 11) / 100 : totalKeseluruhan)}
+
+*Catatan:*
+${noteLines || '-'}
+`;
+        };
+
+        console.log("📱 Payload WhatsApp Message:", buildWhatsAppMessage());
+
+        const payloadReportSuratPenawaran = {
+            groupId: spv ? '120363406595440008@g.us' : '120363021369281320@g.us',
+            message: buildWhatsAppMessage()
+        };
 
         try {
             // Kirim data ke API
-            const responsePenawaranDataBase = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/c/createSalesPenawaran`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': process.env.NEXT_PUBLIC_SECREET
-                },
-                body: JSON.stringify({
-                    id: payloadPenawaranDataBase.id,
-                    customerName: payloadPenawaranDataBase.customerName,
-                    customerPhone: payloadPenawaranDataBase.customerPhone,
-                    PICcustomerName: payloadPenawaranDataBase.PICcustomerName,
-                    salesName: payloadPenawaranDataBase.sales.name,
-                    salesPhone: payloadPenawaranDataBase.sales.phone,
-                    selectedBank: payloadPenawaranDataBase.selectedBank,
-                    notes: payloadPenawaranDataBase.notes,
-                    includePPN: payloadPenawaranDataBase.includePPN,
-                    totalHargaSatuan: payloadPenawaranDataBase.totals.totalHargaSatuan,
-                    totalKeseluruhan: payloadPenawaranDataBase.totals.totalKeseluruhan,
-                    totalQty: payloadPenawaranDataBase.totals.totalQty,
-                    ppn: payloadPenawaranDataBase.totals.ppn,
-                    grandTotal: payloadPenawaranDataBase.totals.grandTotal,
-                    items: payloadPenawaranDataBase.items
-                })
+            const resultPenawaranDataBase = await CreateSalesPenawaran({
+                id: payloadPenawaranDataBase.id,
+                customerName: payloadPenawaranDataBase.customerName,
+                customerPhone: payloadPenawaranDataBase.customerPhone,
+                PICcustomerName: payloadPenawaranDataBase.PICcustomerName,
+                salesName: payloadPenawaranDataBase.sales.name,
+                salesPhone: payloadPenawaranDataBase.sales.phone,
+                selectedBank: payloadPenawaranDataBase.selectedBank,
+                notes: payloadPenawaranDataBase.notes,
+                includePPN: payloadPenawaranDataBase.includePPN,
+                totalHargaSatuan: payloadPenawaranDataBase.totals.totalHargaSatuan,
+                totalKeseluruhan: payloadPenawaranDataBase.totals.totalKeseluruhan,
+                totalQty: payloadPenawaranDataBase.totals.totalQty,
+                ppn: payloadPenawaranDataBase.totals.ppn,
+                grandTotal: payloadPenawaranDataBase.totals.grandTotal,
+                items: payloadPenawaranDataBase.items
             });
 
-            const resultPenawaranDataBase = await responsePenawaranDataBase.json();
             console.log("✅ RESPONSE API PENAWARAN:", resultPenawaranDataBase);
 
-
-            const responsePenawaranGoogleSheet = await fetch(
-                `${process.env.NEXT_PUBLIC_URL}/api/c/createSheetGoogleSalesPenawaran`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization':
-                            process.env.NEXT_PUBLIC_SECREET
-                    },
-                    body: JSON.stringify({
-                        id: payloadPenawaranSheet.id,
-                        customerName:
-                            payloadPenawaranSheet.customerName,
-
-                        customerPhone:
-                            payloadPenawaranSheet.customerPhone,
-
-                        PICcustomerName:
-                            payloadPenawaranSheet.PICcustomerName,
-
-                        salesName:
-                            payloadPenawaranSheet.sales.name,
-
-                        salesPhone:
-                            payloadPenawaranSheet.sales.phone,
-
-                        selectedBank:
-                            payloadPenawaranSheet.selectedBank,
-
-                        notes:
-                            payloadPenawaranSheet.notes,
-
-                        includePPN:
-                            payloadPenawaranSheet.includePPN,
-
-                        totalHargaSatuan:
-                            payloadPenawaranSheet.totals
-                                .totalHargaSatuan,
-
-                        totalKeseluruhan:
-                            payloadPenawaranSheet.totals
-                                .totalKeseluruhan,
-
-                        totalQty:
-                            payloadPenawaranSheet.totals
-                                .totalQty,
-
-                        ppn:
-                            payloadPenawaranSheet.totals
-                                .ppn,
-
-                        grandTotal:
-                            payloadPenawaranSheet.totals
-                                .grandTotal,
-
-                        items:
-                            payloadPenawaranSheet.items
-                    })
-                }
-            );
-
-            const resultSalesPenawaran = await responsePenawaranGoogleSheet.json();
+            const resultSalesPenawaran = await CreateSheetGoogleSalesPenawaran({
+                id: payloadPenawaranSheet.id,
+                customerName: payloadPenawaranSheet.customerName,
+                customerPhone: payloadPenawaranSheet.customerPhone,
+                PICcustomerName: payloadPenawaranSheet.PICcustomerName,
+                salesName: payloadPenawaranSheet.sales.name,
+                salesPhone: payloadPenawaranSheet.sales.phone,
+                selectedBank: payloadPenawaranSheet.selectedBank,
+                notes: payloadPenawaranSheet.notes,
+                includePPN: payloadPenawaranSheet.includePPN,
+                totalHargaSatuan: payloadPenawaranSheet.totals.totalHargaSatuan,
+                totalKeseluruhan: payloadPenawaranSheet.totals.totalKeseluruhan,
+                totalQty: payloadPenawaranSheet.totals.totalQty,
+                ppn: payloadPenawaranSheet.totals.ppn,
+                grandTotal: payloadPenawaranSheet.totals.grandTotal,
+                items: payloadPenawaranSheet.items
+            });
 
             console.log("✅ RESPONSE API PENAWARAN:", resultSalesPenawaran);
             // if (!resultPenawaranDataBase.success) {
@@ -374,6 +370,9 @@ a.c 588.5062.609`
                 setIsLoading(false);
                 throw new Error(resultSalesPenawaran.message);
             }
+
+            const resultReportPenawaran = await SendGroupReportPenawaran(payloadReportSuratPenawaran);
+            console.log('✅ RESPONSE REPORT PENAWARAN:', resultReportPenawaran);
 
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
