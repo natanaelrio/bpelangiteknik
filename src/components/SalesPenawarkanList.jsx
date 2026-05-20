@@ -35,8 +35,7 @@ export default function SalesPenawarkanList({ userSales, session }) {
     const [qtyFilter, setQtyFilter] = useState({ min: '', max: '' });
     const [dateFilter, setDateFilter] = useState({ start: '', end: '' });
     const [invFilter, setInvFilter] = useState('all');
-
-    console.log(invFilter);
+    const [searchId, setSearchId] = useState('');
 
 
     // Pagination
@@ -54,6 +53,13 @@ export default function SalesPenawarkanList({ userSales, session }) {
 
     // Filtered data
     const filteredData = data.filter(item => {
+        // Filter by ID
+        if (searchId &&
+            !(
+                item.id?.toLowerCase().includes(searchId.toLowerCase()) ||
+                item.customerName?.toLowerCase().includes(searchId.toLowerCase())
+            )) return false;
+
         // Filter by sales name
         if (salesNameFilter && item.salesName !== salesNameFilter) return false;
 
@@ -743,6 +749,14 @@ export default function SalesPenawarkanList({ userSales, session }) {
                         >
                             📊 Statistik
                         </button>
+
+                        <input
+                            type="text"
+                            placeholder="Cari ID atau Customer..."
+                            value={searchId}
+                            onChange={(e) => setSearchId(e.target.value)}
+                            className={styles.searchIdInput}
+                        />
                     </div>
 
                     {/* Content */}
@@ -782,6 +796,7 @@ export default function SalesPenawarkanList({ userSales, session }) {
                                             onClick={() => toggleExpand(item.id)}
                                         >
                                             <div className={styles.customerInfo}>
+                                                <div className={styles.salesMeta}>No Pen: {item.id}</div>
                                                 <div className={styles.customerName}>{item.customerName}</div>
                                                 {item.PICcustomerName && (
                                                     <div className={styles.picInfo}>PIC: {item.PICcustomerName}</div>
@@ -792,6 +807,7 @@ export default function SalesPenawarkanList({ userSales, session }) {
                                                 </div>
                                             </div>
                                             <div className={styles.salesBlock}>
+
                                                 <div className={styles.salesMeta}>Sales: {item.salesName}</div>
                                                 <div className={styles.contactInfo}>{item.salesPhone}</div>
                                                 {(() => {

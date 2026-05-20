@@ -758,6 +758,29 @@
     cursor: not-allowed;
 }
 
+/* Modern Search ID Input */
+.searchIdInput {
+    padding: 10px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 220px;
+    outline: none;
+    transition: all 0.3s ease;
+    background: white;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.searchIdInput:focus {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.searchIdInput::placeholder {
+    color: #94a3b8;
+}
+
 /* Popular Products in Modal - Clean & Modern */
 .popularList {
     display: flex;
