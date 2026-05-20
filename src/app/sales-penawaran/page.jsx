@@ -7,6 +7,17 @@ import { authOptions } from "@/lib/auth";
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Sales Penawaran - Pelangi Teknik Indonesia',
+  description: 'Dashboard penjualan dan pengelolaan penawaran produk dari PT Pelangi Teknik Indonesia',
+  keywords: 'penjualan, offerte, produk teknik, pelangi teknik',
+  openGraph: {
+    title: 'Sales Penawaran - Pelangi Teknik',
+    description: 'Dashboard penjualan dan pengelolaan penawaran produk',
+    type: 'website',
+  },
+}
+
 export default async function SalesPenawaranPage() {
     const session = await getServerSession(authOptions)
 
