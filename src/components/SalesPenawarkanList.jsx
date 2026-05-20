@@ -7,6 +7,7 @@ import styles from './SalesPenawarkanList.module.css';
 import { useRouter } from "next/navigation";
 import { FaTrashCan } from "react-icons/fa6";
 import { HandleDeleteSalesPenawaran } from '@/service/handleSalesPenawaran';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 
 export default function SalesPenawarkanList({ userSales, session }) {
 
@@ -17,8 +18,15 @@ export default function SalesPenawarkanList({ userSales, session }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [expandedId, setExpandedId] = useState(null);
+    // Modal states
     const [updateInvModal, setUpdateInvModal] = useState({ show: false, id: null, invoiceNumber: '' });
     const [updatingInv, setUpdatingInv] = useState(false);
+    const [statsModalOpen, setStatsModalOpen] = useState(false);
+    const [productsModalOpen, setProductsModalOpen] = useState(false);
+    const [productsFilterInv, setProductsFilterInv] = useState('all');
+    const [popularModalOpen, setPopularModalOpen] = useState(false);
+    const [chartModalOpen, setChartModalOpen] = useState(false);
+    const [popularInvFilter, setPopularInvFilter] = useState('all');
 
     // Filter states
     const [salesNameFilter, setSalesNameFilter] = useState('');
@@ -77,6 +85,96 @@ export default function SalesPenawarkanList({ userSales, session }) {
 
         return true;
     });
+
+    // Per-sales counts and totals (used for charts)
+    const salesCounts = filteredData.reduce((acc, curr) => {
+        acc[curr.salesName] = (acc[curr.salesName] || 0) + 1;
+        return acc;
+    }, {});
+    const salesTotals = filteredData.reduce((acc, curr) => {
+        acc[curr.salesName] = (acc[curr.salesName] || 0) + Number(curr.grandTotal);
+        return acc;
+    }, {});
+    const totalFiltered = filteredData.length;
+    const grandTotalAll = filteredData.reduce((acc, curr) => acc + Number(curr.grandTotal), 0);
+    const salesPerformance = Object.keys(salesCounts)
+        .map(name => ({
+            name,
+            count: salesCounts[name],
+            total: salesTotals[name],
+            percent: totalFiltered ? Math.round((salesCounts[name] / totalFiltered) * 100) : 0
+        }))
+        .sort((a, b) => b.count - a.count);
+
+    // Data for stats charts
+    const invData = [
+        { name: 'Invoice', value: filteredData.filter(d => d.invoiceNumber).length, fill: '#10b981' },
+        { name: 'No Invoice', value: filteredData.filter(d => !d.invoiceNumber).length, fill: '#ef4444' }
+    ];
+
+    const ppnData = [
+        { name: 'Dengan PPN', value: filteredData.filter(d => d.includePPN).length, fill: '#667eea' },
+        { name: 'Tanpa PPN', value: filteredData.filter(d => !d.includePPN).length, fill: '#f59e0b' }
+    ];
+
+    const summaryData = [
+        {
+            name: 'Total Penawaran',
+            value: filteredData.length,
+            fill: '#667eea'
+        },
+        {
+            name: 'Total Qty',
+            value: filteredData.reduce((acc, curr) => acc + curr.totalQty, 0),
+            fill: '#f59e0b'
+        }
+    ];
+
+    const totalsData = [
+        {
+            name: 'Total INV',
+            value: filteredData.filter(d => d.invoiceNumber).reduce((acc, curr) => acc + Number(curr.grandTotal), 0) / 1000000,
+            valueRaw: filteredData.filter(d => d.invoiceNumber).reduce((acc, curr) => acc + Number(curr.grandTotal), 0),
+            fill: '#10b981'
+        },
+        {
+            name: 'Total No INV',
+            value: filteredData.filter(d => !d.invoiceNumber).reduce((acc, curr) => acc + Number(curr.grandTotal), 0) / 1000000,
+            valueRaw: filteredData.filter(d => !d.invoiceNumber).reduce((acc, curr) => acc + Number(curr.grandTotal), 0),
+            fill: '#ef4444'
+        }
+    ];
+
+    // Popular Products
+    const popularFilteredData = filteredData.filter(item => {
+        if (popularInvFilter === 'inv') return item.invoiceNumber;
+        if (popularInvFilter === 'no-inv') return !item.invoiceNumber;
+        return true;
+    });
+
+    const productCounts = popularFilteredData.reduce((acc, curr) => {
+        curr.items?.forEach(item => {
+            const key = item.productName;
+
+            if (!acc[key]) {
+                acc[key] = {
+                    name: item.productName,
+                    price: Number(item.productPriceFinal),
+                    kodeBarang:
+                        item.relatedProducts?.[0]?.productType || '-',
+                    count: 0
+                };
+            }
+
+            acc[key].count += item.qty;
+        });
+
+        return acc;
+    }, {});
+
+    const popularProducts = Object.values(productCounts)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10);
 
     // Pagination logic
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -231,7 +329,320 @@ export default function SalesPenawarkanList({ userSales, session }) {
                             </div>
                             <div className={styles.statLabel}>Total Qty</div>
                         </div>
+                        <br />
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue} style={{ color: '#10b981' }}>
+                                Rp {filteredData.filter(d => d.invoiceNumber).reduce((acc, curr) => acc + Number(curr.grandTotal), 0).toLocaleString('id-ID')}
+                            </div>
+                            <div className={styles.statLabel}>Total INV</div>
+                        </div>
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue} style={{ color: '#ef4444' }}>
+                                Rp {filteredData.filter(d => !d.invoiceNumber).reduce((acc, curr) => acc + Number(curr.grandTotal), 0).toLocaleString('id-ID')}
+                            </div>
+                            <div className={styles.statLabel}>Total No INV</div>
+                        </div>
                     </div>
+
+
+
+                    {/* Popular Products Section */}
+                    {popularModalOpen && (
+                        <div
+                            className={styles.modalOverlay}
+                            onClick={() => setPopularModalOpen(false)}
+                        >
+                            <div
+                                className={styles.modalContent}
+                                style={{ maxWidth: 1100 }}
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div className={styles.modalHeader}>
+                                    <h3>Top 10 Barang Populer</h3>
+
+                                    <button
+                                        className={styles.modalClose}
+                                        onClick={() =>
+                                            setPopularModalOpen(false)
+                                        }
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+
+                                <select
+                                    className={styles.filterSelect}
+                                    value={popularInvFilter}
+                                    onChange={e =>
+                                        setPopularInvFilter(
+                                            e.target.value
+                                        )
+                                    }
+                                    style={{ marginBottom: 20 }}
+                                >
+                                    <option value="all">
+                                        Semua
+                                    </option>
+                                    <option value="inv">
+                                        Sudah INV
+                                    </option>
+                                    <option value="no-inv">
+                                        Belum INV
+                                    </option>
+                                </select>
+
+                                <div className={styles.popularList}>
+                                    {popularProducts.map(
+                                        (product, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={
+                                                    styles.popularItem
+                                                }
+                                            >
+                                                <div>
+                                                    #{idx + 1}
+                                                </div>
+
+                                                <div>
+                                                    <b>
+                                                        {
+                                                            product.name
+                                                        }
+                                                    </b>
+                                                    <div>
+                                                        {
+                                                            product.kodeBarang
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    Qty:
+                                                    {
+                                                        product.count
+                                                    }
+                                                </div>
+
+                                                <div>
+                                                    Rp{' '}
+                                                    {product.price.toLocaleString(
+                                                        'id-ID'
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {chartModalOpen && (
+                        <div
+                            className={styles.modalOverlay}
+                            onClick={() =>
+                                setChartModalOpen(false)
+                            }
+                        >
+                            <div
+                                className={styles.modalContent}
+                                style={{
+                                    width: '95%',
+                                    maxWidth: 1500
+                                }}
+                                onClick={e =>
+                                    e.stopPropagation()
+                                }
+                            >
+                                <div className={styles.modalHeader}>
+                                    <h3>
+                                        Modern Stats Charts
+                                    </h3>
+
+                                    <button
+                                        className={styles.modalClose}
+                                        onClick={() =>
+                                            setChartModalOpen(
+                                                false
+                                            )
+                                        }
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+
+                                <div
+                                    className={
+                                        styles.chartsGrid
+                                    }
+                                >
+                                    {/* Modern Stats Charts */}
+                                    <div className={styles.chartSection}>
+                                        {filteredData.length > 0 && (
+                                            <div className={styles.chartsGrid}>
+                                                {/* Invoice Distribution Chart */}
+                                                <div className={styles.chartCard}>
+                                                    <h4 className={styles.cardTitle}>Invoice Distribution</h4>
+                                                    <ResponsiveContainer width="100%" height={250}>
+                                                        <PieChart>
+                                                            <Pie
+                                                                data={invData}
+                                                                cx="50%"
+                                                                cy="50%"
+                                                                labelLine={false}
+                                                                label={({ name, value, percent }) => `${name}: ${value} (${(percent * 100).toFixed(0)}%)`}
+                                                                outerRadius={80}
+                                                                fill="#8884d8"
+                                                                dataKey="value"
+                                                            >
+                                                                {invData.map((entry, index) => (
+                                                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                                                ))}
+                                                            </Pie>
+                                                            <Tooltip />
+                                                        </PieChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+
+                                                {/* PPN Distribution Chart */}
+                                                <div className={styles.chartCard}>
+                                                    <h4 className={styles.cardTitle}>PPN Distribution</h4>
+                                                    <ResponsiveContainer width="100%" height={250}>
+                                                        <PieChart>
+                                                            <Pie
+                                                                data={ppnData}
+                                                                cx="50%"
+                                                                cy="50%"
+                                                                labelLine={false}
+                                                                label={({ name, value, percent }) => `${name}: ${value} (${(percent * 100).toFixed(0)}%)`}
+                                                                outerRadius={80}
+                                                                fill="#8884d8"
+                                                                dataKey="value"
+                                                            >
+                                                                {ppnData.map((entry, index) => (
+                                                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                                                ))}
+                                                            </Pie>
+                                                            <Tooltip />
+                                                        </PieChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+
+                                                {/* Summary Bar Chart */}
+                                                <div className={styles.chartCard}>
+                                                    <h4 className={styles.cardTitle}>Summary Metrics</h4>
+                                                    <ResponsiveContainer width="100%" height={250}>
+                                                        <BarChart
+                                                            data={summaryData}
+                                                            margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                                                        >
+                                                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                            <XAxis
+                                                                dataKey="name"
+                                                                angle={-45}
+                                                                textAnchor="end"
+                                                                height={80}
+                                                                tick={{ fontSize: 11 }}
+                                                            />
+                                                            <YAxis tick={{ fontSize: 11 }} />
+                                                            <Tooltip
+                                                                contentStyle={{
+                                                                    backgroundColor: '#ffffff',
+                                                                    border: '1px solid #e5e7eb',
+                                                                    borderRadius: '8px'
+                                                                }}
+                                                            />
+                                                            <Bar dataKey="value" fill="#667eea" radius={[8, 8, 0, 0]} />
+                                                        </BarChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+
+                                                {/* Totals Bar Chart */}
+                                                <div className={styles.chartCard}>
+                                                    <h4 className={styles.cardTitle}>Grand Total Comparison (Juta Rp)</h4>
+                                                    <ResponsiveContainer width="100%" height={250}>
+                                                        <BarChart
+                                                            data={totalsData}
+                                                            margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                                                        >
+                                                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                            <XAxis
+                                                                dataKey="name"
+                                                                angle={-45}
+                                                                textAnchor="end"
+                                                                height={80}
+                                                                tick={{ fontSize: 11 }}
+                                                            />
+                                                            <YAxis tick={{ fontSize: 11 }} />
+                                                            <Tooltip
+                                                                formatter={(value) => `Rp ${(value * 1000000).toLocaleString('id-ID')}`}
+                                                                contentStyle={{
+                                                                    backgroundColor: '#ffffff',
+                                                                    border: '1px solid #e5e7eb',
+                                                                    borderRadius: '8px'
+                                                                }}
+                                                            />
+                                                            <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+                                                                {totalsData.map((entry, index) => (
+                                                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                                                ))}
+                                                            </Bar>
+                                                        </BarChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Sales Performance Chart */}
+                                    {filteredData.length > 0 && (
+                                        <div className={styles.chartSection}>
+                                            <h3 className={styles.chartTitle}>Sales Performance Overview</h3>
+                                            <ResponsiveContainer width="100%" height={300}>
+                                                <BarChart data={salesPerformance} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                                                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                    <XAxis
+                                                        dataKey="name"
+                                                        angle={-45}
+                                                        textAnchor="end"
+                                                        height={80}
+                                                        tick={{ fontSize: 12 }}
+                                                    />
+                                                    <YAxis
+                                                        label={{ value: 'Jumlah Penawaran', angle: -90, position: 'insideLeft' }}
+                                                        tick={{ fontSize: 12 }}
+                                                    />
+                                                    <Tooltip
+                                                        formatter={(value, name) => {
+                                                            if (name === 'count') return [value, 'Jumlah Penawaran'];
+                                                            if (name === 'total') return [`Rp ${value.toLocaleString('id-ID')}`, 'Total Value'];
+                                                            return [value, name];
+                                                        }}
+                                                        contentStyle={{
+                                                            backgroundColor: '#ffffff',
+                                                            border: '1px solid #e5e7eb',
+                                                            borderRadius: '8px',
+                                                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                                                        }}
+                                                    />
+                                                    <Legend
+                                                        wrapperStyle={{ paddingTop: '20px' }}
+                                                        formatter={(value) => {
+                                                            if (value === 'count') return 'Jumlah Penawaran';
+                                                            if (value === 'total') return 'Total Value (Rp)';
+                                                            return value;
+                                                        }}
+                                                    />
+                                                    <Bar dataKey="count" fill="#667eea" name="count" radius={[8, 8, 0, 0]} />
+                                                </BarChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Filters */}
                     <div className={styles.filters}>
@@ -319,6 +730,19 @@ export default function SalesPenawarkanList({ userSales, session }) {
                         >
                             Reset Filter
                         </button>
+                        <button
+                            className={styles.modalButtonSave}
+                            onClick={() => setPopularModalOpen(true)}
+                        >
+                            🔥 Barang Populer
+                        </button>
+
+                        <button
+                            className={styles.modalButtonSave}
+                            onClick={() => setChartModalOpen(true)}
+                        >
+                            📊 Statistik
+                        </button>
                     </div>
 
                     {/* Content */}
@@ -359,17 +783,28 @@ export default function SalesPenawarkanList({ userSales, session }) {
                                         >
                                             <div className={styles.customerInfo}>
                                                 <div className={styles.customerName}>{item.customerName}</div>
-                                                <div className={styles.customerPhone}>{item.customerPhone}</div>
+                                                {item.PICcustomerName && (
+                                                    <div className={styles.picInfo}>PIC: {item.PICcustomerName}</div>
+                                                )}
+                                                <div className={styles.customerPhone}>{'0' + item.customerPhone}</div>
                                                 <div className={styles.customerMeta}>
                                                     {moment(item.createdAt).format('DD MMM YYYY')} • {moment(item.createdAt).format('HH:mm')}
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div className={styles.picInfo}>PIC: {item.PICcustomerName || '-'}</div>
+                                            <div className={styles.salesBlock}>
                                                 <div className={styles.salesMeta}>Sales: {item.salesName}</div>
+                                                <div className={styles.contactInfo}>{item.salesPhone}</div>
+                                                {(() => {
+                                                    const percent = totalFiltered ? Math.round(((salesCounts[item.salesName] || 0) / totalFiltered) * 100) : 0;
+                                                    return (
+                                                        <div className={styles.salesChart}>
+                                                            <div className={styles.salesChartBar} style={{ width: `${percent}%` }} />
+                                                            <div className={styles.salesChartLabel}>{salesCounts[item.salesName] || 0} ({percent}%)</div>
+                                                        </div>
+                                                    );
+                                                })()}
                                             </div>
                                             <div>
-                                                <div className={styles.contactInfo}>{item.salesPhone}</div>
                                                 <div className={styles.bankInfo}>{item.selectedBank || '-'}</div>
                                             </div>
                                             <div>

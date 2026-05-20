@@ -43,6 +43,7 @@
     "react-markdown": "^10.1.0",
     "react-simplemde-editor": "^5.2.0",
     "react-spinners": "^0.14.1",
+    "recharts": "^3.8.1",
     "remark-gfm": "^4.0.1",
     "simplemde": "^1.11.2",
     "yup": "^1.4.0",
