@@ -281,8 +281,8 @@ a.c 588.5062.609`
                 const harga = Number(item.productPriceFinal || 0);
                 const subtotal = harga * qty;
 
-                return `${index + 1}. ${item.productName}\n   Qty: ${qty}\n   Harga: ${formatRupiah(harga)}\n   Subtotal: ${formatRupiah(subtotal)}`;
-            }).join('\n\n');
+                return `${index + 1}. ${item.productName} - Qty: ${qty} - Harga: ${formatRupiah(harga)} - Subtotal: ${formatRupiah(subtotal)}`;
+            }).join('\n');
 
             const noteLines = notes
                 .filter((note) => note && note.trim())
