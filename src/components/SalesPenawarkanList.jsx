@@ -6,6 +6,7 @@ import 'moment/locale/id'
 import styles from './SalesPenawarkanList.module.css';
 import { useRouter } from "next/navigation";
 import { FaTrashCan } from "react-icons/fa6";
+import { BsHeartPulseFill } from "react-icons/bs";
 import { HandleDeleteSalesPenawaran } from '@/service/handleSalesPenawaran';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 
@@ -36,6 +37,7 @@ export default function SalesPenawarkanList({ userSales, session }) {
     const [dateFilter, setDateFilter] = useState({ start: '', end: '' });
     const [invFilter, setInvFilter] = useState('all');
     const [searchId, setSearchId] = useState('');
+    const [showModal, setShowModal] = useState(true);
 
 
     // Pagination
@@ -300,7 +302,28 @@ export default function SalesPenawarkanList({ userSales, session }) {
 
     return (
         <div className={styles.container}>
+            {/* Modal */}
+            {showModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.modalAnimation}>
+                            <BsHeartPulseFill className={styles.heartIcon} />
+                        </div>
+                        <h2 className={styles.modalTitle}>Crafted with ❤️ for better business.</h2>
+                        <p className={styles.modalSubtitle}>Semangappppppppppppppppppp</p>
+                        <button 
+                            className={styles.modalButton}
+                            onClick={() => setShowModal(false)}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className={styles.wrapper}>
+                <div className={styles.license}>
+                    © Riooooow. Crafted with ❤️ for better business.
+                </div>
                 <div className={styles.card}>
                     {/* Header */}
                     <div className={styles.header}>
@@ -796,7 +819,7 @@ export default function SalesPenawarkanList({ userSales, session }) {
                                             onClick={() => toggleExpand(item.id)}
                                         >
                                             <div className={styles.customerInfo}>
-                                                <div className={styles.salesMeta}>No Pen: {item.id}</div>
+                                                <div className={styles.salesMeta}>{item.id}</div>
                                                 <div className={styles.customerName}>{item.customerName}</div>
                                                 {item.PICcustomerName && (
                                                     <div className={styles.picInfo}>PIC: {item.PICcustomerName}</div>
@@ -1001,7 +1024,9 @@ export default function SalesPenawarkanList({ userSales, session }) {
                         )}
                     </div>
                 </div>
-
+                <div className={styles.licensebawah}>
+                    © Riooooow. Crafted with ❤️ for better business.
+                </div>
                 {/* Modal Update INV */}
                 {updateInvModal.show && (
                     <div className={styles.modalOverlay} onClick={() => setUpdateInvModal({ show: false, id: null, invoiceNumber: '' })}>

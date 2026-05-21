@@ -1,8 +1,9 @@
 'use client'
 import styles from '@/components/headerNew.module.css'
 import Link from 'next/link'
-import { MdHome, MdLogout } from "react-icons/md";
+import { MdHome, MdLogout, MdInfo } from "react-icons/md";
 import { FaBorderAll } from "react-icons/fa";
+import { BsHeartPulseFill } from "react-icons/bs";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { MdLibraryAdd } from "react-icons/md";
 import { useRouter } from 'nextjs-toploader/app';
@@ -38,6 +39,7 @@ export default function HeaderNew() {
     const [search, setSearch] = useState('')
     const [dataPenawaran, setDataPenawaran] = useState(null)
     const [layang, setLayang] = useState(false)
+    const [showModal, setShowModal] = useState(true)
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -109,6 +111,25 @@ export default function HeaderNew() {
                 </div>
             </div>
             {layangPenawaran && <Layangpenawaran dataPenawaran={dataPenawaran} setDataPenawaran={setDataPenawaran} />}
+            
+            {/* Modal */}
+            {showModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.modalAnimation}>
+                            <BsHeartPulseFill className={styles.heartIcon} />
+                        </div>
+                        <h2 className={styles.modalTitle}>Crafted with ❤️ for better business.</h2>
+                        <p className={styles.modalSubtitle}>Semangappppppppppppppppppp</p>
+                        <button 
+                            className={styles.modalButton}
+                            onClick={() => setShowModal(false)}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
