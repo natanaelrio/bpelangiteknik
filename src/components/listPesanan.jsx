@@ -456,7 +456,8 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                 return (
                                                     <Fragment key={j}>
                                                         <tr className={styles.summaryRow}>
-                                                            <td className={styles.transactionSummary}>
+                                                            <td>
+                                                                <div className={styles.transactionSummary}>
                                                                 <div className={styles.transactionInfoBlock}>
                                                                     <div className={styles.transactionInfoHeader}>
                                                                         <div>
@@ -504,18 +505,66 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                                         <span className={styles.infoLabel}>Tanggal:</span>
                                                                         <span className={styles.infoValue}>{moment((pesanan?.start).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('DD MMM YYYY')}</span>
                                                                     </div>
+                                                                    <div className={styles.infoRow}>
+                                                                        <span className={styles.infoLabel}>Status:</span>
+                                                                        <select
+                                                                            className={`${styles.statusSelect} ${selectValue === 'Selesai' ? styles.statusSelectPaid : selectValue === 'Dikirim' ? styles.statusSelectShipped : selectValue === 'Diproses' ? styles.statusSelectPending : ''}`}
+                                                                            value={selectValue}
+                                                                            onChange={(e) => handleStatusChange(e.target.value, pesanan)}
+                                                                        >
+                                                                            <option value="">Belum Diproses</option>
+                                                                            <option value="Diproses">Diproses</option>
+                                                                            <option value="Dikirim">Dikirim</option>
+                                                                            <option value="Selesai">Selesai</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    {selectValue === "Dikirim" && shippingItem && (
+                                                                        <div className={styles.infoRow}>
+                                                                            <span className={styles.infoLabel}>{shippingItem.productName}:</span>
+                                                                            {!openResi && (
+                                                                                <button onClick={() => handleTrackingNumberChange(shippingItem?.id)} className={styles.noteButtonSmall}>
+                                                                                    {shippingItem?.noResi ? shippingItem?.noResi : 'Tambahkan Resi'}
+                                                                                </button>
+                                                                            )}
+                                                                            {openResi && idItemResi === shippingItem?.id && (
+                                                                                <div className={styles.noresi}>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        placeholder="Masukkan nomor resi"
+                                                                                        value={resi}
+                                                                                        onChange={(e) => setResi(e.target.value)}
+                                                                                        disabled={loading}
+                                                                                    />
+                                                                                    <button disabled={loading} onClick={() => handleSaveTracking(shippingItem?.id)}>
+                                                                                        {idItemResi === shippingItem?.id && loading
+                                                                                            ? 'Loading'
+                                                                                            : shippingItem?.noResi
+                                                                                                ? 'Update'
+                                                                                                : 'Simpan'}
+                                                                                    </button>
+                                                                                    <div className={styles.close} onClick={() => setOpenResi(false)}>x</div>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    )}
                                                                 </div>
+                                                            </div>
                                                             </td>
-
-                                                            {UserSPV && <td className={styles.deleteColumn}>
-                                                                <button className={styles.deleteButton} disabled={deletePesanan} onClick={() => HandleDeleteOrder(pesanan.id)}>{deletePesanan ? '...' : 'X'}</button>
-                                                            </td>}
                                                         </tr>
 
                                                         {expanded && (
-                                                            <tr className={styles.expandedRow}>
-                                                                <td colSpan={UserSPV ? 2 : 1}>
-                                                                    <div className={styles.orderDetailPanel}>
+                                                            <div className={styles.modalOverlay} onClick={() => setExpandedOrder(null)}>
+                                                                <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                                                                    <div className={styles.modalHeader}>
+                                                                        <h2>Detail Pesanan</h2>
+                                                                        <button 
+                                                                            className={styles.modalClose}
+                                                                            onClick={() => setExpandedOrder(null)}
+                                                                        >
+                                                                            ✕
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className={styles.modalBody}>
                                                                         <div className={styles.orderDetailGrid}>
                                                                             <div className={styles.orderDetailColumn}>
                                                                                 <h4 className={styles.detailHeading}>Produk</h4>
@@ -659,64 +708,9 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
-                                                                        <div className={styles.orderDetailGrid}>
-                                                                            <div className={styles.orderDetailColumn}>
-                                                                                <h4 className={styles.detailHeading}>Status</h4>
-                                                                                <div className={styles.statusItemRow}>
-                                                                                    <div className={styles.statusLabel}>Status Pesanan</div>
-                                                                                    <select
-                                                                                        className={`${styles.statusSelect} ${selectValue === 'Selesai' ? styles.statusSelectPaid : selectValue === 'Dikirim' ? styles.statusSelectShipped : selectValue === 'Diproses' ? styles.statusSelectPending : ''}`}
-                                                                                        value={selectValue}
-                                                                                        onChange={(e) => handleStatusChange(e.target.value, pesanan)}
-                                                                                    >
-                                                                                        <option value="">Belum Diproses</option>
-                                                                                        <option value="Diproses">Diproses</option>
-                                                                                        <option value="Dikirim">Dikirim</option>
-                                                                                        <option value="Selesai">Selesai</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className={styles.orderDetailColumn}>
-                                                                                <h4 className={styles.detailHeading}>Note / Resi</h4>
-                                                                                {/* <div className={styles.noteItemRow}>
-                                                                                    <div className={styles.statusLabel}>Catatan Pesanan</div>
-                                                                                    <div className={styles.summaryValue}>{pesanan?.catatan_pengiriman || '-'}</div>
-                                                                                </div> */}
-                                                                                {selectValue === "Dikirim" && shippingItem && (
-                                                                                    <div className={styles.noteItemRow}>
-                                                                                        <div className={styles.statusLabel}>{shippingItem.productName}</div>
-                                                                                        {!openResi && (
-                                                                                            <button onClick={() => handleTrackingNumberChange(shippingItem?.id)} className={styles.noteButtonSmall}>
-                                                                                                {shippingItem?.noResi ? shippingItem?.noResi : 'Tambahkan Resi'}
-                                                                                            </button>
-                                                                                        )}
-                                                                                        {openResi && idItemResi === shippingItem?.id && (
-                                                                                            <div className={styles.noresi}>
-                                                                                                <input
-                                                                                                    type="text"
-                                                                                                    placeholder="Masukkan nomor resi"
-                                                                                                    value={resi}
-                                                                                                    onChange={(e) => setResi(e.target.value)}
-                                                                                                    disabled={loading}
-                                                                                                />
-                                                                                                <button disabled={loading} onClick={() => handleSaveTracking(shippingItem?.id)}>
-                                                                                                    {idItemResi === shippingItem?.id && loading
-                                                                                                        ? 'Loading'
-                                                                                                        : shippingItem?.noResi
-                                                                                                            ? 'Update'
-                                                                                                            : 'Simpan'}
-                                                                                                </button>
-                                                                                                <div className={styles.close} onClick={() => setOpenResi(false)}>x</div>
-                                                                                            </div>
-                                                                                        )}
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
-                                                                </td>
-                                                            </tr>
+                                                                </div>
+                                                            </div>
                                                         )}
                                                     </Fragment>
                                                 );
