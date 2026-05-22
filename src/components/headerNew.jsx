@@ -15,6 +15,7 @@ import Layangpenawaran from './layangpenawaran';
 import { signOut } from "next-auth/react"
 import { useEffect } from 'react';
 import { useSession } from "next-auth/react"
+import { getRandomQuote } from '@/utils/motivationalQuotes';
 
 export default function HeaderNew() {
 
@@ -40,6 +41,14 @@ export default function HeaderNew() {
     const [dataPenawaran, setDataPenawaran] = useState(null)
     const [layang, setLayang] = useState(false)
     const [showModal, setShowModal] = useState(true)
+    const [randomQuote, setRandomQuote] = useState('')
+
+    // Set random quote setiap kali modal ditampilkan atau page refresh
+    useEffect(() => {
+        if (showModal) {
+            setRandomQuote(getRandomQuote());
+        }
+    }, [showModal]);
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -111,7 +120,7 @@ export default function HeaderNew() {
                 </div>
             </div>
             {layangPenawaran && <Layangpenawaran dataPenawaran={dataPenawaran} setDataPenawaran={setDataPenawaran} />}
-            
+
             {/* Modal */}
             {showModal && (
                 <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
@@ -119,9 +128,9 @@ export default function HeaderNew() {
                         <div className={styles.modalAnimation}>
                             <BsHeartPulseFill className={styles.heartIcon} />
                         </div>
-                        <h2 className={styles.modalTitle}>Crafted with ❤️ for better business.</h2>
-                        <p className={styles.modalSubtitle}>Semangappppppppppppppppppp</p>
-                        <button 
+                        <h2 className={styles.modalTitle}>{randomQuote}</h2>
+                        <p className={styles.modalSubtitle}>Wellcome Home</p>
+                        <button
                             className={styles.modalButton}
                             onClick={() => setShowModal(false)}
                         >

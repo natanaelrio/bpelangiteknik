@@ -9,6 +9,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import { BsHeartPulseFill } from "react-icons/bs";
 import { HandleDeleteSalesPenawaran } from '@/service/handleSalesPenawaran';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { getRandomQuote } from '@/utils/motivationalQuotes';
 
 export default function SalesPenawarkanList({ userSales, session }) {
 
@@ -38,6 +39,14 @@ export default function SalesPenawarkanList({ userSales, session }) {
     const [invFilter, setInvFilter] = useState('all');
     const [searchId, setSearchId] = useState('');
     const [showModal, setShowModal] = useState(true);
+    const [randomQuote, setRandomQuote] = useState('');
+
+    // Set random quote setiap kali modal ditampilkan atau page refresh
+    useEffect(() => {
+        if (showModal) {
+            setRandomQuote(getRandomQuote());
+        }
+    }, [showModal]);
 
 
     // Pagination
@@ -309,8 +318,8 @@ export default function SalesPenawarkanList({ userSales, session }) {
                         <div className={styles.modalAnimation}>
                             <BsHeartPulseFill className={styles.heartIcon} />
                         </div>
-                        <h2 className={styles.modalTitle}>Crafted with ❤️ for better business.</h2>
-                        <p className={styles.modalSubtitle}>Semangappppppppppppppppppp</p>
+                        <h2 className={styles.modalTitle}>{randomQuote}</h2>
+                        <p className={styles.modalSubtitle}>Wellcome Home</p>
                         <button 
                             className={styles.modalButton}
                             onClick={() => setShowModal(false)}
