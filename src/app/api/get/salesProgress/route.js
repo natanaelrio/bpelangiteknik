@@ -113,7 +113,7 @@ export async function GET(req) {
         const total = await prisma.salesProgress.count({ where });
 
         // Calculate totals
-        let totals = { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0 };
+        let totals = { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 };
         try {
             const allData = await prisma.salesProgress.findMany({
                 where,
@@ -122,7 +122,8 @@ export async function GET(req) {
                     totalDeal: true,
                     dpp: true,
                     ppn: true,
-                    totalPayment: true
+                    totalPayment: true,
+                    sisaPayment: true
                 }
             });
 
@@ -131,8 +132,9 @@ export async function GET(req) {
                 totalDeal: acc.totalDeal + (parseFloat(item.totalDeal) || 0),
                 dpp: acc.dpp + (parseFloat(item.dpp) || 0),
                 ppn: acc.ppn + (parseFloat(item.ppn) || 0),
-                totalPayment: acc.totalPayment + (parseFloat(item.totalPayment) || 0)
-            }), { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0 });
+                totalPayment: acc.totalPayment + (parseFloat(item.totalPayment) || 0),
+                sisaPayment: acc.sisaPayment + (parseFloat(item.sisaPayment) || 0)
+            }), { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 });
         } catch (e) {
             console.error('Error calculating totals:', e);
         }

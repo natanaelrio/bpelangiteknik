@@ -62,7 +62,7 @@ export default function SalesProgressReport({ session }) {
     const [showFilters, setShowFilters] = useState(false);
 
     // Totals from API
-    const [totals, setTotals] = useState({ totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0 });
+    const [totals, setTotals] = useState({ totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 });
 
     // Debounce search term
     useEffect(() => {
@@ -151,7 +151,7 @@ export default function SalesProgressReport({ session }) {
             if (result.isSuccess) {
                 setData(result.data || []);
                 setTotalCount(result.total || 0);
-                setTotals(result.totals || { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0 });
+                setTotals(result.totals || { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 });
             } else {
                 toast.error('Gagal memuat data');
             }
@@ -225,7 +225,6 @@ export default function SalesProgressReport({ session }) {
                 sisaPayment: ''
             }));
 
-            console.log(name === 'status' && value !== 'Invoice')
             return;
         }
 
@@ -331,6 +330,43 @@ export default function SalesProgressReport({ session }) {
         if (!formData.statusCatatan) {
             toast.error('Catatan Catatan wajib diisi');
             return;
+        }
+
+        // Validation for items - each item must have required fields
+        if (!formData.items || formData.items.length === 0) {
+            toast.error('Produk wajib diisi');
+            return;
+        }
+
+        // Check each item for required fields
+        for (let i = 0; i < formData.items.length; i++) {
+            const item = formData.items[i];
+            const itemNum = i + 1;
+
+            if (!item.brand) {
+                toast.error(`Produk ${itemNum}: Brand wajib dipilih`);
+                return;
+            }
+            if (!item.namaBarang) {
+                toast.error(`Produk ${itemNum}: Nama Barang wajib diisi`);
+                return;
+            }
+            if (!item.kategoriBarang) {
+                toast.error(`Produk ${itemNum}: Kategori wajib dipilih`);
+                return;
+            }
+            if (!item.qty || item.qty <= 0) {
+                toast.error(`Produk ${itemNum}: Qty wajib diisi dan minimal 1`);
+                return;
+            }
+            if (!item.hargaUnit || parseFloat(item.hargaUnit) <= 0) {
+                toast.error(`Produk ${itemNum}: Harga OCT (Rp) wajib diisi`);
+                return;
+            }
+            if (!item.hargaDeal || parseFloat(item.hargaDeal) <= 0) {
+                toast.error(`Produk ${itemNum}: Harga Deal (Rp) wajib diisi`);
+                return;
+            }
         }
 
         // Validation for Invoice status - payment fields are required
@@ -648,7 +684,7 @@ export default function SalesProgressReport({ session }) {
             {/* Totals Summary */}
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(5, 1fr)',
+                gridTemplateColumns: 'repeat(6, 1fr)',
                 gap: '12px',
                 marginBottom: '16px',
                 padding: '16px',
@@ -657,7 +693,7 @@ export default function SalesProgressReport({ session }) {
                 border: '1px solid #e9ecef'
             }}>
                 <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>Total Unit</div>
+                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>Total Unit ( Harga OCT )</div>
                     <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#212529' }}>{formatRupiah(totals.totalUnit)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
@@ -665,16 +701,21 @@ export default function SalesProgressReport({ session }) {
                     <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#c8302f' }}>{formatRupiah(totals.totalDeal)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>DPP</div>
+                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>DPP (totalDeal / 1.11
+                        )</div>
                     <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#212529' }}>{formatRupiah(totals.dpp)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>PPN</div>
+                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>PPN (DPP * 11%)</div>
                     <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#212529' }}>{formatRupiah(totals.ppn)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>Total Pembayaran</div>
                     <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#28a745' }}>{formatRupiah(totals.totalPayment)}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>Sisa Pembayaran</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#dc3545' }}>{formatRupiah(totals.sisaPayment)}</div>
                 </div>
             </div>
 
@@ -935,7 +976,7 @@ export default function SalesProgressReport({ session }) {
                                             <h3>Total Harga</h3>
                                             <div className={styles.formRow}>
                                                 <div className={styles.formGroup}>
-                                                    <label>Total Unit</label>
+                                                    <label>Total Unit ( Harga OCT )</label>
                                                     <input
                                                         type="text"
                                                         name="totalUnit"
@@ -1155,7 +1196,7 @@ export default function SalesProgressReport({ session }) {
 
                                                 <div className={styles.formRow}>
                                                     <div className={styles.formGroup}>
-                                                        <label>Harga Unit (Rp)</label>
+                                                        <label>Harga OCT (Rp)</label>
                                                         <input
                                                             type="text"
                                                             value={item.hargaUnit ? formatRupiah(item.hargaUnit) : ''}
@@ -1368,7 +1409,11 @@ export default function SalesProgressReport({ session }) {
 
                                                     <div className={styles.formRow}>
                                                         <div className={styles.formGroup}>
-                                                            <label>Kode Barang</label>
+                                                            <label>Kode Barang (<Link style={{
+                                                            textDecoration: 'underline',
+                                                        }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
+                                                            klik disini
+                                                        </Link>)</label>
                                                             <input
                                                                 type="text"
                                                                 value={item.kodeBarang || ''}
@@ -1403,7 +1448,7 @@ export default function SalesProgressReport({ session }) {
 
                                                     <div className={styles.formRow}>
                                                         <div className={styles.formGroup}>
-                                                            <label>Harga Unit (Rp)</label>
+                                                            <label>Harga OCT (Rp)</label>
                                                             <input
                                                                 type="text"
                                                                 value={item.hargaUnit ? formatRupiah(item.hargaUnit) : ''}
@@ -1485,7 +1530,7 @@ export default function SalesProgressReport({ session }) {
                                         <h3>Total Harga</h3>
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
-                                                <label>Total Unit</label>
+                                                <label>Total Unit ( Harga OCT )</label>
                                                 <input
                                                     type="text"
                                                     name="totalUnit"
@@ -2132,7 +2177,7 @@ export default function SalesProgressReport({ session }) {
                                     <h4>Harga & Total</h4>
                                     <div className={styles.sectionContent} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                                         <div>
-                                            <p><strong>Total Unit:</strong> Rp {detailData.totalUnit ? parseFloat(detailData.totalUnit).toLocaleString('id-ID') : '0'}</p>
+                                            <p><strong>Total Unit ( Harga OCT ):</strong> Rp {detailData.totalUnit ? parseFloat(detailData.totalUnit).toLocaleString('id-ID') : '0'}</p>
                                             <p><strong>Total Deal:</strong> <span style={{ color: '#c8302f', fontWeight: 'bold' }}>Rp {detailData.totalDeal ? parseFloat(detailData.totalDeal).toLocaleString('id-ID') : '0'}</span></p>
                                         </div>
                                         <div>
