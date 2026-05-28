@@ -65,6 +65,9 @@ export async function POST(req) {
         let calculatedPpn = calculatedDpp ? Math.round(calculatedDpp * 0.11) : (ppnInput ? parseFloat(ppnInput) : null);
 
         // Prepare update data, filtering out undefined values
+        // If status is NOT Invoice, clear payment-related fields
+        const isInvoice = status === 'Invoice';
+        
         const updateData = {
             salesName: salesName || undefined,
             nama,
@@ -76,15 +79,16 @@ export async function POST(req) {
             statusCatatan: statusCatatan || undefined,
             crosscheck: crosscheck !== undefined ? crosscheck : undefined,
             fakturPajak: fakturPajak || undefined,
-            nomorInvoice: nomorInvoice || undefined,
+            // Clear payment fields if status is not Invoice
+            nomorInvoice: isInvoice ? (nomorInvoice || undefined) : null,
             totalUnit: totalUnit ? parseFloat(totalUnit) : undefined,
             totalDeal: totalDeal ? parseFloat(totalDeal) : undefined,
-            // Payment fields
-            totalPayment: totalPayment ? parseFloat(totalPayment) : undefined,
-            sisaPayment: sisaPayment ? parseFloat(sisaPayment) : undefined,
-            paymentStatus: paymentStatus || undefined,
+            // Payment fields - clear if not Invoice
+            totalPayment: isInvoice ? (totalPayment ? parseFloat(totalPayment) : undefined) : null,
+            sisaPayment: isInvoice ? (sisaPayment ? parseFloat(sisaPayment) : undefined) : null,
+            paymentStatus: isInvoice ? (paymentStatus || undefined) : null,
             salesCompany: salesCompany || undefined,
-            RekeningName: RekeningName || undefined,
+            RekeningName: isInvoice ? (RekeningName || undefined) : null,
             // Only update DPP and PPN if totalDeal changed or if explicitly provided
             ...(totalDeal && { dpp: calculatedDpp, ppn: calculatedPpn })
         };

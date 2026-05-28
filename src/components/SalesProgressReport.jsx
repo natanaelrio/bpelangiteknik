@@ -212,6 +212,23 @@ export default function SalesProgressReport({ session }) {
     // Handle form input
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
+
+        // Reset payment fields when status changes to non-Invoice
+        if (name === 'status' && value !== 'Invoice') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value,
+                paymentStatus: '',
+                nomorInvoice: '',
+                RekeningName: '',
+                totalPayment: '',
+                sisaPayment: ''
+            }));
+
+            console.log(name === 'status' && value !== 'Invoice')
+            return;
+        }
+
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
@@ -345,6 +362,25 @@ export default function SalesProgressReport({ session }) {
         const calculatedDpp = totalDealNum > 0 ? Math.round(totalDealNum / 1.11) : 0;
         const calculatedPpn = Math.round(calculatedDpp * 0.11);
 
+        // Prepare data for API - clear payment fields if status is not Invoice
+        const apiData = {
+            ...formData,
+            dpp: calculatedDpp,
+            ppn: calculatedPpn,
+            actorName: userName,
+            actorRole: userRole,
+            oldValues: modalMode === 'edit' ? selectedRecord : undefined
+        };
+
+        // Clear payment fields when status is not Invoice
+        if (formData.status !== 'Invoice') {
+            apiData.paymentStatus = '';
+            apiData.nomorInvoice = '';
+            apiData.RekeningName = '';
+            apiData.totalPayment = '';
+            apiData.sisaPayment = '';
+        }
+
         try {
             const response = await fetch('/api/p/salesProgress', {
                 method: 'POST',
@@ -352,14 +388,7 @@ export default function SalesProgressReport({ session }) {
                     'Content-Type': 'application/json',
                     authorization: API_KEY
                 },
-                body: JSON.stringify({
-                    ...formData,
-                    dpp: calculatedDpp,
-                    ppn: calculatedPpn,
-                    actorName: userName,
-                    actorRole: userRole,
-                    oldValues: modalMode === 'edit' ? selectedRecord : undefined
-                })
+                body: JSON.stringify(apiData)
             });
 
             const result = await response.json();
@@ -412,7 +441,7 @@ export default function SalesProgressReport({ session }) {
             nomorHp: record.nomorHp || '',
             sumber: record.sumber || '',
             status: record.status || 'Prospect',
-            statusCatatan: record.statusCatatan || '',
+            statusCatatan: '', // Empty on edit
             crosscheck: record.crosscheck || false,
             fakturPajak: record.fakturPajak || '',
             nomorInvoice: record.nomorInvoice || '',
@@ -1263,9 +1292,9 @@ export default function SalesProgressReport({ session }) {
                                                     className={styles.input}
                                                 >
                                                     <option value="">Pilih Status</option>
-                                                    {/* <option value="Prospect">Prospect</option>
+                                                    <option value="Prospect">Prospect</option>
                                                     <option value="Follow Up">Follow Up</option>
-                                                    <option value="Penawaran">Penawaran</option> */}
+                                                    <option value="Penawaran">Penawaran</option>
                                                     <option value="Negosiasi">Negosiasi</option>
                                                     <option value="Invoice">Invoice</option>
                                                     <option value="Cancel">Cancel</option>
