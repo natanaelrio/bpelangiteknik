@@ -1263,9 +1263,9 @@ export default function SalesProgressReport({ session }) {
                                                     className={styles.input}
                                                 >
                                                     <option value="">Pilih Status</option>
-                                                    <option value="Prospect">Prospect</option>
+                                                    {/* <option value="Prospect">Prospect</option>
                                                     <option value="Follow Up">Follow Up</option>
-                                                    <option value="Penawaran">Penawaran</option>
+                                                    <option value="Penawaran">Penawaran</option> */}
                                                     <option value="Negosiasi">Negosiasi</option>
                                                     <option value="Invoice">Invoice</option>
                                                     <option value="Cancel">Cancel</option>
