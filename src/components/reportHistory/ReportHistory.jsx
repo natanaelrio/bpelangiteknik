@@ -15,14 +15,14 @@ export default function ReportHistory({ session }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(0);
-    
+
     // Filters
     const [salesNameFilter, setSalesNameFilter] = useState('');
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
     const [actionFilter, setActionFilter] = useState('');
     const [showFilters, setShowFilters] = useState(false);
-    
+
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 20;
@@ -245,9 +245,9 @@ export default function ReportHistory({ session }) {
                                             </div>
                                         </td>
                                         <td>
-                                            <span 
+                                            <span
                                                 className={styles.actionBadge}
-                                                style={{ 
+                                                style={{
                                                     backgroundColor: getActionColor(item.action) + '20',
                                                     color: getActionColor(item.action)
                                                 }}
@@ -275,375 +275,375 @@ export default function ReportHistory({ session }) {
                                         </td>
                                         <td>
                                             <div className={styles.detailCell}>
-                                             {(item.oldValue != null || item.newValue != null) && (
-                                                        item.oldValue?.startsWith('[') && item.newValue?.startsWith('[') ? (
-                                                            <div className={styles.logNote}>
-                                                                {(() => {
-                                                                    try {
-                                                                        const oldItems = JSON.parse(item.oldValue);
-                                                                        const newItems = JSON.parse(item.newValue);
+                                                {(item.oldValue != null || item.newValue != null) && (
+                                                    item.oldValue?.startsWith('[') && item.newValue?.startsWith('[') ? (
+                                                        <div className={styles.logNote}>
+                                                            {(() => {
+                                                                try {
+                                                                    const oldItems = JSON.parse(item.oldValue);
+                                                                    const newItems = JSON.parse(item.newValue);
 
-                                                                        const getOldItems = Array.isArray(oldItems)
-                                                                            ? oldItems
-                                                                            : (oldItems.items || []);
+                                                                    const getOldItems = Array.isArray(oldItems)
+                                                                        ? oldItems
+                                                                        : (oldItems.items || []);
 
-                                                                        const getNewItems = Array.isArray(newItems)
-                                                                            ? newItems
-                                                                            : (newItems.items || []);
+                                                                    const getNewItems = Array.isArray(newItems)
+                                                                        ? newItems
+                                                                        : (newItems.items || []);
 
-                                                                        const renderItemsList = (items, isNew) => (
-                                                                            <table
+                                                                    const renderItemsList = (items, isNew) => (
+                                                                        <table
+                                                                            style={{
+                                                                                width: '100%',
+                                                                                fontSize: '11px',
+                                                                                borderCollapse: 'collapse',
+                                                                                backgroundColor: isNew ? '#e8f5e9' : '#f5f5f5',
+                                                                                borderRadius: '4px',
+                                                                                overflow: 'hidden'
+                                                                            }}
+                                                                        >
+                                                                            <thead>
+                                                                                <tr
+                                                                                    style={{
+                                                                                        backgroundColor: isNew ? '#c8e6c9' : '#e0e0e0',
+                                                                                        textAlign: 'left'
+                                                                                    }}
+                                                                                >
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Brand
+                                                                                    </th>
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Nama
+                                                                                    </th>
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Kode
+                                                                                    </th>
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Kat
+                                                                                    </th>
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Qty
+                                                                                    </th>
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Harga Unit
+                                                                                    </th>
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Harga Deal
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+                                                                                {items.map((item, idx) => (
+                                                                                    <tr key={idx}>
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.brand || '-'}
+                                                                                        </td>
+
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.namaBarang || '-'}
+                                                                                        </td>
+
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.kodeBarang || '-'}
+                                                                                        </td>
+
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.kategoriBarang === 'sparepart' ? 'S' : 'U'}
+                                                                                        </td>
+
+                                                                                        <td
+                                                                                            style={{
+                                                                                                padding: '6px',
+                                                                                                border: '1px solid #ddd',
+                                                                                                textAlign: 'center'
+                                                                                            }}
+                                                                                        >
+                                                                                            {item.qty || 0}
+                                                                                        </td>
+
+                                                                                        <td
+                                                                                            style={{
+                                                                                                padding: '6px',
+                                                                                                border: '1px solid #ddd',
+                                                                                                textAlign: 'right'
+                                                                                            }}
+                                                                                        >
+                                                                                            {item.hargaUnit
+                                                                                                ? formatRupiah(item.hargaUnit)
+                                                                                                : '-'}
+                                                                                        </td>
+
+                                                                                        <td
+                                                                                            style={{
+                                                                                                padding: '6px',
+                                                                                                border: '1px solid #ddd',
+                                                                                                textAlign: 'right',
+                                                                                                fontWeight: 'bold'
+                                                                                            }}
+                                                                                        >
+                                                                                            {item.hargaDeal
+                                                                                                ? formatRupiah(item.hargaDeal)
+                                                                                                : '-'}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                ))}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    );
+
+                                                                    return (
+                                                                        <>
+                                                                            <div
                                                                                 style={{
-                                                                                    width: '100%',
-                                                                                    fontSize: '11px',
-                                                                                    borderCollapse: 'collapse',
-                                                                                    backgroundColor: isNew ? '#e8f5e9' : '#f5f5f5',
-                                                                                    borderRadius: '4px',
-                                                                                    overflow: 'hidden'
+                                                                                    marginBottom: '4px',
+                                                                                    marginTop: '8px'
                                                                                 }}
                                                                             >
-                                                                                <thead>
-                                                                                    <tr
-                                                                                        style={{
-                                                                                            backgroundColor: isNew ? '#c8e6c9' : '#e0e0e0',
-                                                                                            textAlign: 'left'
-                                                                                        }}
-                                                                                    >
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Brand
-                                                                                        </th>
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Nama
-                                                                                        </th>
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Kode
-                                                                                        </th>
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Kat
-                                                                                        </th>
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Qty
-                                                                                        </th>
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Harga Unit
-                                                                                        </th>
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Harga Deal
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                </thead>
+                                                                                <strong>Item Lama:</strong>
+                                                                            </div>
 
-                                                                                <tbody>
-                                                                                    {items.map((item, idx) => (
-                                                                                        <tr key={idx}>
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.brand || '-'}
-                                                                                            </td>
+                                                                            {renderItemsList(getOldItems, false)}
 
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.namaBarang || '-'}
-                                                                                            </td>
-
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.kodeBarang || '-'}
-                                                                                            </td>
-
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.kategoriBarang === 'sparepart' ? 'S' : 'U'}
-                                                                                            </td>
-
-                                                                                            <td
-                                                                                                style={{
-                                                                                                    padding: '6px',
-                                                                                                    border: '1px solid #ddd',
-                                                                                                    textAlign: 'center'
-                                                                                                }}
-                                                                                            >
-                                                                                                {item.qty || 0}
-                                                                                            </td>
-
-                                                                                            <td
-                                                                                                style={{
-                                                                                                    padding: '6px',
-                                                                                                    border: '1px solid #ddd',
-                                                                                                    textAlign: 'right'
-                                                                                                }}
-                                                                                            >
-                                                                                                {item.hargaUnit
-                                                                                                    ? formatRupiah(item.hargaUnit)
-                                                                                                    : '-'}
-                                                                                            </td>
-
-                                                                                            <td
-                                                                                                style={{
-                                                                                                    padding: '6px',
-                                                                                                    border: '1px solid #ddd',
-                                                                                                    textAlign: 'right',
-                                                                                                    fontWeight: 'bold'
-                                                                                                }}
-                                                                                            >
-                                                                                                {item.hargaDeal
-                                                                                                    ? formatRupiah(item.hargaDeal)
-                                                                                                    : '-'}
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    ))}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        );
-
-                                                                        return (
-                                                                            <>
-                                                                                <div
-                                                                                    style={{
-                                                                                        marginBottom: '4px',
-                                                                                        marginTop: '8px'
-                                                                                    }}
-                                                                                >
-                                                                                    <strong>Item Lama:</strong>
-                                                                                </div>
-
-                                                                                {renderItemsList(getOldItems, false)}
-
-                                                                                <div
-                                                                                    style={{
-                                                                                        marginBottom: '4px',
-                                                                                        marginTop: '8px'
-                                                                                    }}
-                                                                                >
-                                                                                    <strong>Item Baru:</strong>
-                                                                                </div>
-
-                                                                                {renderItemsList(getNewItems, true)}
-                                                                            </>
-                                                                        );
-                                                                    } catch (e) {
-                                                                        return (
-                                                                            <p className={styles.logChange}>
-                                                                                {item.oldValue != null
-                                                                                    ? (
-                                                                                        isNaN(parseFloat(item.oldValue))
-                                                                                            ? item.oldValue
-                                                                                            : formatRupiah(item.oldValue)
-                                                                                    )
-                                                                                    : '-'
-                                                                                }
-
-                                                                                {' → '}
-
-                                                                                {item.newValue != null
-                                                                                    ? (
-                                                                                        isNaN(parseFloat(item.newValue))
-                                                                                            ? item.newValue
-                                                                                            : formatRupiah(item.newValue)
-                                                                                    )
-                                                                                    : '-'
-                                                                                }
-                                                                            </p>
-                                                                        );
-                                                                    }
-                                                                })()}
-                                                            </div>
-                                                        ) : (
-                                                            <p className={styles.logChange}>
-                                                                {item.oldValue != null
-                                                                    ? (
-                                                                        isNaN(parseFloat(item.oldValue))
-                                                                            ? item.oldValue
-                                                                            : formatRupiah(item.oldValue)
-                                                                    )
-                                                                    : '-'
-                                                                }
-
-                                                                {' → '}
-
-                                                                {item.newValue != null
-                                                                    ? (
-                                                                        isNaN(parseFloat(item.newValue))
-                                                                            ? item.newValue
-                                                                            : formatRupiah(item.newValue)
-                                                                    )
-                                                                    : '-'
-                                                                }
-                                                            </p>
-                                                        )
-                                                    )}
-
-                                                    {item.note && (
-                                                        item.note.includes('→') && item.note.startsWith('[') ? (
-                                                            <div className={styles.logNote}>
-                                                                {(() => {
-                                                                    try {
-                                                                        const arrowIndex = item.note.indexOf('→');
-
-                                                                        const oldPart = item.note
-                                                                            .substring(0, arrowIndex)
-                                                                            .trim();
-
-                                                                        const newPart = item.note
-                                                                            .substring(arrowIndex + 1)
-                                                                            .trim();
-
-                                                                        const oldItems = JSON.parse(oldPart);
-                                                                        const newItems = JSON.parse(newPart);
-
-                                                                        const getItems = Array.isArray(oldItems)
-                                                                            ? oldItems
-                                                                            : (oldItems.items || []);
-
-                                                                        const getNewItems = Array.isArray(newItems)
-                                                                            ? newItems
-                                                                            : (newItems.items || []);
-
-                                                                        const renderItemsList = (items, isNew) => (
-                                                                            <table
+                                                                            <div
                                                                                 style={{
-                                                                                    width: '100%',
-                                                                                    fontSize: '11px',
-                                                                                    borderCollapse: 'collapse',
-                                                                                    backgroundColor: isNew ? '#e8f5e9' : '#f5f5f5',
-                                                                                    borderRadius: '4px',
-                                                                                    overflow: 'hidden'
+                                                                                    marginBottom: '4px',
+                                                                                    marginTop: '8px'
                                                                                 }}
                                                                             >
-                                                                                <thead>
-                                                                                    <tr
-                                                                                        style={{
-                                                                                            backgroundColor: isNew ? '#c8e6c9' : '#e0e0e0',
-                                                                                            textAlign: 'left'
-                                                                                        }}
-                                                                                    >
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Brand
-                                                                                        </th>
+                                                                                <strong>Item Baru:</strong>
+                                                                            </div>
 
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Nama
-                                                                                        </th>
+                                                                            {renderItemsList(getNewItems, true)}
+                                                                        </>
+                                                                    );
+                                                                } catch (e) {
+                                                                    return (
+                                                                        <p className={styles.logChange}>
+                                                                            {item.oldValue != null
+                                                                                ? (
+                                                                                    isNaN(parseFloat(item.oldValue))
+                                                                                        ? item.oldValue
+                                                                                        : formatRupiah(item.oldValue)
+                                                                                )
+                                                                                : '-'
+                                                                            }
 
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Kode
-                                                                                        </th>
+                                                                            {' → '}
 
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Kat
-                                                                                        </th>
+                                                                            {item.newValue != null
+                                                                                ? (
+                                                                                    isNaN(parseFloat(item.newValue))
+                                                                                        ? item.newValue
+                                                                                        : formatRupiah(item.newValue)
+                                                                                )
+                                                                                : '-'
+                                                                            }
+                                                                        </p>
+                                                                    );
+                                                                }
+                                                            })()}
+                                                        </div>
+                                                    ) : (
+                                                        <p className={styles.logChange}>
+                                                            {item.oldValue != null
+                                                                ? (
+                                                                    isNaN(parseFloat(item.oldValue))
+                                                                        ? item.oldValue
+                                                                        : formatRupiah(item.oldValue)
+                                                                )
+                                                                : '-'
+                                                            }
 
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Qty
-                                                                                        </th>
+                                                            {' → '}
 
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Harga Unit
-                                                                                        </th>
+                                                            {item.newValue != null
+                                                                ? (
+                                                                    isNaN(parseFloat(item.newValue))
+                                                                        ? item.newValue
+                                                                        : formatRupiah(item.newValue)
+                                                                )
+                                                                : '-'
+                                                            }
+                                                        </p>
+                                                    )
+                                                )}
 
-                                                                                        <th style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                            Harga Deal
-                                                                                        </th>
+                                                {item.note && (
+                                                    item.note.includes('→') && item.note.startsWith('[') ? (
+                                                        <div className={styles.logNote}>
+                                                            {(() => {
+                                                                try {
+                                                                    const arrowIndex = item.note.indexOf('→');
+
+                                                                    const oldPart = item.note
+                                                                        .substring(0, arrowIndex)
+                                                                        .trim();
+
+                                                                    const newPart = item.note
+                                                                        .substring(arrowIndex + 1)
+                                                                        .trim();
+
+                                                                    const oldItems = JSON.parse(oldPart);
+                                                                    const newItems = JSON.parse(newPart);
+
+                                                                    const getItems = Array.isArray(oldItems)
+                                                                        ? oldItems
+                                                                        : (oldItems.items || []);
+
+                                                                    const getNewItems = Array.isArray(newItems)
+                                                                        ? newItems
+                                                                        : (newItems.items || []);
+
+                                                                    const renderItemsList = (items, isNew) => (
+                                                                        <table
+                                                                            style={{
+                                                                                width: '100%',
+                                                                                fontSize: '11px',
+                                                                                borderCollapse: 'collapse',
+                                                                                backgroundColor: isNew ? '#e8f5e9' : '#f5f5f5',
+                                                                                borderRadius: '4px',
+                                                                                overflow: 'hidden'
+                                                                            }}
+                                                                        >
+                                                                            <thead>
+                                                                                <tr
+                                                                                    style={{
+                                                                                        backgroundColor: isNew ? '#c8e6c9' : '#e0e0e0',
+                                                                                        textAlign: 'left'
+                                                                                    }}
+                                                                                >
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Brand
+                                                                                    </th>
+
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Nama
+                                                                                    </th>
+
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Kode
+                                                                                    </th>
+
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Kat
+                                                                                    </th>
+
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Qty
+                                                                                    </th>
+
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Harga Unit
+                                                                                    </th>
+
+                                                                                    <th style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                        Harga Deal
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+                                                                                {items.map((item, idx) => (
+                                                                                    <tr key={idx}>
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.brand || '-'}
+                                                                                        </td>
+
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.namaBarang || '-'}
+                                                                                        </td>
+
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.kodeBarang || '-'}
+                                                                                        </td>
+
+                                                                                        <td style={{ padding: '6px', border: '1px solid #ddd' }}>
+                                                                                            {item.kategoriBarang === 'sparepart' ? 'S' : 'U'}
+                                                                                        </td>
+
+                                                                                        <td
+                                                                                            style={{
+                                                                                                padding: '6px',
+                                                                                                border: '1px solid #ddd',
+                                                                                                textAlign: 'center'
+                                                                                            }}
+                                                                                        >
+                                                                                            {item.qty || 0}
+                                                                                        </td>
+
+                                                                                        <td
+                                                                                            style={{
+                                                                                                padding: '6px',
+                                                                                                border: '1px solid #ddd',
+                                                                                                textAlign: 'right'
+                                                                                            }}
+                                                                                        >
+                                                                                            {item.hargaUnit
+                                                                                                ? formatRupiah(item.hargaUnit)
+                                                                                                : '-'}
+                                                                                        </td>
+
+                                                                                        <td
+                                                                                            style={{
+                                                                                                padding: '6px',
+                                                                                                border: '1px solid #ddd',
+                                                                                                textAlign: 'right',
+                                                                                                fontWeight: 'bold'
+                                                                                            }}
+                                                                                        >
+                                                                                            {item.hargaDeal
+                                                                                                ? formatRupiah(item.hargaDeal)
+                                                                                                : '-'}
+                                                                                        </td>
                                                                                     </tr>
-                                                                                </thead>
+                                                                                ))}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    );
 
-                                                                                <tbody>
-                                                                                    {items.map((item, idx) => (
-                                                                                        <tr key={idx}>
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.brand || '-'}
-                                                                                            </td>
+                                                                    return (
+                                                                        <>
+                                                                            <div
+                                                                                style={{
+                                                                                    marginBottom: '4px',
+                                                                                    marginTop: '8px'
+                                                                                }}
+                                                                            >
+                                                                                <strong>Item Lama:</strong>
+                                                                            </div>
 
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.namaBarang || '-'}
-                                                                                            </td>
+                                                                            {renderItemsList(getItems, false)}
 
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.kodeBarang || '-'}
-                                                                                            </td>
+                                                                            <div
+                                                                                style={{
+                                                                                    marginBottom: '4px',
+                                                                                    marginTop: '8px'
+                                                                                }}
+                                                                            >
+                                                                                <strong>Item Baru:</strong>
+                                                                            </div>
 
-                                                                                            <td style={{ padding: '6px', border: '1px solid #ddd' }}>
-                                                                                                {item.kategoriBarang === 'sparepart' ? 'S' : 'U'}
-                                                                                            </td>
+                                                                            {renderItemsList(getNewItems, true)}
+                                                                        </>
+                                                                    );
+                                                                } catch (e) {
+                                                                    console.error('Error parsing log note:', e);
 
-                                                                                            <td
-                                                                                                style={{
-                                                                                                    padding: '6px',
-                                                                                                    border: '1px solid #ddd',
-                                                                                                    textAlign: 'center'
-                                                                                                }}
-                                                                                            >
-                                                                                                {item.qty || 0}
-                                                                                            </td>
-
-                                                                                            <td
-                                                                                                style={{
-                                                                                                    padding: '6px',
-                                                                                                    border: '1px solid #ddd',
-                                                                                                    textAlign: 'right'
-                                                                                                }}
-                                                                                            >
-                                                                                                {item.hargaUnit
-                                                                                                    ? formatRupiah(item.hargaUnit)
-                                                                                                    : '-'}
-                                                                                            </td>
-
-                                                                                            <td
-                                                                                                style={{
-                                                                                                    padding: '6px',
-                                                                                                    border: '1px solid #ddd',
-                                                                                                    textAlign: 'right',
-                                                                                                    fontWeight: 'bold'
-                                                                                                }}
-                                                                                            >
-                                                                                                {item.hargaDeal
-                                                                                                    ? formatRupiah(item.hargaDeal)
-                                                                                                    : '-'}
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    ))}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        );
-
-                                                                        return (
-                                                                            <>
-                                                                                <div
-                                                                                    style={{
-                                                                                        marginBottom: '4px',
-                                                                                        marginTop: '8px'
-                                                                                    }}
-                                                                                >
-                                                                                    <strong>Item Lama:</strong>
-                                                                                </div>
-
-                                                                                {renderItemsList(getItems, false)}
-
-                                                                                <div
-                                                                                    style={{
-                                                                                        marginBottom: '4px',
-                                                                                        marginTop: '8px'
-                                                                                    }}
-                                                                                >
-                                                                                    <strong>Item Baru:</strong>
-                                                                                </div>
-
-                                                                                {renderItemsList(getNewItems, true)}
-                                                                            </>
-                                                                        );
-                                                                    } catch (e) {
-                                                                        console.error('Error parsing log note:', e);
-
-                                                                        return (
-                                                                            <p style={{ whiteSpace: 'pre-wrap' }}>
-                                                                                {item.note}
-                                                                            </p>
-                                                                        );
-                                                                    }
-                                                                })()}
-                                                            </div>
-                                                        ) : (
-                                                            <p className={styles.logNote}>
-                                                                {item.note}
-                                                            </p>
-                                                        )
-                                                    )}
+                                                                    return (
+                                                                        <p style={{ whiteSpace: 'pre-wrap' }}>
+                                                                            {item.note}
+                                                                        </p>
+                                                                    );
+                                                                }
+                                                            })()}
+                                                        </div>
+                                                    ) : (
+                                                        <p className={styles.logNote}>
+                                                            {item.note}
+                                                        </p>
+                                                    )
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
