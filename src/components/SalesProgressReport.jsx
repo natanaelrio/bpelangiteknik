@@ -10,6 +10,7 @@ import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { motivationalQuotes } from '../utils/motivationalQuotes';
 import Link from 'next/link';
 import { signOut } from "next-auth/react"
+import { SendGroupReportSales } from '../service/handleCRM';
 
 // List of Indonesian provinces
 const PROVINCES = [
@@ -431,6 +432,14 @@ export default function SalesProgressReport({ session }) {
             const result = await response.json();
             if (result.isSuccess) {
                 toast.success(result.message);
+                
+                // Send to WhatsApp after successful save
+                try {
+                    await sendToWhatsApp();
+                } catch (waError) {
+                    console.error('WhatsApp send error:', waError);
+                }
+                
                 setShowModal(false);
                 resetForm();
                 fetchData();
@@ -441,6 +450,85 @@ export default function SalesProgressReport({ session }) {
             toast.error('Error: ' + error.message);
         } finally {
             setIsSubmitting(false);
+        }
+    };
+
+    // Build WhatsApp message from form data
+    const buildWhatsAppMessage = () => {
+        const itemsList = formData.items?.map((item, idx) => {
+            return `${idx + 1}. ${item.brand || '-'} - ${item.namaBarang || '-'} (${item.kategoriBarang === 'sparepart' ? 'Sparepart' : 'Unit'})
+   Qty: ${item.qty || 0} | Harga OCT: Rp ${parseFloat(item.hargaUnit || 0).toLocaleString('id-ID')} | Harga Deal: Rp ${parseFloat(item.hargaDeal || 0).toLocaleString('id-ID')}`;
+        }).join('\n\n');
+
+        const totalUnit = formData.items?.reduce((sum, item) => sum + (parseFloat(item.subtotalUnit) || 0), 0) || 0;
+        const totalDeal = formData.items?.reduce((sum, item) => sum + (parseFloat(item.subtotalDeal) || 0), 0) || 0;
+        const dpp = Math.round(totalDeal / 1.11);
+        const ppn = Math.round(dpp * 0.11);
+
+        const message = `📊 *LAPORAN SALES PROGRESS*
+
+🏢 *Perusahaan:* ${perusahaan}
+👤 *Sales:* ${userName}
+📅 *Tanggal:* ${moment().format('DD MMMM YYYY HH:mm')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 *DATA CUSTOMER*
+• *Nama:* ${formData.nama || '-'}
+• *No. HP:* ${formData.nomorHp || '-'}
+• *Kota:* ${formData.alamatKota || '-'}
+• *Alamat:* ${formData.alamatLengkap || '-'}
+• *Sumber:* ${formData.sumber || '-'}
+
+📌 *STATUS*
+• *Status:* ${formData.status || '-'}
+• *Catatan:* ${formData.statusCatatan || '-'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛒 *DAFTAR PRODUK*
+${itemsList}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 *TOTAL*
+• Total Unit (OCT): Rp ${totalUnit.toLocaleString('id-ID')}
+• Total Deal: Rp ${totalDeal.toLocaleString('id-ID')}
+• DPP: Rp ${dpp.toLocaleString('id-ID')}
+• PPN: Rp ${ppn.toLocaleString('id-ID')}
+
+${formData.status === 'Invoice' ? `💳 *PEMBAYARAN*
+• Status: ${formData.paymentStatus || '-'}
+• Invoice: ${formData.nomorInvoice || '-'}
+• Rekening: ${formData.RekeningName || '-'}
+• Total Bayar: Rp ${parseFloat(formData.totalPayment || 0).toLocaleString('id-ID')}
+• Sisa Bayar: Rp ${parseFloat(formData.sisaPayment || 0).toLocaleString('id-ID')}` : ''}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+_Dikirim dari Sales Progress Report_`;
+
+        return message;
+    };
+
+    // Send to WhatsApp group
+    const sendToWhatsApp = async () => {
+        try {
+            const spv = userRole === 'SPV';
+            const payloadSalesPenawaran = {
+                groupId: spv ? '120363406595440008@g.us' : '120363411343925143@g.us',
+                message: buildWhatsAppMessage()
+            };
+
+            const result = await SendGroupReportSales(payloadSalesPenawaran);
+            
+            if (result?.success) {
+                toast.success('Laporan berhasil dikirim ke WhatsApp!');
+            } else {
+                toast.error('Gagal mengirim ke WhatsApp');
+            }
+        } catch (error) {
+            console.error('WhatsApp send error:', error);
+            toast.error('Error mengirim ke WhatsApp');
         }
     };
 

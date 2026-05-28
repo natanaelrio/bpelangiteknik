@@ -320,59 +320,54 @@ ${noteLines || '-'}
 
         try {
             // Kirim data ke API
-            const resultPenawaranDataBase = await CreateSalesPenawaran({
-                id: payloadPenawaranDataBase.id,
-                customerName: payloadPenawaranDataBase.customerName,
-                customerPhone: payloadPenawaranDataBase.customerPhone,
-                PICcustomerName: payloadPenawaranDataBase.PICcustomerName,
-                salesName: payloadPenawaranDataBase.sales.name,
-                salesPhone: payloadPenawaranDataBase.sales.phone,
-                selectedBank: payloadPenawaranDataBase.selectedBank,
-                notes: payloadPenawaranDataBase.notes,
-                includePPN: payloadPenawaranDataBase.includePPN,
-                totalHargaSatuan: payloadPenawaranDataBase.totals.totalHargaSatuan,
-                totalKeseluruhan: payloadPenawaranDataBase.totals.totalKeseluruhan,
-                totalQty: payloadPenawaranDataBase.totals.totalQty,
-                ppn: payloadPenawaranDataBase.totals.ppn,
-                grandTotal: payloadPenawaranDataBase.totals.grandTotal,
-                items: payloadPenawaranDataBase.items
-            });
+            // const resultPenawaranDataBase = await CreateSalesPenawaran({
+            //     id: payloadPenawaranDataBase.id,
+            //     customerName: payloadPenawaranDataBase.customerName,
+            //     customerPhone: payloadPenawaranDataBase.customerPhone,
+            //     PICcustomerName: payloadPenawaranDataBase.PICcustomerName,
+            //     salesName: payloadPenawaranDataBase.sales.name,
+            //     salesPhone: payloadPenawaranDataBase.sales.phone,
+            //     selectedBank: payloadPenawaranDataBase.selectedBank,
+            //     notes: payloadPenawaranDataBase.notes,
+            //     includePPN: payloadPenawaranDataBase.includePPN,
+            //     totalHargaSatuan: payloadPenawaranDataBase.totals.totalHargaSatuan,
+            //     totalKeseluruhan: payloadPenawaranDataBase.totals.totalKeseluruhan,
+            //     totalQty: payloadPenawaranDataBase.totals.totalQty,
+            //     ppn: payloadPenawaranDataBase.totals.ppn,
+            //     grandTotal: payloadPenawaranDataBase.totals.grandTotal,
+            //     items: payloadPenawaranDataBase.items
+            // });
 
-            console.log("✅ RESPONSE API PENAWARAN:", resultPenawaranDataBase);
+            // console.log("✅ RESPONSE API PENAWARAN:", resultPenawaranDataBase);
 
-            const resultSalesPenawaran = await CreateSheetGoogleSalesPenawaran({
-                id: payloadPenawaranSheet.id,
-                customerName: payloadPenawaranSheet.customerName,
-                customerPhone: payloadPenawaranSheet.customerPhone,
-                PICcustomerName: payloadPenawaranSheet.PICcustomerName,
-                salesName: payloadPenawaranSheet.sales.name,
-                salesPhone: payloadPenawaranSheet.sales.phone,
-                selectedBank: payloadPenawaranSheet.selectedBank,
-                notes: payloadPenawaranSheet.notes,
-                includePPN: payloadPenawaranSheet.includePPN,
-                totalHargaSatuan: payloadPenawaranSheet.totals.totalHargaSatuan,
-                totalKeseluruhan: payloadPenawaranSheet.totals.totalKeseluruhan,
-                totalQty: payloadPenawaranSheet.totals.totalQty,
-                ppn: payloadPenawaranSheet.totals.ppn,
-                grandTotal: payloadPenawaranSheet.totals.grandTotal,
-                items: payloadPenawaranSheet.items
-            });
+            // const resultSalesPenawaran = await CreateSheetGoogleSalesPenawaran({
+            //     id: payloadPenawaranSheet.id,
+            //     customerName: payloadPenawaranSheet.customerName,
+            //     customerPhone: payloadPenawaranSheet.customerPhone,
+            //     PICcustomerName: payloadPenawaranSheet.PICcustomerName,
+            //     salesName: payloadPenawaranSheet.sales.name,
+            //     salesPhone: payloadPenawaranSheet.sales.phone,
+            //     selectedBank: payloadPenawaranSheet.selectedBank,
+            //     notes: payloadPenawaranSheet.notes,
+            //     includePPN: payloadPenawaranSheet.includePPN,
+            //     totalHargaSatuan: payloadPenawaranSheet.totals.totalHargaSatuan,
+            //     totalKeseluruhan: payloadPenawaranSheet.totals.totalKeseluruhan,
+            //     totalQty: payloadPenawaranSheet.totals.totalQty,
+            //     ppn: payloadPenawaranSheet.totals.ppn,
+            //     grandTotal: payloadPenawaranSheet.totals.grandTotal,
+            //     items: payloadPenawaranSheet.items
+            // });
 
-            console.log("✅ RESPONSE API PENAWARAN:", resultSalesPenawaran);
-            // if (!resultPenawaranDataBase.success) {
-            //     toast.error("Gagal membuat penawaran: " + resultPenawaranDataBase.message);
+            // console.log("✅ RESPONSE API PENAWARAN:", resultSalesPenawaran);
+
+            // if (!resultSalesPenawaran.success) {
+            //     toast.error("Gagal membuat penawaran: " + resultSalesPenawaran.message);
             //     setIsLoading(false);
-            //     throw new Error(resultPenawaranDataBase.message);
+            //     throw new Error(resultSalesPenawaran.message);
             // }
 
-            if (!resultSalesPenawaran.success) {
-                toast.error("Gagal membuat penawaran: " + resultSalesPenawaran.message);
-                setIsLoading(false);
-                throw new Error(resultSalesPenawaran.message);
-            }
-
-            const resultReportPenawaran = await SendGroupReportPenawaran(payloadReportSuratPenawaran);
-            console.log('✅ RESPONSE REPORT PENAWARAN:', resultReportPenawaran);
+            // const resultReportPenawaran = await SendGroupReportPenawaran(payloadReportSuratPenawaran);
+            // console.log('✅ RESPONSE REPORT PENAWARAN:', resultReportPenawaran);
 
             const qrCodeData = await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`);
             process.env.NODE_ENV === 'production' && sendGAEventL("GeneratePenawaranAdmin", {
