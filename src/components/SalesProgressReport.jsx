@@ -5,10 +5,11 @@ import toast from 'react-hot-toast';
 import moment from 'moment';
 import 'moment/locale/id';
 import styles from './SalesProgressReport.module.css';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload, FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload, FaSearch, FaChevronLeft, FaChevronRight, FaSignOutAlt } from 'react-icons/fa';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { motivationalQuotes } from '../utils/motivationalQuotes';
 import Link from 'next/link';
+import { signOut } from "next-auth/react"
 
 // List of Indonesian provinces
 const PROVINCES = [
@@ -590,6 +591,14 @@ export default function SalesProgressReport({ session }) {
                     }}
                 >
                     <FaPlus /> Tambah Data
+                </button>
+                <button
+                    className={styles.btnSignout}
+                    onClick={() => {
+                        signOut({ callbackUrl: '/' })
+                    }}
+                >
+                    <FaSignOutAlt /> Logout
                 </button>
             </div>
 
@@ -1410,10 +1419,10 @@ export default function SalesProgressReport({ session }) {
                                                     <div className={styles.formRow}>
                                                         <div className={styles.formGroup}>
                                                             <label>Kode Barang (<Link style={{
-                                                            textDecoration: 'underline',
-                                                        }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
-                                                            klik disini
-                                                        </Link>)</label>
+                                                                textDecoration: 'underline',
+                                                            }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
+                                                                klik disini
+                                                            </Link>)</label>
                                                             <input
                                                                 type="text"
                                                                 value={item.kodeBarang || ''}
