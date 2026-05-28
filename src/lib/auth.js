@@ -34,7 +34,7 @@ export const authOptions = {
                     { id: "6", email: "sales01@tsuzumijapan.com", password: "sales01tsuzumi", username: "DHITA", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
                     { id: "7", email: "sales02@tsuzumijapan.com", password: "sales02tsuzumi", username: "AZZAH", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
                     { id: "5", email: "rio@pelangiteknik.com", password: "rio12345", username: "rio", role: "SPV", perusahaan: "PT Pelangi Teknik Indonesia" },
-                    { id: "8", email: "it@pelangiteknik.com", password: "itpelangiteknik", username: "staffIT", role: "IT", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "8", email: "it@pelangiteknik.com", password: "itpelangiteknik", username: "Fauzan", role: "STAFF IT", perusahaan: "PT Pelangi Teknik Indonesia" },
                 ];
 
                 // Cari pengguna berdasarkan email dan password
