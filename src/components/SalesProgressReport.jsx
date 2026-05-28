@@ -87,7 +87,7 @@ export default function SalesProgressReport({ session }) {
         alamatKota: '',
         nomorHp: '',
         sumber: '',
-        status: 'Prospect',
+        status: '',
         statusCatatan: '',
         crosscheck: false,
         fakturPajak: '',
@@ -299,6 +299,42 @@ export default function SalesProgressReport({ session }) {
             toast.error('Nama wajib diisi');
             return;
         }
+        if (!formData.nomorHp) {
+            toast.error('Nomor HP wajib diisi');
+            return;
+        }
+        if (!formData.sumber) {
+            toast.error('Sumber wajib diisi');
+            return;
+        }
+        if (!formData.status) {
+            toast.error('Status wajib diisi');
+            return;
+        }
+        if (!formData.statusCatatan) {
+            toast.error('Catatan Catatan wajib diisi');
+            return;
+        }
+
+        // Validation for Invoice status - payment fields are required
+        if (formData.status === 'Invoice') {
+            if (!formData.paymentStatus) {
+                toast.error('Status Pembayaran wajib diisi');
+                return;
+            }
+            if (!formData.nomorInvoice) {
+                toast.error('Nomor Invoice wajib diisi');
+                return;
+            }
+            if (!formData.RekeningName) {
+                toast.error('Rekening wajib diisi');
+                return;
+            }
+            if (!formData.totalPayment || parseFloat(formData.totalPayment) <= 0) {
+                toast.error('Total Pembayaran wajib diisi');
+                return;
+            }
+        }
 
         setIsSubmitting(true);
 
@@ -419,7 +455,7 @@ export default function SalesProgressReport({ session }) {
             alamatKota: '',
             nomorHp: '',
             sumber: '',
-            status: 'Prospect',
+            status: '',
             statusCatatan: '',
             crosscheck: false,
             fakturPajak: '',
@@ -581,10 +617,10 @@ export default function SalesProgressReport({ session }) {
             )}
 
             {/* Totals Summary */}
-            <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(5, 1fr)', 
-                gap: '12px', 
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(5, 1fr)',
+                gap: '12px',
                 marginBottom: '16px',
                 padding: '16px',
                 backgroundColor: '#f8f9fa',
@@ -639,15 +675,15 @@ export default function SalesProgressReport({ session }) {
                                                 className={styles.statusBadge}
                                                 style={{
                                                     marginLeft: '4px',
-                                                    backgroundColor: item.paymentStatus === 'LUNAS' ? '#28a745' : 
-                                                        item.paymentStatus === 'DP' ? '#f59e0b' : 
-                                                        item.paymentStatus === 'CICIL' ? '#8b5cf6' : '#6b7280'
+                                                    backgroundColor: item.paymentStatus === 'LUNAS' ? '#28a745' :
+                                                        item.paymentStatus === 'DP' ? '#f59e0b' :
+                                                            item.paymentStatus === 'CICIL' ? '#8b5cf6' : '#6b7280'
                                                 }}
                                             >
-                                                {item.paymentStatus === 'BELUM_BAYAR' ? 'Belum Bayar' : 
-                                                 item.paymentStatus === 'DP' ? 'DP' : 
-                                                 item.paymentStatus === 'CICIL' ? 'Cicilan' : 
-                                                 item.paymentStatus === 'LUNAS' ? 'Lunas' : item.paymentStatus}
+                                                {item.paymentStatus === 'BELUM_BAYAR' ? 'Belum Bayar' :
+                                                    item.paymentStatus === 'DP' ? 'DP' :
+                                                        item.paymentStatus === 'CICIL' ? 'Cicilan' :
+                                                            item.paymentStatus === 'LUNAS' ? 'Lunas' : item.paymentStatus}
                                             </span>
                                         )}
                                     </div>
@@ -771,7 +807,7 @@ export default function SalesProgressReport({ session }) {
                                                 />
                                             </div>
                                             <div className={styles.formGroup}>
-                                                <label>Nomor HP</label>
+                                                <label>Nomor HP *</label>
                                                 <input
                                                     type="text"
                                                     name="nomorHp"
@@ -813,24 +849,25 @@ export default function SalesProgressReport({ session }) {
 
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
-                                                <label>Status</label>
+                                                <label>Status *</label>
                                                 <select
                                                     name="status"
                                                     value={formData.status}
                                                     onChange={handleInputChange}
                                                     className={styles.input}
                                                 >
+                                                    <option value="">Pilih Status</option>
                                                     <option value="Prospect">Prospect</option>
                                                     <option value="Follow Up">Follow Up</option>
                                                     <option value="Penawaran">Penawaran</option>
-                                                    <option value="Negosiasi">Negosiasi</option>
-                                                    <option value="Invoice">Invoice</option>
+                                                    {/* <option value="Negosiasi">Negosiasi</option>
+                                                    <option value="Invoice">Invoice</option> */}
                                                     <option value="Cancel">Cancel</option>
                                                     {/* <option value="Selasai">Selesai</option> */}
                                                 </select>
                                             </div>
                                             <div className={styles.formGroup}>
-                                                <label>Sumber</label>
+                                                <label>Sumber *</label>
                                                 <select
                                                     name="sumber"
                                                     value={formData.sumber}
@@ -852,7 +889,7 @@ export default function SalesProgressReport({ session }) {
 
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
-                                                <label>Catatan Status</label>
+                                                <label>Catatan Status *</label>
                                                 <textarea
                                                     name="statusCatatan"
                                                     value={formData.statusCatatan}
@@ -1080,7 +1117,7 @@ export default function SalesProgressReport({ session }) {
                                                         <label>Qty</label>
                                                         <input
                                                             type="number"
-                                                            value={item.qty || 1}
+                                                            value={item.qty}
                                                             onChange={(e) => handleItemChange(index, 'qty', parseInt(e.target.value))}
                                                             className={styles.input}
                                                         />
@@ -1225,6 +1262,7 @@ export default function SalesProgressReport({ session }) {
                                                     onChange={handleInputChange}
                                                     className={styles.input}
                                                 >
+                                                    <option value="">Pilih Status</option>
                                                     <option value="Prospect">Prospect</option>
                                                     <option value="Follow Up">Follow Up</option>
                                                     <option value="Penawaran">Penawaran</option>
