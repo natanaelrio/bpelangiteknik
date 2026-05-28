@@ -417,3 +417,176 @@ model salesPenawaranItem {
 
   @@index([salesPenawaranId])
 }
+
+// model ListProductMaster {
+//   id            String   @id @default(uuid())
+
+//   brand         String   // TSUZUMI
+//   category      String   // BIG SERIES
+//   productSeries String   // DIESEL OPEN GENERATOR
+//   productName   String   // TD/TF 20 KVA
+
+//   brandCode     String   // TS
+//   categoryCode  String   // 01
+//   seriesCode    String   // 01
+//   sequence      Int      // 001
+
+//   sku           String   @unique // TS-0101001
+
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+// }
+
+model SalesProgress {
+  id String @id @default(uuid())
+
+  // =========================
+  // PIC SALES
+  // =========================
+  salesName    String?
+  salesCompany String?
+
+  // =========================
+  // CUSTOMER
+  // =========================
+  nama          String
+  alamatLengkap String? @db.Text
+  alamatKota    String?
+  nomorHp       String?
+
+  // =========================
+  // SOURCE & STATUS
+  // =========================
+  sumber        String?
+  status        String? // Prospect, Follow Up, Penawaran, Invoice, Deal, Cancel
+  statusCatatan String? @db.Text
+
+  // =========================
+  // INVOICE
+  // =========================
+  nomorInvoice String? @unique
+
+  // =========================
+  // VALIDASI
+  // =========================
+  crosscheck Boolean @default(false)
+
+  // =========================
+  // PAJAK
+  // =========================
+  fakturPajak String?
+
+  // =========================
+  // TOTAL
+  // =========================
+  totalUnit Decimal? @db.Decimal(18, 2)
+  totalDeal Decimal? @db.Decimal(18, 2)
+
+  dpp Decimal? @db.Decimal(18, 2)
+  ppn Decimal? @db.Decimal(18, 2)
+
+  // =========================
+  // PAYMENT SUMMARY
+  // =========================
+  totalPayment Decimal? @db.Decimal(18, 2)
+  sisaPayment  Decimal? @db.Decimal(18, 2)
+
+  paymentStatus String?
+  // BELUM_BAYAR
+  // DP
+  // CICIL
+  // LUNAS
+
+  // =========================
+  // BANK
+  // =========================
+  RekeningName String?
+  // PT PELANGI TEKNIK INDONESIA
+  // PT TSUZUMI JAPAN TECHNOLOGY
+  // Rekening Fenti Marlina
+  // Rekening Tommy Admadiredja
+
+  // =========================
+  // NOTES
+  // =========================
+  remarks      String? @db.Text
+  remarksPajak String? @db.Text
+
+  // =========================
+  // RELATIONS
+  // =========================
+  items SalesProgressItem[]
+  logs  SalesLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SalesProgressItem {
+  id String @id @default(uuid())
+
+  salesProgressId String
+  salesProgress   SalesProgress @relation(fields: [salesProgressId], references: [id], onDelete: Cascade)
+  // =========================
+  // PRODUK
+  // =========================
+  brand           String?
+  namaBarang      String?
+  kodeBarang      String?
+  kategoriBarang  String?
+
+  qty Int @default(1)
+
+  // =========================
+  // HARGA LIST
+  // =========================
+  hargaUnit    Decimal? @db.Decimal(18, 2)
+  subtotalUnit Decimal? @db.Decimal(18, 2)
+
+  // =========================
+  // HARGA DEAL
+  // =========================
+  hargaDeal    Decimal? @db.Decimal(18, 2)
+  subtotalDeal Decimal? @db.Decimal(18, 2)
+
+  // =========================
+  // OPTIONAL
+  // =========================
+  note String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SalesLog {
+  id String @id @default(uuid())
+
+  salesProgressId String
+  salesProgress   SalesProgress @relation(fields: [salesProgressId], references: [id], onDelete: Cascade)
+
+  // siapa yang ubah
+  actorName String?
+  actorRole String? // SALES | ACCOUNTING | ADMIN
+
+  // aksi
+  action String
+  // CREATE
+  // UPDATE_STATUS
+  // UPDATE_ITEM
+  // ADD_ITEM
+  // REMOVE_ITEM
+  // UPDATE_PRICE
+  // CROSSCHECK
+  // CREATE_INVOICE
+  // APPROVE_PAYMENT
+  // CANCEL
+
+  fieldName String?
+
+  oldValue String? @db.Text
+  newValue String? @db.Text
+
+  note String? @db.Text
+
+  createdAt DateTime @default(now())
+}

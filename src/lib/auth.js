@@ -3,7 +3,12 @@ import Credentials from "next-auth/providers/credentials"
 
 export const authOptions = {
     session: {
-        strategy: "jwt"
+        strategy: "jwt",
+        maxAge: 3600, // 1 jam dalam detik
+        updateAge: 300, // Update setiap 5 menit (untuk refresh)
+    },
+    jwt: {
+        maxAge: 3600, // 1 jam dalam detik
     },
     providers: [
         Credentials({
@@ -22,13 +27,14 @@ export const authOptions = {
                 if (!credentials?.email || !credentials.password) return null
 
                 const users = [
-                    { id: "1", email: "sales01@pelangiteknik.com", password: "sales01pelangi", username: "sales01" },
-                    { id: "2", email: "sales02@pelangiteknik.com", password: "sales02pelangi", username: "sales02" },
-                    { id: "3", email: "sales03@pelangiteknik.com", password: "sales03pelangi", username: "sales03" },
-                    { id: "4", email: "sales04@pelangiteknik.com", password: "sales04pelangi", username: "sales04" },
-                    { id: "5", email: "rio@pelangiteknik.com", password: "rio12345", username: "rio" },
-                    { id: "6", email: "sales01@tsuzumijapan.com", password: "sales01tsuzumi", username: "sales05" },
-                    { id: "7", email: "it@pelangiteknik.com", password: "itpelangiteknik", username: "sales05" },
+                    { id: "1", email: "sales01@pelangiteknik.com", password: "sales01pelangi", username: "ALMA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "2", email: "sales02@pelangiteknik.com", password: "sales02pelangi", username: "SIFA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "3", email: "sales03@pelangiteknik.com", password: "sales03pelangi", username: "INA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "4", email: "sales04@pelangiteknik.com", password: "sales04pelangi", username: "-", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "6", email: "sales01@tsuzumijapan.com", password: "sales01tsuzumi", username: "DHITA", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
+                    { id: "7", email: "sales02@tsuzumijapan.com", password: "sales02tsuzumi", username: "AZZAH", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
+                    { id: "5", email: "rio@pelangiteknik.com", password: "rio12345", username: "rio", role: "SPV", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "8", email: "it@pelangiteknik.com", password: "itpelangiteknik", username: "it01", role: "IT", perusahaan: "PT Pelangi Teknik Indonesia" },
                 ];
 
                 // Cari pengguna berdasarkan email dan password
@@ -45,6 +51,8 @@ export const authOptions = {
                     id: user.id,
                     email: user.email,
                     username: user.username,
+                    role: user.role,
+                    perusahaan: user.perusahaan
                 };
             }
         }
@@ -52,7 +60,7 @@ export const authOptions = {
     ], callbacks: {
         jwt({ token, user }) {
             if (!user) return token
-            return { ...token, id: user.id, username: user.username }
+            return { ...token, id: user.id, username: user.username, role: user.role, perusahaan: user.perusahaan }
         },
         session({ session, token }) {
             return {
@@ -60,6 +68,8 @@ export const authOptions = {
                 id: token.id,
                 email: token.email,
                 username: token.username,
+                role: token.role,
+                perusahaan: token.perusahaan
             }
         }
     },

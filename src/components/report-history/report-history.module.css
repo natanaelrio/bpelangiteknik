@@ -1,0 +1,311 @@
+.container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 24px;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.titleIcon {
+    color: #4f46e5;
+}
+
+.subtitle {
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Filter Bar */
+.filterBar {
+    background-color: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.filterRow {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filterSelectWrapper {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filterIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.filterSelect {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.filterInput {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.resetBtn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #fee2e2;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Stats */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.statCard {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.statLabel {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.statValue {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+/* Table */
+.tableCard {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead tr {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.evenRow {
+    background-color: #f9fafb;
+}
+
+/* Cells */
+.dateCell {
+    display: flex;
+    flex-direction: column;
+}
+
+.date {
+    font-size: 13px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.time {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.actionBadge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.salesCell {
+    display: flex;
+    flex-direction: column;
+}
+
+.salesName {
+    font-weight: 500;
+    color: #374151;
+}
+
+.salesRole {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.customerCell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.customerName {
+    font-weight: 500;
+    color: #374151;
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    width: fit-content;
+}
+
+.detailCell {
+    font-size: 13px;
+}
+
+.fieldName {
+    margin-bottom: 4px;
+    color: #6b7280;
+}
+
+.fieldValue {
+    color: #4f46e5;
+    font-weight: 500;
+}
+
+.changeBox {
+    background-color: #f9fafb;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.changeRow {
+    margin-bottom: 4px;
+}
+
+.changeLabel {
+    color: #6b7280;
+}
+
+.changeValue {
+    color: #374151;
+    word-break: break-word;
+}
+
+.jsonValue {
+    color: #7c3aed;
+}
+
+.jsonValueNew {
+    color: #059669;
+}
+
+.noteText {
+    color: #6b7280;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Loading & Empty */
+.loading, .empty {
+    padding: 40px;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* Pagination */
+.pagination {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e5e7eb;
+}
+
+.paginationInfo {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.paginationButtons {
+    display: flex;
+    gap: 8px;
+}
+
+.paginationBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    color: #374151;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.paginationBtn:disabled {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.paginationBtn:hover:not(:disabled) {
+    background-color: #f9fafb;
+}

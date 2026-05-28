@@ -1,7 +1,7 @@
 'use client'
 import styles from '@/components/headerNew.module.css'
 import Link from 'next/link'
-import { MdHome, MdLogout, MdInfo } from "react-icons/md";
+import { MdHome, MdLogout, MdInfo, MdLibraryBooks } from "react-icons/md";
 import { FaBorderAll } from "react-icons/fa";
 import { BsHeartPulseFill } from "react-icons/bs";
 import { MdOutlineLocalOffer } from "react-icons/md";
@@ -91,6 +91,10 @@ export default function HeaderNew() {
                 <button className={styles.searchP}>
                     <Link href={'/post'}><MdLibraryAdd size={16} /><span>+ Product</span></Link>
                 </button>
+                <button className={styles.searchP}>
+                    <Link href={'/report'}><MdLibraryBooks size={16} /><span>+ Report</span></Link>
+                </button>
+
                 {session?.user?.email == 'rio@pelangiteknik.com' &&
                     <button className={styles.searchP}><Link href={'/postartikel'}><MdLibraryAdd size={16} /><span>+Artikel</span></Link>
                     </button>

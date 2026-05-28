@@ -477,6 +477,64 @@ exports.Prisma.SalesPenawaranItemScalarFieldEnum = {
   salesPenawaranId: 'salesPenawaranId'
 };
 
+exports.Prisma.SalesProgressScalarFieldEnum = {
+  id: 'id',
+  salesName: 'salesName',
+  salesCompany: 'salesCompany',
+  nama: 'nama',
+  alamatLengkap: 'alamatLengkap',
+  alamatKota: 'alamatKota',
+  nomorHp: 'nomorHp',
+  sumber: 'sumber',
+  status: 'status',
+  statusCatatan: 'statusCatatan',
+  nomorInvoice: 'nomorInvoice',
+  crosscheck: 'crosscheck',
+  fakturPajak: 'fakturPajak',
+  totalUnit: 'totalUnit',
+  totalDeal: 'totalDeal',
+  dpp: 'dpp',
+  ppn: 'ppn',
+  totalPayment: 'totalPayment',
+  sisaPayment: 'sisaPayment',
+  paymentStatus: 'paymentStatus',
+  RekeningName: 'RekeningName',
+  remarks: 'remarks',
+  remarksPajak: 'remarksPajak',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SalesProgressItemScalarFieldEnum = {
+  id: 'id',
+  salesProgressId: 'salesProgressId',
+  brand: 'brand',
+  namaBarang: 'namaBarang',
+  kodeBarang: 'kodeBarang',
+  kategoriBarang: 'kategoriBarang',
+  qty: 'qty',
+  hargaUnit: 'hargaUnit',
+  subtotalUnit: 'subtotalUnit',
+  hargaDeal: 'hargaDeal',
+  subtotalDeal: 'subtotalDeal',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SalesLogScalarFieldEnum = {
+  id: 'id',
+  salesProgressId: 'salesProgressId',
+  actorName: 'actorName',
+  actorRole: 'actorRole',
+  action: 'action',
+  fieldName: 'fieldName',
+  oldValue: 'oldValue',
+  newValue: 'newValue',
+  note: 'note',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -526,7 +584,10 @@ exports.Prisma.ModelName = {
   categoryArtikel: 'categoryArtikel',
   sales: 'sales',
   salesPenawaran: 'salesPenawaran',
-  salesPenawaranItem: 'salesPenawaranItem'
+  salesPenawaranItem: 'salesPenawaranItem',
+  SalesProgress: 'SalesProgress',
+  SalesProgressItem: 'SalesProgressItem',
+  SalesLog: 'SalesLog'
 };
 
 /**

@@ -1,0 +1,15 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import ReportHistory from "@/components/report-history/reportHistory";
+
+export const dynamic = 'force-dynamic'
+
+
+export default async function Home() {
+    const session = await getServerSession(authOptions)
+
+    return (
+        <ReportHistory session={session} />
+    )
+}
+

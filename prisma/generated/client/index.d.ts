@@ -123,6 +123,21 @@ export type salesPenawaran = $Result.DefaultSelection<Prisma.$salesPenawaranPayl
  * 
  */
 export type salesPenawaranItem = $Result.DefaultSelection<Prisma.$salesPenawaranItemPayload>
+/**
+ * Model SalesProgress
+ * 
+ */
+export type SalesProgress = $Result.DefaultSelection<Prisma.$SalesProgressPayload>
+/**
+ * Model SalesProgressItem
+ * 
+ */
+export type SalesProgressItem = $Result.DefaultSelection<Prisma.$SalesProgressItemPayload>
+/**
+ * Model SalesLog
+ * 
+ */
+export type SalesLog = $Result.DefaultSelection<Prisma.$SalesLogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -466,6 +481,36 @@ export class PrismaClient<
     * ```
     */
   get salesPenawaranItem(): Prisma.salesPenawaranItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.salesProgress`: Exposes CRUD operations for the **SalesProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SalesProgresses
+    * const salesProgresses = await prisma.salesProgress.findMany()
+    * ```
+    */
+  get salesProgress(): Prisma.SalesProgressDelegate<ExtArgs>;
+
+  /**
+   * `prisma.salesProgressItem`: Exposes CRUD operations for the **SalesProgressItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SalesProgressItems
+    * const salesProgressItems = await prisma.salesProgressItem.findMany()
+    * ```
+    */
+  get salesProgressItem(): Prisma.SalesProgressItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.salesLog`: Exposes CRUD operations for the **SalesLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SalesLogs
+    * const salesLogs = await prisma.salesLog.findMany()
+    * ```
+    */
+  get salesLog(): Prisma.SalesLogDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -926,7 +971,10 @@ export namespace Prisma {
     categoryArtikel: 'categoryArtikel',
     sales: 'sales',
     salesPenawaran: 'salesPenawaran',
-    salesPenawaranItem: 'salesPenawaranItem'
+    salesPenawaranItem: 'salesPenawaranItem',
+    SalesProgress: 'SalesProgress',
+    SalesProgressItem: 'SalesProgressItem',
+    SalesLog: 'SalesLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -942,7 +990,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "categoryProductUtama" | "categoryProduct" | "listProduct" | "fMerek" | "specProduct" | "imageProductUtama" | "imageProduct" | "voucher" | "cart" | "cartItem" | "formPembelian" | "ongkosKirim" | "dataPesananItem" | "dataPesanan" | "suratPenawaran" | "postArtikel" | "tagArtikel" | "imageProductArtikel" | "categoryArtikel" | "sales" | "salesPenawaran" | "salesPenawaranItem"
+      modelProps: "categoryProductUtama" | "categoryProduct" | "listProduct" | "fMerek" | "specProduct" | "imageProductUtama" | "imageProduct" | "voucher" | "cart" | "cartItem" | "formPembelian" | "ongkosKirim" | "dataPesananItem" | "dataPesanan" | "suratPenawaran" | "postArtikel" | "tagArtikel" | "imageProductArtikel" | "categoryArtikel" | "sales" | "salesPenawaran" | "salesPenawaranItem" | "salesProgress" | "salesProgressItem" | "salesLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2486,6 +2534,216 @@ export namespace Prisma {
           }
         }
       }
+      SalesProgress: {
+        payload: Prisma.$SalesProgressPayload<ExtArgs>
+        fields: Prisma.SalesProgressFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SalesProgressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SalesProgressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>
+          }
+          findFirst: {
+            args: Prisma.SalesProgressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SalesProgressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>
+          }
+          findMany: {
+            args: Prisma.SalesProgressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>[]
+          }
+          create: {
+            args: Prisma.SalesProgressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>
+          }
+          createMany: {
+            args: Prisma.SalesProgressCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SalesProgressCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>[]
+          }
+          delete: {
+            args: Prisma.SalesProgressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>
+          }
+          update: {
+            args: Prisma.SalesProgressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>
+          }
+          deleteMany: {
+            args: Prisma.SalesProgressDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SalesProgressUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SalesProgressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressPayload>
+          }
+          aggregate: {
+            args: Prisma.SalesProgressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSalesProgress>
+          }
+          groupBy: {
+            args: Prisma.SalesProgressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SalesProgressGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SalesProgressCountArgs<ExtArgs>
+            result: $Utils.Optional<SalesProgressCountAggregateOutputType> | number
+          }
+        }
+      }
+      SalesProgressItem: {
+        payload: Prisma.$SalesProgressItemPayload<ExtArgs>
+        fields: Prisma.SalesProgressItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SalesProgressItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SalesProgressItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>
+          }
+          findFirst: {
+            args: Prisma.SalesProgressItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SalesProgressItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>
+          }
+          findMany: {
+            args: Prisma.SalesProgressItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>[]
+          }
+          create: {
+            args: Prisma.SalesProgressItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>
+          }
+          createMany: {
+            args: Prisma.SalesProgressItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SalesProgressItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>[]
+          }
+          delete: {
+            args: Prisma.SalesProgressItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>
+          }
+          update: {
+            args: Prisma.SalesProgressItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.SalesProgressItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SalesProgressItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SalesProgressItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesProgressItemPayload>
+          }
+          aggregate: {
+            args: Prisma.SalesProgressItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSalesProgressItem>
+          }
+          groupBy: {
+            args: Prisma.SalesProgressItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SalesProgressItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SalesProgressItemCountArgs<ExtArgs>
+            result: $Utils.Optional<SalesProgressItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      SalesLog: {
+        payload: Prisma.$SalesLogPayload<ExtArgs>
+        fields: Prisma.SalesLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SalesLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SalesLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>
+          }
+          findFirst: {
+            args: Prisma.SalesLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SalesLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>
+          }
+          findMany: {
+            args: Prisma.SalesLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>[]
+          }
+          create: {
+            args: Prisma.SalesLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>
+          }
+          createMany: {
+            args: Prisma.SalesLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SalesLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>[]
+          }
+          delete: {
+            args: Prisma.SalesLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>
+          }
+          update: {
+            args: Prisma.SalesLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.SalesLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SalesLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SalesLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesLogPayload>
+          }
+          aggregate: {
+            args: Prisma.SalesLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSalesLog>
+          }
+          groupBy: {
+            args: Prisma.SalesLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SalesLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SalesLogCountArgs<ExtArgs>
+            result: $Utils.Optional<SalesLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3074,6 +3332,46 @@ export namespace Prisma {
    */
   export type SalesPenawaranItemCountOutputTypeCountRelatedProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: listProductWhereInput
+  }
+
+
+  /**
+   * Count Type SalesProgressCountOutputType
+   */
+
+  export type SalesProgressCountOutputType = {
+    items: number
+    logs: number
+  }
+
+  export type SalesProgressCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | SalesProgressCountOutputTypeCountItemsArgs
+    logs?: boolean | SalesProgressCountOutputTypeCountLogsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SalesProgressCountOutputType without action
+   */
+  export type SalesProgressCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressCountOutputType
+     */
+    select?: SalesProgressCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SalesProgressCountOutputType without action
+   */
+  export type SalesProgressCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesProgressItemWhereInput
+  }
+
+  /**
+   * SalesProgressCountOutputType without action
+   */
+  export type SalesProgressCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesLogWhereInput
   }
 
 
@@ -27111,6 +27409,3356 @@ export namespace Prisma {
 
 
   /**
+   * Model SalesProgress
+   */
+
+  export type AggregateSalesProgress = {
+    _count: SalesProgressCountAggregateOutputType | null
+    _avg: SalesProgressAvgAggregateOutputType | null
+    _sum: SalesProgressSumAggregateOutputType | null
+    _min: SalesProgressMinAggregateOutputType | null
+    _max: SalesProgressMaxAggregateOutputType | null
+  }
+
+  export type SalesProgressAvgAggregateOutputType = {
+    totalUnit: Decimal | null
+    totalDeal: Decimal | null
+    dpp: Decimal | null
+    ppn: Decimal | null
+    totalPayment: Decimal | null
+    sisaPayment: Decimal | null
+  }
+
+  export type SalesProgressSumAggregateOutputType = {
+    totalUnit: Decimal | null
+    totalDeal: Decimal | null
+    dpp: Decimal | null
+    ppn: Decimal | null
+    totalPayment: Decimal | null
+    sisaPayment: Decimal | null
+  }
+
+  export type SalesProgressMinAggregateOutputType = {
+    id: string | null
+    salesName: string | null
+    salesCompany: string | null
+    nama: string | null
+    alamatLengkap: string | null
+    alamatKota: string | null
+    nomorHp: string | null
+    sumber: string | null
+    status: string | null
+    statusCatatan: string | null
+    nomorInvoice: string | null
+    crosscheck: boolean | null
+    fakturPajak: string | null
+    totalUnit: Decimal | null
+    totalDeal: Decimal | null
+    dpp: Decimal | null
+    ppn: Decimal | null
+    totalPayment: Decimal | null
+    sisaPayment: Decimal | null
+    paymentStatus: string | null
+    RekeningName: string | null
+    remarks: string | null
+    remarksPajak: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SalesProgressMaxAggregateOutputType = {
+    id: string | null
+    salesName: string | null
+    salesCompany: string | null
+    nama: string | null
+    alamatLengkap: string | null
+    alamatKota: string | null
+    nomorHp: string | null
+    sumber: string | null
+    status: string | null
+    statusCatatan: string | null
+    nomorInvoice: string | null
+    crosscheck: boolean | null
+    fakturPajak: string | null
+    totalUnit: Decimal | null
+    totalDeal: Decimal | null
+    dpp: Decimal | null
+    ppn: Decimal | null
+    totalPayment: Decimal | null
+    sisaPayment: Decimal | null
+    paymentStatus: string | null
+    RekeningName: string | null
+    remarks: string | null
+    remarksPajak: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SalesProgressCountAggregateOutputType = {
+    id: number
+    salesName: number
+    salesCompany: number
+    nama: number
+    alamatLengkap: number
+    alamatKota: number
+    nomorHp: number
+    sumber: number
+    status: number
+    statusCatatan: number
+    nomorInvoice: number
+    crosscheck: number
+    fakturPajak: number
+    totalUnit: number
+    totalDeal: number
+    dpp: number
+    ppn: number
+    totalPayment: number
+    sisaPayment: number
+    paymentStatus: number
+    RekeningName: number
+    remarks: number
+    remarksPajak: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SalesProgressAvgAggregateInputType = {
+    totalUnit?: true
+    totalDeal?: true
+    dpp?: true
+    ppn?: true
+    totalPayment?: true
+    sisaPayment?: true
+  }
+
+  export type SalesProgressSumAggregateInputType = {
+    totalUnit?: true
+    totalDeal?: true
+    dpp?: true
+    ppn?: true
+    totalPayment?: true
+    sisaPayment?: true
+  }
+
+  export type SalesProgressMinAggregateInputType = {
+    id?: true
+    salesName?: true
+    salesCompany?: true
+    nama?: true
+    alamatLengkap?: true
+    alamatKota?: true
+    nomorHp?: true
+    sumber?: true
+    status?: true
+    statusCatatan?: true
+    nomorInvoice?: true
+    crosscheck?: true
+    fakturPajak?: true
+    totalUnit?: true
+    totalDeal?: true
+    dpp?: true
+    ppn?: true
+    totalPayment?: true
+    sisaPayment?: true
+    paymentStatus?: true
+    RekeningName?: true
+    remarks?: true
+    remarksPajak?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SalesProgressMaxAggregateInputType = {
+    id?: true
+    salesName?: true
+    salesCompany?: true
+    nama?: true
+    alamatLengkap?: true
+    alamatKota?: true
+    nomorHp?: true
+    sumber?: true
+    status?: true
+    statusCatatan?: true
+    nomorInvoice?: true
+    crosscheck?: true
+    fakturPajak?: true
+    totalUnit?: true
+    totalDeal?: true
+    dpp?: true
+    ppn?: true
+    totalPayment?: true
+    sisaPayment?: true
+    paymentStatus?: true
+    RekeningName?: true
+    remarks?: true
+    remarksPajak?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SalesProgressCountAggregateInputType = {
+    id?: true
+    salesName?: true
+    salesCompany?: true
+    nama?: true
+    alamatLengkap?: true
+    alamatKota?: true
+    nomorHp?: true
+    sumber?: true
+    status?: true
+    statusCatatan?: true
+    nomorInvoice?: true
+    crosscheck?: true
+    fakturPajak?: true
+    totalUnit?: true
+    totalDeal?: true
+    dpp?: true
+    ppn?: true
+    totalPayment?: true
+    sisaPayment?: true
+    paymentStatus?: true
+    RekeningName?: true
+    remarks?: true
+    remarksPajak?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SalesProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesProgress to aggregate.
+     */
+    where?: SalesProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgresses to fetch.
+     */
+    orderBy?: SalesProgressOrderByWithRelationInput | SalesProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SalesProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SalesProgresses
+    **/
+    _count?: true | SalesProgressCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SalesProgressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SalesProgressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SalesProgressMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SalesProgressMaxAggregateInputType
+  }
+
+  export type GetSalesProgressAggregateType<T extends SalesProgressAggregateArgs> = {
+        [P in keyof T & keyof AggregateSalesProgress]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSalesProgress[P]>
+      : GetScalarType<T[P], AggregateSalesProgress[P]>
+  }
+
+
+
+
+  export type SalesProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesProgressWhereInput
+    orderBy?: SalesProgressOrderByWithAggregationInput | SalesProgressOrderByWithAggregationInput[]
+    by: SalesProgressScalarFieldEnum[] | SalesProgressScalarFieldEnum
+    having?: SalesProgressScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SalesProgressCountAggregateInputType | true
+    _avg?: SalesProgressAvgAggregateInputType
+    _sum?: SalesProgressSumAggregateInputType
+    _min?: SalesProgressMinAggregateInputType
+    _max?: SalesProgressMaxAggregateInputType
+  }
+
+  export type SalesProgressGroupByOutputType = {
+    id: string
+    salesName: string | null
+    salesCompany: string | null
+    nama: string
+    alamatLengkap: string | null
+    alamatKota: string | null
+    nomorHp: string | null
+    sumber: string | null
+    status: string | null
+    statusCatatan: string | null
+    nomorInvoice: string | null
+    crosscheck: boolean
+    fakturPajak: string | null
+    totalUnit: Decimal | null
+    totalDeal: Decimal | null
+    dpp: Decimal | null
+    ppn: Decimal | null
+    totalPayment: Decimal | null
+    sisaPayment: Decimal | null
+    paymentStatus: string | null
+    RekeningName: string | null
+    remarks: string | null
+    remarksPajak: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SalesProgressCountAggregateOutputType | null
+    _avg: SalesProgressAvgAggregateOutputType | null
+    _sum: SalesProgressSumAggregateOutputType | null
+    _min: SalesProgressMinAggregateOutputType | null
+    _max: SalesProgressMaxAggregateOutputType | null
+  }
+
+  type GetSalesProgressGroupByPayload<T extends SalesProgressGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SalesProgressGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SalesProgressGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SalesProgressGroupByOutputType[P]>
+            : GetScalarType<T[P], SalesProgressGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SalesProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    salesName?: boolean
+    salesCompany?: boolean
+    nama?: boolean
+    alamatLengkap?: boolean
+    alamatKota?: boolean
+    nomorHp?: boolean
+    sumber?: boolean
+    status?: boolean
+    statusCatatan?: boolean
+    nomorInvoice?: boolean
+    crosscheck?: boolean
+    fakturPajak?: boolean
+    totalUnit?: boolean
+    totalDeal?: boolean
+    dpp?: boolean
+    ppn?: boolean
+    totalPayment?: boolean
+    sisaPayment?: boolean
+    paymentStatus?: boolean
+    RekeningName?: boolean
+    remarks?: boolean
+    remarksPajak?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    items?: boolean | SalesProgress$itemsArgs<ExtArgs>
+    logs?: boolean | SalesProgress$logsArgs<ExtArgs>
+    _count?: boolean | SalesProgressCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesProgress"]>
+
+  export type SalesProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    salesName?: boolean
+    salesCompany?: boolean
+    nama?: boolean
+    alamatLengkap?: boolean
+    alamatKota?: boolean
+    nomorHp?: boolean
+    sumber?: boolean
+    status?: boolean
+    statusCatatan?: boolean
+    nomorInvoice?: boolean
+    crosscheck?: boolean
+    fakturPajak?: boolean
+    totalUnit?: boolean
+    totalDeal?: boolean
+    dpp?: boolean
+    ppn?: boolean
+    totalPayment?: boolean
+    sisaPayment?: boolean
+    paymentStatus?: boolean
+    RekeningName?: boolean
+    remarks?: boolean
+    remarksPajak?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["salesProgress"]>
+
+  export type SalesProgressSelectScalar = {
+    id?: boolean
+    salesName?: boolean
+    salesCompany?: boolean
+    nama?: boolean
+    alamatLengkap?: boolean
+    alamatKota?: boolean
+    nomorHp?: boolean
+    sumber?: boolean
+    status?: boolean
+    statusCatatan?: boolean
+    nomorInvoice?: boolean
+    crosscheck?: boolean
+    fakturPajak?: boolean
+    totalUnit?: boolean
+    totalDeal?: boolean
+    dpp?: boolean
+    ppn?: boolean
+    totalPayment?: boolean
+    sisaPayment?: boolean
+    paymentStatus?: boolean
+    RekeningName?: boolean
+    remarks?: boolean
+    remarksPajak?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SalesProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | SalesProgress$itemsArgs<ExtArgs>
+    logs?: boolean | SalesProgress$logsArgs<ExtArgs>
+    _count?: boolean | SalesProgressCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SalesProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SalesProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SalesProgress"
+    objects: {
+      items: Prisma.$SalesProgressItemPayload<ExtArgs>[]
+      logs: Prisma.$SalesLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      salesName: string | null
+      salesCompany: string | null
+      nama: string
+      alamatLengkap: string | null
+      alamatKota: string | null
+      nomorHp: string | null
+      sumber: string | null
+      status: string | null
+      statusCatatan: string | null
+      nomorInvoice: string | null
+      crosscheck: boolean
+      fakturPajak: string | null
+      totalUnit: Prisma.Decimal | null
+      totalDeal: Prisma.Decimal | null
+      dpp: Prisma.Decimal | null
+      ppn: Prisma.Decimal | null
+      totalPayment: Prisma.Decimal | null
+      sisaPayment: Prisma.Decimal | null
+      paymentStatus: string | null
+      RekeningName: string | null
+      remarks: string | null
+      remarksPajak: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["salesProgress"]>
+    composites: {}
+  }
+
+  type SalesProgressGetPayload<S extends boolean | null | undefined | SalesProgressDefaultArgs> = $Result.GetResult<Prisma.$SalesProgressPayload, S>
+
+  type SalesProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SalesProgressFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SalesProgressCountAggregateInputType | true
+    }
+
+  export interface SalesProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SalesProgress'], meta: { name: 'SalesProgress' } }
+    /**
+     * Find zero or one SalesProgress that matches the filter.
+     * @param {SalesProgressFindUniqueArgs} args - Arguments to find a SalesProgress
+     * @example
+     * // Get one SalesProgress
+     * const salesProgress = await prisma.salesProgress.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SalesProgressFindUniqueArgs>(args: SelectSubset<T, SalesProgressFindUniqueArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SalesProgress that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SalesProgressFindUniqueOrThrowArgs} args - Arguments to find a SalesProgress
+     * @example
+     * // Get one SalesProgress
+     * const salesProgress = await prisma.salesProgress.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SalesProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, SalesProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SalesProgress that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressFindFirstArgs} args - Arguments to find a SalesProgress
+     * @example
+     * // Get one SalesProgress
+     * const salesProgress = await prisma.salesProgress.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SalesProgressFindFirstArgs>(args?: SelectSubset<T, SalesProgressFindFirstArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SalesProgress that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressFindFirstOrThrowArgs} args - Arguments to find a SalesProgress
+     * @example
+     * // Get one SalesProgress
+     * const salesProgress = await prisma.salesProgress.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SalesProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, SalesProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SalesProgresses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SalesProgresses
+     * const salesProgresses = await prisma.salesProgress.findMany()
+     * 
+     * // Get first 10 SalesProgresses
+     * const salesProgresses = await prisma.salesProgress.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const salesProgressWithIdOnly = await prisma.salesProgress.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SalesProgressFindManyArgs>(args?: SelectSubset<T, SalesProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SalesProgress.
+     * @param {SalesProgressCreateArgs} args - Arguments to create a SalesProgress.
+     * @example
+     * // Create one SalesProgress
+     * const SalesProgress = await prisma.salesProgress.create({
+     *   data: {
+     *     // ... data to create a SalesProgress
+     *   }
+     * })
+     * 
+     */
+    create<T extends SalesProgressCreateArgs>(args: SelectSubset<T, SalesProgressCreateArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SalesProgresses.
+     * @param {SalesProgressCreateManyArgs} args - Arguments to create many SalesProgresses.
+     * @example
+     * // Create many SalesProgresses
+     * const salesProgress = await prisma.salesProgress.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SalesProgressCreateManyArgs>(args?: SelectSubset<T, SalesProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SalesProgresses and returns the data saved in the database.
+     * @param {SalesProgressCreateManyAndReturnArgs} args - Arguments to create many SalesProgresses.
+     * @example
+     * // Create many SalesProgresses
+     * const salesProgress = await prisma.salesProgress.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SalesProgresses and only return the `id`
+     * const salesProgressWithIdOnly = await prisma.salesProgress.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SalesProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, SalesProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SalesProgress.
+     * @param {SalesProgressDeleteArgs} args - Arguments to delete one SalesProgress.
+     * @example
+     * // Delete one SalesProgress
+     * const SalesProgress = await prisma.salesProgress.delete({
+     *   where: {
+     *     // ... filter to delete one SalesProgress
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SalesProgressDeleteArgs>(args: SelectSubset<T, SalesProgressDeleteArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SalesProgress.
+     * @param {SalesProgressUpdateArgs} args - Arguments to update one SalesProgress.
+     * @example
+     * // Update one SalesProgress
+     * const salesProgress = await prisma.salesProgress.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SalesProgressUpdateArgs>(args: SelectSubset<T, SalesProgressUpdateArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SalesProgresses.
+     * @param {SalesProgressDeleteManyArgs} args - Arguments to filter SalesProgresses to delete.
+     * @example
+     * // Delete a few SalesProgresses
+     * const { count } = await prisma.salesProgress.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SalesProgressDeleteManyArgs>(args?: SelectSubset<T, SalesProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SalesProgresses
+     * const salesProgress = await prisma.salesProgress.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SalesProgressUpdateManyArgs>(args: SelectSubset<T, SalesProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SalesProgress.
+     * @param {SalesProgressUpsertArgs} args - Arguments to update or create a SalesProgress.
+     * @example
+     * // Update or create a SalesProgress
+     * const salesProgress = await prisma.salesProgress.upsert({
+     *   create: {
+     *     // ... data to create a SalesProgress
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SalesProgress we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SalesProgressUpsertArgs>(args: SelectSubset<T, SalesProgressUpsertArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SalesProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressCountArgs} args - Arguments to filter SalesProgresses to count.
+     * @example
+     * // Count the number of SalesProgresses
+     * const count = await prisma.salesProgress.count({
+     *   where: {
+     *     // ... the filter for the SalesProgresses we want to count
+     *   }
+     * })
+    **/
+    count<T extends SalesProgressCountArgs>(
+      args?: Subset<T, SalesProgressCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SalesProgressCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SalesProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SalesProgressAggregateArgs>(args: Subset<T, SalesProgressAggregateArgs>): Prisma.PrismaPromise<GetSalesProgressAggregateType<T>>
+
+    /**
+     * Group by SalesProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SalesProgressGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SalesProgressGroupByArgs['orderBy'] }
+        : { orderBy?: SalesProgressGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SalesProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSalesProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SalesProgress model
+   */
+  readonly fields: SalesProgressFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SalesProgress.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SalesProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    items<T extends SalesProgress$itemsArgs<ExtArgs> = {}>(args?: Subset<T, SalesProgress$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "findMany"> | Null>
+    logs<T extends SalesProgress$logsArgs<ExtArgs> = {}>(args?: Subset<T, SalesProgress$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SalesProgress model
+   */ 
+  interface SalesProgressFieldRefs {
+    readonly id: FieldRef<"SalesProgress", 'String'>
+    readonly salesName: FieldRef<"SalesProgress", 'String'>
+    readonly salesCompany: FieldRef<"SalesProgress", 'String'>
+    readonly nama: FieldRef<"SalesProgress", 'String'>
+    readonly alamatLengkap: FieldRef<"SalesProgress", 'String'>
+    readonly alamatKota: FieldRef<"SalesProgress", 'String'>
+    readonly nomorHp: FieldRef<"SalesProgress", 'String'>
+    readonly sumber: FieldRef<"SalesProgress", 'String'>
+    readonly status: FieldRef<"SalesProgress", 'String'>
+    readonly statusCatatan: FieldRef<"SalesProgress", 'String'>
+    readonly nomorInvoice: FieldRef<"SalesProgress", 'String'>
+    readonly crosscheck: FieldRef<"SalesProgress", 'Boolean'>
+    readonly fakturPajak: FieldRef<"SalesProgress", 'String'>
+    readonly totalUnit: FieldRef<"SalesProgress", 'Decimal'>
+    readonly totalDeal: FieldRef<"SalesProgress", 'Decimal'>
+    readonly dpp: FieldRef<"SalesProgress", 'Decimal'>
+    readonly ppn: FieldRef<"SalesProgress", 'Decimal'>
+    readonly totalPayment: FieldRef<"SalesProgress", 'Decimal'>
+    readonly sisaPayment: FieldRef<"SalesProgress", 'Decimal'>
+    readonly paymentStatus: FieldRef<"SalesProgress", 'String'>
+    readonly RekeningName: FieldRef<"SalesProgress", 'String'>
+    readonly remarks: FieldRef<"SalesProgress", 'String'>
+    readonly remarksPajak: FieldRef<"SalesProgress", 'String'>
+    readonly createdAt: FieldRef<"SalesProgress", 'DateTime'>
+    readonly updatedAt: FieldRef<"SalesProgress", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SalesProgress findUnique
+   */
+  export type SalesProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgress to fetch.
+     */
+    where: SalesProgressWhereUniqueInput
+  }
+
+  /**
+   * SalesProgress findUniqueOrThrow
+   */
+  export type SalesProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgress to fetch.
+     */
+    where: SalesProgressWhereUniqueInput
+  }
+
+  /**
+   * SalesProgress findFirst
+   */
+  export type SalesProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgress to fetch.
+     */
+    where?: SalesProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgresses to fetch.
+     */
+    orderBy?: SalesProgressOrderByWithRelationInput | SalesProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesProgresses.
+     */
+    cursor?: SalesProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesProgresses.
+     */
+    distinct?: SalesProgressScalarFieldEnum | SalesProgressScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgress findFirstOrThrow
+   */
+  export type SalesProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgress to fetch.
+     */
+    where?: SalesProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgresses to fetch.
+     */
+    orderBy?: SalesProgressOrderByWithRelationInput | SalesProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesProgresses.
+     */
+    cursor?: SalesProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesProgresses.
+     */
+    distinct?: SalesProgressScalarFieldEnum | SalesProgressScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgress findMany
+   */
+  export type SalesProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgresses to fetch.
+     */
+    where?: SalesProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgresses to fetch.
+     */
+    orderBy?: SalesProgressOrderByWithRelationInput | SalesProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SalesProgresses.
+     */
+    cursor?: SalesProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgresses.
+     */
+    skip?: number
+    distinct?: SalesProgressScalarFieldEnum | SalesProgressScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgress create
+   */
+  export type SalesProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SalesProgress.
+     */
+    data: XOR<SalesProgressCreateInput, SalesProgressUncheckedCreateInput>
+  }
+
+  /**
+   * SalesProgress createMany
+   */
+  export type SalesProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SalesProgresses.
+     */
+    data: SalesProgressCreateManyInput | SalesProgressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SalesProgress createManyAndReturn
+   */
+  export type SalesProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SalesProgresses.
+     */
+    data: SalesProgressCreateManyInput | SalesProgressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SalesProgress update
+   */
+  export type SalesProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SalesProgress.
+     */
+    data: XOR<SalesProgressUpdateInput, SalesProgressUncheckedUpdateInput>
+    /**
+     * Choose, which SalesProgress to update.
+     */
+    where: SalesProgressWhereUniqueInput
+  }
+
+  /**
+   * SalesProgress updateMany
+   */
+  export type SalesProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SalesProgresses.
+     */
+    data: XOR<SalesProgressUpdateManyMutationInput, SalesProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which SalesProgresses to update
+     */
+    where?: SalesProgressWhereInput
+  }
+
+  /**
+   * SalesProgress upsert
+   */
+  export type SalesProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SalesProgress to update in case it exists.
+     */
+    where: SalesProgressWhereUniqueInput
+    /**
+     * In case the SalesProgress found by the `where` argument doesn't exist, create a new SalesProgress with this data.
+     */
+    create: XOR<SalesProgressCreateInput, SalesProgressUncheckedCreateInput>
+    /**
+     * In case the SalesProgress was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SalesProgressUpdateInput, SalesProgressUncheckedUpdateInput>
+  }
+
+  /**
+   * SalesProgress delete
+   */
+  export type SalesProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+    /**
+     * Filter which SalesProgress to delete.
+     */
+    where: SalesProgressWhereUniqueInput
+  }
+
+  /**
+   * SalesProgress deleteMany
+   */
+  export type SalesProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesProgresses to delete
+     */
+    where?: SalesProgressWhereInput
+  }
+
+  /**
+   * SalesProgress.items
+   */
+  export type SalesProgress$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    where?: SalesProgressItemWhereInput
+    orderBy?: SalesProgressItemOrderByWithRelationInput | SalesProgressItemOrderByWithRelationInput[]
+    cursor?: SalesProgressItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesProgressItemScalarFieldEnum | SalesProgressItemScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgress.logs
+   */
+  export type SalesProgress$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    where?: SalesLogWhereInput
+    orderBy?: SalesLogOrderByWithRelationInput | SalesLogOrderByWithRelationInput[]
+    cursor?: SalesLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesLogScalarFieldEnum | SalesLogScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgress without action
+   */
+  export type SalesProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgress
+     */
+    select?: SalesProgressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SalesProgressItem
+   */
+
+  export type AggregateSalesProgressItem = {
+    _count: SalesProgressItemCountAggregateOutputType | null
+    _avg: SalesProgressItemAvgAggregateOutputType | null
+    _sum: SalesProgressItemSumAggregateOutputType | null
+    _min: SalesProgressItemMinAggregateOutputType | null
+    _max: SalesProgressItemMaxAggregateOutputType | null
+  }
+
+  export type SalesProgressItemAvgAggregateOutputType = {
+    qty: number | null
+    hargaUnit: Decimal | null
+    subtotalUnit: Decimal | null
+    hargaDeal: Decimal | null
+    subtotalDeal: Decimal | null
+  }
+
+  export type SalesProgressItemSumAggregateOutputType = {
+    qty: number | null
+    hargaUnit: Decimal | null
+    subtotalUnit: Decimal | null
+    hargaDeal: Decimal | null
+    subtotalDeal: Decimal | null
+  }
+
+  export type SalesProgressItemMinAggregateOutputType = {
+    id: string | null
+    salesProgressId: string | null
+    brand: string | null
+    namaBarang: string | null
+    kodeBarang: string | null
+    kategoriBarang: string | null
+    qty: number | null
+    hargaUnit: Decimal | null
+    subtotalUnit: Decimal | null
+    hargaDeal: Decimal | null
+    subtotalDeal: Decimal | null
+    note: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SalesProgressItemMaxAggregateOutputType = {
+    id: string | null
+    salesProgressId: string | null
+    brand: string | null
+    namaBarang: string | null
+    kodeBarang: string | null
+    kategoriBarang: string | null
+    qty: number | null
+    hargaUnit: Decimal | null
+    subtotalUnit: Decimal | null
+    hargaDeal: Decimal | null
+    subtotalDeal: Decimal | null
+    note: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SalesProgressItemCountAggregateOutputType = {
+    id: number
+    salesProgressId: number
+    brand: number
+    namaBarang: number
+    kodeBarang: number
+    kategoriBarang: number
+    qty: number
+    hargaUnit: number
+    subtotalUnit: number
+    hargaDeal: number
+    subtotalDeal: number
+    note: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SalesProgressItemAvgAggregateInputType = {
+    qty?: true
+    hargaUnit?: true
+    subtotalUnit?: true
+    hargaDeal?: true
+    subtotalDeal?: true
+  }
+
+  export type SalesProgressItemSumAggregateInputType = {
+    qty?: true
+    hargaUnit?: true
+    subtotalUnit?: true
+    hargaDeal?: true
+    subtotalDeal?: true
+  }
+
+  export type SalesProgressItemMinAggregateInputType = {
+    id?: true
+    salesProgressId?: true
+    brand?: true
+    namaBarang?: true
+    kodeBarang?: true
+    kategoriBarang?: true
+    qty?: true
+    hargaUnit?: true
+    subtotalUnit?: true
+    hargaDeal?: true
+    subtotalDeal?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SalesProgressItemMaxAggregateInputType = {
+    id?: true
+    salesProgressId?: true
+    brand?: true
+    namaBarang?: true
+    kodeBarang?: true
+    kategoriBarang?: true
+    qty?: true
+    hargaUnit?: true
+    subtotalUnit?: true
+    hargaDeal?: true
+    subtotalDeal?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SalesProgressItemCountAggregateInputType = {
+    id?: true
+    salesProgressId?: true
+    brand?: true
+    namaBarang?: true
+    kodeBarang?: true
+    kategoriBarang?: true
+    qty?: true
+    hargaUnit?: true
+    subtotalUnit?: true
+    hargaDeal?: true
+    subtotalDeal?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SalesProgressItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesProgressItem to aggregate.
+     */
+    where?: SalesProgressItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgressItems to fetch.
+     */
+    orderBy?: SalesProgressItemOrderByWithRelationInput | SalesProgressItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SalesProgressItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgressItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgressItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SalesProgressItems
+    **/
+    _count?: true | SalesProgressItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SalesProgressItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SalesProgressItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SalesProgressItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SalesProgressItemMaxAggregateInputType
+  }
+
+  export type GetSalesProgressItemAggregateType<T extends SalesProgressItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateSalesProgressItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSalesProgressItem[P]>
+      : GetScalarType<T[P], AggregateSalesProgressItem[P]>
+  }
+
+
+
+
+  export type SalesProgressItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesProgressItemWhereInput
+    orderBy?: SalesProgressItemOrderByWithAggregationInput | SalesProgressItemOrderByWithAggregationInput[]
+    by: SalesProgressItemScalarFieldEnum[] | SalesProgressItemScalarFieldEnum
+    having?: SalesProgressItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SalesProgressItemCountAggregateInputType | true
+    _avg?: SalesProgressItemAvgAggregateInputType
+    _sum?: SalesProgressItemSumAggregateInputType
+    _min?: SalesProgressItemMinAggregateInputType
+    _max?: SalesProgressItemMaxAggregateInputType
+  }
+
+  export type SalesProgressItemGroupByOutputType = {
+    id: string
+    salesProgressId: string
+    brand: string | null
+    namaBarang: string | null
+    kodeBarang: string | null
+    kategoriBarang: string | null
+    qty: number
+    hargaUnit: Decimal | null
+    subtotalUnit: Decimal | null
+    hargaDeal: Decimal | null
+    subtotalDeal: Decimal | null
+    note: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SalesProgressItemCountAggregateOutputType | null
+    _avg: SalesProgressItemAvgAggregateOutputType | null
+    _sum: SalesProgressItemSumAggregateOutputType | null
+    _min: SalesProgressItemMinAggregateOutputType | null
+    _max: SalesProgressItemMaxAggregateOutputType | null
+  }
+
+  type GetSalesProgressItemGroupByPayload<T extends SalesProgressItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SalesProgressItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SalesProgressItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SalesProgressItemGroupByOutputType[P]>
+            : GetScalarType<T[P], SalesProgressItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SalesProgressItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    salesProgressId?: boolean
+    brand?: boolean
+    namaBarang?: boolean
+    kodeBarang?: boolean
+    kategoriBarang?: boolean
+    qty?: boolean
+    hargaUnit?: boolean
+    subtotalUnit?: boolean
+    hargaDeal?: boolean
+    subtotalDeal?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesProgressItem"]>
+
+  export type SalesProgressItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    salesProgressId?: boolean
+    brand?: boolean
+    namaBarang?: boolean
+    kodeBarang?: boolean
+    kategoriBarang?: boolean
+    qty?: boolean
+    hargaUnit?: boolean
+    subtotalUnit?: boolean
+    hargaDeal?: boolean
+    subtotalDeal?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesProgressItem"]>
+
+  export type SalesProgressItemSelectScalar = {
+    id?: boolean
+    salesProgressId?: boolean
+    brand?: boolean
+    namaBarang?: boolean
+    kodeBarang?: boolean
+    kategoriBarang?: boolean
+    qty?: boolean
+    hargaUnit?: boolean
+    subtotalUnit?: boolean
+    hargaDeal?: boolean
+    subtotalDeal?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SalesProgressItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }
+  export type SalesProgressItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }
+
+  export type $SalesProgressItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SalesProgressItem"
+    objects: {
+      salesProgress: Prisma.$SalesProgressPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      salesProgressId: string
+      brand: string | null
+      namaBarang: string | null
+      kodeBarang: string | null
+      kategoriBarang: string | null
+      qty: number
+      hargaUnit: Prisma.Decimal | null
+      subtotalUnit: Prisma.Decimal | null
+      hargaDeal: Prisma.Decimal | null
+      subtotalDeal: Prisma.Decimal | null
+      note: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["salesProgressItem"]>
+    composites: {}
+  }
+
+  type SalesProgressItemGetPayload<S extends boolean | null | undefined | SalesProgressItemDefaultArgs> = $Result.GetResult<Prisma.$SalesProgressItemPayload, S>
+
+  type SalesProgressItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SalesProgressItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SalesProgressItemCountAggregateInputType | true
+    }
+
+  export interface SalesProgressItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SalesProgressItem'], meta: { name: 'SalesProgressItem' } }
+    /**
+     * Find zero or one SalesProgressItem that matches the filter.
+     * @param {SalesProgressItemFindUniqueArgs} args - Arguments to find a SalesProgressItem
+     * @example
+     * // Get one SalesProgressItem
+     * const salesProgressItem = await prisma.salesProgressItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SalesProgressItemFindUniqueArgs>(args: SelectSubset<T, SalesProgressItemFindUniqueArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SalesProgressItem that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SalesProgressItemFindUniqueOrThrowArgs} args - Arguments to find a SalesProgressItem
+     * @example
+     * // Get one SalesProgressItem
+     * const salesProgressItem = await prisma.salesProgressItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SalesProgressItemFindUniqueOrThrowArgs>(args: SelectSubset<T, SalesProgressItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SalesProgressItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemFindFirstArgs} args - Arguments to find a SalesProgressItem
+     * @example
+     * // Get one SalesProgressItem
+     * const salesProgressItem = await prisma.salesProgressItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SalesProgressItemFindFirstArgs>(args?: SelectSubset<T, SalesProgressItemFindFirstArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SalesProgressItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemFindFirstOrThrowArgs} args - Arguments to find a SalesProgressItem
+     * @example
+     * // Get one SalesProgressItem
+     * const salesProgressItem = await prisma.salesProgressItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SalesProgressItemFindFirstOrThrowArgs>(args?: SelectSubset<T, SalesProgressItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SalesProgressItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SalesProgressItems
+     * const salesProgressItems = await prisma.salesProgressItem.findMany()
+     * 
+     * // Get first 10 SalesProgressItems
+     * const salesProgressItems = await prisma.salesProgressItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const salesProgressItemWithIdOnly = await prisma.salesProgressItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SalesProgressItemFindManyArgs>(args?: SelectSubset<T, SalesProgressItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SalesProgressItem.
+     * @param {SalesProgressItemCreateArgs} args - Arguments to create a SalesProgressItem.
+     * @example
+     * // Create one SalesProgressItem
+     * const SalesProgressItem = await prisma.salesProgressItem.create({
+     *   data: {
+     *     // ... data to create a SalesProgressItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends SalesProgressItemCreateArgs>(args: SelectSubset<T, SalesProgressItemCreateArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SalesProgressItems.
+     * @param {SalesProgressItemCreateManyArgs} args - Arguments to create many SalesProgressItems.
+     * @example
+     * // Create many SalesProgressItems
+     * const salesProgressItem = await prisma.salesProgressItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SalesProgressItemCreateManyArgs>(args?: SelectSubset<T, SalesProgressItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SalesProgressItems and returns the data saved in the database.
+     * @param {SalesProgressItemCreateManyAndReturnArgs} args - Arguments to create many SalesProgressItems.
+     * @example
+     * // Create many SalesProgressItems
+     * const salesProgressItem = await prisma.salesProgressItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SalesProgressItems and only return the `id`
+     * const salesProgressItemWithIdOnly = await prisma.salesProgressItem.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SalesProgressItemCreateManyAndReturnArgs>(args?: SelectSubset<T, SalesProgressItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SalesProgressItem.
+     * @param {SalesProgressItemDeleteArgs} args - Arguments to delete one SalesProgressItem.
+     * @example
+     * // Delete one SalesProgressItem
+     * const SalesProgressItem = await prisma.salesProgressItem.delete({
+     *   where: {
+     *     // ... filter to delete one SalesProgressItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SalesProgressItemDeleteArgs>(args: SelectSubset<T, SalesProgressItemDeleteArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SalesProgressItem.
+     * @param {SalesProgressItemUpdateArgs} args - Arguments to update one SalesProgressItem.
+     * @example
+     * // Update one SalesProgressItem
+     * const salesProgressItem = await prisma.salesProgressItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SalesProgressItemUpdateArgs>(args: SelectSubset<T, SalesProgressItemUpdateArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SalesProgressItems.
+     * @param {SalesProgressItemDeleteManyArgs} args - Arguments to filter SalesProgressItems to delete.
+     * @example
+     * // Delete a few SalesProgressItems
+     * const { count } = await prisma.salesProgressItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SalesProgressItemDeleteManyArgs>(args?: SelectSubset<T, SalesProgressItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesProgressItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SalesProgressItems
+     * const salesProgressItem = await prisma.salesProgressItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SalesProgressItemUpdateManyArgs>(args: SelectSubset<T, SalesProgressItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SalesProgressItem.
+     * @param {SalesProgressItemUpsertArgs} args - Arguments to update or create a SalesProgressItem.
+     * @example
+     * // Update or create a SalesProgressItem
+     * const salesProgressItem = await prisma.salesProgressItem.upsert({
+     *   create: {
+     *     // ... data to create a SalesProgressItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SalesProgressItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SalesProgressItemUpsertArgs>(args: SelectSubset<T, SalesProgressItemUpsertArgs<ExtArgs>>): Prisma__SalesProgressItemClient<$Result.GetResult<Prisma.$SalesProgressItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SalesProgressItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemCountArgs} args - Arguments to filter SalesProgressItems to count.
+     * @example
+     * // Count the number of SalesProgressItems
+     * const count = await prisma.salesProgressItem.count({
+     *   where: {
+     *     // ... the filter for the SalesProgressItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends SalesProgressItemCountArgs>(
+      args?: Subset<T, SalesProgressItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SalesProgressItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SalesProgressItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SalesProgressItemAggregateArgs>(args: Subset<T, SalesProgressItemAggregateArgs>): Prisma.PrismaPromise<GetSalesProgressItemAggregateType<T>>
+
+    /**
+     * Group by SalesProgressItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesProgressItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SalesProgressItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SalesProgressItemGroupByArgs['orderBy'] }
+        : { orderBy?: SalesProgressItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SalesProgressItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSalesProgressItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SalesProgressItem model
+   */
+  readonly fields: SalesProgressItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SalesProgressItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SalesProgressItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    salesProgress<T extends SalesProgressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SalesProgressDefaultArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SalesProgressItem model
+   */ 
+  interface SalesProgressItemFieldRefs {
+    readonly id: FieldRef<"SalesProgressItem", 'String'>
+    readonly salesProgressId: FieldRef<"SalesProgressItem", 'String'>
+    readonly brand: FieldRef<"SalesProgressItem", 'String'>
+    readonly namaBarang: FieldRef<"SalesProgressItem", 'String'>
+    readonly kodeBarang: FieldRef<"SalesProgressItem", 'String'>
+    readonly kategoriBarang: FieldRef<"SalesProgressItem", 'String'>
+    readonly qty: FieldRef<"SalesProgressItem", 'Int'>
+    readonly hargaUnit: FieldRef<"SalesProgressItem", 'Decimal'>
+    readonly subtotalUnit: FieldRef<"SalesProgressItem", 'Decimal'>
+    readonly hargaDeal: FieldRef<"SalesProgressItem", 'Decimal'>
+    readonly subtotalDeal: FieldRef<"SalesProgressItem", 'Decimal'>
+    readonly note: FieldRef<"SalesProgressItem", 'String'>
+    readonly createdAt: FieldRef<"SalesProgressItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"SalesProgressItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SalesProgressItem findUnique
+   */
+  export type SalesProgressItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgressItem to fetch.
+     */
+    where: SalesProgressItemWhereUniqueInput
+  }
+
+  /**
+   * SalesProgressItem findUniqueOrThrow
+   */
+  export type SalesProgressItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgressItem to fetch.
+     */
+    where: SalesProgressItemWhereUniqueInput
+  }
+
+  /**
+   * SalesProgressItem findFirst
+   */
+  export type SalesProgressItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgressItem to fetch.
+     */
+    where?: SalesProgressItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgressItems to fetch.
+     */
+    orderBy?: SalesProgressItemOrderByWithRelationInput | SalesProgressItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesProgressItems.
+     */
+    cursor?: SalesProgressItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgressItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgressItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesProgressItems.
+     */
+    distinct?: SalesProgressItemScalarFieldEnum | SalesProgressItemScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgressItem findFirstOrThrow
+   */
+  export type SalesProgressItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgressItem to fetch.
+     */
+    where?: SalesProgressItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgressItems to fetch.
+     */
+    orderBy?: SalesProgressItemOrderByWithRelationInput | SalesProgressItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesProgressItems.
+     */
+    cursor?: SalesProgressItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgressItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgressItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesProgressItems.
+     */
+    distinct?: SalesProgressItemScalarFieldEnum | SalesProgressItemScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgressItem findMany
+   */
+  export type SalesProgressItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesProgressItems to fetch.
+     */
+    where?: SalesProgressItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesProgressItems to fetch.
+     */
+    orderBy?: SalesProgressItemOrderByWithRelationInput | SalesProgressItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SalesProgressItems.
+     */
+    cursor?: SalesProgressItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesProgressItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesProgressItems.
+     */
+    skip?: number
+    distinct?: SalesProgressItemScalarFieldEnum | SalesProgressItemScalarFieldEnum[]
+  }
+
+  /**
+   * SalesProgressItem create
+   */
+  export type SalesProgressItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SalesProgressItem.
+     */
+    data: XOR<SalesProgressItemCreateInput, SalesProgressItemUncheckedCreateInput>
+  }
+
+  /**
+   * SalesProgressItem createMany
+   */
+  export type SalesProgressItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SalesProgressItems.
+     */
+    data: SalesProgressItemCreateManyInput | SalesProgressItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SalesProgressItem createManyAndReturn
+   */
+  export type SalesProgressItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SalesProgressItems.
+     */
+    data: SalesProgressItemCreateManyInput | SalesProgressItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SalesProgressItem update
+   */
+  export type SalesProgressItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SalesProgressItem.
+     */
+    data: XOR<SalesProgressItemUpdateInput, SalesProgressItemUncheckedUpdateInput>
+    /**
+     * Choose, which SalesProgressItem to update.
+     */
+    where: SalesProgressItemWhereUniqueInput
+  }
+
+  /**
+   * SalesProgressItem updateMany
+   */
+  export type SalesProgressItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SalesProgressItems.
+     */
+    data: XOR<SalesProgressItemUpdateManyMutationInput, SalesProgressItemUncheckedUpdateManyInput>
+    /**
+     * Filter which SalesProgressItems to update
+     */
+    where?: SalesProgressItemWhereInput
+  }
+
+  /**
+   * SalesProgressItem upsert
+   */
+  export type SalesProgressItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SalesProgressItem to update in case it exists.
+     */
+    where: SalesProgressItemWhereUniqueInput
+    /**
+     * In case the SalesProgressItem found by the `where` argument doesn't exist, create a new SalesProgressItem with this data.
+     */
+    create: XOR<SalesProgressItemCreateInput, SalesProgressItemUncheckedCreateInput>
+    /**
+     * In case the SalesProgressItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SalesProgressItemUpdateInput, SalesProgressItemUncheckedUpdateInput>
+  }
+
+  /**
+   * SalesProgressItem delete
+   */
+  export type SalesProgressItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+    /**
+     * Filter which SalesProgressItem to delete.
+     */
+    where: SalesProgressItemWhereUniqueInput
+  }
+
+  /**
+   * SalesProgressItem deleteMany
+   */
+  export type SalesProgressItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesProgressItems to delete
+     */
+    where?: SalesProgressItemWhereInput
+  }
+
+  /**
+   * SalesProgressItem without action
+   */
+  export type SalesProgressItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesProgressItem
+     */
+    select?: SalesProgressItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesProgressItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SalesLog
+   */
+
+  export type AggregateSalesLog = {
+    _count: SalesLogCountAggregateOutputType | null
+    _min: SalesLogMinAggregateOutputType | null
+    _max: SalesLogMaxAggregateOutputType | null
+  }
+
+  export type SalesLogMinAggregateOutputType = {
+    id: string | null
+    salesProgressId: string | null
+    actorName: string | null
+    actorRole: string | null
+    action: string | null
+    fieldName: string | null
+    oldValue: string | null
+    newValue: string | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type SalesLogMaxAggregateOutputType = {
+    id: string | null
+    salesProgressId: string | null
+    actorName: string | null
+    actorRole: string | null
+    action: string | null
+    fieldName: string | null
+    oldValue: string | null
+    newValue: string | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type SalesLogCountAggregateOutputType = {
+    id: number
+    salesProgressId: number
+    actorName: number
+    actorRole: number
+    action: number
+    fieldName: number
+    oldValue: number
+    newValue: number
+    note: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SalesLogMinAggregateInputType = {
+    id?: true
+    salesProgressId?: true
+    actorName?: true
+    actorRole?: true
+    action?: true
+    fieldName?: true
+    oldValue?: true
+    newValue?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type SalesLogMaxAggregateInputType = {
+    id?: true
+    salesProgressId?: true
+    actorName?: true
+    actorRole?: true
+    action?: true
+    fieldName?: true
+    oldValue?: true
+    newValue?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type SalesLogCountAggregateInputType = {
+    id?: true
+    salesProgressId?: true
+    actorName?: true
+    actorRole?: true
+    action?: true
+    fieldName?: true
+    oldValue?: true
+    newValue?: true
+    note?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SalesLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesLog to aggregate.
+     */
+    where?: SalesLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesLogs to fetch.
+     */
+    orderBy?: SalesLogOrderByWithRelationInput | SalesLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SalesLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SalesLogs
+    **/
+    _count?: true | SalesLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SalesLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SalesLogMaxAggregateInputType
+  }
+
+  export type GetSalesLogAggregateType<T extends SalesLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateSalesLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSalesLog[P]>
+      : GetScalarType<T[P], AggregateSalesLog[P]>
+  }
+
+
+
+
+  export type SalesLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesLogWhereInput
+    orderBy?: SalesLogOrderByWithAggregationInput | SalesLogOrderByWithAggregationInput[]
+    by: SalesLogScalarFieldEnum[] | SalesLogScalarFieldEnum
+    having?: SalesLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SalesLogCountAggregateInputType | true
+    _min?: SalesLogMinAggregateInputType
+    _max?: SalesLogMaxAggregateInputType
+  }
+
+  export type SalesLogGroupByOutputType = {
+    id: string
+    salesProgressId: string
+    actorName: string | null
+    actorRole: string | null
+    action: string
+    fieldName: string | null
+    oldValue: string | null
+    newValue: string | null
+    note: string | null
+    createdAt: Date
+    _count: SalesLogCountAggregateOutputType | null
+    _min: SalesLogMinAggregateOutputType | null
+    _max: SalesLogMaxAggregateOutputType | null
+  }
+
+  type GetSalesLogGroupByPayload<T extends SalesLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SalesLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SalesLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SalesLogGroupByOutputType[P]>
+            : GetScalarType<T[P], SalesLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SalesLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    salesProgressId?: boolean
+    actorName?: boolean
+    actorRole?: boolean
+    action?: boolean
+    fieldName?: boolean
+    oldValue?: boolean
+    newValue?: boolean
+    note?: boolean
+    createdAt?: boolean
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesLog"]>
+
+  export type SalesLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    salesProgressId?: boolean
+    actorName?: boolean
+    actorRole?: boolean
+    action?: boolean
+    fieldName?: boolean
+    oldValue?: boolean
+    newValue?: boolean
+    note?: boolean
+    createdAt?: boolean
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesLog"]>
+
+  export type SalesLogSelectScalar = {
+    id?: boolean
+    salesProgressId?: boolean
+    actorName?: boolean
+    actorRole?: boolean
+    action?: boolean
+    fieldName?: boolean
+    oldValue?: boolean
+    newValue?: boolean
+    note?: boolean
+    createdAt?: boolean
+  }
+
+  export type SalesLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }
+  export type SalesLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salesProgress?: boolean | SalesProgressDefaultArgs<ExtArgs>
+  }
+
+  export type $SalesLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SalesLog"
+    objects: {
+      salesProgress: Prisma.$SalesProgressPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      salesProgressId: string
+      actorName: string | null
+      actorRole: string | null
+      action: string
+      fieldName: string | null
+      oldValue: string | null
+      newValue: string | null
+      note: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["salesLog"]>
+    composites: {}
+  }
+
+  type SalesLogGetPayload<S extends boolean | null | undefined | SalesLogDefaultArgs> = $Result.GetResult<Prisma.$SalesLogPayload, S>
+
+  type SalesLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SalesLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SalesLogCountAggregateInputType | true
+    }
+
+  export interface SalesLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SalesLog'], meta: { name: 'SalesLog' } }
+    /**
+     * Find zero or one SalesLog that matches the filter.
+     * @param {SalesLogFindUniqueArgs} args - Arguments to find a SalesLog
+     * @example
+     * // Get one SalesLog
+     * const salesLog = await prisma.salesLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SalesLogFindUniqueArgs>(args: SelectSubset<T, SalesLogFindUniqueArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SalesLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SalesLogFindUniqueOrThrowArgs} args - Arguments to find a SalesLog
+     * @example
+     * // Get one SalesLog
+     * const salesLog = await prisma.salesLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SalesLogFindUniqueOrThrowArgs>(args: SelectSubset<T, SalesLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SalesLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogFindFirstArgs} args - Arguments to find a SalesLog
+     * @example
+     * // Get one SalesLog
+     * const salesLog = await prisma.salesLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SalesLogFindFirstArgs>(args?: SelectSubset<T, SalesLogFindFirstArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SalesLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogFindFirstOrThrowArgs} args - Arguments to find a SalesLog
+     * @example
+     * // Get one SalesLog
+     * const salesLog = await prisma.salesLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SalesLogFindFirstOrThrowArgs>(args?: SelectSubset<T, SalesLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SalesLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SalesLogs
+     * const salesLogs = await prisma.salesLog.findMany()
+     * 
+     * // Get first 10 SalesLogs
+     * const salesLogs = await prisma.salesLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const salesLogWithIdOnly = await prisma.salesLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SalesLogFindManyArgs>(args?: SelectSubset<T, SalesLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SalesLog.
+     * @param {SalesLogCreateArgs} args - Arguments to create a SalesLog.
+     * @example
+     * // Create one SalesLog
+     * const SalesLog = await prisma.salesLog.create({
+     *   data: {
+     *     // ... data to create a SalesLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends SalesLogCreateArgs>(args: SelectSubset<T, SalesLogCreateArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SalesLogs.
+     * @param {SalesLogCreateManyArgs} args - Arguments to create many SalesLogs.
+     * @example
+     * // Create many SalesLogs
+     * const salesLog = await prisma.salesLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SalesLogCreateManyArgs>(args?: SelectSubset<T, SalesLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SalesLogs and returns the data saved in the database.
+     * @param {SalesLogCreateManyAndReturnArgs} args - Arguments to create many SalesLogs.
+     * @example
+     * // Create many SalesLogs
+     * const salesLog = await prisma.salesLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SalesLogs and only return the `id`
+     * const salesLogWithIdOnly = await prisma.salesLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SalesLogCreateManyAndReturnArgs>(args?: SelectSubset<T, SalesLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SalesLog.
+     * @param {SalesLogDeleteArgs} args - Arguments to delete one SalesLog.
+     * @example
+     * // Delete one SalesLog
+     * const SalesLog = await prisma.salesLog.delete({
+     *   where: {
+     *     // ... filter to delete one SalesLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SalesLogDeleteArgs>(args: SelectSubset<T, SalesLogDeleteArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SalesLog.
+     * @param {SalesLogUpdateArgs} args - Arguments to update one SalesLog.
+     * @example
+     * // Update one SalesLog
+     * const salesLog = await prisma.salesLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SalesLogUpdateArgs>(args: SelectSubset<T, SalesLogUpdateArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SalesLogs.
+     * @param {SalesLogDeleteManyArgs} args - Arguments to filter SalesLogs to delete.
+     * @example
+     * // Delete a few SalesLogs
+     * const { count } = await prisma.salesLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SalesLogDeleteManyArgs>(args?: SelectSubset<T, SalesLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SalesLogs
+     * const salesLog = await prisma.salesLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SalesLogUpdateManyArgs>(args: SelectSubset<T, SalesLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SalesLog.
+     * @param {SalesLogUpsertArgs} args - Arguments to update or create a SalesLog.
+     * @example
+     * // Update or create a SalesLog
+     * const salesLog = await prisma.salesLog.upsert({
+     *   create: {
+     *     // ... data to create a SalesLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SalesLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SalesLogUpsertArgs>(args: SelectSubset<T, SalesLogUpsertArgs<ExtArgs>>): Prisma__SalesLogClient<$Result.GetResult<Prisma.$SalesLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SalesLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogCountArgs} args - Arguments to filter SalesLogs to count.
+     * @example
+     * // Count the number of SalesLogs
+     * const count = await prisma.salesLog.count({
+     *   where: {
+     *     // ... the filter for the SalesLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends SalesLogCountArgs>(
+      args?: Subset<T, SalesLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SalesLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SalesLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SalesLogAggregateArgs>(args: Subset<T, SalesLogAggregateArgs>): Prisma.PrismaPromise<GetSalesLogAggregateType<T>>
+
+    /**
+     * Group by SalesLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SalesLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SalesLogGroupByArgs['orderBy'] }
+        : { orderBy?: SalesLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SalesLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSalesLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SalesLog model
+   */
+  readonly fields: SalesLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SalesLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SalesLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    salesProgress<T extends SalesProgressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SalesProgressDefaultArgs<ExtArgs>>): Prisma__SalesProgressClient<$Result.GetResult<Prisma.$SalesProgressPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SalesLog model
+   */ 
+  interface SalesLogFieldRefs {
+    readonly id: FieldRef<"SalesLog", 'String'>
+    readonly salesProgressId: FieldRef<"SalesLog", 'String'>
+    readonly actorName: FieldRef<"SalesLog", 'String'>
+    readonly actorRole: FieldRef<"SalesLog", 'String'>
+    readonly action: FieldRef<"SalesLog", 'String'>
+    readonly fieldName: FieldRef<"SalesLog", 'String'>
+    readonly oldValue: FieldRef<"SalesLog", 'String'>
+    readonly newValue: FieldRef<"SalesLog", 'String'>
+    readonly note: FieldRef<"SalesLog", 'String'>
+    readonly createdAt: FieldRef<"SalesLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SalesLog findUnique
+   */
+  export type SalesLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesLog to fetch.
+     */
+    where: SalesLogWhereUniqueInput
+  }
+
+  /**
+   * SalesLog findUniqueOrThrow
+   */
+  export type SalesLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesLog to fetch.
+     */
+    where: SalesLogWhereUniqueInput
+  }
+
+  /**
+   * SalesLog findFirst
+   */
+  export type SalesLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesLog to fetch.
+     */
+    where?: SalesLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesLogs to fetch.
+     */
+    orderBy?: SalesLogOrderByWithRelationInput | SalesLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesLogs.
+     */
+    cursor?: SalesLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesLogs.
+     */
+    distinct?: SalesLogScalarFieldEnum | SalesLogScalarFieldEnum[]
+  }
+
+  /**
+   * SalesLog findFirstOrThrow
+   */
+  export type SalesLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesLog to fetch.
+     */
+    where?: SalesLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesLogs to fetch.
+     */
+    orderBy?: SalesLogOrderByWithRelationInput | SalesLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesLogs.
+     */
+    cursor?: SalesLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesLogs.
+     */
+    distinct?: SalesLogScalarFieldEnum | SalesLogScalarFieldEnum[]
+  }
+
+  /**
+   * SalesLog findMany
+   */
+  export type SalesLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesLogs to fetch.
+     */
+    where?: SalesLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesLogs to fetch.
+     */
+    orderBy?: SalesLogOrderByWithRelationInput | SalesLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SalesLogs.
+     */
+    cursor?: SalesLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesLogs.
+     */
+    skip?: number
+    distinct?: SalesLogScalarFieldEnum | SalesLogScalarFieldEnum[]
+  }
+
+  /**
+   * SalesLog create
+   */
+  export type SalesLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SalesLog.
+     */
+    data: XOR<SalesLogCreateInput, SalesLogUncheckedCreateInput>
+  }
+
+  /**
+   * SalesLog createMany
+   */
+  export type SalesLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SalesLogs.
+     */
+    data: SalesLogCreateManyInput | SalesLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SalesLog createManyAndReturn
+   */
+  export type SalesLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SalesLogs.
+     */
+    data: SalesLogCreateManyInput | SalesLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SalesLog update
+   */
+  export type SalesLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SalesLog.
+     */
+    data: XOR<SalesLogUpdateInput, SalesLogUncheckedUpdateInput>
+    /**
+     * Choose, which SalesLog to update.
+     */
+    where: SalesLogWhereUniqueInput
+  }
+
+  /**
+   * SalesLog updateMany
+   */
+  export type SalesLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SalesLogs.
+     */
+    data: XOR<SalesLogUpdateManyMutationInput, SalesLogUncheckedUpdateManyInput>
+    /**
+     * Filter which SalesLogs to update
+     */
+    where?: SalesLogWhereInput
+  }
+
+  /**
+   * SalesLog upsert
+   */
+  export type SalesLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SalesLog to update in case it exists.
+     */
+    where: SalesLogWhereUniqueInput
+    /**
+     * In case the SalesLog found by the `where` argument doesn't exist, create a new SalesLog with this data.
+     */
+    create: XOR<SalesLogCreateInput, SalesLogUncheckedCreateInput>
+    /**
+     * In case the SalesLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SalesLogUpdateInput, SalesLogUncheckedUpdateInput>
+  }
+
+  /**
+   * SalesLog delete
+   */
+  export type SalesLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+    /**
+     * Filter which SalesLog to delete.
+     */
+    where: SalesLogWhereUniqueInput
+  }
+
+  /**
+   * SalesLog deleteMany
+   */
+  export type SalesLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesLogs to delete
+     */
+    where?: SalesLogWhereInput
+  }
+
+  /**
+   * SalesLog without action
+   */
+  export type SalesLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesLog
+     */
+    select?: SalesLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesLogInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -27548,6 +31196,73 @@ export namespace Prisma {
   export type SalesPenawaranItemScalarFieldEnum = (typeof SalesPenawaranItemScalarFieldEnum)[keyof typeof SalesPenawaranItemScalarFieldEnum]
 
 
+  export const SalesProgressScalarFieldEnum: {
+    id: 'id',
+    salesName: 'salesName',
+    salesCompany: 'salesCompany',
+    nama: 'nama',
+    alamatLengkap: 'alamatLengkap',
+    alamatKota: 'alamatKota',
+    nomorHp: 'nomorHp',
+    sumber: 'sumber',
+    status: 'status',
+    statusCatatan: 'statusCatatan',
+    nomorInvoice: 'nomorInvoice',
+    crosscheck: 'crosscheck',
+    fakturPajak: 'fakturPajak',
+    totalUnit: 'totalUnit',
+    totalDeal: 'totalDeal',
+    dpp: 'dpp',
+    ppn: 'ppn',
+    totalPayment: 'totalPayment',
+    sisaPayment: 'sisaPayment',
+    paymentStatus: 'paymentStatus',
+    RekeningName: 'RekeningName',
+    remarks: 'remarks',
+    remarksPajak: 'remarksPajak',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SalesProgressScalarFieldEnum = (typeof SalesProgressScalarFieldEnum)[keyof typeof SalesProgressScalarFieldEnum]
+
+
+  export const SalesProgressItemScalarFieldEnum: {
+    id: 'id',
+    salesProgressId: 'salesProgressId',
+    brand: 'brand',
+    namaBarang: 'namaBarang',
+    kodeBarang: 'kodeBarang',
+    kategoriBarang: 'kategoriBarang',
+    qty: 'qty',
+    hargaUnit: 'hargaUnit',
+    subtotalUnit: 'subtotalUnit',
+    hargaDeal: 'hargaDeal',
+    subtotalDeal: 'subtotalDeal',
+    note: 'note',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SalesProgressItemScalarFieldEnum = (typeof SalesProgressItemScalarFieldEnum)[keyof typeof SalesProgressItemScalarFieldEnum]
+
+
+  export const SalesLogScalarFieldEnum: {
+    id: 'id',
+    salesProgressId: 'salesProgressId',
+    actorName: 'actorName',
+    actorRole: 'actorRole',
+    action: 'action',
+    fieldName: 'fieldName',
+    oldValue: 'oldValue',
+    newValue: 'newValue',
+    note: 'note',
+    createdAt: 'createdAt'
+  };
+
+  export type SalesLogScalarFieldEnum = (typeof SalesLogScalarFieldEnum)[keyof typeof SalesLogScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -27661,6 +31376,20 @@ export namespace Prisma {
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -29887,6 +33616,348 @@ export namespace Prisma {
     qty?: IntWithAggregatesFilter<"salesPenawaranItem"> | number
     productPriceFinal?: BigIntWithAggregatesFilter<"salesPenawaranItem"> | bigint | number
     salesPenawaranId?: StringWithAggregatesFilter<"salesPenawaranItem"> | string
+  }
+
+  export type SalesProgressWhereInput = {
+    AND?: SalesProgressWhereInput | SalesProgressWhereInput[]
+    OR?: SalesProgressWhereInput[]
+    NOT?: SalesProgressWhereInput | SalesProgressWhereInput[]
+    id?: StringFilter<"SalesProgress"> | string
+    salesName?: StringNullableFilter<"SalesProgress"> | string | null
+    salesCompany?: StringNullableFilter<"SalesProgress"> | string | null
+    nama?: StringFilter<"SalesProgress"> | string
+    alamatLengkap?: StringNullableFilter<"SalesProgress"> | string | null
+    alamatKota?: StringNullableFilter<"SalesProgress"> | string | null
+    nomorHp?: StringNullableFilter<"SalesProgress"> | string | null
+    sumber?: StringNullableFilter<"SalesProgress"> | string | null
+    status?: StringNullableFilter<"SalesProgress"> | string | null
+    statusCatatan?: StringNullableFilter<"SalesProgress"> | string | null
+    nomorInvoice?: StringNullableFilter<"SalesProgress"> | string | null
+    crosscheck?: BoolFilter<"SalesProgress"> | boolean
+    fakturPajak?: StringNullableFilter<"SalesProgress"> | string | null
+    totalUnit?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    dpp?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    ppn?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: StringNullableFilter<"SalesProgress"> | string | null
+    RekeningName?: StringNullableFilter<"SalesProgress"> | string | null
+    remarks?: StringNullableFilter<"SalesProgress"> | string | null
+    remarksPajak?: StringNullableFilter<"SalesProgress"> | string | null
+    createdAt?: DateTimeFilter<"SalesProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"SalesProgress"> | Date | string
+    items?: SalesProgressItemListRelationFilter
+    logs?: SalesLogListRelationFilter
+  }
+
+  export type SalesProgressOrderByWithRelationInput = {
+    id?: SortOrder
+    salesName?: SortOrderInput | SortOrder
+    salesCompany?: SortOrderInput | SortOrder
+    nama?: SortOrder
+    alamatLengkap?: SortOrderInput | SortOrder
+    alamatKota?: SortOrderInput | SortOrder
+    nomorHp?: SortOrderInput | SortOrder
+    sumber?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    statusCatatan?: SortOrderInput | SortOrder
+    nomorInvoice?: SortOrderInput | SortOrder
+    crosscheck?: SortOrder
+    fakturPajak?: SortOrderInput | SortOrder
+    totalUnit?: SortOrderInput | SortOrder
+    totalDeal?: SortOrderInput | SortOrder
+    dpp?: SortOrderInput | SortOrder
+    ppn?: SortOrderInput | SortOrder
+    totalPayment?: SortOrderInput | SortOrder
+    sisaPayment?: SortOrderInput | SortOrder
+    paymentStatus?: SortOrderInput | SortOrder
+    RekeningName?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    remarksPajak?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    items?: SalesProgressItemOrderByRelationAggregateInput
+    logs?: SalesLogOrderByRelationAggregateInput
+  }
+
+  export type SalesProgressWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    nomorInvoice?: string
+    AND?: SalesProgressWhereInput | SalesProgressWhereInput[]
+    OR?: SalesProgressWhereInput[]
+    NOT?: SalesProgressWhereInput | SalesProgressWhereInput[]
+    salesName?: StringNullableFilter<"SalesProgress"> | string | null
+    salesCompany?: StringNullableFilter<"SalesProgress"> | string | null
+    nama?: StringFilter<"SalesProgress"> | string
+    alamatLengkap?: StringNullableFilter<"SalesProgress"> | string | null
+    alamatKota?: StringNullableFilter<"SalesProgress"> | string | null
+    nomorHp?: StringNullableFilter<"SalesProgress"> | string | null
+    sumber?: StringNullableFilter<"SalesProgress"> | string | null
+    status?: StringNullableFilter<"SalesProgress"> | string | null
+    statusCatatan?: StringNullableFilter<"SalesProgress"> | string | null
+    crosscheck?: BoolFilter<"SalesProgress"> | boolean
+    fakturPajak?: StringNullableFilter<"SalesProgress"> | string | null
+    totalUnit?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    dpp?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    ppn?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: StringNullableFilter<"SalesProgress"> | string | null
+    RekeningName?: StringNullableFilter<"SalesProgress"> | string | null
+    remarks?: StringNullableFilter<"SalesProgress"> | string | null
+    remarksPajak?: StringNullableFilter<"SalesProgress"> | string | null
+    createdAt?: DateTimeFilter<"SalesProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"SalesProgress"> | Date | string
+    items?: SalesProgressItemListRelationFilter
+    logs?: SalesLogListRelationFilter
+  }, "id" | "nomorInvoice">
+
+  export type SalesProgressOrderByWithAggregationInput = {
+    id?: SortOrder
+    salesName?: SortOrderInput | SortOrder
+    salesCompany?: SortOrderInput | SortOrder
+    nama?: SortOrder
+    alamatLengkap?: SortOrderInput | SortOrder
+    alamatKota?: SortOrderInput | SortOrder
+    nomorHp?: SortOrderInput | SortOrder
+    sumber?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    statusCatatan?: SortOrderInput | SortOrder
+    nomorInvoice?: SortOrderInput | SortOrder
+    crosscheck?: SortOrder
+    fakturPajak?: SortOrderInput | SortOrder
+    totalUnit?: SortOrderInput | SortOrder
+    totalDeal?: SortOrderInput | SortOrder
+    dpp?: SortOrderInput | SortOrder
+    ppn?: SortOrderInput | SortOrder
+    totalPayment?: SortOrderInput | SortOrder
+    sisaPayment?: SortOrderInput | SortOrder
+    paymentStatus?: SortOrderInput | SortOrder
+    RekeningName?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    remarksPajak?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SalesProgressCountOrderByAggregateInput
+    _avg?: SalesProgressAvgOrderByAggregateInput
+    _max?: SalesProgressMaxOrderByAggregateInput
+    _min?: SalesProgressMinOrderByAggregateInput
+    _sum?: SalesProgressSumOrderByAggregateInput
+  }
+
+  export type SalesProgressScalarWhereWithAggregatesInput = {
+    AND?: SalesProgressScalarWhereWithAggregatesInput | SalesProgressScalarWhereWithAggregatesInput[]
+    OR?: SalesProgressScalarWhereWithAggregatesInput[]
+    NOT?: SalesProgressScalarWhereWithAggregatesInput | SalesProgressScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SalesProgress"> | string
+    salesName?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    salesCompany?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    nama?: StringWithAggregatesFilter<"SalesProgress"> | string
+    alamatLengkap?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    alamatKota?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    nomorHp?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    sumber?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    status?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    statusCatatan?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    nomorInvoice?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    crosscheck?: BoolWithAggregatesFilter<"SalesProgress"> | boolean
+    fakturPajak?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    totalUnit?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    dpp?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    ppn?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    RekeningName?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    remarks?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    remarksPajak?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SalesProgress"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SalesProgress"> | Date | string
+  }
+
+  export type SalesProgressItemWhereInput = {
+    AND?: SalesProgressItemWhereInput | SalesProgressItemWhereInput[]
+    OR?: SalesProgressItemWhereInput[]
+    NOT?: SalesProgressItemWhereInput | SalesProgressItemWhereInput[]
+    id?: StringFilter<"SalesProgressItem"> | string
+    salesProgressId?: StringFilter<"SalesProgressItem"> | string
+    brand?: StringNullableFilter<"SalesProgressItem"> | string | null
+    namaBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    kodeBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    kategoriBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    qty?: IntFilter<"SalesProgressItem"> | number
+    hargaUnit?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    note?: StringNullableFilter<"SalesProgressItem"> | string | null
+    createdAt?: DateTimeFilter<"SalesProgressItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SalesProgressItem"> | Date | string
+    salesProgress?: XOR<SalesProgressRelationFilter, SalesProgressWhereInput>
+  }
+
+  export type SalesProgressItemOrderByWithRelationInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    brand?: SortOrderInput | SortOrder
+    namaBarang?: SortOrderInput | SortOrder
+    kodeBarang?: SortOrderInput | SortOrder
+    kategoriBarang?: SortOrderInput | SortOrder
+    qty?: SortOrder
+    hargaUnit?: SortOrderInput | SortOrder
+    subtotalUnit?: SortOrderInput | SortOrder
+    hargaDeal?: SortOrderInput | SortOrder
+    subtotalDeal?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    salesProgress?: SalesProgressOrderByWithRelationInput
+  }
+
+  export type SalesProgressItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SalesProgressItemWhereInput | SalesProgressItemWhereInput[]
+    OR?: SalesProgressItemWhereInput[]
+    NOT?: SalesProgressItemWhereInput | SalesProgressItemWhereInput[]
+    salesProgressId?: StringFilter<"SalesProgressItem"> | string
+    brand?: StringNullableFilter<"SalesProgressItem"> | string | null
+    namaBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    kodeBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    kategoriBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    qty?: IntFilter<"SalesProgressItem"> | number
+    hargaUnit?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    note?: StringNullableFilter<"SalesProgressItem"> | string | null
+    createdAt?: DateTimeFilter<"SalesProgressItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SalesProgressItem"> | Date | string
+    salesProgress?: XOR<SalesProgressRelationFilter, SalesProgressWhereInput>
+  }, "id">
+
+  export type SalesProgressItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    brand?: SortOrderInput | SortOrder
+    namaBarang?: SortOrderInput | SortOrder
+    kodeBarang?: SortOrderInput | SortOrder
+    kategoriBarang?: SortOrderInput | SortOrder
+    qty?: SortOrder
+    hargaUnit?: SortOrderInput | SortOrder
+    subtotalUnit?: SortOrderInput | SortOrder
+    hargaDeal?: SortOrderInput | SortOrder
+    subtotalDeal?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SalesProgressItemCountOrderByAggregateInput
+    _avg?: SalesProgressItemAvgOrderByAggregateInput
+    _max?: SalesProgressItemMaxOrderByAggregateInput
+    _min?: SalesProgressItemMinOrderByAggregateInput
+    _sum?: SalesProgressItemSumOrderByAggregateInput
+  }
+
+  export type SalesProgressItemScalarWhereWithAggregatesInput = {
+    AND?: SalesProgressItemScalarWhereWithAggregatesInput | SalesProgressItemScalarWhereWithAggregatesInput[]
+    OR?: SalesProgressItemScalarWhereWithAggregatesInput[]
+    NOT?: SalesProgressItemScalarWhereWithAggregatesInput | SalesProgressItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SalesProgressItem"> | string
+    salesProgressId?: StringWithAggregatesFilter<"SalesProgressItem"> | string
+    brand?: StringNullableWithAggregatesFilter<"SalesProgressItem"> | string | null
+    namaBarang?: StringNullableWithAggregatesFilter<"SalesProgressItem"> | string | null
+    kodeBarang?: StringNullableWithAggregatesFilter<"SalesProgressItem"> | string | null
+    kategoriBarang?: StringNullableWithAggregatesFilter<"SalesProgressItem"> | string | null
+    qty?: IntWithAggregatesFilter<"SalesProgressItem"> | number
+    hargaUnit?: DecimalNullableWithAggregatesFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: DecimalNullableWithAggregatesFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: DecimalNullableWithAggregatesFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: DecimalNullableWithAggregatesFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    note?: StringNullableWithAggregatesFilter<"SalesProgressItem"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SalesProgressItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SalesProgressItem"> | Date | string
+  }
+
+  export type SalesLogWhereInput = {
+    AND?: SalesLogWhereInput | SalesLogWhereInput[]
+    OR?: SalesLogWhereInput[]
+    NOT?: SalesLogWhereInput | SalesLogWhereInput[]
+    id?: StringFilter<"SalesLog"> | string
+    salesProgressId?: StringFilter<"SalesLog"> | string
+    actorName?: StringNullableFilter<"SalesLog"> | string | null
+    actorRole?: StringNullableFilter<"SalesLog"> | string | null
+    action?: StringFilter<"SalesLog"> | string
+    fieldName?: StringNullableFilter<"SalesLog"> | string | null
+    oldValue?: StringNullableFilter<"SalesLog"> | string | null
+    newValue?: StringNullableFilter<"SalesLog"> | string | null
+    note?: StringNullableFilter<"SalesLog"> | string | null
+    createdAt?: DateTimeFilter<"SalesLog"> | Date | string
+    salesProgress?: XOR<SalesProgressRelationFilter, SalesProgressWhereInput>
+  }
+
+  export type SalesLogOrderByWithRelationInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    actorName?: SortOrderInput | SortOrder
+    actorRole?: SortOrderInput | SortOrder
+    action?: SortOrder
+    fieldName?: SortOrderInput | SortOrder
+    oldValue?: SortOrderInput | SortOrder
+    newValue?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    salesProgress?: SalesProgressOrderByWithRelationInput
+  }
+
+  export type SalesLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SalesLogWhereInput | SalesLogWhereInput[]
+    OR?: SalesLogWhereInput[]
+    NOT?: SalesLogWhereInput | SalesLogWhereInput[]
+    salesProgressId?: StringFilter<"SalesLog"> | string
+    actorName?: StringNullableFilter<"SalesLog"> | string | null
+    actorRole?: StringNullableFilter<"SalesLog"> | string | null
+    action?: StringFilter<"SalesLog"> | string
+    fieldName?: StringNullableFilter<"SalesLog"> | string | null
+    oldValue?: StringNullableFilter<"SalesLog"> | string | null
+    newValue?: StringNullableFilter<"SalesLog"> | string | null
+    note?: StringNullableFilter<"SalesLog"> | string | null
+    createdAt?: DateTimeFilter<"SalesLog"> | Date | string
+    salesProgress?: XOR<SalesProgressRelationFilter, SalesProgressWhereInput>
+  }, "id">
+
+  export type SalesLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    actorName?: SortOrderInput | SortOrder
+    actorRole?: SortOrderInput | SortOrder
+    action?: SortOrder
+    fieldName?: SortOrderInput | SortOrder
+    oldValue?: SortOrderInput | SortOrder
+    newValue?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: SalesLogCountOrderByAggregateInput
+    _max?: SalesLogMaxOrderByAggregateInput
+    _min?: SalesLogMinOrderByAggregateInput
+  }
+
+  export type SalesLogScalarWhereWithAggregatesInput = {
+    AND?: SalesLogScalarWhereWithAggregatesInput | SalesLogScalarWhereWithAggregatesInput[]
+    OR?: SalesLogScalarWhereWithAggregatesInput[]
+    NOT?: SalesLogScalarWhereWithAggregatesInput | SalesLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SalesLog"> | string
+    salesProgressId?: StringWithAggregatesFilter<"SalesLog"> | string
+    actorName?: StringNullableWithAggregatesFilter<"SalesLog"> | string | null
+    actorRole?: StringNullableWithAggregatesFilter<"SalesLog"> | string | null
+    action?: StringWithAggregatesFilter<"SalesLog"> | string
+    fieldName?: StringNullableWithAggregatesFilter<"SalesLog"> | string | null
+    oldValue?: StringNullableWithAggregatesFilter<"SalesLog"> | string | null
+    newValue?: StringNullableWithAggregatesFilter<"SalesLog"> | string | null
+    note?: StringNullableWithAggregatesFilter<"SalesLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SalesLog"> | Date | string
   }
 
   export type categoryProductUtamaCreateInput = {
@@ -32430,6 +36501,418 @@ export namespace Prisma {
     salesPenawaranId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type SalesProgressCreateInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: SalesProgressItemCreateNestedManyWithoutSalesProgressInput
+    logs?: SalesLogCreateNestedManyWithoutSalesProgressInput
+  }
+
+  export type SalesProgressUncheckedCreateInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: SalesProgressItemUncheckedCreateNestedManyWithoutSalesProgressInput
+    logs?: SalesLogUncheckedCreateNestedManyWithoutSalesProgressInput
+  }
+
+  export type SalesProgressUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: SalesProgressItemUpdateManyWithoutSalesProgressNestedInput
+    logs?: SalesLogUpdateManyWithoutSalesProgressNestedInput
+  }
+
+  export type SalesProgressUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: SalesProgressItemUncheckedUpdateManyWithoutSalesProgressNestedInput
+    logs?: SalesLogUncheckedUpdateManyWithoutSalesProgressNestedInput
+  }
+
+  export type SalesProgressCreateManyInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SalesProgressUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesProgressUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesProgressItemCreateInput = {
+    id?: string
+    brand?: string | null
+    namaBarang?: string | null
+    kodeBarang?: string | null
+    kategoriBarang?: string | null
+    qty?: number
+    hargaUnit?: Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: Decimal | DecimalJsLike | number | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    salesProgress: SalesProgressCreateNestedOneWithoutItemsInput
+  }
+
+  export type SalesProgressItemUncheckedCreateInput = {
+    id?: string
+    salesProgressId: string
+    brand?: string | null
+    namaBarang?: string | null
+    kodeBarang?: string | null
+    kategoriBarang?: string | null
+    qty?: number
+    hargaUnit?: Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: Decimal | DecimalJsLike | number | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SalesProgressItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salesProgress?: SalesProgressUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type SalesProgressItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesProgressId?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesProgressItemCreateManyInput = {
+    id?: string
+    salesProgressId: string
+    brand?: string | null
+    namaBarang?: string | null
+    kodeBarang?: string | null
+    kategoriBarang?: string | null
+    qty?: number
+    hargaUnit?: Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: Decimal | DecimalJsLike | number | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SalesProgressItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesProgressItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesProgressId?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesLogCreateInput = {
+    id?: string
+    actorName?: string | null
+    actorRole?: string | null
+    action: string
+    fieldName?: string | null
+    oldValue?: string | null
+    newValue?: string | null
+    note?: string | null
+    createdAt?: Date | string
+    salesProgress: SalesProgressCreateNestedOneWithoutLogsInput
+  }
+
+  export type SalesLogUncheckedCreateInput = {
+    id?: string
+    salesProgressId: string
+    actorName?: string | null
+    actorRole?: string | null
+    action: string
+    fieldName?: string | null
+    oldValue?: string | null
+    newValue?: string | null
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SalesLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salesProgress?: SalesProgressUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type SalesLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesProgressId?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesLogCreateManyInput = {
+    id?: string
+    salesProgressId: string
+    actorName?: string | null
+    actorRole?: string | null
+    action: string
+    fieldName?: string | null
+    oldValue?: string | null
+    newValue?: string | null
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SalesLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesProgressId?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -34263,6 +38746,266 @@ export namespace Prisma {
     productPriceFinal?: SortOrder
   }
 
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type SalesProgressItemListRelationFilter = {
+    every?: SalesProgressItemWhereInput
+    some?: SalesProgressItemWhereInput
+    none?: SalesProgressItemWhereInput
+  }
+
+  export type SalesLogListRelationFilter = {
+    every?: SalesLogWhereInput
+    some?: SalesLogWhereInput
+    none?: SalesLogWhereInput
+  }
+
+  export type SalesProgressItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SalesLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SalesProgressCountOrderByAggregateInput = {
+    id?: SortOrder
+    salesName?: SortOrder
+    salesCompany?: SortOrder
+    nama?: SortOrder
+    alamatLengkap?: SortOrder
+    alamatKota?: SortOrder
+    nomorHp?: SortOrder
+    sumber?: SortOrder
+    status?: SortOrder
+    statusCatatan?: SortOrder
+    nomorInvoice?: SortOrder
+    crosscheck?: SortOrder
+    fakturPajak?: SortOrder
+    totalUnit?: SortOrder
+    totalDeal?: SortOrder
+    dpp?: SortOrder
+    ppn?: SortOrder
+    totalPayment?: SortOrder
+    sisaPayment?: SortOrder
+    paymentStatus?: SortOrder
+    RekeningName?: SortOrder
+    remarks?: SortOrder
+    remarksPajak?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SalesProgressAvgOrderByAggregateInput = {
+    totalUnit?: SortOrder
+    totalDeal?: SortOrder
+    dpp?: SortOrder
+    ppn?: SortOrder
+    totalPayment?: SortOrder
+    sisaPayment?: SortOrder
+  }
+
+  export type SalesProgressMaxOrderByAggregateInput = {
+    id?: SortOrder
+    salesName?: SortOrder
+    salesCompany?: SortOrder
+    nama?: SortOrder
+    alamatLengkap?: SortOrder
+    alamatKota?: SortOrder
+    nomorHp?: SortOrder
+    sumber?: SortOrder
+    status?: SortOrder
+    statusCatatan?: SortOrder
+    nomorInvoice?: SortOrder
+    crosscheck?: SortOrder
+    fakturPajak?: SortOrder
+    totalUnit?: SortOrder
+    totalDeal?: SortOrder
+    dpp?: SortOrder
+    ppn?: SortOrder
+    totalPayment?: SortOrder
+    sisaPayment?: SortOrder
+    paymentStatus?: SortOrder
+    RekeningName?: SortOrder
+    remarks?: SortOrder
+    remarksPajak?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SalesProgressMinOrderByAggregateInput = {
+    id?: SortOrder
+    salesName?: SortOrder
+    salesCompany?: SortOrder
+    nama?: SortOrder
+    alamatLengkap?: SortOrder
+    alamatKota?: SortOrder
+    nomorHp?: SortOrder
+    sumber?: SortOrder
+    status?: SortOrder
+    statusCatatan?: SortOrder
+    nomorInvoice?: SortOrder
+    crosscheck?: SortOrder
+    fakturPajak?: SortOrder
+    totalUnit?: SortOrder
+    totalDeal?: SortOrder
+    dpp?: SortOrder
+    ppn?: SortOrder
+    totalPayment?: SortOrder
+    sisaPayment?: SortOrder
+    paymentStatus?: SortOrder
+    RekeningName?: SortOrder
+    remarks?: SortOrder
+    remarksPajak?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SalesProgressSumOrderByAggregateInput = {
+    totalUnit?: SortOrder
+    totalDeal?: SortOrder
+    dpp?: SortOrder
+    ppn?: SortOrder
+    totalPayment?: SortOrder
+    sisaPayment?: SortOrder
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type SalesProgressRelationFilter = {
+    is?: SalesProgressWhereInput
+    isNot?: SalesProgressWhereInput
+  }
+
+  export type SalesProgressItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    brand?: SortOrder
+    namaBarang?: SortOrder
+    kodeBarang?: SortOrder
+    kategoriBarang?: SortOrder
+    qty?: SortOrder
+    hargaUnit?: SortOrder
+    subtotalUnit?: SortOrder
+    hargaDeal?: SortOrder
+    subtotalDeal?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SalesProgressItemAvgOrderByAggregateInput = {
+    qty?: SortOrder
+    hargaUnit?: SortOrder
+    subtotalUnit?: SortOrder
+    hargaDeal?: SortOrder
+    subtotalDeal?: SortOrder
+  }
+
+  export type SalesProgressItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    brand?: SortOrder
+    namaBarang?: SortOrder
+    kodeBarang?: SortOrder
+    kategoriBarang?: SortOrder
+    qty?: SortOrder
+    hargaUnit?: SortOrder
+    subtotalUnit?: SortOrder
+    hargaDeal?: SortOrder
+    subtotalDeal?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SalesProgressItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    brand?: SortOrder
+    namaBarang?: SortOrder
+    kodeBarang?: SortOrder
+    kategoriBarang?: SortOrder
+    qty?: SortOrder
+    hargaUnit?: SortOrder
+    subtotalUnit?: SortOrder
+    hargaDeal?: SortOrder
+    subtotalDeal?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SalesProgressItemSumOrderByAggregateInput = {
+    qty?: SortOrder
+    hargaUnit?: SortOrder
+    subtotalUnit?: SortOrder
+    hargaDeal?: SortOrder
+    subtotalDeal?: SortOrder
+  }
+
+  export type SalesLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    actorName?: SortOrder
+    actorRole?: SortOrder
+    action?: SortOrder
+    fieldName?: SortOrder
+    oldValue?: SortOrder
+    newValue?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SalesLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    actorName?: SortOrder
+    actorRole?: SortOrder
+    action?: SortOrder
+    fieldName?: SortOrder
+    oldValue?: SortOrder
+    newValue?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SalesLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    salesProgressId?: SortOrder
+    actorName?: SortOrder
+    actorRole?: SortOrder
+    action?: SortOrder
+    fieldName?: SortOrder
+    oldValue?: SortOrder
+    newValue?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type categoryProductCreateNestedManyWithoutCategoryProductUtamaInput = {
     create?: XOR<categoryProductCreateWithoutCategoryProductUtamaInput, categoryProductUncheckedCreateWithoutCategoryProductUtamaInput> | categoryProductCreateWithoutCategoryProductUtamaInput[] | categoryProductUncheckedCreateWithoutCategoryProductUtamaInput[]
     connectOrCreate?: categoryProductCreateOrConnectWithoutCategoryProductUtamaInput | categoryProductCreateOrConnectWithoutCategoryProductUtamaInput[]
@@ -35438,6 +40181,126 @@ export namespace Prisma {
     deleteMany?: listProductScalarWhereInput | listProductScalarWhereInput[]
   }
 
+  export type SalesProgressItemCreateNestedManyWithoutSalesProgressInput = {
+    create?: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput> | SalesProgressItemCreateWithoutSalesProgressInput[] | SalesProgressItemUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesProgressItemCreateOrConnectWithoutSalesProgressInput | SalesProgressItemCreateOrConnectWithoutSalesProgressInput[]
+    createMany?: SalesProgressItemCreateManySalesProgressInputEnvelope
+    connect?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+  }
+
+  export type SalesLogCreateNestedManyWithoutSalesProgressInput = {
+    create?: XOR<SalesLogCreateWithoutSalesProgressInput, SalesLogUncheckedCreateWithoutSalesProgressInput> | SalesLogCreateWithoutSalesProgressInput[] | SalesLogUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesLogCreateOrConnectWithoutSalesProgressInput | SalesLogCreateOrConnectWithoutSalesProgressInput[]
+    createMany?: SalesLogCreateManySalesProgressInputEnvelope
+    connect?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+  }
+
+  export type SalesProgressItemUncheckedCreateNestedManyWithoutSalesProgressInput = {
+    create?: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput> | SalesProgressItemCreateWithoutSalesProgressInput[] | SalesProgressItemUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesProgressItemCreateOrConnectWithoutSalesProgressInput | SalesProgressItemCreateOrConnectWithoutSalesProgressInput[]
+    createMany?: SalesProgressItemCreateManySalesProgressInputEnvelope
+    connect?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+  }
+
+  export type SalesLogUncheckedCreateNestedManyWithoutSalesProgressInput = {
+    create?: XOR<SalesLogCreateWithoutSalesProgressInput, SalesLogUncheckedCreateWithoutSalesProgressInput> | SalesLogCreateWithoutSalesProgressInput[] | SalesLogUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesLogCreateOrConnectWithoutSalesProgressInput | SalesLogCreateOrConnectWithoutSalesProgressInput[]
+    createMany?: SalesLogCreateManySalesProgressInputEnvelope
+    connect?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesProgressItemUpdateManyWithoutSalesProgressNestedInput = {
+    create?: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput> | SalesProgressItemCreateWithoutSalesProgressInput[] | SalesProgressItemUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesProgressItemCreateOrConnectWithoutSalesProgressInput | SalesProgressItemCreateOrConnectWithoutSalesProgressInput[]
+    upsert?: SalesProgressItemUpsertWithWhereUniqueWithoutSalesProgressInput | SalesProgressItemUpsertWithWhereUniqueWithoutSalesProgressInput[]
+    createMany?: SalesProgressItemCreateManySalesProgressInputEnvelope
+    set?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    disconnect?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    delete?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    connect?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    update?: SalesProgressItemUpdateWithWhereUniqueWithoutSalesProgressInput | SalesProgressItemUpdateWithWhereUniqueWithoutSalesProgressInput[]
+    updateMany?: SalesProgressItemUpdateManyWithWhereWithoutSalesProgressInput | SalesProgressItemUpdateManyWithWhereWithoutSalesProgressInput[]
+    deleteMany?: SalesProgressItemScalarWhereInput | SalesProgressItemScalarWhereInput[]
+  }
+
+  export type SalesLogUpdateManyWithoutSalesProgressNestedInput = {
+    create?: XOR<SalesLogCreateWithoutSalesProgressInput, SalesLogUncheckedCreateWithoutSalesProgressInput> | SalesLogCreateWithoutSalesProgressInput[] | SalesLogUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesLogCreateOrConnectWithoutSalesProgressInput | SalesLogCreateOrConnectWithoutSalesProgressInput[]
+    upsert?: SalesLogUpsertWithWhereUniqueWithoutSalesProgressInput | SalesLogUpsertWithWhereUniqueWithoutSalesProgressInput[]
+    createMany?: SalesLogCreateManySalesProgressInputEnvelope
+    set?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    disconnect?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    delete?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    connect?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    update?: SalesLogUpdateWithWhereUniqueWithoutSalesProgressInput | SalesLogUpdateWithWhereUniqueWithoutSalesProgressInput[]
+    updateMany?: SalesLogUpdateManyWithWhereWithoutSalesProgressInput | SalesLogUpdateManyWithWhereWithoutSalesProgressInput[]
+    deleteMany?: SalesLogScalarWhereInput | SalesLogScalarWhereInput[]
+  }
+
+  export type SalesProgressItemUncheckedUpdateManyWithoutSalesProgressNestedInput = {
+    create?: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput> | SalesProgressItemCreateWithoutSalesProgressInput[] | SalesProgressItemUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesProgressItemCreateOrConnectWithoutSalesProgressInput | SalesProgressItemCreateOrConnectWithoutSalesProgressInput[]
+    upsert?: SalesProgressItemUpsertWithWhereUniqueWithoutSalesProgressInput | SalesProgressItemUpsertWithWhereUniqueWithoutSalesProgressInput[]
+    createMany?: SalesProgressItemCreateManySalesProgressInputEnvelope
+    set?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    disconnect?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    delete?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    connect?: SalesProgressItemWhereUniqueInput | SalesProgressItemWhereUniqueInput[]
+    update?: SalesProgressItemUpdateWithWhereUniqueWithoutSalesProgressInput | SalesProgressItemUpdateWithWhereUniqueWithoutSalesProgressInput[]
+    updateMany?: SalesProgressItemUpdateManyWithWhereWithoutSalesProgressInput | SalesProgressItemUpdateManyWithWhereWithoutSalesProgressInput[]
+    deleteMany?: SalesProgressItemScalarWhereInput | SalesProgressItemScalarWhereInput[]
+  }
+
+  export type SalesLogUncheckedUpdateManyWithoutSalesProgressNestedInput = {
+    create?: XOR<SalesLogCreateWithoutSalesProgressInput, SalesLogUncheckedCreateWithoutSalesProgressInput> | SalesLogCreateWithoutSalesProgressInput[] | SalesLogUncheckedCreateWithoutSalesProgressInput[]
+    connectOrCreate?: SalesLogCreateOrConnectWithoutSalesProgressInput | SalesLogCreateOrConnectWithoutSalesProgressInput[]
+    upsert?: SalesLogUpsertWithWhereUniqueWithoutSalesProgressInput | SalesLogUpsertWithWhereUniqueWithoutSalesProgressInput[]
+    createMany?: SalesLogCreateManySalesProgressInputEnvelope
+    set?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    disconnect?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    delete?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    connect?: SalesLogWhereUniqueInput | SalesLogWhereUniqueInput[]
+    update?: SalesLogUpdateWithWhereUniqueWithoutSalesProgressInput | SalesLogUpdateWithWhereUniqueWithoutSalesProgressInput[]
+    updateMany?: SalesLogUpdateManyWithWhereWithoutSalesProgressInput | SalesLogUpdateManyWithWhereWithoutSalesProgressInput[]
+    deleteMany?: SalesLogScalarWhereInput | SalesLogScalarWhereInput[]
+  }
+
+  export type SalesProgressCreateNestedOneWithoutItemsInput = {
+    create?: XOR<SalesProgressCreateWithoutItemsInput, SalesProgressUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: SalesProgressCreateOrConnectWithoutItemsInput
+    connect?: SalesProgressWhereUniqueInput
+  }
+
+  export type SalesProgressUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<SalesProgressCreateWithoutItemsInput, SalesProgressUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: SalesProgressCreateOrConnectWithoutItemsInput
+    upsert?: SalesProgressUpsertWithoutItemsInput
+    connect?: SalesProgressWhereUniqueInput
+    update?: XOR<XOR<SalesProgressUpdateToOneWithWhereWithoutItemsInput, SalesProgressUpdateWithoutItemsInput>, SalesProgressUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type SalesProgressCreateNestedOneWithoutLogsInput = {
+    create?: XOR<SalesProgressCreateWithoutLogsInput, SalesProgressUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: SalesProgressCreateOrConnectWithoutLogsInput
+    connect?: SalesProgressWhereUniqueInput
+  }
+
+  export type SalesProgressUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<SalesProgressCreateWithoutLogsInput, SalesProgressUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: SalesProgressCreateOrConnectWithoutLogsInput
+    upsert?: SalesProgressUpsertWithoutLogsInput
+    connect?: SalesProgressWhereUniqueInput
+    update?: XOR<XOR<SalesProgressUpdateToOneWithWhereWithoutLogsInput, SalesProgressUpdateWithoutLogsInput>, SalesProgressUncheckedUpdateWithoutLogsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -35726,6 +40589,33 @@ export namespace Prisma {
     _sum?: NestedBigIntFilter<$PrismaModel>
     _min?: NestedBigIntFilter<$PrismaModel>
     _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type categoryProductCreateWithoutCategoryProductUtamaInput = {
@@ -38926,6 +43816,414 @@ export namespace Prisma {
     grandTotal?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type SalesProgressItemCreateWithoutSalesProgressInput = {
+    id?: string
+    brand?: string | null
+    namaBarang?: string | null
+    kodeBarang?: string | null
+    kategoriBarang?: string | null
+    qty?: number
+    hargaUnit?: Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: Decimal | DecimalJsLike | number | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SalesProgressItemUncheckedCreateWithoutSalesProgressInput = {
+    id?: string
+    brand?: string | null
+    namaBarang?: string | null
+    kodeBarang?: string | null
+    kategoriBarang?: string | null
+    qty?: number
+    hargaUnit?: Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: Decimal | DecimalJsLike | number | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SalesProgressItemCreateOrConnectWithoutSalesProgressInput = {
+    where: SalesProgressItemWhereUniqueInput
+    create: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput>
+  }
+
+  export type SalesProgressItemCreateManySalesProgressInputEnvelope = {
+    data: SalesProgressItemCreateManySalesProgressInput | SalesProgressItemCreateManySalesProgressInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SalesLogCreateWithoutSalesProgressInput = {
+    id?: string
+    actorName?: string | null
+    actorRole?: string | null
+    action: string
+    fieldName?: string | null
+    oldValue?: string | null
+    newValue?: string | null
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SalesLogUncheckedCreateWithoutSalesProgressInput = {
+    id?: string
+    actorName?: string | null
+    actorRole?: string | null
+    action: string
+    fieldName?: string | null
+    oldValue?: string | null
+    newValue?: string | null
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SalesLogCreateOrConnectWithoutSalesProgressInput = {
+    where: SalesLogWhereUniqueInput
+    create: XOR<SalesLogCreateWithoutSalesProgressInput, SalesLogUncheckedCreateWithoutSalesProgressInput>
+  }
+
+  export type SalesLogCreateManySalesProgressInputEnvelope = {
+    data: SalesLogCreateManySalesProgressInput | SalesLogCreateManySalesProgressInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SalesProgressItemUpsertWithWhereUniqueWithoutSalesProgressInput = {
+    where: SalesProgressItemWhereUniqueInput
+    update: XOR<SalesProgressItemUpdateWithoutSalesProgressInput, SalesProgressItemUncheckedUpdateWithoutSalesProgressInput>
+    create: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput>
+  }
+
+  export type SalesProgressItemUpdateWithWhereUniqueWithoutSalesProgressInput = {
+    where: SalesProgressItemWhereUniqueInput
+    data: XOR<SalesProgressItemUpdateWithoutSalesProgressInput, SalesProgressItemUncheckedUpdateWithoutSalesProgressInput>
+  }
+
+  export type SalesProgressItemUpdateManyWithWhereWithoutSalesProgressInput = {
+    where: SalesProgressItemScalarWhereInput
+    data: XOR<SalesProgressItemUpdateManyMutationInput, SalesProgressItemUncheckedUpdateManyWithoutSalesProgressInput>
+  }
+
+  export type SalesProgressItemScalarWhereInput = {
+    AND?: SalesProgressItemScalarWhereInput | SalesProgressItemScalarWhereInput[]
+    OR?: SalesProgressItemScalarWhereInput[]
+    NOT?: SalesProgressItemScalarWhereInput | SalesProgressItemScalarWhereInput[]
+    id?: StringFilter<"SalesProgressItem"> | string
+    salesProgressId?: StringFilter<"SalesProgressItem"> | string
+    brand?: StringNullableFilter<"SalesProgressItem"> | string | null
+    namaBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    kodeBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    kategoriBarang?: StringNullableFilter<"SalesProgressItem"> | string | null
+    qty?: IntFilter<"SalesProgressItem"> | number
+    hargaUnit?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: DecimalNullableFilter<"SalesProgressItem"> | Decimal | DecimalJsLike | number | string | null
+    note?: StringNullableFilter<"SalesProgressItem"> | string | null
+    createdAt?: DateTimeFilter<"SalesProgressItem"> | Date | string
+    updatedAt?: DateTimeFilter<"SalesProgressItem"> | Date | string
+  }
+
+  export type SalesLogUpsertWithWhereUniqueWithoutSalesProgressInput = {
+    where: SalesLogWhereUniqueInput
+    update: XOR<SalesLogUpdateWithoutSalesProgressInput, SalesLogUncheckedUpdateWithoutSalesProgressInput>
+    create: XOR<SalesLogCreateWithoutSalesProgressInput, SalesLogUncheckedCreateWithoutSalesProgressInput>
+  }
+
+  export type SalesLogUpdateWithWhereUniqueWithoutSalesProgressInput = {
+    where: SalesLogWhereUniqueInput
+    data: XOR<SalesLogUpdateWithoutSalesProgressInput, SalesLogUncheckedUpdateWithoutSalesProgressInput>
+  }
+
+  export type SalesLogUpdateManyWithWhereWithoutSalesProgressInput = {
+    where: SalesLogScalarWhereInput
+    data: XOR<SalesLogUpdateManyMutationInput, SalesLogUncheckedUpdateManyWithoutSalesProgressInput>
+  }
+
+  export type SalesLogScalarWhereInput = {
+    AND?: SalesLogScalarWhereInput | SalesLogScalarWhereInput[]
+    OR?: SalesLogScalarWhereInput[]
+    NOT?: SalesLogScalarWhereInput | SalesLogScalarWhereInput[]
+    id?: StringFilter<"SalesLog"> | string
+    salesProgressId?: StringFilter<"SalesLog"> | string
+    actorName?: StringNullableFilter<"SalesLog"> | string | null
+    actorRole?: StringNullableFilter<"SalesLog"> | string | null
+    action?: StringFilter<"SalesLog"> | string
+    fieldName?: StringNullableFilter<"SalesLog"> | string | null
+    oldValue?: StringNullableFilter<"SalesLog"> | string | null
+    newValue?: StringNullableFilter<"SalesLog"> | string | null
+    note?: StringNullableFilter<"SalesLog"> | string | null
+    createdAt?: DateTimeFilter<"SalesLog"> | Date | string
+  }
+
+  export type SalesProgressCreateWithoutItemsInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logs?: SalesLogCreateNestedManyWithoutSalesProgressInput
+  }
+
+  export type SalesProgressUncheckedCreateWithoutItemsInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logs?: SalesLogUncheckedCreateNestedManyWithoutSalesProgressInput
+  }
+
+  export type SalesProgressCreateOrConnectWithoutItemsInput = {
+    where: SalesProgressWhereUniqueInput
+    create: XOR<SalesProgressCreateWithoutItemsInput, SalesProgressUncheckedCreateWithoutItemsInput>
+  }
+
+  export type SalesProgressUpsertWithoutItemsInput = {
+    update: XOR<SalesProgressUpdateWithoutItemsInput, SalesProgressUncheckedUpdateWithoutItemsInput>
+    create: XOR<SalesProgressCreateWithoutItemsInput, SalesProgressUncheckedCreateWithoutItemsInput>
+    where?: SalesProgressWhereInput
+  }
+
+  export type SalesProgressUpdateToOneWithWhereWithoutItemsInput = {
+    where?: SalesProgressWhereInput
+    data: XOR<SalesProgressUpdateWithoutItemsInput, SalesProgressUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type SalesProgressUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: SalesLogUpdateManyWithoutSalesProgressNestedInput
+  }
+
+  export type SalesProgressUncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: SalesLogUncheckedUpdateManyWithoutSalesProgressNestedInput
+  }
+
+  export type SalesProgressCreateWithoutLogsInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: SalesProgressItemCreateNestedManyWithoutSalesProgressInput
+  }
+
+  export type SalesProgressUncheckedCreateWithoutLogsInput = {
+    id?: string
+    salesName?: string | null
+    salesCompany?: string | null
+    nama: string
+    alamatLengkap?: string | null
+    alamatKota?: string | null
+    nomorHp?: string | null
+    sumber?: string | null
+    status?: string | null
+    statusCatatan?: string | null
+    nomorInvoice?: string | null
+    crosscheck?: boolean
+    fakturPajak?: string | null
+    totalUnit?: Decimal | DecimalJsLike | number | string | null
+    totalDeal?: Decimal | DecimalJsLike | number | string | null
+    dpp?: Decimal | DecimalJsLike | number | string | null
+    ppn?: Decimal | DecimalJsLike | number | string | null
+    totalPayment?: Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: string | null
+    RekeningName?: string | null
+    remarks?: string | null
+    remarksPajak?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: SalesProgressItemUncheckedCreateNestedManyWithoutSalesProgressInput
+  }
+
+  export type SalesProgressCreateOrConnectWithoutLogsInput = {
+    where: SalesProgressWhereUniqueInput
+    create: XOR<SalesProgressCreateWithoutLogsInput, SalesProgressUncheckedCreateWithoutLogsInput>
+  }
+
+  export type SalesProgressUpsertWithoutLogsInput = {
+    update: XOR<SalesProgressUpdateWithoutLogsInput, SalesProgressUncheckedUpdateWithoutLogsInput>
+    create: XOR<SalesProgressCreateWithoutLogsInput, SalesProgressUncheckedCreateWithoutLogsInput>
+    where?: SalesProgressWhereInput
+  }
+
+  export type SalesProgressUpdateToOneWithWhereWithoutLogsInput = {
+    where?: SalesProgressWhereInput
+    data: XOR<SalesProgressUpdateWithoutLogsInput, SalesProgressUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type SalesProgressUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: SalesProgressItemUpdateManyWithoutSalesProgressNestedInput
+  }
+
+  export type SalesProgressUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesName?: NullableStringFieldUpdateOperationsInput | string | null
+    salesCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    nama?: StringFieldUpdateOperationsInput | string
+    alamatLengkap?: NullableStringFieldUpdateOperationsInput | string | null
+    alamatKota?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    dpp?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    ppn?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    totalPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sisaPayment?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paymentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    RekeningName?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    remarksPajak?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: SalesProgressItemUncheckedUpdateManyWithoutSalesProgressNestedInput
+  }
+
   export type categoryProductCreateManyCategoryProductUtamaInput = {
     id?: number
     start?: Date | string
@@ -40173,6 +45471,118 @@ export namespace Prisma {
     updateDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SalesProgressItemCreateManySalesProgressInput = {
+    id?: string
+    brand?: string | null
+    namaBarang?: string | null
+    kodeBarang?: string | null
+    kategoriBarang?: string | null
+    qty?: number
+    hargaUnit?: Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: Decimal | DecimalJsLike | number | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SalesLogCreateManySalesProgressInput = {
+    id?: string
+    actorName?: string | null
+    actorRole?: string | null
+    action: string
+    fieldName?: string | null
+    oldValue?: string | null
+    newValue?: string | null
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SalesProgressItemUpdateWithoutSalesProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesProgressItemUncheckedUpdateWithoutSalesProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesProgressItemUncheckedUpdateManyWithoutSalesProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    namaBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kodeBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    kategoriBarang?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    hargaUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    hargaDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesLogUpdateWithoutSalesProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesLogUncheckedUpdateWithoutSalesProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesLogUncheckedUpdateManyWithoutSalesProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorName?: NullableStringFieldUpdateOperationsInput | string | null
+    actorRole?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    fieldName?: NullableStringFieldUpdateOperationsInput | string | null
+    oldValue?: NullableStringFieldUpdateOperationsInput | string | null
+    newValue?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -40226,6 +45636,10 @@ export namespace Prisma {
      * @deprecated Use SalesPenawaranItemCountOutputTypeDefaultArgs instead
      */
     export type SalesPenawaranItemCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesPenawaranItemCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SalesProgressCountOutputTypeDefaultArgs instead
+     */
+    export type SalesProgressCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesProgressCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use categoryProductUtamaDefaultArgs instead
      */
@@ -40314,6 +45728,18 @@ export namespace Prisma {
      * @deprecated Use salesPenawaranItemDefaultArgs instead
      */
     export type salesPenawaranItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = salesPenawaranItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SalesProgressDefaultArgs instead
+     */
+    export type SalesProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesProgressDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SalesProgressItemDefaultArgs instead
+     */
+    export type SalesProgressItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesProgressItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SalesLogDefaultArgs instead
+     */
+    export type SalesLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SalesLogDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
