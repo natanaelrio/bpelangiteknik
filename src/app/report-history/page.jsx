@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import ReportHistory from "@/components/report-history/reportHistory";
+import ReportHistory from "@/components/reportHistory/reportHistory";
 
 export const dynamic = 'force-dynamic'
 
