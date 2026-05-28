@@ -1062,3 +1062,63 @@ select.textarea {
         max-height: 95vh;
     }
 }
+
+/* Totals Summary */
+.totalsSummary {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.totalsItem {
+    text-align: center;
+}
+
+.totalsLabel {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.totalsValue {
+    font-size: 16px;
+    font-weight: bold;
+    color: #212529;
+}
+
+.totalsValueDeal {
+    font-size: 16px;
+    font-weight: bold;
+    color: #c8302f;
+}
+
+.totalsValuePayment {
+    font-size: 16px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.totalsValueRemaining {
+    font-size: 16px;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+/* Spinner animation */
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
