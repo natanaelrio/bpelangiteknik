@@ -4,7 +4,7 @@ import ReportHistory from "@/components/reportHistory/reportHistory";
 
 export const dynamic = 'force-dynamic'
 
-export default async function Home() {
+export default async function ReportHis() {
     const session = await getServerSession(authOptions)
 
     return (
