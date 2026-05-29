@@ -67,7 +67,7 @@ export async function POST(req) {
         // Prepare update data, filtering out undefined values
         // If status is NOT Invoice, clear payment-related fields
         const isInvoice = status === 'Invoice';
-        
+
         const updateData = {
             salesName: salesName || undefined,
             nama,
@@ -134,7 +134,8 @@ export async function POST(req) {
             Object.keys(updateData).forEach(key => {
                 if (key === 'items') return; // Skip items comparison here
                 // Skip DPP/PPN logging if totalDeal hasn't changed (they're auto-calculated)
-                if ((key === 'dpp' || key === 'ppn') && !totalDealChanged) return;
+                // if ((key === 'dpp' || key === 'ppn') && !totalDealChanged) return;
+                if ((key === 'dpp' || key === 'ppn')) return;
 
                 const oldValue = oldRecord[key];
                 const newValue = updateData[key];
