@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import moment from 'moment';
 import 'moment/locale/id';
 import styles from '@/components/SalesProgressReport/SalesProgressReport.module.css';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload, FaSearch, FaChevronLeft, FaChevronRight, FaSignOutAlt } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload, FaSearch, FaChevronLeft, FaChevronRight, FaSignOutAlt, FaSpinner } from 'react-icons/fa';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { motivationalQuotes } from '../utils/motivationalQuotes';
 import Link from 'next/link';
@@ -62,9 +62,15 @@ export default function SalesProgressReport({ session }) {
     // Loading state for submit
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Loading state for download
+    const [isDownloading, setIsDownloading] = useState(false);
+
+    // Loading state for logs
+    const [isLoadingLogs, setIsLoadingLogs] = useState(false);
+
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 20;
+    const itemsPerPage = 5;
 
     // Filter states
     const [searchTerm, setSearchTerm] = useState('');
@@ -206,6 +212,7 @@ export default function SalesProgressReport({ session }) {
     // Fetch logs for a specific record
     const fetchLogs = async (salesProgressId) => {
         try {
+            setIsLoadingLogs(true);
             const response = await fetch(
                 `/api/get/salesLog?salesProgressId=${salesProgressId}&limit=100`,
                 {
@@ -219,6 +226,8 @@ export default function SalesProgressReport({ session }) {
             }
         } catch (error) {
             toast.error('Gagal memuat logs');
+        } finally {
+            setIsLoadingLogs(false);
         }
     };
 
@@ -701,7 +710,80 @@ a.c 588.5062.609`
     };
 
     // Handle download offer letter (penawaran)
+
     const handleDownloadPenawaran = async (item) => {
+
+        const buildWhatsAppMessageDownloadPenawarkan = () => {
+            const itemsList = item.items?.map((recordItem, idx) => {
+                return `${idx + 1}. ${recordItem.brand || '-'} - ${recordItem.namaBarang || '-'} (${recordItem.kategoriBarang === 'sparepart' ? 'Sparepart' : 'Unit'})
+   Qty: ${recordItem.qty || 0} | Harga OCT: Rp ${parseFloat(recordItem.hargaUnit || 0).toLocaleString('id-ID')} | Harga Deal: Rp ${parseFloat(recordItem.hargaDeal || 0).toLocaleString('id-ID')}`;
+            }).join('\n\n');
+
+            const totalUnit = item.items?.reduce((sum, recordItem) => sum + (parseFloat(recordItem.subtotalUnit) || 0), 0) || 0;
+            const totalDeal = item.items?.reduce((sum, recordItem) => sum + (parseFloat(recordItem.subtotalDeal) || 0), 0) || 0;
+            const dpp = Math.round(totalDeal / 1.11);
+            const ppn = Math.round(dpp * 0.11);
+
+            const message = `📄 *SURAT PENAWARAN TELAH DI-DOWNLOAD*
+
+🏢 *Perusahaan:* ${perusahaan}
+👤 *Sales:* ${item.salesName || userName}
+📅 *Tanggal:* ${moment().format('DD MMMM YYYY HH:mm')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 *DATA CUSTOMER*
+• *Nama:* ${item.nama || '-'}
+• *No. HP:* ${item.nomorHp || '-'}
+• *Kota:* ${item.alamatKota || '-'}
+• *Alamat:* ${item.alamatLengkap || '-'}
+• *Sumber:* ${item.sumber || '-'}
+
+📌 *STATUS*
+• *Status:* ${item.status || '-'}
+• *Catatan:* ${item.statusCatatan || '-'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛒 *DAFTAR PRODUK*
+${itemsList}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 *TOTAL*
+• Total Unit (OCT): Rp ${totalUnit.toLocaleString('id-ID')}
+• Total Deal: Rp ${totalDeal.toLocaleString('id-ID')}
+• DPP: Rp ${dpp.toLocaleString('id-ID')}
+• PPN: Rp ${ppn.toLocaleString('id-ID')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+_Surat Penawaran telah di-download_
+_Pengiriman dari Sales Progress Report_`;
+
+            return message;
+        };
+
+        const sendToWhatsAppDownloadPenawaran = async () => {
+            try {
+                const isProduction = process.env.NODE_ENV === 'production';
+
+                const payloadSalesPenawaran = {
+                    groupId: isProduction ? '120363411343925143@g.us' : '120363406595440008@g.us',
+                    message: buildWhatsAppMessageDownloadPenawarkan()
+                };
+
+                const result = await SendGroupReportSales(payloadSalesPenawaran);
+
+                if (result?.success) {
+                    toast.success('Laporan berhasil dikirim ke WhatsApp!');
+                } else {
+                    toast.error('Gagal mengirim ke WhatsApp');
+                }
+            } catch (error) {
+                console.error('WhatsApp send error:', error);
+                toast.error('Error mengirim ke WhatsApp');
+            }
+        };
         // Prepare data from sales progress item
         const customerName = item.nama;
 
@@ -959,9 +1041,15 @@ a.c 588.5062.609`
                 // Refresh data to show updated status
                 fetchData();
                 toast.success('Status updated to Penawarkan');
+
+                // Send to WhatsApp after successful download
+                // Send to WhatsApp group
+                await sendToWhatsAppDownloadPenawaran();
             }
         } catch (error) {
             console.error('Error updating status:', error);
+        } finally {
+            setIsDownloading(false);
         }
     };
 
@@ -1245,15 +1333,17 @@ a.c 588.5062.609`
                                             onClick={() => {
                                                 fetchLogs(item.id);
                                             }}
+                                            disabled={isLoadingLogs}
                                         >
-                                            <FaEye /> Logs
+                                            {isLoadingLogs ? <FaSpinner /> : <FaEye />} Logs
                                         </button>
                                         <button
                                             className={styles.detailBtn}
                                             onClick={() => openDownloadModal(item)}
                                             style={{ backgroundColor: '#8B5CF6' }}
+                                            disabled={isDownloading}
                                         >
-                                            <FaDownload /> Penawaran
+                                            {isDownloading ? <FaSpinner /> : <FaDownload />} Penawaran
                                         </button>
                                         {SPV && (
                                             <button
@@ -2832,3 +2922,7 @@ a.c 588.5062.609`
         </div >
     );
 }
+
+
+
+
