@@ -521,8 +521,10 @@ _Dikirim dari Sales Progress Report_`;
     const sendToWhatsApp = async () => {
         try {
             const spv = userRole === 'SPV';
+            const isProduction = process.env.NODE_ENV === 'production';
+
             const payloadSalesPenawaran = {
-                groupId: spv ? '120363406595440008@g.us' : '120363411343925143@g.us',
+                groupId: isProduction ? '120363411343925143@g.us' : '120363406595440008@g.us',
                 message: buildWhatsAppMessage()
             };
 
