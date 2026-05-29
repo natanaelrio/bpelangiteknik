@@ -14,7 +14,7 @@ import { SendGroupReportSales } from '../service/handleCRM';
 
 // List of Indonesian provinces
 const PROVINCES = [
-    "Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi",
+    "Tidak diketahui", "Luar Negeri", "Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi",
     "Sumatera Selatan", "Bengkulu", "Lampung", "Kepulauan Bangka Belitung",
     "Kepulauan Riau", "DKI Jakarta", "Jawa Barat", "Jawa Tengah",
     "DI Yogyakarta", "Jawa Timur", "Banten", "Bali", "Nusa Tenggara Barat",
