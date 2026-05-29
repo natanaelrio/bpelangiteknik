@@ -27,14 +27,14 @@ export const authOptions = {
                 if (!credentials?.email || !credentials.password) return null
 
                 const users = [
-                    { id: "1", email: "sales01@pelangiteknik.com", password: "sales01pelangi", username: "ALMA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
-                    { id: "2", email: "sales02@pelangiteknik.com", password: "sales02pelangi", username: "SIFA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
-                    { id: "3", email: "sales03@pelangiteknik.com", password: "sales03pelangi", username: "INA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
-                    { id: "4", email: "sales04@pelangiteknik.com", password: "sales04pelangi", username: "-", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
-                    { id: "6", email: "sales01@tsuzumijapan.com", password: "sales01tsuzumi", username: "DHITA", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
-                    { id: "7", email: "sales02@tsuzumijapan.com", password: "sales02tsuzumi", username: "AZZAH", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
-                    { id: "5", email: "rio@pelangiteknik.com", password: "rio12345", username: "rio", role: "SPV", perusahaan: "PT Pelangi Teknik Indonesia" },
-                    { id: "8", email: "it@pelangiteknik.com", password: "itpelangiteknik", username: "Fauzan", role: "STAFF IT", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "1", email: "sales01@pelangiteknik.com", password: "sales01pelangi", nomorHp: "+62 859-3855-2586", username: "ALMA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "2", email: "sales02@pelangiteknik.com", password: "sales02pelangi", nomorHp: "+62 859-3855-2576", username: "SIFA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "3", email: "sales03@pelangiteknik.com", password: "sales03pelangi", nomorHp: "+62 877-3923-5740", username: "INA", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "4", email: "sales04@pelangiteknik.com", password: "sales04pelangi", nomorHp: "00000000000", username: "-", role: "SALES", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "6", email: "sales01@tsuzumijapan.com", password: "sales01tsuzumi", nomorHp: "+62 851-9521-9494", username: "DHITA", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
+                    { id: "7", email: "sales02@tsuzumijapan.com", password: "sales02tsuzumi", nomorHp: "+62 819-4428-9494", username: "AZZAH", role: "SALES", perusahaan: "PT Tsuzumi Japan Technology" },
+                    { id: "5", email: "rio@pelangiteknik.com", password: "rio12345", nomorHp: "+62 878-3833-9494", username: "rio", role: "SPV", perusahaan: "PT Pelangi Teknik Indonesia" },
+                    { id: "8", email: "it@pelangiteknik.com", password: "itpelangiteknik", nomorHp: "+62 878-0116-2929", username: "Fauzan", role: "STAFF IT", perusahaan: "PT Pelangi Teknik Indonesia" },
                 ];
 
                 // Cari pengguna berdasarkan email dan password

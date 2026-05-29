@@ -11,6 +11,13 @@ import { motivationalQuotes } from '../utils/motivationalQuotes';
 import Link from 'next/link';
 import { signOut } from "next-auth/react"
 import { SendGroupReportSales } from '../service/handleCRM';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import QRCode from 'qrcode';
+import LogoAtas from './logo/logoAtas';
+import TTD from './logo/ttd';
+import LogoAtasTZ from './logo/logoAtasTZ';
+import TTDTZ from './logo/ttdTZ';
 
 // List of Indonesian provinces
 const PROVINCES = [
@@ -30,8 +37,14 @@ export default function SalesProgressReport({ session }) {
     const userName = session.username || 'User';
     const userRole = session.role || 'SALES';
     const perusahaan = session.perusahaan || 'PT xxxx';
+    const nomerHp = session.nomerHp || '000000000000';
 
     const SPV = session.role === 'SPV' || false;
+
+    const logoBase64 = LogoAtas()
+    const logoTTD = TTD()
+    const logoBase64TZ = LogoAtasTZ()
+    const logoTTDTZ = TTDTZ()
 
     // Get random motivational quote
     const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
@@ -609,6 +622,335 @@ _Dikirim dari Sales Progress Report_`;
         setShowModal(true);
     };
 
+    const bankList = [
+        {
+            nama: "Bank BCA - PT Pelangi Teknik Indonesia",
+            detail: `Bank BCA
+a.n PT Pelangi Teknik Indonesia
+Cab : Lindeteves Trade Center
+Swift Code : CENAIDJA
+a.c 5885.127.255`
+        },
+        {
+            nama: "Bank BCA - PT Tsuzumi Japan Teknologi",
+            detail: `Bank BCA
+a.n PT Tsuzumi Japan Teknologi
+a.c  5885-611-777`
+        },
+        {
+            nama: "Bank BCA - Fenti Marlina",
+            detail: `Bank BCA
+a.n Fenti Marlina
+Cab : Lindeteves Trade Center
+Swift Code : CENAIDJA
+a.c 588.5062.609`
+        }
+    ];
+
+    // Download modal states
+    const [showDownloadModal, setShowDownloadModal] = useState(false);
+    const [selectedDownloadItem, setSelectedDownloadItem] = useState(null);
+    const [selectedBank, setSelectedBank] = useState(bankList[0]);
+    const [downloadNotes, setDownloadNotes] = useState([
+        "Garansi servise 1 tahun",
+        "Pembayaran cash before shipping",
+        "Franco Jabodetabek",
+        "Surat penawaran berlaku selama 3 (Tiga) minggu sejak surat penawaran di buat."
+    ]);
+
+    // Handler for opening download modal
+    const openDownloadModal = (item) => {
+        setSelectedDownloadItem(item);
+        setSelectedBank(bankList[0]);
+        setDownloadNotes([
+            "Garansi servise 1 tahun",
+            "Pembayaran cash before shipping",
+            "Franco Jabodetabek",
+            "Surat penawaran berlaku selama 3 (Tiga) minggu sejak surat penawaran di buat."
+        ]);
+        setShowDownloadModal(true);
+    };
+
+    // Add new note
+    const addDownloadNote = () => {
+        setDownloadNotes([...downloadNotes, ""]);
+    };
+
+    // Remove note
+    const removeDownloadNote = (index) => {
+        setDownloadNotes(downloadNotes.filter((_, i) => i !== index));
+    };
+
+    // Update note
+    const updateDownloadNote = (index, value) => {
+        const newNotes = [...downloadNotes];
+        newNotes[index] = value;
+        setDownloadNotes(newNotes);
+    };
+
+    // Handle download offer letter (penawaran)
+    const handleDownloadPenawaran = async (item) => {
+        // Prepare data from sales progress item
+        const customerName = item.nama;
+
+        // Transform items to offer letter format
+        const dataPenawarkan = item.items?.map(recordItem => ({
+            productName: recordItem.namaBarang || '-',
+            spekNew: [], // No specs in sales progress
+            qty: recordItem.qty || 1,
+            productPriceFinal: recordItem.hargaDeal || 0
+        })) || [];
+
+        const totalQty = dataPenawarkan.reduce((sum, item) => sum + (parseInt(item.qty) || 0), 0);
+        const totalKeseluruhan = dataPenawarkan.reduce((sum, item) => sum + (parseFloat(item.productPriceFinal) || 0) * (parseInt(item.qty) || 0), 0);
+        const includePPN = true; // Default to include PPN
+
+        // Use selected bank from modal
+        const currentBank = selectedBank || bankList[0];
+
+        // Use notes from state (filter out empty ones)
+        const notes = downloadNotes.filter(n => n.trim() !== '');
+
+        // Sales info
+        const nameSales = item.salesName || userName;
+        const numberSales = ''; // Phone number not stored in sales progress
+
+        // Generate QR Code
+        const qrCodeData = perusahaan === 'PT Pelangi Teknik Indonesia' && await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`) || perusahaan === 'PT Tsuzumi Japan Technology' && await generateQRCode(`https://tsuzumijapan.com`) || '';
+
+        const docDefinitionv = {
+            content: [
+                {
+                    columns: [
+                        {
+                            image: qrCodeData,
+                            width: 70,
+                            style: 'qr'
+                        },
+                        {
+                            stack:
+                                perusahaan === 'PT Pelangi Teknik Indonesia'
+                                    ? [
+                                        { image: logoBase64, width: 230, alignment: 'right', style: 'gambarlogo' },
+                                        { text: 'Lindeteves Trade Center Lt. GF2 Blok B7 No. 05', style: 'atasLogo', alignment: 'right' },
+                                        { text: 'Jl. Hayam Wuruk No.127 - Jakarta Barat', style: 'atasLogo', alignment: 'right' },
+                                        { text: 'Tel.021-62303512; pelangiteknik@rocketmail.com', style: 'atasLogo', alignment: 'right' },
+                                        { text: 'www.pelangiteknik.com', style: 'atasLogo', alignment: 'right' },
+                                    ]
+                                    : perusahaan === 'PT Tsuzumi Japan Technology'
+                                        ? [
+                                            { image: logoBase64TZ, width: 210, alignment: 'right', style: 'gambarlogo' },
+                                            { text: 'Jl. Hasyim Ashari No. 29 – Tangerang', style: 'atasLogo', alignment: 'right' },
+                                            { text: 'No Telp : 085195219494 / 085195209494', style: 'atasLogo', alignment: 'right' },
+                                            { text: 'www.tsuzumijapan.com | Email : hello@tsuzumijapan.com', style: 'atasLogo', alignment: 'right' },
+                                        ]
+                                        : []
+                        }
+                    ],
+                    columnGap: 10,
+                },
+                { text: '\n' },
+                { text: '\n' },
+
+                { text: `Jakarta, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`, style: 'defaultStyle' },
+                { text: '\n' },
+                { text: 'Kepada Yth,', style: 'Blode' },
+                { text: `${customerName}`, style: 'Blode' },
+                { text: item.alamatKota || '', style: 'Blode' },
+                { text: '\n' },
+                { text: `Perihal       : Surat Penawaran`, style: 'Blode' },
+                { text: '\n' },
+                { text: `Dengan hormat, demikian disampaikan informasi dari barang yang saudara butuhkan :`, style: 'defaultStyle' },
+                { text: '\n' },
+
+                {
+                    table: {
+                        widths: ['auto', '*', 'auto', 'auto'],
+                        body: [
+                            [
+                                { text: "Jumlah", style: "tableHeader", alignment: 'center' },
+                                { text: "Deskripsi Barang", style: "tableHeader" },
+                                { text: "Harga Satuan", style: "tableHeader" },
+                                { text: "Total", style: "tableHeader" },
+                            ],
+                            ...dataPenawarkan.map((recordItem) => [
+                                {
+                                    text: String(recordItem.qty),
+                                    style: "subheader",
+                                    alignment: "center"
+                                },
+                                {
+                                    text: recordItem.productName,
+                                    style: "tableCell",
+                                    fontSize: 10
+                                },
+                                {
+                                    text: formatRupiah(recordItem.productPriceFinal),
+                                    style: "subheader",
+                                    alignment: "right",
+                                    fontSize: 10
+                                },
+                                {
+                                    text: formatRupiah(parseFloat(recordItem.productPriceFinal) * parseInt(recordItem.qty)),
+                                    style: "subheader",
+                                    alignment: "right",
+                                    fontSize: 10
+                                }
+                            ]),
+                            [
+                                { text: totalQty, style: "tableHeader", alignment: 'center' },
+                                { text: "", style: "tableHeader" },
+                                { text: "", style: "tableHeader" },
+                                { text: "", style: "tableHeader" },
+                            ],
+                            ...(includePPN
+                                ? [
+                                    [
+                                        { text: "", colSpan: 2, border: [false, false, false, false] },
+                                        {},
+                                        { text: 'TOTAL', style: "tableHeader" },
+                                        { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
+                                    ],
+                                    // [
+                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
+                                    //     {},
+                                    //     { text: 'TAX (11%)', style: "tableHeader" },
+                                    //     { text: formatRupiah((totalKeseluruhan * 11) / 100), style: "tableHeader" },
+                                    // ],
+                                    // [
+                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
+                                    //     {},
+                                    //     { text: 'GRANDTOTAL', style: "tableHeader" },
+                                    //     { text: formatRupiah(totalKeseluruhan + (totalKeseluruhan * 11) / 100), style: "tableHeader" },
+                                    // ]
+                                ]
+                                : [
+                                    [
+                                        { text: "", colSpan: 2, border: [false, false, false, false] },
+                                        {},
+                                        { text: 'GRANDTOTAL', style: "tableHeader" },
+                                        { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
+                                    ]
+                                ])
+                        ]
+                    },
+                    layout: {
+                        hLineWidth: () => 0.5,
+                        vLineWidth: () => 0.5,
+                        hLineColor: () => 'gray',
+                        vLineColor: () => 'gray',
+                    },
+                    margin: [30, 0, 30, 0]
+                },
+
+                { text: '\n' },
+
+                {
+                    stack: [
+                        { text: 'NOTE:', bold: true },
+                        { ul: notes, style: 'defaultStyle' }
+                    ]
+                },
+
+                { text: '\n' },
+
+                currentBank && {
+                    text: [
+                        { text: 'PEMBAYARAN:\n', bold: true },
+                        currentBank.detail
+                    ],
+                    style: 'defaultStyle'
+                },
+
+                { text: '\n' },
+                { text: `Informasi lebih lanjut hubungi ${nameSales} - ${nomerHp}`, style: 'defaultStyle' },
+
+                { text: '\n' },
+                { text: '\n' },
+
+                { text: 'Salam,', style: 'ttd', alignment: 'right' },
+                { image: perusahaan === 'PT Pelangi Teknik Indonesia' && logoTTD || perusahaan === 'PT Tsuzumi Japan Technology' && logoTTDTZ, width: 150, alignment: 'right', style: 'gambarlogo' },
+                { text: 'Jakarta,', style: 'ttd', alignment: 'right' }
+            ],
+            styles: {
+                atasLogo: { fontSize: 8, marginLeft: 30, marginRight: 30 },
+                Blode: { fontSize: 10, bold: true, marginLeft: 30, marginRight: 30 },
+                ttd: { fontSize: 10, bold: true, marginLeft: 70, marginRight: 70 },
+                productjudul: { fontSize: 10, marginLeft: 70, marginRight: 30, bold: true },
+                product: { fontSize: 10, marginLeft: 70 },
+                defaultStyle: { fontSize: 10, marginLeft: 30, marginRight: 30 },
+                qr: { marginLeft: 30, marginRight: 30, marginTop: 10 },
+                gambarlogo: { marginRight: 14 },
+                tableHeader: { bold: true, fontSize: 10, color: 'black', fillColor: '#f2f2f2', margin: 5 },
+                tableCell: { margin: 5 },
+                subheader: { fontSize: 10, margin: 5, alignment: 'center' },
+                footerText: { fontSize: 8, italics: true, margin: [0, 0, 0, 10], color: 'gray' }
+            },
+
+            footer: function (currentPage, pageCount) {
+                return {
+                    text: `Halaman ${currentPage} dari ${pageCount}`,
+                    alignment: 'right',
+                    margin: [0, 0, 40, 20],
+                    fontSize: 8,
+                    color: 'gray'
+                };
+            },
+        };
+
+        pdfMake.createPdf(docDefinitionv).download(`Surat_Penawaran_${customerName}.pdf`);
+
+        // Update status to "Penawaran" and add log entry
+        try {
+            // First, update the status to "Penawaran"
+            const updateResponse = await fetch('/api/p/salesProgress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: API_KEY
+                },
+                body: JSON.stringify({
+                    id: item.id,
+                    salesName: item.salesName || userName,
+                    nama: item.nama,
+                    alamatLengkap: item.alamatLengkap,
+                    alamatKota: item.alamatKota,
+                    nomorHp: item.nomorHp,
+                    sumber: item.sumber,
+                    status: 'Penawaran',
+                    statusCatatan: item.statusCatatan || 'Surat Penawaran telah di-download',
+                    crosscheck: item.crosscheck || false,
+                    fakturPajak: item.fakturPajak || '',
+                    nomorInvoice: item.nomorInvoice || '',
+                    totalUnit: item.totalUnit || '',
+                    totalDeal: item.totalDeal || '',
+                    dpp: item.dpp || '',
+                    ppn: item.ppn || '',
+                    remarks: item.remarks || '',
+                    remarksPajak: item.remarksPajak || '',
+                    totalPayment: item.totalPayment || '',
+                    sisaPayment: item.sisaPayment || '',
+                    paymentStatus: item.paymentStatus || '',
+                    salesCompany: item.salesCompany || perusahaan,
+                    RekeningName: item.RekeningName || '',
+                    items: item.items || [],
+                    actorName: userName,
+                    actorRole: userRole,
+                    oldValues: item
+                })
+            });
+
+            const updateResult = await updateResponse.json();
+            if (updateResult.isSuccess) {
+                // Refresh data to show updated status
+                // fetchData();
+                toast.success('Status updated to Penawarkan');
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    };
+
     const resetForm = () => {
         setFormData({
             salesName: userName || '',
@@ -650,6 +992,16 @@ _Dikirim dari Sales Progress Report_`;
             }]
         });
         setSelectedRecord(null);
+    };
+
+    //Handle Penawaran
+    const generateQRCode = async (text) => {
+        try {
+            return await QRCode.toDataURL(text);
+        } catch (err) {
+            console.error(err);
+            return '';
+        }
     };
 
     // Pagination calculations (using API-based total count)
@@ -881,6 +1233,13 @@ _Dikirim dari Sales Progress Report_`;
                                             }}
                                         >
                                             <FaEye /> Logs
+                                        </button>
+                                        <button
+                                            className={styles.detailBtn}
+                                            onClick={() => openDownloadModal(item)}
+                                            style={{ backgroundColor: '#8B5CF6' }}
+                                        >
+                                            <FaDownload /> Penawaran
                                         </button>
                                         {SPV && (
                                             <button
@@ -2346,6 +2705,110 @@ _Dikirim dari Sales Progress Report_`;
                                     onClick={() => setShowDetailModal(false)}
                                 >
                                     Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            {/* Download Penawaran Modal */}
+            {
+                showDownloadModal && selectedDownloadItem && (
+                    <div className={styles.modalOverlay} onClick={() => setShowDownloadModal(false)}>
+                        <div className={styles.modal} style={{ maxWidth: '500px' }} onClick={(e) => e.stopPropagation()}>
+                            <div className={styles.modalHeader}>
+                                <h2>Download Penawaran</h2>
+                                <button
+                                    className={styles.closeBtn}
+                                    onClick={() => setShowDownloadModal(false)}
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            <div className={styles.modalContent}>
+                                {/* Bank Selection */}
+                                <div className={styles.formGroup} style={{ marginBottom: '15px' }}>
+                                    <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Pilih Bank</label>
+                                    <select
+                                        value={selectedBank?.nama || ''}
+                                        onChange={(e) => {
+                                            const bank = bankList.find(b => b.nama === e.target.value);
+                                            setSelectedBank(bank);
+                                        }}
+                                        className={styles.input}
+                                        style={{ width: '100%', padding: '10px' }}
+                                    >
+                                        {bankList.map((bank, index) => (
+                                            <option key={index} value={bank.nama}>
+                                                {bank.nama}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Notes Section */}
+                                <div style={{ marginBottom: '10px' }}>
+                                    <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Catatan</label>
+                                    {downloadNotes.map((note, index) => (
+                                        <div key={index} style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
+                                            <input
+                                                type="text"
+                                                value={note}
+                                                onChange={(e) => updateDownloadNote(index, e.target.value)}
+                                                className={styles.input}
+                                                style={{ flex: 1, padding: '8px' }}
+                                                placeholder="Masukkan catatan..."
+                                            />
+                                            <button
+                                                onClick={() => removeDownloadNote(index)}
+                                                style={{
+                                                    padding: '8px 12px',
+                                                    backgroundColor: '#EF4444',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    ))}
+                                    <button
+                                        onClick={addDownloadNote}
+                                        style={{
+                                            padding: '8px 12px',
+                                            backgroundColor: '#10B981',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                            marginTop: '5px'
+                                        }}
+                                    >
+                                        + Tambah Catatan
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className={styles.modalFooter}>
+                                <button
+                                    className={styles.btnEdit}
+                                    onClick={() => {
+                                        handleDownloadPenawaran(selectedDownloadItem);
+                                        setShowDownloadModal(false);
+                                    }}
+                                    style={{ backgroundColor: '#8B5CF6' }}
+                                >
+                                    <FaDownload /> Download
+                                </button>
+                                <button
+                                    className={styles.btnCancel}
+                                    onClick={() => setShowDownloadModal(false)}
+                                >
+                                    Batal
                                 </button>
                             </div>
                         </div>
