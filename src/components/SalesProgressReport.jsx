@@ -437,6 +437,18 @@ export default function SalesProgressReport({ session }) {
             apiData.RekeningName = '';
             apiData.totalPayment = '';
             apiData.sisaPayment = '';
+
+            // Also clear payment fields in oldValues to prevent logging payment changes
+            if (modalMode === 'edit' && apiData.oldValues) {
+                apiData.oldValues = {
+                    ...apiData.oldValues,
+                    paymentStatus: '',
+                    nomorInvoice: '',
+                    RekeningName: '',
+                    totalPayment: '',
+                    sisaPayment: ''
+                };
+            }
         }
 
         try {
@@ -901,6 +913,7 @@ a.c 588.5062.609`
         pdfMake.createPdf(docDefinitionv).download(`Surat_Penawaran_${customerName}.pdf`);
 
         // Update status to "Penawaran" and add log entry
+        // Note: For non-Invoice status, payment fields should be empty to avoid logging them
         try {
             // First, update the status to "Penawaran"
             const updateResponse = await fetch('/api/p/salesProgress', {
@@ -920,19 +933,20 @@ a.c 588.5062.609`
                     status: 'Penawaran',
                     statusCatatan: item.statusCatatan || 'Surat Penawaran telah di-download',
                     crosscheck: item.crosscheck || false,
-                    fakturPajak: item.fakturPajak || '',
-                    nomorInvoice: item.nomorInvoice || '',
+                    fakturPajak: '',
+                    nomorInvoice: '',
                     totalUnit: item.totalUnit || '',
                     totalDeal: item.totalDeal || '',
                     dpp: item.dpp || '',
                     ppn: item.ppn || '',
                     remarks: item.remarks || '',
                     remarksPajak: item.remarksPajak || '',
-                    totalPayment: item.totalPayment || '',
-                    sisaPayment: item.sisaPayment || '',
-                    paymentStatus: item.paymentStatus || '',
+                    // Payment fields - set to empty for non-Invoice status to avoid logging
+                    totalPayment: '',
+                    sisaPayment: '',
+                    paymentStatus: '',
                     salesCompany: item.salesCompany || perusahaan,
-                    RekeningName: item.RekeningName || '',
+                    RekeningName: '',
                     items: item.items || [],
                     actorName: userName,
                     actorRole: userRole,
