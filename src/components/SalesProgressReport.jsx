@@ -943,7 +943,7 @@ a.c 588.5062.609`
             const updateResult = await updateResponse.json();
             if (updateResult.isSuccess) {
                 // Refresh data to show updated status
-                // fetchData();
+                fetchData();
                 toast.success('Status updated to Penawarkan');
             }
         } catch (error) {
