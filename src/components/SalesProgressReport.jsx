@@ -1069,8 +1069,8 @@ _Dikirim dari Sales Progress Report_`;
                                                     <option value="">Pilih Sumber</option>
                                                     <option value="USAHA SENDIRI">USAHA SENDIRI</option>
                                                     <option value="WALK IN">WALK IN</option>
-                                                    <option value="WA PA TOMMY">WA PA TOMMY</option>
-                                                    <option value="WA CI FENTI">WA CI FENTI</option>
+                                                    <option value="WA TOMMY ADMADIREDJA">WA TOMMY ADMADIREDJA</option>
+                                                    <option value="WA FENTI MARLINA">WA FENTI MARLINA</option>
                                                     <option value="WEB PELANGI">WEB PELANGI</option>
                                                     <option value="WEB TSUZUMI/TALK TO">WEB TSUZUMI/TALK TO</option>
                                                     <option value="GRUP SALES PT">GRUP SALES PT</option>
