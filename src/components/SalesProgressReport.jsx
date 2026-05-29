@@ -127,8 +127,15 @@ export default function SalesProgressReport({ session }) {
     // Build query params for API
     const buildQueryParams = () => {
         const params = new URLSearchParams();
+
+        // If not SPV, only show own data
+        if (userRole !== 'SPV') {
+            params.append('salesName', userName);
+        } else if (salesNameFilter) {
+            params.append('salesName', salesNameFilter);
+        }
+
         if (statusFilter) params.append('status', statusFilter);
-        if (salesNameFilter) params.append('salesName', salesNameFilter);
         if (paymentStatusFilter) params.append('paymentStatus', paymentStatusFilter);
         if (debouncedSearch) params.append('search', debouncedSearch);
         if (dateFrom) params.append('dateFrom', dateFrom);
@@ -432,14 +439,14 @@ export default function SalesProgressReport({ session }) {
             const result = await response.json();
             if (result.isSuccess) {
                 toast.success(result.message);
-                
+
                 // Send to WhatsApp after successful save
                 try {
                     await sendToWhatsApp();
                 } catch (waError) {
                     console.error('WhatsApp send error:', waError);
                 }
-                
+
                 setShowModal(false);
                 resetForm();
                 fetchData();
@@ -520,7 +527,7 @@ _Dikirim dari Sales Progress Report_`;
             };
 
             const result = await SendGroupReportSales(payloadSalesPenawaran);
-            
+
             if (result?.success) {
                 toast.success('Laporan berhasil dikirim ke WhatsApp!');
             } else {
@@ -733,12 +740,13 @@ _Dikirim dari Sales Progress Report_`;
                     <div className={styles.filterGroup}>
                         <label>Nama Sales</label>
                         <select
-                            value={salesNameFilter}
+                            value={userRole === 'SPV' ? salesNameFilter : userName}
                             onChange={(e) => setSalesNameFilter(e.target.value)}
                             className={styles.filterSelect}
+                            disabled={userRole !== 'SPV'}
                         >
-                            <option value="">Semua Sales</option>
-                            {salesNames.map((name) => (
+                            <option value="">{userRole === 'SPV' ? 'Semua Sales' : userName}</option>
+                            {userRole === 'SPV' && salesNames.map((name) => (
                                 <option key={name} value={name}>{name}</option>
                             ))}
                         </select>
@@ -753,7 +761,7 @@ _Dikirim dari Sales Progress Report_`;
                             <option value="">Semua Pembayaran</option>
                             <option value="BELUM_BAYAR">Belum Bayar</option>
                             <option value="DP">DP (Uang Muka)</option>
-                            <option value="CICIL">Cicilan</option>
+                            {/* <option value="CICIL">Cicilan</option> */}
                             <option value="LUNAS">Lunas</option>
                         </select>
                     </div>
@@ -1024,13 +1032,16 @@ _Dikirim dari Sales Progress Report_`;
                                                     className={styles.input}
                                                 >
                                                     <option value="">Pilih Status</option>
-                                                    <option value="Prospect">Prospect</option>
-                                                    <option value="Follow Up">Follow Up</option>
-                                                    <option value="Penawaran">Penawaran</option>
-                                                    {/* <option value="Negosiasi">Negosiasi</option>
-                                                    <option value="Invoice">Invoice</option> */}
-                                                    <option value="Cancel">Cancel</option>
-                                                    {/* <option value="Selasai">Selesai</option> */}
+                                                    {['MARKETPLACE SHOPEE', 'MARKETPLACE TOKPED', 'MARKETPLACE BLIBLI'].includes(formData.sumber) ? (
+                                                        <option value="Invoice">Invoice</option>
+                                                    ) : (
+                                                        <>
+                                                            <option value="Prospect">Prospect</option>
+                                                            <option value="Follow Up">Follow Up</option>
+                                                            <option value="Penawaran">Penawaran</option>
+                                                            <option value="Cancel">Cancel</option>
+                                                        </>
+                                                    )}
                                                 </select>
                                             </div>
                                             <div className={styles.formGroup}>
@@ -1038,18 +1049,33 @@ _Dikirim dari Sales Progress Report_`;
                                                 <select
                                                     name="sumber"
                                                     value={formData.sumber}
-                                                    onChange={handleInputChange}
+                                                    onChange={(e) => {
+                                                        const newSumber = e.target.value;
+                                                        // Auto-set status to Invoice for marketplace sources
+                                                        if (['MARKETPLACE SHOPEE', 'MARKETPLACE TOKPED', 'MARKETPLACE BLIBLI'].includes(newSumber)) {
+                                                            setFormData(prev => ({
+                                                                ...prev,
+                                                                sumber: newSumber,
+                                                                status: 'Invoice'
+                                                            }));
+                                                        } else {
+                                                            handleInputChange(e);
+                                                        }
+                                                    }}
                                                     className={styles.input}
                                                 >
                                                     <option value="">Pilih Sumber</option>
-                                                    <option value="usaha sendiri">usaha sendiri</option>
-                                                    <option value="wa pa tommy">wa pa tommy</option>
-                                                    <option value="wa ci fenti">wa ci fenti</option>
-                                                    <option value="web pelangi">web pelangi</option>
-                                                    <option value="web tsuzumi/talk to">web tsuzumi/talk to</option>
-                                                    <option value="grup sales pt">grup sales pt</option>
-                                                    <option value="marketplace">marketplace</option>
-                                                    <option value="walk in">walk in</option>
+                                                    <option value="USAHA SENDIRI">USAHA SENDIRI</option>
+                                                    <option value="WALK IN">WALK IN</option>
+                                                    <option value="WA PA TOMMY">WA PA TOMMY</option>
+                                                    <option value="WA CI FENTI">WA CI FENTI</option>
+                                                    <option value="WEB PELANGI">WEB PELANGI</option>
+                                                    <option value="WEB TSUZUMI/TALK TO">WEB TSUZUMI/TALK TO</option>
+                                                    <option value="GRUP SALES PT">GRUP SALES PT</option>
+                                                    <option value="INAPROC">INAPROC</option>
+                                                    <option value="MARKETPLACE SHOPEE">MARKETPLACE SHOPEE</option>
+                                                    <option value="MARKETPLACE TOKPED">MARKETPLACE TOKPED</option>
+                                                    <option value="MARKETPLACE BLIBLI">MARKETPLACE BLIBLI</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1139,7 +1165,7 @@ _Dikirim dari Sales Progress Report_`;
                                                             <option value="">Pilih Status</option>
                                                             <option value="BELUM_BAYAR">Belum Bayar</option>
                                                             <option value="DP">DP (Uang Muka)</option>
-                                                            <option value="CICIL">Cicilan</option>
+                                                            {/* <option value="CICIL">Cicilan</option> */}
                                                             <option value="LUNAS">Lunas</option>
                                                         </select>
                                                     </div>
@@ -1690,7 +1716,7 @@ _Dikirim dari Sales Progress Report_`;
                                                     <option value="">Pilih Status</option>
                                                     <option value="BELUM_BAYAR">Belum Bayar</option>
                                                     <option value="DP">DP (Uang Muka)</option>
-                                                    <option value="CICIL">Cicilan</option>
+                                                    {/* <option value="CICIL">Cicilan</option> */}
                                                     <option value="LUNAS">Lunas</option>
                                                 </select>
                                             </div>
