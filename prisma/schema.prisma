@@ -464,7 +464,8 @@ model SalesProgress {
   // =========================
   // INVOICE
   // =========================
-  nomorInvoice String? @unique
+  nomorInvoice String?  @unique
+  notesInvoice String[]
 
   // =========================
   // VALIDASI

@@ -58,6 +58,7 @@ export async function GET(req) {
         const dateFrom = searchParams.get('dateFrom');
         const dateTo = searchParams.get('dateTo');
         const paymentStatus = searchParams.get('paymentStatus');
+        const crosscheck = searchParams.get('crosscheck');
 
         if (status) {
             where.status = status;
@@ -65,6 +66,10 @@ export async function GET(req) {
 
         if (paymentStatus) {
             where.paymentStatus = paymentStatus;
+        }
+
+        if (crosscheck !== null && crosscheck !== undefined) {
+            where.crosscheck = crosscheck === 'true';
         }
 
         if (salesName) {
@@ -112,8 +117,9 @@ export async function GET(req) {
 
         const total = await prisma.salesProgress.count({ where });
 
-        // Calculate totals
+        // Calculate totals and crosscheck totals
         let totals = { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 };
+        let crosscheckTotals = { crosschecked: { count: 0, totalDeal: 0 }, notCrosschecked: { count: 0, totalDeal: 0 } };
         try {
             const allData = await prisma.salesProgress.findMany({
                 where,
@@ -123,7 +129,8 @@ export async function GET(req) {
                     dpp: true,
                     ppn: true,
                     totalPayment: true,
-                    sisaPayment: true
+                    sisaPayment: true,
+                    crosscheck: true
                 }
             });
 
@@ -135,6 +142,16 @@ export async function GET(req) {
                 totalPayment: acc.totalPayment + (parseFloat(item.totalPayment) || 0),
                 sisaPayment: acc.sisaPayment + (parseFloat(item.sisaPayment) || 0)
             }), { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 });
+
+            // Calculate crosscheck statistics
+            const crosscheckedData = allData.filter(item => item.crosscheck === true);
+            const notCrosscheckedData = allData.filter(item => item.crosscheck === false);
+
+            crosscheckTotals.crosschecked.count = crosscheckedData.length;
+            crosscheckTotals.crosschecked.totalDeal = crosscheckedData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0);
+            
+            crosscheckTotals.notCrosschecked.count = notCrosscheckedData.length;
+            crosscheckTotals.notCrosschecked.totalDeal = notCrosscheckedData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0);
         } catch (e) {
             console.error('Error calculating totals:', e);
         }
@@ -145,6 +162,7 @@ export async function GET(req) {
             data,
             total,
             totals,
+            crosscheckTotals,
             limit,
             offset
         });

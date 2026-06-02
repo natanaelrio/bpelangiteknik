@@ -489,6 +489,7 @@ exports.Prisma.SalesProgressScalarFieldEnum = {
   status: 'status',
   statusCatatan: 'statusCatatan',
   nomorInvoice: 'nomorInvoice',
+  notesInvoice: 'notesInvoice',
   crosscheck: 'crosscheck',
   fakturPajak: 'fakturPajak',
   totalUnit: 'totalUnit',

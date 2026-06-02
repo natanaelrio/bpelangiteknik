@@ -46,7 +46,8 @@ export async function POST(req) {
             actorRole,
             oldValues, // For creating logs
             salesCompany,
-            RekeningName
+            RekeningName,
+            notesInvoice
         } = body;
 
         // Validate required fields
@@ -69,7 +70,7 @@ export async function POST(req) {
         const isInvoice = status === 'Invoice';
 
         const updateData = {
-            salesName: salesName || undefined,
+            // salesName: salesName || undefined,
             nama,
             alamatLengkap: alamatLengkap || undefined,
             alamatKota: alamatKota || undefined,
@@ -89,6 +90,7 @@ export async function POST(req) {
             paymentStatus: isInvoice ? (paymentStatus || undefined) : null,
             salesCompany: salesCompany || undefined,
             RekeningName: isInvoice ? (RekeningName || undefined) : null,
+            notesInvoice: isInvoice && notesInvoice ? notesInvoice : null,
             // Only update DPP and PPN if totalDeal changed or if explicitly provided
             ...(totalDeal && { dpp: calculatedDpp, ppn: calculatedPpn })
         };

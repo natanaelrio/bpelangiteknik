@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import moment from 'moment';
 import 'moment/locale/id';
 import styles from '@/components/SalesProgressReport/SalesProgressReport.module.css';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload, FaSearch, FaChevronLeft, FaChevronRight, FaSignOutAlt, FaSpinner } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload, FaSearch, FaChevronLeft, FaChevronRight, FaSignOutAlt, FaSpinner, FaUndo } from 'react-icons/fa';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { motivationalQuotes } from '../utils/motivationalQuotes';
 import Link from 'next/link';
@@ -18,6 +18,7 @@ import LogoAtas from './logo/logoAtas';
 import TTD from './logo/ttd';
 import LogoAtasTZ from './logo/logoAtasTZ';
 import TTDTZ from './logo/ttdTZ';
+import { FaCheck, FaClock } from 'react-icons/fa6';
 
 // List of Indonesian provinces
 const PROVINCES = [
@@ -40,6 +41,9 @@ export default function SalesProgressReport({ session }) {
     const nomerHp = session.nomerHp || '000000000000';
 
     const SPV = session.role === 'SPV' || false;
+    const IT = session.role === 'STAFF IT' || false;
+    const ADMIN = session.role === 'ADMIN' || false;
+    const SALES = session.role === 'SALES' || false;
 
     const logoBase64 = LogoAtas()
     const logoTTD = TTD()
@@ -68,6 +72,9 @@ export default function SalesProgressReport({ session }) {
     // Loading state for logs
     const [isLoadingLogs, setIsLoadingLogs] = useState(false);
 
+    // Loading state for crosscheck
+    const [isLoadingCrosscheck, setIsLoadingCrosscheck] = useState(false);
+
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -78,12 +85,19 @@ export default function SalesProgressReport({ session }) {
     const [statusFilter, setStatusFilter] = useState('');
     const [salesNameFilter, setSalesNameFilter] = useState('');
     const [paymentStatusFilter, setPaymentStatusFilter] = useState('');
+    const [crosscheckFilter, setCrosscheckFilter] = useState('');
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
     const [showFilters, setShowFilters] = useState(false);
 
     // Totals from API
     const [totals, setTotals] = useState({ totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 });
+
+    // Crosscheck totals from API
+    const [crosscheckTotals, setCrosscheckTotals] = useState({
+        crosschecked: { count: 0, totalDeal: 0 },
+        notCrosschecked: { count: 0, totalDeal: 0 }
+    });
 
     // Debounce search term
     useEffect(() => {
@@ -127,6 +141,11 @@ export default function SalesProgressReport({ session }) {
         // Company & Bank fields
         salesCompany: perusahaan,
         RekeningName: '',
+        notesInvoice: [
+            "Garansi servise 1 tahun",
+            "Pembayaran cash before shipping",
+            "Free Jabodetabek"
+        ],
         items: [{
             brand: '',
             namaBarang: '',
@@ -147,15 +166,17 @@ export default function SalesProgressReport({ session }) {
     const buildQueryParams = () => {
         const params = new URLSearchParams();
 
-        // If not SPV, only show own data
-        if (userRole !== 'SPV') {
-            params.append('salesName', userName);
-        } else if (salesNameFilter) {
+        // If SPV or IT, use salesNameFilter; otherwise show own data only
+        if ((SPV || IT) && salesNameFilter) {
             params.append('salesName', salesNameFilter);
+        } else if (!(SPV || IT)) {
+            params.append('salesName', userName);
         }
+        // Jika SPV/IT dan salesNameFilter kosong, tidak append filter = fetch semua
 
         if (statusFilter) params.append('status', statusFilter);
         if (paymentStatusFilter) params.append('paymentStatus', paymentStatusFilter);
+        if (crosscheckFilter) params.append('crosscheck', crosscheckFilter);
         if (debouncedSearch) params.append('search', debouncedSearch);
         if (dateFrom) params.append('dateFrom', dateFrom);
         if (dateTo) params.append('dateTo', dateTo);
@@ -176,10 +197,13 @@ export default function SalesProgressReport({ session }) {
                 }
             );
             const result = await response.json();
+            console.log(result);
+
             if (result.isSuccess) {
                 setData(result.data || []);
                 setTotalCount(result.total || 0);
                 setTotals(result.totals || { totalUnit: 0, totalDeal: 0, dpp: 0, ppn: 0, totalPayment: 0, sisaPayment: 0 });
+                setCrosscheckTotals(result.crosscheckTotals || { crosschecked: { count: 0, totalDeal: 0 }, notCrosschecked: { count: 0, totalDeal: 0 } });
             } else {
                 toast.error('Gagal memuat data');
             }
@@ -233,7 +257,7 @@ export default function SalesProgressReport({ session }) {
 
     useEffect(() => {
         fetchData();
-    }, [currentPage, statusFilter, salesNameFilter, paymentStatusFilter, debouncedSearch, dateFrom, dateTo]);
+    }, [currentPage, statusFilter, salesNameFilter, paymentStatusFilter, crosscheckFilter, debouncedSearch, dateFrom, dateTo]);
 
     // Fetch sales names on mount
     useEffect(() => {
@@ -256,6 +280,22 @@ export default function SalesProgressReport({ session }) {
                 sisaPayment: ''
             }));
 
+            return;
+        }
+
+        // Set default notesInvoice when status changes to Invoice
+        if (name === 'status' && value === 'Invoice') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value,
+                notesInvoice: prev.notesInvoice && prev.notesInvoice.length > 0
+                    ? prev.notesInvoice
+                    : [
+                        "Garansi servise 1 tahun",
+                        "Pembayaran cash before shipping",
+                        "Free Jabodetabek"
+                    ]
+            }));
             return;
         }
 
@@ -338,6 +378,52 @@ export default function SalesProgressReport({ session }) {
             ...prev,
             items: prev.items.filter((_, i) => i !== index)
         }));
+    };
+
+    // Handle crosscheck
+    const handleCrosscheck = async (id, currentStatus, nama) => {
+        const newStatus = !currentStatus;
+        const confirmMessage = newStatus
+            ? `Yakin ingin menandai data ${nama} sebagai sudah di-crosscheck?`
+            : `Yakin ingin membatalkan status crosscheck untuk ${nama}?`;
+
+        if (!confirm(confirmMessage)) return;
+
+        setIsLoadingCrosscheck(true);
+        try {
+            const response = await fetch('/api/p/salesProgress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: API_KEY
+                },
+                body: JSON.stringify({
+                    nama: nama,
+                    id: id,
+                    crosscheck: newStatus,
+                    actorName: userName,
+                    actorRole: userRole
+                })
+            });
+
+            const result = await response.json();
+            console.log(result);
+            if (result.isSuccess) {
+                toast.success(newStatus ? 'Data berhasil di-crosscheck' : 'Crosscheck berhasil dibatalkan');
+                fetchData();
+                // Update detailData if modal is open
+                if (detailData && detailData.id === id) {
+                    setDetailData({ ...detailData, crosscheck: newStatus });
+                }
+                setShowDetailModal(false);
+            } else {
+                toast.error(result.message || 'Gagal update crosscheck');
+            }
+        } catch (error) {
+            toast.error('Error: ' + error.message);
+        } finally {
+            setIsLoadingCrosscheck(false);
+        }
     };
 
     // Handle create/edit
@@ -479,6 +565,15 @@ export default function SalesProgressReport({ session }) {
                     await sendToWhatsApp();
                 } catch (waError) {
                     console.error('WhatsApp send error:', waError);
+                }
+
+                // If status is Invoice and this is an edit, download invoice PDF and send to WhatsApp
+                if (modalMode === 'edit' && formData.status === 'Invoice') {
+                    try {
+                        await handleDownloadInvoice(formData);
+                    } catch (invoiceError) {
+                        console.error('Invoice download error:', invoiceError);
+                    }
                 }
 
                 setShowModal(false);
@@ -626,6 +721,11 @@ _Dikirim dari Sales Progress Report_`;
             // Company & Bank fields
             salesCompany: record.salesCompany || perusahaan,
             RekeningName: record.RekeningName || '',
+            notesInvoice: record.notesInvoice || [
+                "Garansi servise 1 tahun",
+                "Pembayaran cash before shipping",
+                "Free Jabodetabek"
+            ],
             items: record.items?.length > 0 ? record.items : [{
                 brand: '',
                 namaBarang: '',
@@ -668,52 +768,11 @@ a.c 588.5062.609`
         }
     ];
 
-    // Download modal states
-    const [showDownloadModal, setShowDownloadModal] = useState(false);
-    const [selectedDownloadItem, setSelectedDownloadItem] = useState(null);
-    const [selectedBank, setSelectedBank] = useState(bankList[0]);
-    const [downloadNotes, setDownloadNotes] = useState([
-        "Garansi servise 1 tahun",
-        "Pembayaran cash before shipping",
-        "Franco Jabodetabek",
-        "Surat penawaran berlaku selama 3 (Tiga) minggu sejak surat penawaran di buat."
-    ]);
+    // Handle download Invoice PDF
+    const handleDownloadInvoice = async (item) => {
+        setIsDownloading(true);
 
-    // Handler for opening download modal
-    const openDownloadModal = (item) => {
-        setSelectedDownloadItem(item);
-        setSelectedBank(bankList[0]);
-        setDownloadNotes([
-            "Garansi servise 1 tahun",
-            "Pembayaran cash before shipping",
-            "Franco Jabodetabek",
-            "Surat penawaran berlaku selama 3 (Tiga) minggu sejak surat penawaran di buat."
-        ]);
-        setShowDownloadModal(true);
-    };
-
-    // Add new note
-    const addDownloadNote = () => {
-        setDownloadNotes([...downloadNotes, ""]);
-    };
-
-    // Remove note
-    const removeDownloadNote = (index) => {
-        setDownloadNotes(downloadNotes.filter((_, i) => i !== index));
-    };
-
-    // Update note
-    const updateDownloadNote = (index, value) => {
-        const newNotes = [...downloadNotes];
-        newNotes[index] = value;
-        setDownloadNotes(newNotes);
-    };
-
-    // Handle download offer letter (penawaran)
-
-    const handleDownloadPenawaran = async (item) => {
-
-        const buildWhatsAppMessageDownloadPenawarkan = () => {
+        const buildWhatsAppMessageDownloadInvoice = () => {
             const itemsList = item.items?.map((recordItem, idx) => {
                 return `${idx + 1}. ${recordItem.brand || '-'} - ${recordItem.namaBarang || '-'} (${recordItem.kategoriBarang === 'sparepart' ? 'Sparepart' : 'Unit'})
    Qty: ${recordItem.qty || 0} | Harga OCT: Rp ${parseFloat(recordItem.hargaUnit || 0).toLocaleString('id-ID')} | Harga Deal: Rp ${parseFloat(recordItem.hargaDeal || 0).toLocaleString('id-ID')}`;
@@ -724,7 +783,7 @@ a.c 588.5062.609`
             const dpp = Math.round(totalDeal / 1.11);
             const ppn = Math.round(dpp * 0.11);
 
-            const message = `📄 *SURAT PENAWARAN TELAH DI-DOWNLOAD*
+            const message = `🧾 *INVOICE TELAH DI-DOWNLOAD*
 
 🏢 *Perusahaan:* ${perusahaan}
 👤 *Sales:* ${item.salesName || userName}
@@ -737,11 +796,11 @@ a.c 588.5062.609`
 • *No. HP:* ${item.nomorHp || '-'}
 • *Kota:* ${item.alamatKota || '-'}
 • *Alamat:* ${item.alamatLengkap || '-'}
-• *Sumber:* ${item.sumber || '-'}
 
 📌 *STATUS*
 • *Status:* ${item.status || '-'}
 • *Catatan:* ${item.statusCatatan || '-'}
+• *No. Invoice:* ${item.nomorInvoice || '-'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -756,63 +815,76 @@ ${itemsList}
 • DPP: Rp ${dpp.toLocaleString('id-ID')}
 • PPN: Rp ${ppn.toLocaleString('id-ID')}
 
+💳 *PEMBAYARAN*
+• Status: ${item.paymentStatus || '-'}
+• Invoice: ${item.nomorInvoice || '-'}
+• Rekening: ${item.RekeningName || '-'}
+• Total Bayar: Rp ${parseFloat(item.totalPayment || 0).toLocaleString('id-ID')}
+• Sisa Bayar: Rp ${parseFloat(item.sisaPayment || 0).toLocaleString('id-ID')}
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-_Surat Penawaran telah di-download_
+_Invoice telah di-download_
 _Pengiriman dari Sales Progress Report_`;
 
             return message;
         };
 
-        const sendToWhatsAppDownloadPenawaran = async () => {
+        const sendToWhatsAppDownloadInvoice = async () => {
             try {
                 const isProduction = process.env.NODE_ENV === 'production';
 
-                const payloadSalesPenawaran = {
+                const payloadSalesInvoice = {
                     groupId: isProduction ? '120363411343925143@g.us' : '120363406595440008@g.us',
-                    message: buildWhatsAppMessageDownloadPenawarkan()
+                    message: buildWhatsAppMessageDownloadInvoice()
                 };
 
-                const result = await SendGroupReportSales(payloadSalesPenawaran);
+                const result = await SendGroupReportSales(payloadSalesInvoice);
 
                 if (result?.success) {
-                    toast.success('Laporan berhasil dikirim ke WhatsApp!');
+                    toast.success('Invoice berhasil dikirim ke WhatsApp!');
                 } else {
-                    toast.error('Gagal mengirim ke WhatsApp');
+                    toast.error('Gagal mengirim Invoice ke WhatsApp');
                 }
             } catch (error) {
                 console.error('WhatsApp send error:', error);
-                toast.error('Error mengirim ke WhatsApp');
+                toast.error('Error mengirim Invoice ke WhatsApp');
             }
         };
+
         // Prepare data from sales progress item
         const customerName = item.nama;
 
-        // Transform items to offer letter format
+        // Transform items to invoice format
         const dataPenawarkan = item.items?.map(recordItem => ({
             productName: recordItem.namaBarang || '-',
-            spekNew: [], // No specs in sales progress
+            spekNew: [],
             qty: recordItem.qty || 1,
             productPriceFinal: recordItem.hargaDeal || 0
         })) || [];
 
-        const totalQty = dataPenawarkan.reduce((sum, item) => sum + (parseInt(item.qty) || 0), 0);
-        const totalKeseluruhan = dataPenawarkan.reduce((sum, item) => sum + (parseFloat(item.productPriceFinal) || 0) * (parseInt(item.qty) || 0), 0);
-        const includePPN = true; // Default to include PPN
+        const totalQty = dataPenawarkan.reduce((sum, recordItem) => sum + (parseInt(recordItem.qty) || 0), 0);
+        const totalKeseluruhan = dataPenawarkan.reduce((sum, recordItem) => sum + (parseFloat(recordItem.productPriceFinal) || 0) * (parseInt(recordItem.qty) || 0), 0);
+        const dppValue = Math.round(totalKeseluruhan / 1.11);
+        const ppnValue = Math.round(dppValue * 0.11);
+        const includePPN = true;
 
-        // Use selected bank from modal
-        const currentBank = selectedBank || bankList[0];
+        // Use selected bank from modal (or from item's RekeningName)
+        let currentBank = bankList.find(b => b.nama.includes(item.RekeningName)) || bankList[0];
 
-        // Use notes from state (filter out empty ones)
-        const notes = downloadNotes.filter(n => n.trim() !== '');
+        // Notes for invoice - use from item data or default
+        const notes = item.notesInvoice || [
+            "Garansi servise 1 tahun",
+            "Pembayaran cash before shipping",
+            "Free Jabodetabek"
+        ];
 
         // Sales info
         const nameSales = item.salesName || userName;
-        const numberSales = ''; // Phone number not stored in sales progress
 
         // Generate QR Code
         const qrCodeData = perusahaan === 'PT Pelangi Teknik Indonesia' && await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`) || perusahaan === 'PT Tsuzumi Japan Technology' && await generateQRCode(`https://tsuzumijapan.com`) || '';
 
-        const docDefinitionv = {
+        const docDefinitionInvoice = {
             content: [
                 {
                     columns: [
@@ -852,9 +924,10 @@ _Pengiriman dari Sales Progress Report_`;
                 { text: `${customerName}`, style: 'Blode' },
                 { text: item.alamatKota || '', style: 'Blode' },
                 { text: '\n' },
-                { text: `Perihal       : Surat Penawaran`, style: 'Blode' },
+                { text: `Perihal       : INVOICE`, style: 'Blode' },
+                { text: `No. Invoice  : ${item.nomorInvoice || '-'}`, style: 'Blode' },
                 { text: '\n' },
-                { text: `Dengan hormat, demikian disampaikan informasi dari barang yang saudara butuhkan :`, style: 'defaultStyle' },
+                { text: `Dengan hormat, demikian disampaikan informasi tagihan atas barang yang saudara butuhkan :`, style: 'defaultStyle' },
                 { text: '\n' },
 
                 {
@@ -899,24 +972,30 @@ _Pengiriman dari Sales Progress Report_`;
                             ],
                             ...(includePPN
                                 ? [
+                                    // [
+                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
+                                    //     {},
+                                    //     { text: 'SUBTOTAL', style: "tableHeader" },
+                                    //     { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
+                                    // ],
+                                    // [
+                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
+                                    //     {},
+                                    //     { text: 'DPP (11%)', style: "tableHeader" },
+                                    //     { text: formatRupiah(dppValue), style: "tableHeader" },
+                                    // ],
+                                    // [
+                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
+                                    //     {},
+                                    //     { text: 'PPN (11%)', style: "tableHeader" },
+                                    //     { text: formatRupiah(ppnValue), style: "tableHeader" },
+                                    // ],
                                     [
                                         { text: "", colSpan: 2, border: [false, false, false, false] },
                                         {},
                                         { text: 'TOTAL', style: "tableHeader" },
                                         { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
-                                    ],
-                                    // [
-                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
-                                    //     {},
-                                    //     { text: 'TAX (11%)', style: "tableHeader" },
-                                    //     { text: formatRupiah((totalKeseluruhan * 11) / 100), style: "tableHeader" },
-                                    // ],
-                                    // [
-                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
-                                    //     {},
-                                    //     { text: 'GRANDTOTAL', style: "tableHeader" },
-                                    //     { text: formatRupiah(totalKeseluruhan + (totalKeseluruhan * 11) / 100), style: "tableHeader" },
-                                    // ]
+                                    ]
                                 ]
                                 : [
                                     [
@@ -992,65 +1071,16 @@ _Pengiriman dari Sales Progress Report_`;
             },
         };
 
-        pdfMake.createPdf(docDefinitionv).download(`Surat_Penawaran_${customerName}.pdf`);
+        pdfMake.createPdf(docDefinitionInvoice).download(`Invoice_${item.nomorInvoice || customerName}.pdf`);
 
-        // Update status to "Penawaran" and add log entry
-        // Note: For non-Invoice status, payment fields should be empty to avoid logging them
+        // Send to WhatsApp after successful download
         try {
-            // First, update the status to "Penawaran"
-            const updateResponse = await fetch('/api/p/salesProgress', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: API_KEY
-                },
-                body: JSON.stringify({
-                    id: item.id,
-                    salesName: item.salesName || userName,
-                    nama: item.nama,
-                    alamatLengkap: item.alamatLengkap,
-                    alamatKota: item.alamatKota,
-                    nomorHp: item.nomorHp,
-                    sumber: item.sumber,
-                    status: 'Penawaran',
-                    statusCatatan: item.statusCatatan || 'Surat Penawaran telah di-download',
-                    crosscheck: item.crosscheck || false,
-                    fakturPajak: '',
-                    nomorInvoice: '',
-                    totalUnit: item.totalUnit || '',
-                    totalDeal: item.totalDeal || '',
-                    dpp: item.dpp || '',
-                    ppn: item.ppn || '',
-                    remarks: item.remarks || '',
-                    remarksPajak: item.remarksPajak || '',
-                    // Payment fields - set to empty for non-Invoice status to avoid logging
-                    totalPayment: '',
-                    sisaPayment: '',
-                    paymentStatus: '',
-                    salesCompany: item.salesCompany || perusahaan,
-                    RekeningName: '',
-                    items: item.items || [],
-                    actorName: userName,
-                    actorRole: userRole,
-                    oldValues: item
-                })
-            });
-
-            const updateResult = await updateResponse.json();
-            if (updateResult.isSuccess) {
-                // Refresh data to show updated status
-                fetchData();
-                toast.success('Status updated to Penawarkan');
-
-                // Send to WhatsApp after successful download
-                // Send to WhatsApp group
-                await sendToWhatsAppDownloadPenawaran();
-            }
-        } catch (error) {
-            console.error('Error updating status:', error);
-        } finally {
-            setIsDownloading(false);
+            await sendToWhatsAppDownloadInvoice();
+        } catch (waError) {
+            console.error('WhatsApp send error:', waError);
         }
+
+        setIsDownloading(false);
     };
 
     const resetForm = () => {
@@ -1080,6 +1110,11 @@ _Pengiriman dari Sales Progress Report_`;
             // Company & Bank fields
             salesCompany: perusahaan,
             RekeningName: '',
+            notesInvoice: [
+                "Garansi servise 1 tahun",
+                "Pembayaran cash before shipping",
+                "Free Jabodetabek"
+            ],
             items: [{
                 brand: '',
                 namaBarang: '',
@@ -1121,6 +1156,8 @@ _Pengiriman dari Sales Progress Report_`;
         'Deal': '#EF4444',
         'Cancel': '#6B7280'
     };
+
+
 
     return (
         <div className={styles.container}>
@@ -1196,13 +1233,13 @@ _Pengiriman dari Sales Progress Report_`;
                     <div className={styles.filterGroup}>
                         <label>Nama Sales</label>
                         <select
-                            value={userRole === 'SPV' ? salesNameFilter : userName}
+                            value={(SPV || IT) ? salesNameFilter : userName}
                             onChange={(e) => setSalesNameFilter(e.target.value)}
                             className={styles.filterSelect}
-                            disabled={userRole !== 'SPV'}
+                            disabled={!(SPV || IT)}
                         >
-                            <option value="">{userRole === 'SPV' ? 'Semua Sales' : userName}</option>
-                            {userRole === 'SPV' && salesNames.map((name) => (
+                            <option value="">{(SPV || IT) ? 'Semua Sales' : userName}</option>
+                            {(SPV || IT) && salesNames.map((name) => (
                                 <option key={name} value={name}>{name}</option>
                             ))}
                         </select>
@@ -1219,6 +1256,18 @@ _Pengiriman dari Sales Progress Report_`;
                             <option value="DP">DP (Uang Muka)</option>
                             {/* <option value="CICIL">Cicilan</option> */}
                             <option value="LUNAS">Lunas</option>
+                        </select>
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>Status Crosscheck</label>
+                        <select
+                            value={crosscheckFilter}
+                            onChange={(e) => setCrosscheckFilter(e.target.value)}
+                            className={styles.filterSelect}
+                        >
+                            <option value="">Semua Data</option>
+                            <option value="true">✅ Sudah Crosscheck</option>
+                            <option value="false">⏳ Belum Crosscheck</option>
                         </select>
                     </div>
                     <div className={styles.filterGroup}>
@@ -1280,6 +1329,42 @@ _Pengiriman dari Sales Progress Report_`;
                 </div>
             </div>
 
+            {/* Crosscheck Status Summary */}
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '12px',
+                marginBottom: '16px',
+                padding: '16px',
+                backgroundColor: '#f0f9ff',
+                borderRadius: '8px',
+                border: '1px solid #bfdbfe'
+            }}>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>✅ Sudah Crosscheck</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#059669' }}>{crosscheckTotals.crosschecked.count} data</div>
+                    <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.crosschecked.totalDeal)}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>⏳ Belum Crosscheck</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#dc2626' }}>{crosscheckTotals.notCrosschecked.count} data</div>
+                    <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.notCrosschecked.totalDeal)}</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>Total Data</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#0369a1' }}>{crosscheckTotals.crosschecked.count + crosscheckTotals.notCrosschecked.count} data</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>Progress Crosscheck</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#6366f1' }}>
+                        {crosscheckTotals.crosschecked.count + crosscheckTotals.notCrosschecked.count === 0
+                            ? '0%'
+                            : `${Math.round((crosscheckTotals.crosschecked.count / (crosscheckTotals.crosschecked.count + crosscheckTotals.notCrosschecked.count)) * 100)}%`
+                        }
+                    </div>
+                </div>
+            </div>
+
             {/* Data Table */}
             <div className={styles.tableWrapper}>
                 {loading ? (
@@ -1337,14 +1422,23 @@ _Pengiriman dari Sales Progress Report_`;
                                         >
                                             {isLoadingLogs ? <FaSpinner /> : <FaEye />} Logs
                                         </button>
-                                        <button
-                                            className={styles.detailBtn}
-                                            onClick={() => openDownloadModal(item)}
-                                            style={{ backgroundColor: '#8B5CF6' }}
-                                            disabled={isDownloading}
-                                        >
-                                            {isDownloading ? <FaSpinner /> : <FaDownload />} Penawaran
-                                        </button>
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            padding: '8px 12px',
+                                            borderRadius: '6px',
+                                            fontSize: '14px',
+                                            fontWeight: '500',
+                                            backgroundColor: item.crosscheck ? '#D1FAE5' : '#FEF3C7',
+                                            color: item.crosscheck ? '#065F46' : '#92400E'
+                                        }}>
+                                            {item.crosscheck ? (
+                                                <><FaCheck style={{ color: '#10B981' }} /> Sudah Crosscheck</>
+                                            ) : (
+                                                <><FaClock style={{ color: '#F59E0B' }} /> Belum Dicrosscheck</>
+                                            )}
+                                        </div>
                                         {SPV && (
                                             <button
                                                 className={styles.deleteBtn}
@@ -1557,6 +1651,98 @@ _Pengiriman dari Sales Progress Report_`;
                                                 />
                                             </div>
                                         </div>
+
+                                        {/* Notes Invoice - Only show when status is Invoice */}
+                                        {formData.status === 'Invoice' && (
+                                            <div className={styles.formSection}>
+                                                <h3>Catatan Invoice</h3>
+                                                <div style={{ marginBottom: '15px' }}>
+                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                                        <input
+                                                            type="text"
+                                                            id="newNote"
+                                                            placeholder="Tambah catatan baru..."
+                                                            className={styles.input}
+                                                            onKeyPress={(e) => {
+                                                                if (e.key === 'Enter') {
+                                                                    const newNote = e.target.value.trim();
+                                                                    if (newNote) {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                        }));
+                                                                        e.target.value = '';
+                                                                    }
+                                                                }
+                                                            }}
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const input = document.getElementById('newNote');
+                                                                const newNote = input.value.trim();
+                                                                if (newNote) {
+                                                                    setFormData(prev => ({
+                                                                        ...prev,
+                                                                        notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                    }));
+                                                                    input.value = '';
+                                                                }
+                                                            }}
+                                                            style={{
+                                                                padding: '8px 16px',
+                                                                backgroundColor: '#3B82F6',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '6px',
+                                                                cursor: 'pointer',
+                                                                fontWeight: '500'
+                                                            }}
+                                                        >
+                                                            + Tambah
+                                                        </button>
+                                                    </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                        {(formData.notesInvoice || []).map((note, idx) => (
+                                                            <div
+                                                                key={idx}
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    alignItems: 'center',
+                                                                    padding: '10px 12px',
+                                                                    backgroundColor: '#F3F4F6',
+                                                                    borderRadius: '6px',
+                                                                    border: '1px solid #E5E7EB'
+                                                                }}
+                                                            >
+                                                                <span>{note}</span>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
+                                                                        }));
+                                                                    }}
+                                                                    style={{
+                                                                        padding: '4px 8px',
+                                                                        backgroundColor: '#EF4444',
+                                                                        color: 'white',
+                                                                        border: 'none',
+                                                                        borderRadius: '4px',
+                                                                        cursor: 'pointer',
+                                                                        fontSize: '12px'
+                                                                    }}
+                                                                >
+                                                                    Hapus
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
 
 
                                         {/* Pricing Summary - Read only (auto-calculated from items) */}
@@ -2248,6 +2434,96 @@ _Pengiriman dari Sales Progress Report_`;
                                                     />
                                                 </div>
                                             </div>
+
+                                            {/* Notes Invoice Management */}
+                                            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
+                                                <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan Invoice</h4>
+                                                <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                                    <input
+                                                        type="text"
+                                                        id="newNoteInvoice"
+                                                        placeholder="Tambah catatan baru..."
+                                                        className={styles.input}
+                                                        onKeyPress={(e) => {
+                                                            if (e.key === 'Enter') {
+                                                                const newNote = e.target.value.trim();
+                                                                if (newNote) {
+                                                                    setFormData(prev => ({
+                                                                        ...prev,
+                                                                        notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                    }));
+                                                                    e.target.value = '';
+                                                                }
+                                                            }
+                                                        }}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            const input = document.getElementById('newNoteInvoice');
+                                                            const newNote = input.value.trim();
+                                                            if (newNote) {
+                                                                setFormData(prev => ({
+                                                                    ...prev,
+                                                                    notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                }));
+                                                                input.value = '';
+                                                            }
+                                                        }}
+                                                        style={{
+                                                            padding: '8px 16px',
+                                                            backgroundColor: '#3B82F6',
+                                                            color: 'white',
+                                                            border: 'none',
+                                                            borderRadius: '6px',
+                                                            cursor: 'pointer',
+                                                            fontWeight: '500',
+                                                            whiteSpace: 'nowrap'
+                                                        }}
+                                                    >
+                                                        + Tambah
+                                                    </button>
+                                                </div>
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                    {(formData.notesInvoice || []).map((note, idx) => (
+                                                        <div
+                                                            key={idx}
+                                                            style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                alignItems: 'center',
+                                                                padding: '10px 12px',
+                                                                backgroundColor: '#F3F4F6',
+                                                                borderRadius: '6px',
+                                                                border: '1px solid #E5E7EB',
+                                                                fontSize: '14px'
+                                                            }}
+                                                        >
+                                                            <span>{note}</span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setFormData(prev => ({
+                                                                        ...prev,
+                                                                        notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
+                                                                    }));
+                                                                }}
+                                                                style={{
+                                                                    padding: '4px 8px',
+                                                                    backgroundColor: '#EF4444',
+                                                                    color: 'white',
+                                                                    border: 'none',
+                                                                    borderRadius: '4px',
+                                                                    cursor: 'pointer',
+                                                                    fontSize: '12px'
+                                                                }}
+                                                            >
+                                                                Hapus
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
 
@@ -2269,7 +2545,7 @@ _Pengiriman dari Sales Progress Report_`;
                                 onClick={handleSave}
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? 'Menyimpan...' : (modalMode === 'create' ? 'Tambah Data' : 'Update Data')}
+                                {isSubmitting ? 'Menyimpan...' : (modalMode === 'create' ? 'Tambah Data' : formData.status === 'Invoice' ? 'Update Data & Download Invoice' : 'Update Data')}
                             </button>
                         </div>
                     </div>
@@ -2792,18 +3068,72 @@ _Pengiriman dari Sales Progress Report_`;
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Notes Invoice - Show in Detail Data if exists */}
+                                {detailData.notesInvoice && detailData.notesInvoice.length > 0 && (
+                                    <div className={styles.section}>
+                                        <h4>Catatan Invoice</h4>
+                                        <div className={styles.sectionContent}>
+                                            <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                                                {detailData.notesInvoice.map((note, idx) => (
+                                                    <li key={idx} style={{ marginBottom: '5px', fontSize: '14px' }}>{note}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className={styles.modalFooter}>
-                                <button
-                                    className={styles.btnEdit}
-                                    onClick={() => {
-                                        setShowDetailModal(false);
-                                        handleEdit(detailData);
-                                    }}
-                                >
-                                    <FaEdit /> Edit
-                                </button>
+                                {(SALES) && !detailData.crosscheck && (
+                                    <button
+                                        className={styles.btnEdit}
+                                        onClick={() => {
+                                            setShowDetailModal(false);
+                                            handleEdit(detailData);
+                                        }}
+                                    >
+                                        <FaEdit /> Edit
+                                    </button>
+                                )}
+                                {(SPV || IT) && (
+                                    <>
+                                        <button
+                                            className={styles.btnEdit}
+                                            onClick={() => {
+                                                setShowDetailModal(false);
+                                                handleEdit(detailData);
+                                            }}
+                                        >
+                                            <FaEdit /> Edit
+                                        </button>
+                                        <button
+                                            className={detailData.crosscheck ? styles.btnCancel : styles.btnEdit}
+                                            onClick={() => handleCrosscheck(detailData.id, detailData.crosscheck, detailData.nama)}
+                                            style={detailData.crosscheck ? { marginRight: '10px', backgroundColor: '#6B7280' } : { marginRight: '10px', backgroundColor: '#059669' }}
+                                            disabled={isLoadingCrosscheck}
+                                        >
+                                            {isLoadingCrosscheck ? (
+                                                <><FaSpinner className="fa-spin" style={{ marginRight: '5px' }} /> Memproses...</>
+                                            ) : (
+                                                detailData.crosscheck ? <><FaUndo /> Batalkan Crosscheck</> : <><FaCheck /> Crosscheck</>
+                                            )}
+                                        </button>
+                                    </>
+                                )}
+                                {detailData.crosscheck && SALES && (
+                                    <div style={{
+                                        padding: '10px',
+                                        backgroundColor: '#FEF3C7',
+                                        border: '1px solid #F59E0B',
+                                        borderRadius: '4px',
+                                        color: '#92400E',
+                                        fontSize: '14px',
+                                        marginRight: '10px'
+                                    }}>
+                                        ⚠️ Data sudah di-crosscheck. Hubungi IT untuk perubahan.
+                                    </div>
+                                )}
                                 <button
                                     className={styles.btnCancel}
                                     onClick={() => setShowDetailModal(false)}
@@ -2817,108 +3147,6 @@ _Pengiriman dari Sales Progress Report_`;
             }
 
             {/* Download Penawaran Modal */}
-            {
-                showDownloadModal && selectedDownloadItem && (
-                    <div className={styles.modalOverlay} onClick={() => setShowDownloadModal(false)}>
-                        <div className={styles.modal} style={{ maxWidth: '500px' }} onClick={(e) => e.stopPropagation()}>
-                            <div className={styles.modalHeader}>
-                                <h2>Download Penawaran</h2>
-                                <button
-                                    className={styles.closeBtn}
-                                    onClick={() => setShowDownloadModal(false)}
-                                >
-                                    ✕
-                                </button>
-                            </div>
-
-                            <div className={styles.modalContent}>
-                                {/* Bank Selection */}
-                                <div className={styles.formGroup} style={{ marginBottom: '15px' }}>
-                                    <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Pilih Bank</label>
-                                    <select
-                                        value={selectedBank?.nama || ''}
-                                        onChange={(e) => {
-                                            const bank = bankList.find(b => b.nama === e.target.value);
-                                            setSelectedBank(bank);
-                                        }}
-                                        className={styles.input}
-                                        style={{ width: '100%', padding: '10px' }}
-                                    >
-                                        {bankList.map((bank, index) => (
-                                            <option key={index} value={bank.nama}>
-                                                {bank.nama}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                {/* Notes Section */}
-                                <div style={{ marginBottom: '10px' }}>
-                                    <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Catatan</label>
-                                    {downloadNotes.map((note, index) => (
-                                        <div key={index} style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
-                                            <input
-                                                type="text"
-                                                value={note}
-                                                onChange={(e) => updateDownloadNote(index, e.target.value)}
-                                                className={styles.input}
-                                                style={{ flex: 1, padding: '8px' }}
-                                                placeholder="Masukkan catatan..."
-                                            />
-                                            <button
-                                                onClick={() => removeDownloadNote(index)}
-                                                style={{
-                                                    padding: '8px 12px',
-                                                    backgroundColor: '#EF4444',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '4px',
-                                                    cursor: 'pointer'
-                                                }}
-                                            >
-                                                ✕
-                                            </button>
-                                        </div>
-                                    ))}
-                                    <button
-                                        onClick={addDownloadNote}
-                                        style={{
-                                            padding: '8px 12px',
-                                            backgroundColor: '#10B981',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '4px',
-                                            cursor: 'pointer',
-                                            marginTop: '5px'
-                                        }}
-                                    >
-                                        + Tambah Catatan
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className={styles.modalFooter}>
-                                <button
-                                    className={styles.btnEdit}
-                                    onClick={() => {
-                                        handleDownloadPenawaran(selectedDownloadItem);
-                                        setShowDownloadModal(false);
-                                    }}
-                                    style={{ backgroundColor: '#8B5CF6' }}
-                                >
-                                    <FaDownload /> Download
-                                </button>
-                                <button
-                                    className={styles.btnCancel}
-                                    onClick={() => setShowDownloadModal(false)}
-                                >
-                                    Batal
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
         </div >
     );
 }
