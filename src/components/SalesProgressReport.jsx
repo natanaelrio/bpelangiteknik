@@ -2105,11 +2105,21 @@ _Pengiriman dari Sales Progress Report_`;
                                                     style={{ backgroundColor: '#f5f5f5' }}
                                                 />
                                             </div>
-                                            <div className={styles.formGroup}>
+                                            {/* <div className={styles.formGroup}>
                                                 <label>Sales Name</label>
                                                 <input
                                                     type="text"
                                                     value={formData.salesName || '-'}
+                                                    readOnly
+                                                    className={`${styles.input}`}
+                                                    style={{ backgroundColor: '#f5f5f5' }}
+                                                />
+                                            </div> */}
+                                            <div className={styles.formGroup}>
+                                                <label>Nomor HP</label>
+                                                <input
+                                                    type="text"
+                                                    value={formData.nomorHp || '-'}
                                                     readOnly
                                                     className={`${styles.input}`}
                                                     style={{ backgroundColor: '#f5f5f5' }}
@@ -2119,13 +2129,13 @@ _Pengiriman dari Sales Progress Report_`;
 
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
-                                                <label>Nomor HP</label>
+                                                <label>Alamat Lengkap</label>
                                                 <input
                                                     type="text"
-                                                    value={formData.nomorHp || '-'}
-                                                    readOnly
-                                                    className={`${styles.input}`}
-                                                    style={{ backgroundColor: '#f5f5f5' }}
+                                                    name="alamatLengkap"
+                                                    value={formData.alamatLengkap || ''}
+                                                    onChange={handleInputChange}
+                                                    className={styles.input}
                                                 />
                                             </div>
                                             <div className={styles.formGroup}>
@@ -2147,16 +2157,7 @@ _Pengiriman dari Sales Progress Report_`;
                                         </div>
 
                                         <div className={styles.formRow}>
-                                            <div className={styles.formGroup}>
-                                                <label>Alamat Lengkap</label>
-                                                <input
-                                                    type="text"
-                                                    name="alamatLengkap"
-                                                    value={formData.alamatLengkap || ''}
-                                                    onChange={handleInputChange}
-                                                    className={styles.input}
-                                                />
-                                            </div>
+
                                             <div className={styles.formGroup}>
                                                 <label>Status</label>
                                                 <select
@@ -2175,9 +2176,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                     {/* <option value="Selasai">Selesai</option> */}
                                                 </select>
                                             </div>
-                                        </div>
 
-                                        <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
                                                 <label>Sumber</label>
                                                 <input
@@ -2189,6 +2188,8 @@ _Pengiriman dari Sales Progress Report_`;
                                                 />
                                             </div>
                                         </div>
+
+
 
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
