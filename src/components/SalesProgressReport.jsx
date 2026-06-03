@@ -765,7 +765,27 @@ a.n Fenti Marlina
 Cab : Lindeteves Trade Center
 Swift Code : CENAIDJA
 a.c 588.5062.609`
-        }
+        },
+        {
+            nama: "Bank MANDIRI - Fenti Marlina",
+            detail: `Bank MANDIRI
+a.n Fenti Marlina
+a.c 1150007778873`
+        },
+        {
+            nama: "Bank BRI - TOMMY ADMADIREDJA",
+            detail: `Bank BRI
+a.n TOMMY ADMADIREDJA
+a.c 139001000080567`
+        },
+        {
+            nama: "PAPER ID - WEB PELANGITEKNIK",
+            detail: `Pembelian melalui website pelangiteknik.com`
+        },
+        {
+            nama: "XENDIT - WEB TSUZUMI",
+            detail: `Pembelian melalui website tsuzumijapan.com`
+        },
     ];
 
     // Handle download Invoice PDF
@@ -869,7 +889,7 @@ _Pengiriman dari Sales Progress Report_`;
         const includePPN = true;
 
         // Use selected bank from modal (or from item's RekeningName)
-        let currentBank = bankList.find(b => b.nama.includes(item.RekeningName)) || bankList[0];
+        let currentBank = bankList.find(b => b.nama === item.RekeningName) || bankList[0];
 
         // Notes for invoice - use from item data or default
         const notes = item.notesInvoice || [
@@ -1846,12 +1866,9 @@ _Pengiriman dari Sales Progress Report_`;
                                                             className={styles.input}
                                                         >
                                                             <option value="">Pilih Rekening</option>
-                                                            <option value="PT PELANGI TEKNIK INDONESIA">PT PELANGI TEKNIK INDONESIA</option>
-                                                            <option value="PT TSUZUMI JAPAN TECHNOLOGY">PT TSUZUMI JAPAN TECHNOLOGY</option>
-                                                            <option value="Rekening Fenti Marlina">Rekening Fenti Marlina</option>
-                                                            <option value="Rekening Tommy Admadiredja">Rekening Tommy Admadiredja</option>
-                                                            <option value="Web Pelangi Teknik">Web Pelangi Teknik</option>
-                                                            <option value="Web TsuzumiJapan">Web TsuzumiJapan</option>
+                                                            {bankList.map((bank, idx) => (
+                                                                <option key={idx} value={bank.nama}>{bank.nama}</option>
+                                                            ))}
                                                         </select>
                                                     </div>
 
@@ -2392,12 +2409,9 @@ _Pengiriman dari Sales Progress Report_`;
                                                         className={styles.input}
                                                     >
                                                         <option value="">Pilih Rekening</option>
-                                                        <option value="PT PELANGI TEKNIK INDONESIA">PT PELANGI TEKNIK INDONESIA</option>
-                                                        <option value="PT TSUZUMI JAPAN TECHNOLOGY">PT TSUZUMI JAPAN TECHNOLOGY</option>
-                                                        <option value="Rekening Fenti Marlina">Rekening Fenti Marlina</option>
-                                                        <option value="Rekening Tommy Admadiredja">Rekening Tommy Admadiredja</option>
-                                                        <option value="Web Pelangi Teknik">Web Pelangi Teknik</option>
-                                                        <option value="Web TsuzumiJapan">Web TsuzumiJapan</option>
+                                                        {bankList.map((bank, idx) => (
+                                                            <option key={idx} value={bank.nama}>{bank.nama}</option>
+                                                        ))}
                                                     </select>
                                                 </div>
 
