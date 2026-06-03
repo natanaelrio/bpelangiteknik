@@ -936,7 +936,17 @@ _Pengiriman dari Sales Progress Report_`;
         const nameSales = item.salesName || userName;
 
         // Generate QR Code
-        const qrCodeData = perusahaan === 'PT Pelangi Teknik Indonesia' && await generateQRCode(`${process.env.NEXT_PUBLIC_URL2}`) || perusahaan === 'PT Tsuzumi Japan Technology' && await generateQRCode(`https://tsuzumijapan.com`) || '';
+        let qrCodeData = '';
+        try {
+            if (perusahaan === 'PT Pelangi Teknik Indonesia') {
+                qrCodeData = await generateQRCode(process.env.NEXT_PUBLIC_URL2 || 'https://pelangiteknik.com');
+            } else if (perusahaan === 'PT Tsuzumi Japan Technology') {
+                qrCodeData = await generateQRCode('https://tsuzumijapan.com');
+            }
+        } catch (qrError) {
+            console.error('QR Code generation error:', qrError);
+            qrCodeData = '';
+        }
 
         const docDefinitionInvoice = {
             content: [
