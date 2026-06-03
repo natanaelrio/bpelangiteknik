@@ -923,7 +923,7 @@ _Pengiriman dari Sales Progress Report_`;
         const includePPN = true;
 
         // Use selected bank from modal (or from item's RekeningName)
-        let currentBank = bankList.find(b => b.nama === item.RekeningName) || bankList[0];
+        const currentBank = bankList.find(b => b.nama === item.RekeningName) || bankList[0];
 
         // Notes for invoice - use from item data or default
         const notes = item.notesInvoice || [
@@ -1034,41 +1034,12 @@ _Pengiriman dari Sales Progress Report_`;
                                 { text: "", style: "tableHeader" },
                                 { text: "", style: "tableHeader" },
                             ],
-                            ...(includePPN
-                                ? [
-                                    // [
-                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
-                                    //     {},
-                                    //     { text: 'SUBTOTAL', style: "tableHeader" },
-                                    //     { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
-                                    // ],
-                                    // [
-                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
-                                    //     {},
-                                    //     { text: 'DPP (11%)', style: "tableHeader" },
-                                    //     { text: formatRupiah(dppValue), style: "tableHeader" },
-                                    // ],
-                                    // [
-                                    //     { text: "", colSpan: 2, border: [false, false, false, false] },
-                                    //     {},
-                                    //     { text: 'PPN (11%)', style: "tableHeader" },
-                                    //     { text: formatRupiah(ppnValue), style: "tableHeader" },
-                                    // ],
-                                    [
-                                        { text: "", colSpan: 2, border: [false, false, false, false] },
-                                        {},
-                                        { text: 'TOTAL', style: "tableHeader" },
-                                        { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
-                                    ]
-                                ]
-                                : [
-                                    [
-                                        { text: "", colSpan: 2, border: [false, false, false, false] },
-                                        {},
-                                        { text: 'GRANDTOTAL', style: "tableHeader" },
-                                        { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
-                                    ]
-                                ])
+                            [
+                                { text: "", colSpan: 2, border: [false, false, false, false] },
+                                {},
+                                { text: 'TOTAL', style: "tableHeader" },
+                                { text: formatRupiah(totalKeseluruhan), style: "tableHeader" },
+                            ],
                         ]
                     },
                     layout: {
@@ -1082,22 +1053,32 @@ _Pengiriman dari Sales Progress Report_`;
 
                 { text: '\n' },
 
+                // {
+                //     stack: [
+                //         { text: 'NOTE:', bold: true },
+                //         { ul: notes, style: 'defaultStyle' }
+                //     ]
+                // },
+
                 {
                     stack: [
                         { text: 'NOTE:', bold: true },
-                        { ul: notes, style: 'defaultStyle' }
-                    ]
-                },
-
-                { text: '\n' },
-
-                currentBank && {
-                    text: [
-                        { text: 'PEMBAYARAN:\n', bold: true },
-                        currentBank.detail
+                        {
+                            ul: notes.filter(n => n.trim() !== '')
+                        }
                     ],
                     style: 'defaultStyle'
                 },
+                { text: '\n' },
+
+
+                currentBank ? {
+                    text: [
+                        { text: 'PEMBAYARAN:\n', bold: true },
+                        { text: currentBank.detail },
+                    ],
+                    style: 'defaultStyle'
+                } : null,
 
                 { text: '\n' },
                 { text: `Informasi lebih lanjut hubungi ${nameSales} - ${nomerHp}`, style: 'defaultStyle' },
