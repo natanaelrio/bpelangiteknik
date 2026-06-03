@@ -90,7 +90,7 @@ export async function POST(req) {
             paymentStatus: isInvoice ? (paymentStatus || undefined) : null,
             salesCompany: salesCompany || undefined,
             RekeningName: isInvoice ? (RekeningName || undefined) : null,
-            notesInvoice: isInvoice && notesInvoice ? notesInvoice : null,
+            notesInvoice: isInvoice && notesInvoice ? notesInvoice : [],
             // Only update DPP and PPN if totalDeal changed or if explicitly provided
             ...(totalDeal && { dpp: calculatedDpp, ppn: calculatedPpn })
         };
