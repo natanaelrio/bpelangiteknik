@@ -1512,9 +1512,21 @@ _Pengiriman dari Sales Progress Report_`;
 
                                 {/* Collapsed view - compact info */}
                                 <div className={styles.cardInfoCompact}>
+
+                                    {item.nomorInvoice && (
+                                        <div className={styles.compactRow}>
+                                            <span className={styles.compactLabel}>No INV:</span>
+                                            <span>{item.nomorInvoice || '-'}</span>
+                                        </div>
+                                    )}
+
                                     <div className={styles.compactRow}>
                                         <span className={styles.compactLabel}>Sales:</span>
                                         <span>{item.salesName || '-'}</span>
+                                    </div>
+                                    <div className={styles.compactRow}>
+                                        <span className={styles.compactLabel}>Customer:</span>
+                                        <span>{item.nama || '-'}</span>
                                         <span className={styles.compactLabel}>Telp:</span>
                                         <span>{item.nomorHp || '-'}</span>
                                         <span className={styles.compactLabel}>Kota:</span>
