@@ -75,6 +75,10 @@ export default function SalesProgressReport({ session }) {
     // Loading state for crosscheck
     const [isLoadingCrosscheck, setIsLoadingCrosscheck] = useState(false);
 
+    // Loading state for delete log
+    const [isDeletingLog, setIsDeletingLog] = useState(false);
+    const [deletingLogId, setDeletingLogId] = useState(null);
+
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -252,6 +256,36 @@ export default function SalesProgressReport({ session }) {
             toast.error('Gagal memuat logs');
         } finally {
             setIsLoadingLogs(false);
+        }
+    };
+
+    // Handle delete log
+    const handleDeleteLog = async (logId) => {
+        if (!confirm('Yakin ingin menghapus log ini?')) return;
+
+        setIsDeletingLog(true);
+        setDeletingLogId(logId);
+
+        try {
+            const response = await fetch(`/api/del/salesLog?id=${logId}`, {
+                method: 'DELETE',
+                headers: { authorization: API_KEY }
+            });
+            const result = await response.json();
+            if (result.isSuccess) {
+                toast.success('Log berhasil dihapus');
+                // Refresh logs
+                if (selectedRecord?.id) {
+                    fetchLogs(selectedRecord.id);
+                }
+            } else {
+                toast.error('Gagal menghapus log');
+            }
+        } catch (error) {
+            toast.error('Error: ' + error.message);
+        } finally {
+            setIsDeletingLog(false);
+            setDeletingLogId(null);
         }
     };
 
@@ -2591,6 +2625,24 @@ _Pengiriman dari Sales Progress Report_`;
                                             <div key={log.id} className={styles.logItem}>
                                                 <div className={styles.logTime}>
                                                     {moment(log.createdAt).format('DD MMM YYYY HH:mm')}
+                                                    {SPV && (
+                                                        <button
+                                                            onClick={() => handleDeleteLog(log.id)}
+                                                            disabled={isDeletingLog && deletingLogId === log.id}
+                                                            style={{
+                                                                marginLeft: '10px',
+                                                                padding: '2px 8px',
+                                                                backgroundColor: isDeletingLog && deletingLogId === log.id ? '#9CA3AF' : '#EF4444',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '4px',
+                                                                fontSize: '10px',
+                                                                cursor: isDeletingLog && deletingLogId === log.id ? 'not-allowed' : 'pointer'
+                                                            }}
+                                                        >
+                                                            {isDeletingLog && deletingLogId === log.id ? '...' : 'Hapus'}
+                                                        </button>
+                                                    )}
                                                 </div>
                                                 <div className={styles.logContent}>
                                                     <div className={styles.logActor}>
@@ -2741,11 +2793,12 @@ _Pengiriman dari Sales Progress Report_`;
                                                                             </>
                                                                         );
                                                                     } catch (e) {
+                                                                        const isNomorInvoice = log.action?.includes('nomorInvoice');
                                                                         return (
                                                                             <p className={styles.logChange}>
                                                                                 {log.oldValue != null
                                                                                     ? (
-                                                                                        isNaN(parseFloat(log.oldValue))
+                                                                                        isNomorInvoice || isNaN(parseFloat(log.oldValue))
                                                                                             ? log.oldValue
                                                                                             : formatRupiah(log.oldValue)
                                                                                     )
@@ -2756,7 +2809,7 @@ _Pengiriman dari Sales Progress Report_`;
 
                                                                                 {log.newValue != null
                                                                                     ? (
-                                                                                        isNaN(parseFloat(log.newValue))
+                                                                                        isNomorInvoice || isNaN(parseFloat(log.newValue))
                                                                                             ? log.newValue
                                                                                             : formatRupiah(log.newValue)
                                                                                     )
@@ -2768,27 +2821,32 @@ _Pengiriman dari Sales Progress Report_`;
                                                                 })()}
                                                             </div>
                                                         ) : (
-                                                            <p className={styles.logChange}>
-                                                                {log.oldValue != null
-                                                                    ? (
-                                                                        isNaN(parseFloat(log.oldValue))
-                                                                            ? log.oldValue
-                                                                            : formatRupiah(log.oldValue)
-                                                                    )
-                                                                    : '-'
-                                                                }
+                                                            (() => {
+                                                                const isNomorInvoice = log.action?.includes('nomorInvoice');
+                                                                return (
+                                                                    <p className={styles.logChange}>
+                                                                        {log.oldValue != null
+                                                                            ? (
+                                                                                isNomorInvoice || isNaN(parseFloat(log.oldValue))
+                                                                                    ? log.oldValue
+                                                                                    : formatRupiah(log.oldValue)
+                                                                            )
+                                                                            : '-'
+                                                                        }
 
-                                                                {' → '}
+                                                                        {' → '}
 
-                                                                {log.newValue != null
-                                                                    ? (
-                                                                        isNaN(parseFloat(log.newValue))
-                                                                            ? log.newValue
-                                                                            : formatRupiah(log.newValue)
-                                                                    )
-                                                                    : '-'
-                                                                }
-                                                            </p>
+                                                                        {log.newValue != null
+                                                                            ? (
+                                                                                isNomorInvoice || isNaN(parseFloat(log.newValue))
+                                                                                    ? log.newValue
+                                                                                    : formatRupiah(log.newValue)
+                                                                            )
+                                                                            : '-'
+                                                                        }
+                                                                    </p>
+                                                                );
+                                                            })()
                                                         )
                                                     )}
 
@@ -3068,11 +3126,13 @@ _Pengiriman dari Sales Progress Report_`;
                                 {/* Informasi Lain (Invoice, Pajak, Catatan, Tanggal) */}
                                 <div className={styles.section}>
                                     <h4>Informasi Lain</h4>
+                                    {console.log(detailData)}
                                     <div className={styles.sectionContent} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                                         <div>
                                             {detailData.nomorInvoice && <p><strong>Nomor Invoice:</strong> {detailData.nomorInvoice}</p>}
-                                            {detailData.fakturPajak && <p><strong>Faktur Pajak:</strong> {detailData.fakturPajak}</p>}
-                                            {detailData.crosscheck !== undefined && <p><strong>Crosscheck:</strong> {detailData.crosscheck ? 'Ya' : 'Tidak'}</p>}
+                                            {/* {detailData.fakturPajak && <p><strong>Faktur Pajak:</strong> {detailData.fakturPajak}</p>} */}
+                                            {/* {detailData.crosscheck !== undefined && <p><strong>Crosscheck:</strong> {detailData.crosscheck ? 'Ya' : 'Tidak'}</p>} */}
+                                            {detailData.RekeningName && <p><strong>Bank Tujuan:</strong> {detailData.RekeningName}</p>}
                                         </div>
                                         <div>
                                             {detailData.remarks && <p><strong>Catatan Umum:</strong> {detailData.remarks}</p>}
