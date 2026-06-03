@@ -247,6 +247,7 @@ export async function POST(req) {
             result = await prisma.salesProgress.create({
                 data: {
                     id: newId,
+                    salesName: salesName || undefined,
                     ...updateData
                 },
                 include: {
