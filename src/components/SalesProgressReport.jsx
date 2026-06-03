@@ -2793,7 +2793,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                                             </>
                                                                         );
                                                                     } catch (e) {
-                                                                        const isNomorInvoice = log.action?.includes('nomorInvoice');
+                                                                        const isNomorInvoice = log.fieldName == 'nomorInvoice'
                                                                         return (
                                                                             <p className={styles.logChange}>
                                                                                 {log.oldValue != null
@@ -2822,7 +2822,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                             </div>
                                                         ) : (
                                                             (() => {
-                                                                const isNomorInvoice = log.action?.includes('nomorInvoice');
+                                                                const isNomorInvoice = log.fieldName == 'nomorInvoice'
                                                                 return (
                                                                     <p className={styles.logChange}>
                                                                         {log.oldValue != null
