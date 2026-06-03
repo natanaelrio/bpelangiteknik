@@ -302,6 +302,16 @@ export default function SalesProgressReport({ session }) {
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
 
+        // Validasi nomorHp - hanya angka, tanpa spasi dan karakter khusus
+        if (name === 'nomorHp') {
+            const cleanValue = value.replace(/[^0-9]/g, '');
+            setFormData(prev => ({
+                ...prev,
+                [name]: cleanValue
+            }));
+            return;
+        }
+
         // Reset payment fields when status changes to non-Invoice
         if (name === 'status' && value !== 'Invoice') {
             setFormData(prev => ({
@@ -355,6 +365,11 @@ export default function SalesProgressReport({ session }) {
 
     // Handle item change with auto-calculate subtotals
     const handleItemChange = (index, field, value) => {
+        // Validasi kodeBarang - tanpa spasi
+        if (field === 'kodeBarang') {
+            value = value.replace(/\s/g, '');
+        }
+
         setFormData(prev => {
             const newItems = prev.items.map((item, i) => {
                 if (i === index) {
@@ -1593,6 +1608,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                     value={formData.nomorHp}
                                                     onChange={handleInputChange}
                                                     className={styles.input}
+                                                    placeholder='Ex: 628123xxxx'
                                                 />
                                             </div>
                                         </div>
@@ -1758,7 +1774,8 @@ _Pengiriman dari Sales Progress Report_`;
                                                                     padding: '10px 12px',
                                                                     backgroundColor: '#F3F4F6',
                                                                     borderRadius: '6px',
-                                                                    border: '1px solid #E5E7EB'
+                                                                    border: '1px solid #E5E7EB',
+                                                                    fontSize: '14px'
                                                                 }}
                                                             >
                                                                 <span>{note}</span>
