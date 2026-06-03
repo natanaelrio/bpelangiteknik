@@ -81,7 +81,8 @@ export async function GET(req) {
                 { nama: { contains: search, mode: 'insensitive' } },
                 { salesName: { contains: search, mode: 'insensitive' } },
                 { nomorHp: { contains: search, mode: 'insensitive' } },
-                { alamatKota: { contains: search, mode: 'insensitive' } }
+                { alamatKota: { contains: search, mode: 'insensitive' } },
+                { nomorInvoice: { contains: search, mode: 'insensitive' } }
             ];
         }
 

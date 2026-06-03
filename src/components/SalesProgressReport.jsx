@@ -1256,7 +1256,7 @@ _Pengiriman dari Sales Progress Report_`;
                     <FaSearch className={styles.searchIcon} />
                     <input
                         type="text"
-                        placeholder="Cari nama, nomor HP, atau brand..."
+                        placeholder="Cari nama, nomor HP, nomor invoice, atau brand..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className={styles.searchInput}
