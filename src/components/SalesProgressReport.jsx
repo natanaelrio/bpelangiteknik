@@ -61,6 +61,8 @@ export default function SalesProgressReport({ session }) {
     const [logsData, setLogsData] = useState([]);
     const [showLogs, setShowLogs] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
+    const [showSPBBModal, setShowSPBBModal] = useState(false);
+    const [spbbData, setSpbbData] = useState({ id: '', nama: '', spbb: '', spbbCreatedAt: new Date().toISOString().slice(0, 10) });
     const [detailData, setDetailData] = useState(null);
 
     // Loading state for submit
@@ -92,6 +94,12 @@ export default function SalesProgressReport({ session }) {
     const [crosscheckFilter, setCrosscheckFilter] = useState('');
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
+    const [dpDateFrom, setDpDateFrom] = useState('');
+    const [dpDateTo, setDpDateTo] = useState('');
+    const [invoiceDateFrom, setInvoiceDateFrom] = useState('');
+    const [invoiceDateTo, setInvoiceDateTo] = useState('');
+    const [spbbDateFrom, setSpbbDateFrom] = useState('');
+    const [spbbDateTo, setSpbbDateTo] = useState('');
     const [showFilters, setShowFilters] = useState(false);
 
     // Totals from API
@@ -131,6 +139,16 @@ export default function SalesProgressReport({ session }) {
         crosscheck: false,
         fakturPajak: '',
         nomorInvoice: '',
+        invoiceCreatedAt: '',
+        dpNumber: '',
+        dpCreatedAt: '',
+        notesDP: [
+            "Pembayaran DP sebagai tanda jadi pemesanan.",
+            "Pelunasan dilakukan sebelum barang dikirim.",
+            "Estimasi pengiriman setelah pembayaran lunas diterima."
+        ],
+        spbb: '',
+        spbbCreatedAt: '',
         totalUnit: '',
         totalDeal: '',
         // Hidden fields - auto-calculated
@@ -184,6 +202,12 @@ export default function SalesProgressReport({ session }) {
         if (debouncedSearch) params.append('search', debouncedSearch);
         if (dateFrom) params.append('dateFrom', dateFrom);
         if (dateTo) params.append('dateTo', dateTo);
+        if (dpDateFrom) params.append('dpDateFrom', dpDateFrom);
+        if (dpDateTo) params.append('dpDateTo', dpDateTo);
+        if (invoiceDateFrom) params.append('invoiceDateFrom', invoiceDateFrom);
+        if (invoiceDateTo) params.append('invoiceDateTo', invoiceDateTo);
+        if (spbbDateFrom) params.append('spbbDateFrom', spbbDateFrom);
+        if (spbbDateTo) params.append('spbbDateTo', spbbDateTo);
         params.append('limit', itemsPerPage.toString());
         params.append('offset', ((currentPage - 1) * itemsPerPage).toString());
         return params.toString();
@@ -201,8 +225,6 @@ export default function SalesProgressReport({ session }) {
                 }
             );
             const result = await response.json();
-            console.log(result);
-
             if (result.isSuccess) {
                 setData(result.data || []);
                 setTotalCount(result.total || 0);
@@ -291,7 +313,7 @@ export default function SalesProgressReport({ session }) {
 
     useEffect(() => {
         fetchData();
-    }, [currentPage, statusFilter, salesNameFilter, paymentStatusFilter, crosscheckFilter, debouncedSearch, dateFrom, dateTo]);
+    }, [currentPage, statusFilter, salesNameFilter, paymentStatusFilter, crosscheckFilter, debouncedSearch, dateFrom, dateTo, dpDateFrom, dpDateTo, invoiceDateFrom, invoiceDateTo, spbbDateFrom, spbbDateTo]);
 
     // Fetch sales names on mount
     useEffect(() => {
@@ -338,7 +360,87 @@ export default function SalesProgressReport({ session }) {
                         "Garansi servise 1 tahun",
                         "Pembayaran cash before shipping",
                         "Free Jabodetabek"
+                    ],
+                invoiceCreatedAt: new Date().toISOString()
+            }));
+            return;
+        }
+
+        // Set dpCreatedAt when status changes to DP
+        if (name === 'status' && value === 'DP') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value,
+                dpCreatedAt: new Date().toISOString()
+            }));
+            return;
+        }
+
+        // Set dpNumber, dpCreatedAt, and notesDP when paymentStatus changes to DP (Uang Muka)
+        if (name === 'paymentStatus' && value === 'DP') {
+            // Generate DP number if not exists
+            const newDpNumber = formData.dpNumber || `DP-${Date.now()}`;
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value,
+                dpNumber: newDpNumber,
+                dpCreatedAt: prev.dpCreatedAt || new Date().toISOString(),
+                notesDP: prev.notesDP && prev.notesDP.length > 0
+                    ? prev.notesDP
+                    : [
+                        "Pembayaran DP sebagai tanda jadi pemesanan.",
+                        "Pelunasan dilakukan sebelum barang dikirim.",
+                        "Estimasi pengiriman setelah pembayaran lunas diterima."
                     ]
+            }));
+            return;
+        }
+
+        // Set dpCreatedAt when paymentStatus changes to Lunas (Lunas = sudah lunas)
+        if (name === 'paymentStatus' && value === 'LUNAS') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value,
+                // Set default notesInvoice when status changes to Lunas
+                notesInvoice: prev.notesInvoice && prev.notesInvoice.length > 0
+                    ? prev.notesInvoice
+                    : [
+                        "Garansi servise 1 tahun",
+                        "Pembayaran cash before shipping",
+                        "Free Jabodetabek"
+                    ],
+                invoiceCreatedAt: prev.invoiceCreatedAt || new Date().toISOString()
+            }));
+            return;
+        }
+
+        // Reset dp fields when paymentStatus is cleared
+        if (name === 'paymentStatus' && value === '') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value,
+                dpNumber: '',
+                dpCreatedAt: ''
+            }));
+            return;
+        }
+
+        // Update invoiceCreatedAt when nomorInvoice changes
+        if (name === 'nomorInvoice' && value) {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
+                invoiceCreatedAt: new Date().toISOString()
+            }));
+            return;
+        }
+
+        // Update dpCreatedAt when dpNumber changes
+        if (name === 'dpNumber' && value) {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
+                dpCreatedAt: new Date().toISOString()
             }));
             return;
         }
@@ -430,12 +532,23 @@ export default function SalesProgressReport({ session }) {
     };
 
     // Handle crosscheck
-    const handleCrosscheck = async (id, currentStatus, nama) => {
+    const handleCrosscheck = async (id, currentStatus, nama, currentSpbb = '') => {
         const newStatus = !currentStatus;
-        const confirmMessage = newStatus
-            ? `Yakin ingin menandai data ${nama} sebagai sudah di-crosscheck?`
-            : `Yakin ingin membatalkan status crosscheck untuk ${nama}?`;
 
+        // Jika mengaktifkan crosscheck, tampilkan modal untuk input SPBB
+        if (newStatus) {
+            setSpbbData({
+                id: id,
+                nama: nama,
+                spbb: currentSpbb || '',
+                spbbCreatedAt: new Date().toISOString().slice(0, 10)
+            });
+            setShowSPBBModal(true);
+            return;
+        }
+
+        // Jika membatalkan crosscheck, langsung proses
+        const confirmMessage = `Yakin ingin membatalkan status crosscheck untuk ${nama}?`;
         if (!confirm(confirmMessage)) return;
 
         setIsLoadingCrosscheck(true);
@@ -450,19 +563,68 @@ export default function SalesProgressReport({ session }) {
                     nama: nama,
                     id: id,
                     crosscheck: newStatus,
+                    spbb: '',
+                    spbbCreatedAt: null,
                     actorName: userName,
                     actorRole: userRole
                 })
             });
 
             const result = await response.json();
-            console.log(result);
             if (result.isSuccess) {
-                toast.success(newStatus ? 'Data berhasil di-crosscheck' : 'Crosscheck berhasil dibatalkan');
+                toast.success('Crosscheck berhasil dibatalkan');
                 fetchData();
-                // Update detailData if modal is open
                 if (detailData && detailData.id === id) {
-                    setDetailData({ ...detailData, crosscheck: newStatus });
+                    setDetailData({ ...detailData, crosscheck: newStatus, spbb: '', spbbCreatedAt: null });
+                }
+            } else {
+                toast.error(result.message || 'Gagal update crosscheck');
+            }
+        } catch (error) {
+            toast.error('Error: ' + error.message);
+        } finally {
+            setIsLoadingCrosscheck(false);
+        }
+    };
+
+    // Handle save SPBB
+    const handleSaveSPBB = async () => {
+        if (!spbbData.spbb) {
+            toast.error('Nomor SPBB wajib diisi');
+            return;
+        }
+
+        setIsLoadingCrosscheck(true);
+        try {
+            const response = await fetch('/api/p/salesProgress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: API_KEY
+                },
+                body: JSON.stringify({
+                    nama: spbbData.nama,
+                    id: spbbData.id,
+                    crosscheck: true,
+                    spbb: spbbData.spbb,
+                    spbbCreatedAt: new Date(spbbData.spbbCreatedAt).toISOString(),
+                    actorName: userName,
+                    actorRole: userRole
+                })
+            });
+
+            const result = await response.json();
+            if (result.isSuccess) {
+                toast.success('Data berhasil di-crosscheck dengan SPBB');
+                setShowSPBBModal(false);
+                fetchData();
+                if (detailData && detailData.id === spbbData.id) {
+                    setDetailData({
+                        ...detailData,
+                        crosscheck: true,
+                        spbb: spbbData.spbb,
+                        spbbCreatedAt: spbbData.spbbCreatedAt
+                    });
                 }
                 setShowDetailModal(false);
             } else {
@@ -541,10 +703,18 @@ export default function SalesProgressReport({ session }) {
                 toast.error('Status Pembayaran wajib diisi');
                 return;
             }
-            if (!formData.nomorInvoice) {
+            if (formData.paymentStatus == 'DP' && !formData.dpNumber) {
+                toast.error('Nomor DP wajib diisi');
+                return;
+            }
+            if (formData.paymentStatus == 'LUNAS' && !formData.nomorInvoice) {
                 toast.error('Nomor Invoice wajib diisi');
                 return;
             }
+            // if (!formData.nomorInvoice) {
+            //     toast.error('Nomor Invoice wajib diisi');
+            //     return;
+            // }
             if (!formData.RekeningName) {
                 toast.error('Rekening wajib diisi');
                 return;
@@ -565,7 +735,7 @@ export default function SalesProgressReport({ session }) {
         const calculatedPpn = Math.round(calculatedDpp * 0.11);
 
         // Prepare data for API - clear payment fields if status is not Invoice
-        const apiData = {
+        let apiData = {
             ...formData,
             dpp: calculatedDpp,
             ppn: calculatedPpn,
@@ -757,6 +927,14 @@ _Dikirim dari Sales Progress Report_`;
             crosscheck: record.crosscheck || false,
             fakturPajak: record.fakturPajak || '',
             nomorInvoice: record.nomorInvoice || '',
+            invoiceCreatedAt: record.invoiceCreatedAt || '',
+            dpNumber: record.dpNumber || '',
+            dpCreatedAt: record.dpCreatedAt || '',
+            notesDP: record.notesDP || [
+                "Pembayaran DP sebagai tanda jadi pemesanan.",
+                "Pelunasan dilakukan sebelum barang dikirim.",
+                "Estimasi pengiriman setelah pembayaran lunas diterima."
+            ],
             totalUnit: record.totalUnit || '',
             totalDeal: record.totalDeal || '',
             dpp: record.dpp || '',
@@ -886,7 +1064,7 @@ ${itemsList}
 
 💳 *PEMBAYARAN*
 • Status: ${item.paymentStatus || '-'}
-• Invoice: ${item.nomorInvoice || '-'}
+${item.paymentStatus === 'DP' ? `• No. DP: ${item.dpNumber || '-'}` : `• Invoice: ${item.nomorInvoice || '-'}`}
 • Rekening: ${item.RekeningName || '-'}
 • Total Bayar: Rp ${parseFloat(item.totalPayment || 0).toLocaleString('id-ID')}
 • Sisa Bayar: Rp ${parseFloat(item.sisaPayment || 0).toLocaleString('id-ID')}
@@ -940,12 +1118,19 @@ _Pengiriman dari Sales Progress Report_`;
         // Use selected bank from modal (or from item's RekeningName)
         const currentBank = bankList.find(b => b.nama === item.RekeningName) || bankList[0];
 
-        // Notes for invoice - use from item data or default
-        const notes = item.notesInvoice || [
-            "Garansi servise 1 tahun",
-            "Pembayaran cash before shipping",
-            "Free Jabodetabek"
-        ];
+        // Notes for invoice - use from item data based on paymentStatus
+        // If paymentStatus is DP, use notesDP; otherwise use notesInvoice
+        const notes = item.paymentStatus === 'DP'
+            ? (item.notesDP || [
+                "Pembayaran DP sebagai tanda jadi pemesanan.",
+                "Pelunasan dilakukan sebelum barang dikirim.",
+                "Estimasi pengiriman setelah pembayaran lunas diterima."
+            ])
+            : (item.notesInvoice || [
+                "Garansi servise 1 tahun",
+                "Pembayaran cash before shipping",
+                "Free Jabodetabek"
+            ]);
 
         // Sales info
         const nameSales = item.salesName || userName;
@@ -1003,8 +1188,8 @@ _Pengiriman dari Sales Progress Report_`;
                 { text: `${customerName}`, style: 'Blode' },
                 { text: item.alamatKota || '', style: 'Blode' },
                 { text: '\n' },
-                { text: `Perihal       : INVOICE`, style: 'Blode' },
-                { text: `No. Invoice  : ${item.nomorInvoice || '-'}`, style: 'Blode' },
+                { text: `Perihal       : ${item.paymentStatus === 'INVOICE' ? 'INVOICE' : 'DP'}`, style: 'Blode' },
+                { text: `No. ${item.paymentStatus === 'INVOICE' ? 'Invoice' : 'DP'}  : ${item.paymentStatus === 'INVOICE' ? item.nomorInvoice || '-' : item.dpNumber || '-'}`, style: 'Blode' },
                 { text: '\n' },
                 { text: `Dengan hormat, demikian disampaikan informasi tagihan atas barang yang saudara butuhkan :`, style: 'defaultStyle' },
                 { text: '\n' },
@@ -1068,13 +1253,6 @@ _Pengiriman dari Sales Progress Report_`;
 
                 { text: '\n' },
 
-                // {
-                //     stack: [
-                //         { text: 'NOTE:', bold: true },
-                //         { ul: notes, style: 'defaultStyle' }
-                //     ]
-                // },
-
                 {
                     stack: [
                         { text: 'NOTE:', bold: true },
@@ -1091,6 +1269,9 @@ _Pengiriman dari Sales Progress Report_`;
                     text: [
                         { text: 'PEMBAYARAN:\n', bold: true },
                         { text: currentBank.detail },
+                        { text: '\n' },
+                        item.paymentStatus === 'DP' ? { text: `Total Pembayaran DP: Rp ${parseFloat(item.totalPayment || 0).toLocaleString('id-ID')}\n`, bold: true } : {},
+                        item.paymentStatus === 'DP' ? { text: `Sisa Pembayaran: Rp ${parseFloat(item.sisaPayment || 0).toLocaleString('id-ID')}`, bold: true, color: '#dc2626' } : {},
                     ],
                     style: 'defaultStyle'
                 } : null,
@@ -1131,7 +1312,7 @@ _Pengiriman dari Sales Progress Report_`;
             },
         };
 
-        pdfMake.createPdf(docDefinitionInvoice).download(`Invoice_${item.nomorInvoice || customerName}.pdf`);
+        pdfMake.createPdf(docDefinitionInvoice).download(item.paymentStatus === 'DP' ? `Invoice_DP_${item.dpNumber + '-' + customerName || customerName}.pdf` : `Invoice_Pelunasan_${item.nomorInvoice + '-' + customerName || customerName}.pdf`);
 
         // Send to WhatsApp after successful download
         try {
@@ -1331,7 +1512,7 @@ _Pengiriman dari Sales Progress Report_`;
                         </select>
                     </div>
                     <div className={styles.filterGroup}>
-                        <label>Dari Tanggal</label>
+                        <label>Buat Dari Tanggal</label>
                         <input
                             type="date"
                             value={dateFrom}
@@ -1340,11 +1521,65 @@ _Pengiriman dari Sales Progress Report_`;
                         />
                     </div>
                     <div className={styles.filterGroup}>
-                        <label>Sampai Tanggal</label>
+                        <label>Buat Sampai Tanggal</label>
                         <input
                             type="date"
                             value={dateTo}
                             onChange={(e) => setDateTo(e.target.value)}
+                            className={styles.filterSelect}
+                        />
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>DP Dari Tanggal</label>
+                        <input
+                            type="date"
+                            value={dpDateFrom}
+                            onChange={(e) => setDpDateFrom(e.target.value)}
+                            className={styles.filterSelect}
+                        />
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>DP Sampai Tanggal</label>
+                        <input
+                            type="date"
+                            value={dpDateTo}
+                            onChange={(e) => setDpDateTo(e.target.value)}
+                            className={styles.filterSelect}
+                        />
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>Invoice Dari Tanggal</label>
+                        <input
+                            type="date"
+                            value={invoiceDateFrom}
+                            onChange={(e) => setInvoiceDateFrom(e.target.value)}
+                            className={styles.filterSelect}
+                        />
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>Invoice Sampai Tanggal</label>
+                        <input
+                            type="date"
+                            value={invoiceDateTo}
+                            onChange={(e) => setInvoiceDateTo(e.target.value)}
+                            className={styles.filterSelect}
+                        />
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>SPBB Dari Tanggal</label>
+                        <input
+                            type="date"
+                            value={spbbDateFrom}
+                            onChange={(e) => setSpbbDateFrom(e.target.value)}
+                            className={styles.filterSelect}
+                        />
+                    </div>
+                    <div className={styles.filterGroup}>
+                        <label>SPBB Sampai Tanggal</label>
+                        <input
+                            type="date"
+                            value={spbbDateTo}
+                            onChange={(e) => setSpbbDateTo(e.target.value)}
                             className={styles.filterSelect}
                         />
                     </div>
@@ -1512,6 +1747,13 @@ _Pengiriman dari Sales Progress Report_`;
 
                                 {/* Collapsed view - compact info */}
                                 <div className={styles.cardInfoCompact}>
+
+                                    {item.spbb && (
+                                        <div className={styles.compactRow}>
+                                            <span className={styles.compactLabel}>No SPBB:</span>
+                                            <span>{item.spbb || '-'}</span>
+                                        </div>
+                                    )}
 
                                     {item.nomorInvoice && (
                                         <div className={styles.compactRow}>
@@ -2445,15 +2687,32 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
                                             <div className={styles.formRow}>
                                                 <div className={styles.formGroup}>
-                                                    <label>Nomor Invoice</label>
-                                                    <input
-                                                        type="text"
-                                                        name="nomorInvoice"
-                                                        value={formData.nomorInvoice}
-                                                        onChange={handleInputChange}
-                                                        className={styles.input}
-                                                        placeholder="INV/001/2024"
-                                                    />
+                                                    {formData.paymentStatus === 'LUNAS' && (
+                                                        <>
+                                                            <label>Nomor Invoice</label>
+                                                            <input
+                                                                type="text"
+                                                                name="nomorInvoice"
+                                                                value={formData.nomorInvoice}
+                                                                onChange={handleInputChange}
+                                                                className={styles.input}
+                                                                placeholder="INV/001/2024"
+                                                            />
+                                                        </>
+                                                    )}
+                                                    {formData.paymentStatus === 'DP' && (
+                                                        <>
+                                                            <label>Nomor DP</label>
+                                                            <input
+                                                                type="text"
+                                                                name="dpNumber"
+                                                                value={formData.dpNumber}
+                                                                onChange={handleInputChange}
+                                                                className={styles.input}
+                                                                placeholder="DP/001/2024"
+                                                            />
+                                                        </>
+                                                    )}
                                                 </div>
                                                 <div className={styles.formGroup}>
                                                     <label>Rekening</label>
@@ -2505,94 +2764,188 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
 
                                             {/* Notes Invoice Management */}
-                                            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
-                                                <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan Invoice</h4>
-                                                <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                                                    <input
-                                                        type="text"
-                                                        id="newNoteInvoice"
-                                                        placeholder="Tambah catatan baru..."
-                                                        className={styles.input}
-                                                        onKeyPress={(e) => {
-                                                            if (e.key === 'Enter') {
-                                                                const newNote = e.target.value.trim();
+                                            {formData.paymentStatus === 'LUNAS' && (
+                                                <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
+                                                    <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan Invoice</h4>
+                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                                        <input
+                                                            type="text"
+                                                            id="newNoteInvoice"
+                                                            placeholder="Tambah catatan baru..."
+                                                            className={styles.input}
+                                                            onKeyPress={(e) => {
+                                                                if (e.key === 'Enter') {
+                                                                    const newNote = e.target.value.trim();
+                                                                    if (newNote) {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                        }));
+                                                                        e.target.value = '';
+                                                                    }
+                                                                }
+                                                            }}
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const input = document.getElementById('newNoteInvoice');
+                                                                const newNote = input.value.trim();
                                                                 if (newNote) {
                                                                     setFormData(prev => ({
                                                                         ...prev,
                                                                         notesInvoice: [...(prev.notesInvoice || []), newNote]
                                                                     }));
-                                                                    e.target.value = '';
+                                                                    input.value = '';
                                                                 }
-                                                            }
-                                                        }}
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            const input = document.getElementById('newNoteInvoice');
-                                                            const newNote = input.value.trim();
-                                                            if (newNote) {
-                                                                setFormData(prev => ({
-                                                                    ...prev,
-                                                                    notesInvoice: [...(prev.notesInvoice || []), newNote]
-                                                                }));
-                                                                input.value = '';
-                                                            }
-                                                        }}
-                                                        style={{
-                                                            padding: '8px 16px',
-                                                            backgroundColor: '#3B82F6',
-                                                            color: 'white',
-                                                            border: 'none',
-                                                            borderRadius: '6px',
-                                                            cursor: 'pointer',
-                                                            fontWeight: '500',
-                                                            whiteSpace: 'nowrap'
-                                                        }}
-                                                    >
-                                                        + Tambah
-                                                    </button>
-                                                </div>
-                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                    {(formData.notesInvoice || []).map((note, idx) => (
-                                                        <div
-                                                            key={idx}
+                                                            }}
                                                             style={{
-                                                                display: 'flex',
-                                                                justifyContent: 'space-between',
-                                                                alignItems: 'center',
-                                                                padding: '10px 12px',
-                                                                backgroundColor: '#F3F4F6',
+                                                                padding: '8px 16px',
+                                                                backgroundColor: '#3B82F6',
+                                                                color: 'white',
+                                                                border: 'none',
                                                                 borderRadius: '6px',
-                                                                border: '1px solid #E5E7EB',
-                                                                fontSize: '14px'
+                                                                cursor: 'pointer',
+                                                                fontWeight: '500',
+                                                                whiteSpace: 'nowrap'
                                                             }}
                                                         >
-                                                            <span>{note}</span>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    setFormData(prev => ({
-                                                                        ...prev,
-                                                                        notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
-                                                                    }));
-                                                                }}
+                                                            + Tambah
+                                                        </button>
+                                                    </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                        {(formData.notesInvoice || []).map((note, idx) => (
+                                                            <div
+                                                                key={idx}
                                                                 style={{
-                                                                    padding: '4px 8px',
-                                                                    backgroundColor: '#EF4444',
-                                                                    color: 'white',
-                                                                    border: 'none',
-                                                                    borderRadius: '4px',
-                                                                    cursor: 'pointer',
-                                                                    fontSize: '12px'
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    alignItems: 'center',
+                                                                    padding: '10px 12px',
+                                                                    backgroundColor: '#F3F4F6',
+                                                                    borderRadius: '6px',
+                                                                    border: '1px solid #E5E7EB',
+                                                                    fontSize: '14px'
                                                                 }}
                                                             >
-                                                                Hapus
-                                                            </button>
-                                                        </div>
-                                                    ))}
+                                                                <span>{note}</span>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
+                                                                        }));
+                                                                    }}
+                                                                    style={{
+                                                                        padding: '4px 8px',
+                                                                        backgroundColor: '#EF4444',
+                                                                        color: 'white',
+                                                                        border: 'none',
+                                                                        borderRadius: '4px',
+                                                                        cursor: 'pointer',
+                                                                        fontSize: '12px'
+                                                                    }}
+                                                                >
+                                                                    Hapus
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            )}
+                                            {/* Notes DP - Only show when paymentStatus is DP */}
+                                            {formData.paymentStatus === 'DP' && (
+                                                <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
+                                                    <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan DP</h4>
+                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                                        <input
+                                                            type="text"
+                                                            id="newNoteDPEdit"
+                                                            placeholder="Tambah catatan baru..."
+                                                            className={styles.input}
+                                                            onKeyPress={(e) => {
+                                                                if (e.key === 'Enter') {
+                                                                    const newNote = e.target.value.trim();
+                                                                    if (newNote) {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesDP: [...(prev.notesDP || []), newNote]
+                                                                        }));
+                                                                        e.target.value = '';
+                                                                    }
+                                                                }
+                                                            }}
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const input = document.getElementById('newNoteDPEdit');
+                                                                const newNote = input.value.trim();
+                                                                if (newNote) {
+                                                                    setFormData(prev => ({
+                                                                        ...prev,
+                                                                        notesDP: [...(prev.notesDP || []), newNote]
+                                                                    }));
+                                                                    input.value = '';
+                                                                }
+                                                            }}
+                                                            style={{
+                                                                padding: '8px 16px',
+                                                                backgroundColor: '#f59e0b',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '6px',
+                                                                cursor: 'pointer',
+                                                                fontWeight: '500',
+                                                                whiteSpace: 'nowrap'
+                                                            }}
+                                                        >
+                                                            + Tambah
+                                                        </button>
+                                                    </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                        {(formData.notesDP || []).map((note, idx) => (
+                                                            <div
+                                                                key={idx}
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    alignItems: 'center',
+                                                                    padding: '10px 12px',
+                                                                    backgroundColor: '#FEF3C7',
+                                                                    borderRadius: '6px',
+                                                                    border: '1px solid #FCD34D',
+                                                                    fontSize: '14px'
+                                                                }}
+                                                            >
+                                                                {console.log(note)}
+                                                                <span>{note}</span>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesDP: (prev.notesDP || []).filter((_, i) => i !== idx)
+                                                                        }));
+                                                                    }}
+                                                                    style={{
+                                                                        padding: '4px 8px',
+                                                                        backgroundColor: '#EF4444',
+                                                                        color: 'white',
+                                                                        border: 'none',
+                                                                        borderRadius: '4px',
+                                                                        cursor: 'pointer',
+                                                                        fontSize: '12px'
+                                                                    }}
+                                                                >
+                                                                    Hapus
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
 
@@ -3147,7 +3500,6 @@ _Pengiriman dari Sales Progress Report_`;
                                 {/* Informasi Lain (Invoice, Pajak, Catatan, Tanggal) */}
                                 <div className={styles.section}>
                                     <h4>Informasi Lain</h4>
-                                    {console.log(detailData)}
                                     <div className={styles.sectionContent} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                                         <div>
                                             {detailData.nomorInvoice && <p><strong>Nomor Invoice:</strong> {detailData.nomorInvoice}</p>}
@@ -3234,6 +3586,79 @@ _Pengiriman dari Sales Progress Report_`;
                                     onClick={() => setShowDetailModal(false)}
                                 >
                                     Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            {/* SPBB Modal */}
+            {
+                showSPBBModal && (
+                    <div className={styles.modalOverlay} onClick={() => setShowSPBBModal(false)}>
+                        <div className={styles.modal} style={{ maxWidth: '500px' }} onClick={(e) => e.stopPropagation()}>
+                            <div className={styles.modalHeader}>
+                                <h2>Input SPBB</h2>
+                                <button
+                                    className={styles.closeBtn}
+                                    onClick={() => setShowSPBBModal(false)}
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            <div className={styles.modalContent}>
+                                <div className={styles.section}>
+                                    <h4>Data Customer</h4>
+                                    <div className={styles.sectionContent}>
+                                        <p><strong>Nama:</strong> {spbbData.nama || '-'}</p>
+                                    </div>
+                                </div>
+
+                                <div className={styles.section}>
+                                    <h4>Informasi SPBB</h4>
+                                    <div className={styles.formGroup}>
+                                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                                            Nomor SPBB <span style={{ color: 'red' }}>*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className={styles.input}
+                                            value={spbbData.spbb}
+                                            onChange={(e) => setSpbbData({ ...spbbData, spbb: e.target.value })}
+                                            placeholder="Masukkan nomor SPBB"
+                                        />
+                                    </div>
+
+                                    <div className={styles.formGroup} style={{ marginTop: '15px' }}>
+                                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                                            Tanggal SPBB
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className={styles.input}
+                                            value={spbbData.spbbCreatedAt}
+                                            onChange={(e) => setSpbbData({ ...spbbData, spbbCreatedAt: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.modalFooter}>
+                                <button
+                                    className={styles.btnCancel}
+                                    onClick={() => setShowSPBBModal(false)}
+                                    disabled={isLoadingCrosscheck}
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    className={styles.btnCancel}
+                                    onClick={handleSaveSPBB}
+                                    disabled={isLoadingCrosscheck || !spbbData.spbb}
+                                >
+                                    {isLoadingCrosscheck ? 'Menyimpan...' : 'Simpan'}
                                 </button>
                             </div>
                         </div>

@@ -27450,6 +27450,11 @@ export namespace Prisma {
     status: string | null
     statusCatatan: string | null
     nomorInvoice: string | null
+    invoiceCreatedAt: Date | null
+    dpNumber: string | null
+    dpCreatedAt: Date | null
+    spbb: string | null
+    spbbCreatedAt: Date | null
     crosscheck: boolean | null
     fakturPajak: string | null
     totalUnit: Decimal | null
@@ -27478,6 +27483,11 @@ export namespace Prisma {
     status: string | null
     statusCatatan: string | null
     nomorInvoice: string | null
+    invoiceCreatedAt: Date | null
+    dpNumber: string | null
+    dpCreatedAt: Date | null
+    spbb: string | null
+    spbbCreatedAt: Date | null
     crosscheck: boolean | null
     fakturPajak: string | null
     totalUnit: Decimal | null
@@ -27507,6 +27517,12 @@ export namespace Prisma {
     statusCatatan: number
     nomorInvoice: number
     notesInvoice: number
+    invoiceCreatedAt: number
+    dpNumber: number
+    notesDP: number
+    dpCreatedAt: number
+    spbb: number
+    spbbCreatedAt: number
     crosscheck: number
     fakturPajak: number
     totalUnit: number
@@ -27555,6 +27571,11 @@ export namespace Prisma {
     status?: true
     statusCatatan?: true
     nomorInvoice?: true
+    invoiceCreatedAt?: true
+    dpNumber?: true
+    dpCreatedAt?: true
+    spbb?: true
+    spbbCreatedAt?: true
     crosscheck?: true
     fakturPajak?: true
     totalUnit?: true
@@ -27583,6 +27604,11 @@ export namespace Prisma {
     status?: true
     statusCatatan?: true
     nomorInvoice?: true
+    invoiceCreatedAt?: true
+    dpNumber?: true
+    dpCreatedAt?: true
+    spbb?: true
+    spbbCreatedAt?: true
     crosscheck?: true
     fakturPajak?: true
     totalUnit?: true
@@ -27612,6 +27638,12 @@ export namespace Prisma {
     statusCatatan?: true
     nomorInvoice?: true
     notesInvoice?: true
+    invoiceCreatedAt?: true
+    dpNumber?: true
+    notesDP?: true
+    dpCreatedAt?: true
+    spbb?: true
+    spbbCreatedAt?: true
     crosscheck?: true
     fakturPajak?: true
     totalUnit?: true
@@ -27728,6 +27760,12 @@ export namespace Prisma {
     statusCatatan: string | null
     nomorInvoice: string | null
     notesInvoice: string[]
+    invoiceCreatedAt: Date | null
+    dpNumber: string | null
+    notesDP: string[]
+    dpCreatedAt: Date | null
+    spbb: string | null
+    spbbCreatedAt: Date | null
     crosscheck: boolean
     fakturPajak: string | null
     totalUnit: Decimal | null
@@ -27776,6 +27814,12 @@ export namespace Prisma {
     statusCatatan?: boolean
     nomorInvoice?: boolean
     notesInvoice?: boolean
+    invoiceCreatedAt?: boolean
+    dpNumber?: boolean
+    notesDP?: boolean
+    dpCreatedAt?: boolean
+    spbb?: boolean
+    spbbCreatedAt?: boolean
     crosscheck?: boolean
     fakturPajak?: boolean
     totalUnit?: boolean
@@ -27808,6 +27852,12 @@ export namespace Prisma {
     statusCatatan?: boolean
     nomorInvoice?: boolean
     notesInvoice?: boolean
+    invoiceCreatedAt?: boolean
+    dpNumber?: boolean
+    notesDP?: boolean
+    dpCreatedAt?: boolean
+    spbb?: boolean
+    spbbCreatedAt?: boolean
     crosscheck?: boolean
     fakturPajak?: boolean
     totalUnit?: boolean
@@ -27837,6 +27887,12 @@ export namespace Prisma {
     statusCatatan?: boolean
     nomorInvoice?: boolean
     notesInvoice?: boolean
+    invoiceCreatedAt?: boolean
+    dpNumber?: boolean
+    notesDP?: boolean
+    dpCreatedAt?: boolean
+    spbb?: boolean
+    spbbCreatedAt?: boolean
     crosscheck?: boolean
     fakturPajak?: boolean
     totalUnit?: boolean
@@ -27879,6 +27935,12 @@ export namespace Prisma {
       statusCatatan: string | null
       nomorInvoice: string | null
       notesInvoice: string[]
+      invoiceCreatedAt: Date | null
+      dpNumber: string | null
+      notesDP: string[]
+      dpCreatedAt: Date | null
+      spbb: string | null
+      spbbCreatedAt: Date | null
       crosscheck: boolean
       fakturPajak: string | null
       totalUnit: Prisma.Decimal | null
@@ -28300,6 +28362,12 @@ export namespace Prisma {
     readonly statusCatatan: FieldRef<"SalesProgress", 'String'>
     readonly nomorInvoice: FieldRef<"SalesProgress", 'String'>
     readonly notesInvoice: FieldRef<"SalesProgress", 'String[]'>
+    readonly invoiceCreatedAt: FieldRef<"SalesProgress", 'DateTime'>
+    readonly dpNumber: FieldRef<"SalesProgress", 'String'>
+    readonly notesDP: FieldRef<"SalesProgress", 'String[]'>
+    readonly dpCreatedAt: FieldRef<"SalesProgress", 'DateTime'>
+    readonly spbb: FieldRef<"SalesProgress", 'String'>
+    readonly spbbCreatedAt: FieldRef<"SalesProgress", 'DateTime'>
     readonly crosscheck: FieldRef<"SalesProgress", 'Boolean'>
     readonly fakturPajak: FieldRef<"SalesProgress", 'String'>
     readonly totalUnit: FieldRef<"SalesProgress", 'Decimal'>
@@ -31217,6 +31285,12 @@ export namespace Prisma {
     statusCatatan: 'statusCatatan',
     nomorInvoice: 'nomorInvoice',
     notesInvoice: 'notesInvoice',
+    invoiceCreatedAt: 'invoiceCreatedAt',
+    dpNumber: 'dpNumber',
+    notesDP: 'notesDP',
+    dpCreatedAt: 'dpCreatedAt',
+    spbb: 'spbb',
+    spbbCreatedAt: 'spbbCreatedAt',
     crosscheck: 'crosscheck',
     fakturPajak: 'fakturPajak',
     totalUnit: 'totalUnit',
@@ -33643,6 +33717,12 @@ export namespace Prisma {
     statusCatatan?: StringNullableFilter<"SalesProgress"> | string | null
     nomorInvoice?: StringNullableFilter<"SalesProgress"> | string | null
     notesInvoice?: StringNullableListFilter<"SalesProgress">
+    invoiceCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
+    dpNumber?: StringNullableFilter<"SalesProgress"> | string | null
+    notesDP?: StringNullableListFilter<"SalesProgress">
+    dpCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
+    spbb?: StringNullableFilter<"SalesProgress"> | string | null
+    spbbCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
     crosscheck?: BoolFilter<"SalesProgress"> | boolean
     fakturPajak?: StringNullableFilter<"SalesProgress"> | string | null
     totalUnit?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
@@ -33674,6 +33754,12 @@ export namespace Prisma {
     statusCatatan?: SortOrderInput | SortOrder
     nomorInvoice?: SortOrderInput | SortOrder
     notesInvoice?: SortOrder
+    invoiceCreatedAt?: SortOrderInput | SortOrder
+    dpNumber?: SortOrderInput | SortOrder
+    notesDP?: SortOrder
+    dpCreatedAt?: SortOrderInput | SortOrder
+    spbb?: SortOrderInput | SortOrder
+    spbbCreatedAt?: SortOrderInput | SortOrder
     crosscheck?: SortOrder
     fakturPajak?: SortOrderInput | SortOrder
     totalUnit?: SortOrderInput | SortOrder
@@ -33695,6 +33781,7 @@ export namespace Prisma {
   export type SalesProgressWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     nomorInvoice?: string
+    dpNumber?: string
     AND?: SalesProgressWhereInput | SalesProgressWhereInput[]
     OR?: SalesProgressWhereInput[]
     NOT?: SalesProgressWhereInput | SalesProgressWhereInput[]
@@ -33708,6 +33795,11 @@ export namespace Prisma {
     status?: StringNullableFilter<"SalesProgress"> | string | null
     statusCatatan?: StringNullableFilter<"SalesProgress"> | string | null
     notesInvoice?: StringNullableListFilter<"SalesProgress">
+    invoiceCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
+    notesDP?: StringNullableListFilter<"SalesProgress">
+    dpCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
+    spbb?: StringNullableFilter<"SalesProgress"> | string | null
+    spbbCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
     crosscheck?: BoolFilter<"SalesProgress"> | boolean
     fakturPajak?: StringNullableFilter<"SalesProgress"> | string | null
     totalUnit?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
@@ -33724,7 +33816,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"SalesProgress"> | Date | string
     items?: SalesProgressItemListRelationFilter
     logs?: SalesLogListRelationFilter
-  }, "id" | "nomorInvoice">
+  }, "id" | "nomorInvoice" | "dpNumber">
 
   export type SalesProgressOrderByWithAggregationInput = {
     id?: SortOrder
@@ -33739,6 +33831,12 @@ export namespace Prisma {
     statusCatatan?: SortOrderInput | SortOrder
     nomorInvoice?: SortOrderInput | SortOrder
     notesInvoice?: SortOrder
+    invoiceCreatedAt?: SortOrderInput | SortOrder
+    dpNumber?: SortOrderInput | SortOrder
+    notesDP?: SortOrder
+    dpCreatedAt?: SortOrderInput | SortOrder
+    spbb?: SortOrderInput | SortOrder
+    spbbCreatedAt?: SortOrderInput | SortOrder
     crosscheck?: SortOrder
     fakturPajak?: SortOrderInput | SortOrder
     totalUnit?: SortOrderInput | SortOrder
@@ -33776,6 +33874,12 @@ export namespace Prisma {
     statusCatatan?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
     nomorInvoice?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
     notesInvoice?: StringNullableListFilter<"SalesProgress">
+    invoiceCreatedAt?: DateTimeNullableWithAggregatesFilter<"SalesProgress"> | Date | string | null
+    dpNumber?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    notesDP?: StringNullableListFilter<"SalesProgress">
+    dpCreatedAt?: DateTimeNullableWithAggregatesFilter<"SalesProgress"> | Date | string | null
+    spbb?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    spbbCreatedAt?: DateTimeNullableWithAggregatesFilter<"SalesProgress"> | Date | string | null
     crosscheck?: BoolWithAggregatesFilter<"SalesProgress"> | boolean
     fakturPajak?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
     totalUnit?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
@@ -36528,6 +36632,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -36559,6 +36669,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -36590,6 +36706,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -36621,6 +36743,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -36652,6 +36780,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -36681,6 +36815,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -36710,6 +36850,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -38811,6 +38957,12 @@ export namespace Prisma {
     statusCatatan?: SortOrder
     nomorInvoice?: SortOrder
     notesInvoice?: SortOrder
+    invoiceCreatedAt?: SortOrder
+    dpNumber?: SortOrder
+    notesDP?: SortOrder
+    dpCreatedAt?: SortOrder
+    spbb?: SortOrder
+    spbbCreatedAt?: SortOrder
     crosscheck?: SortOrder
     fakturPajak?: SortOrder
     totalUnit?: SortOrder
@@ -38848,6 +39000,11 @@ export namespace Prisma {
     status?: SortOrder
     statusCatatan?: SortOrder
     nomorInvoice?: SortOrder
+    invoiceCreatedAt?: SortOrder
+    dpNumber?: SortOrder
+    dpCreatedAt?: SortOrder
+    spbb?: SortOrder
+    spbbCreatedAt?: SortOrder
     crosscheck?: SortOrder
     fakturPajak?: SortOrder
     totalUnit?: SortOrder
@@ -38876,6 +39033,11 @@ export namespace Prisma {
     status?: SortOrder
     statusCatatan?: SortOrder
     nomorInvoice?: SortOrder
+    invoiceCreatedAt?: SortOrder
+    dpNumber?: SortOrder
+    dpCreatedAt?: SortOrder
+    spbb?: SortOrder
+    spbbCreatedAt?: SortOrder
     crosscheck?: SortOrder
     fakturPajak?: SortOrder
     totalUnit?: SortOrder
@@ -40207,6 +40369,10 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type SalesProgressCreatenotesDPInput = {
+    set: string[]
+  }
+
   export type SalesProgressItemCreateNestedManyWithoutSalesProgressInput = {
     create?: XOR<SalesProgressItemCreateWithoutSalesProgressInput, SalesProgressItemUncheckedCreateWithoutSalesProgressInput> | SalesProgressItemCreateWithoutSalesProgressInput[] | SalesProgressItemUncheckedCreateWithoutSalesProgressInput[]
     connectOrCreate?: SalesProgressItemCreateOrConnectWithoutSalesProgressInput | SalesProgressItemCreateOrConnectWithoutSalesProgressInput[]
@@ -40236,6 +40402,11 @@ export namespace Prisma {
   }
 
   export type SalesProgressUpdatenotesInvoiceInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type SalesProgressUpdatenotesDPInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -44004,6 +44175,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -44034,6 +44211,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -44080,6 +44263,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -44110,6 +44299,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -44140,6 +44335,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -44170,6 +44371,12 @@ export namespace Prisma {
     statusCatatan?: string | null
     nomorInvoice?: string | null
     notesInvoice?: SalesProgressCreatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: Date | string | null
+    dpNumber?: string | null
+    notesDP?: SalesProgressCreatenotesDPInput | string[]
+    dpCreatedAt?: Date | string | null
+    spbb?: string | null
+    spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
@@ -44216,6 +44423,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -44246,6 +44459,12 @@ export namespace Prisma {
     statusCatatan?: NullableStringFieldUpdateOperationsInput | string | null
     nomorInvoice?: NullableStringFieldUpdateOperationsInput | string | null
     notesInvoice?: SalesProgressUpdatenotesInvoiceInput | string[]
+    invoiceCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dpNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    notesDP?: SalesProgressUpdatenotesDPInput | string[]
+    dpCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    spbb?: NullableStringFieldUpdateOperationsInput | string | null
+    spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null

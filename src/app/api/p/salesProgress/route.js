@@ -37,6 +37,13 @@ export async function POST(req) {
             ppn: ppnInput,
             remarks,
             remarksPajak,
+
+            invoiceCreatedAt,
+            dpNumber,
+            notesDP,
+            dpCreatedAt,
+            spbb,
+            spbbCreatedAt,
             // Payment fields
             totalPayment,
             sisaPayment,
@@ -49,6 +56,8 @@ export async function POST(req) {
             RekeningName,
             notesInvoice
         } = body;
+
+        console.log('Received data:', body);
 
         // Validate required fields
         if (!nama) {
@@ -82,6 +91,12 @@ export async function POST(req) {
             fakturPajak: fakturPajak || undefined,
             // Clear payment fields if status is not Invoice
             nomorInvoice: isInvoice ? (nomorInvoice || undefined) : null,
+            invoiceCreatedAt: invoiceCreatedAt || undefined,
+            dpCreatedAt: dpCreatedAt || undefined,
+            dpNumber: dpNumber || undefined,
+            notesDP: notesDP || undefined,
+            spbb: spbb || undefined,
+            spbbCreatedAt: spbbCreatedAt || undefined,
             totalUnit: totalUnit ? parseFloat(totalUnit) : undefined,
             totalDeal: totalDeal ? parseFloat(totalDeal) : undefined,
             // Payment fields - clear if not Invoice
@@ -247,7 +262,7 @@ export async function POST(req) {
             result = await prisma.salesProgress.create({
                 data: {
                     id: newId,
-                    salesName: salesName || undefined,  
+                    salesName: salesName || undefined,
                     ...updateData
                 },
                 include: {

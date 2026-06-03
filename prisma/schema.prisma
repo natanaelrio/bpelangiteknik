@@ -464,8 +464,22 @@ model SalesProgress {
   // =========================
   // INVOICE
   // =========================
-  nomorInvoice String?  @unique
-  notesInvoice String[] 
+  nomorInvoice     String?   @unique
+  notesInvoice     String[]
+  invoiceCreatedAt DateTime?
+
+  // =========================
+  // DP
+  // =========================
+  dpNumber    String?   @unique
+  notesDP     String[]
+  dpCreatedAt DateTime?
+
+  // =========================
+  // SPBB
+  // =========================
+  spbb          String?
+  spbbCreatedAt DateTime?
 
   // =========================
   // VALIDASI
