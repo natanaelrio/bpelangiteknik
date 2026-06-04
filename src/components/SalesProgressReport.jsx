@@ -787,6 +787,20 @@ export default function SalesProgressReport({ session }) {
             oldValues: modalMode === 'edit' ? selectedRecord : undefined
         };
 
+        // Format dates for API - convert YYYY-MM-DD to ISO format
+        if (apiData.invoiceCreatedAt) {
+            // If it's already in ISO format (contains T), keep it
+            // Otherwise, convert from YYYY-MM-DD to ISO
+            apiData.invoiceCreatedAt = apiData.invoiceCreatedAt.includes('T') 
+                ? apiData.invoiceCreatedAt 
+                : new Date(apiData.invoiceCreatedAt).toISOString();
+        }
+        if (apiData.dpCreatedAt) {
+            apiData.dpCreatedAt = apiData.dpCreatedAt.includes('T') 
+                ? apiData.dpCreatedAt 
+                : new Date(apiData.dpCreatedAt).toISOString();
+        }
+
         // Clear payment fields when status is not Invoice
         if (formData.status !== 'Invoice') {
             apiData.paymentStatus = '';
@@ -2806,21 +2820,66 @@ _Pengiriman dari Sales Progress Report_`;
                                                     )}
                                                 </div>
                                                 <div className={styles.formGroup}>
-                                                    <label>Rekening</label>
-                                                    <select
-                                                        name="RekeningName"
-                                                        value={formData.RekeningName || ''}
-                                                        onChange={handleInputChange}
-                                                        className={styles.input}
-                                                    >
-                                                        <option value="">Pilih Rekening</option>
-                                                        {bankList.map((bank, idx) => (
-                                                            <option key={idx} value={bank.nama}>{bank.nama}</option>
-                                                        ))}
-                                                    </select>
+                                                    {formData.paymentStatus === 'LUNAS' && (
+                                                        <>
+                                                            <label>Tanggal Invoice</label>
+                                                            <input
+                                                                type="date"
+                                                                name="invoiceCreatedAt"
+                                                                value={formData.invoiceCreatedAt ? formData.invoiceCreatedAt.split('T')[0] : ''}
+                                                                onChange={handleInputChange}
+                                                                className={styles.input}
+                                                            />
+                                                        </>
+                                                    )}
+                                                    {formData.paymentStatus === 'DP' && (
+                                                        <>
+                                                            <label>Tanggal DP</label>
+                                                            <input
+                                                                type="date"
+                                                                name="dpCreatedAt"
+                                                                value={formData.dpCreatedAt ? formData.dpCreatedAt.split('T')[0] : ''}
+                                                                onChange={handleInputChange}
+                                                                className={styles.input}
+                                                            />
+                                                        </>
+                                                    )}
+                                                    {!formData.paymentStatus && (
+                                                        <label>Rekening</label>
+                                                    )}
+                                                    {(formData.paymentStatus === 'BELUM_BAYAR' || !formData.paymentStatus) && (
+                                                        <select
+                                                            name="RekeningName"
+                                                            value={formData.RekeningName || ''}
+                                                            onChange={handleInputChange}
+                                                            className={styles.input}
+                                                        >
+                                                            <option value="">Pilih Rekening</option>
+                                                            {bankList.map((bank, idx) => (
+                                                                <option key={idx} value={bank.nama}>{bank.nama}</option>
+                                                            ))}
+                                                        </select>
+                                                    )}
                                                 </div>
-
                                             </div>
+                                            {formData.paymentStatus !== 'BELUM_BAYAR' && formData.paymentStatus && (
+                                                <div className={styles.formRow}>
+                                                    <div className={styles.formGroup}>
+                                                        <label>Rekening</label>
+                                                        <select
+                                                            name="RekeningName"
+                                                            value={formData.RekeningName || ''}
+                                                            onChange={handleInputChange}
+                                                            className={styles.input}
+                                                        >
+                                                            <option value="">Pilih Rekening</option>
+                                                            {bankList.map((bank, idx) => (
+                                                                <option key={idx} value={bank.nama}>{bank.nama}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            )}
                                             <div className={styles.formRow}>
                                                 <div className={styles.formGroup}>
                                                     <label>Total Pembayaran</label>
