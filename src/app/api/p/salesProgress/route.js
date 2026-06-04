@@ -29,6 +29,8 @@ export async function POST(req) {
             status,
             statusCatatan,
             crosscheck,
+            crosscheckStatus,
+            crosscheckNotes,
             fakturPajak,
             nomorInvoice,
             totalUnit,
@@ -88,6 +90,8 @@ export async function POST(req) {
             status: status || undefined,
             statusCatatan: statusCatatan || undefined,
             crosscheck: crosscheck !== undefined ? crosscheck : undefined,
+            crosscheckStatus: crosscheckStatus || undefined,
+            crosscheckNotes: crosscheckNotes || undefined,
             fakturPajak: fakturPajak || undefined,
             // Clear payment fields if status is not Invoice
             nomorInvoice: isInvoice ? (nomorInvoice || undefined) : null,

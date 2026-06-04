@@ -393,6 +393,45 @@
     color: #c8302f;
 }
 
+/* Card Info Compact Grid - Two Column Layout */
+.cardInfoCompactGrid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: start;
+}
+
+.cardInfoCompactLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cardInfoCompactRight {
+    background-color: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 6px;
+    padding: 10px 12px;
+    max-width: 250px;
+    min-width: 180px;
+}
+
+.crosscheckNotesLabel {
+    font-size: 11px;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.crosscheckNotesContent {
+    font-size: 12px;
+    color: #78350f;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 /* Product Review Section */
 .productReview {
     margin-top: 10px;

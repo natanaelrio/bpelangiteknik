@@ -27456,6 +27456,8 @@ export namespace Prisma {
     spbb: string | null
     spbbCreatedAt: Date | null
     crosscheck: boolean | null
+    crosscheckStatus: string | null
+    crosscheckNotes: string | null
     fakturPajak: string | null
     totalUnit: Decimal | null
     totalDeal: Decimal | null
@@ -27489,6 +27491,8 @@ export namespace Prisma {
     spbb: string | null
     spbbCreatedAt: Date | null
     crosscheck: boolean | null
+    crosscheckStatus: string | null
+    crosscheckNotes: string | null
     fakturPajak: string | null
     totalUnit: Decimal | null
     totalDeal: Decimal | null
@@ -27524,6 +27528,8 @@ export namespace Prisma {
     spbb: number
     spbbCreatedAt: number
     crosscheck: number
+    crosscheckStatus: number
+    crosscheckNotes: number
     fakturPajak: number
     totalUnit: number
     totalDeal: number
@@ -27577,6 +27583,8 @@ export namespace Prisma {
     spbb?: true
     spbbCreatedAt?: true
     crosscheck?: true
+    crosscheckStatus?: true
+    crosscheckNotes?: true
     fakturPajak?: true
     totalUnit?: true
     totalDeal?: true
@@ -27610,6 +27618,8 @@ export namespace Prisma {
     spbb?: true
     spbbCreatedAt?: true
     crosscheck?: true
+    crosscheckStatus?: true
+    crosscheckNotes?: true
     fakturPajak?: true
     totalUnit?: true
     totalDeal?: true
@@ -27645,6 +27655,8 @@ export namespace Prisma {
     spbb?: true
     spbbCreatedAt?: true
     crosscheck?: true
+    crosscheckStatus?: true
+    crosscheckNotes?: true
     fakturPajak?: true
     totalUnit?: true
     totalDeal?: true
@@ -27767,6 +27779,8 @@ export namespace Prisma {
     spbb: string | null
     spbbCreatedAt: Date | null
     crosscheck: boolean
+    crosscheckStatus: string | null
+    crosscheckNotes: string | null
     fakturPajak: string | null
     totalUnit: Decimal | null
     totalDeal: Decimal | null
@@ -27821,6 +27835,8 @@ export namespace Prisma {
     spbb?: boolean
     spbbCreatedAt?: boolean
     crosscheck?: boolean
+    crosscheckStatus?: boolean
+    crosscheckNotes?: boolean
     fakturPajak?: boolean
     totalUnit?: boolean
     totalDeal?: boolean
@@ -27859,6 +27875,8 @@ export namespace Prisma {
     spbb?: boolean
     spbbCreatedAt?: boolean
     crosscheck?: boolean
+    crosscheckStatus?: boolean
+    crosscheckNotes?: boolean
     fakturPajak?: boolean
     totalUnit?: boolean
     totalDeal?: boolean
@@ -27894,6 +27912,8 @@ export namespace Prisma {
     spbb?: boolean
     spbbCreatedAt?: boolean
     crosscheck?: boolean
+    crosscheckStatus?: boolean
+    crosscheckNotes?: boolean
     fakturPajak?: boolean
     totalUnit?: boolean
     totalDeal?: boolean
@@ -27942,6 +27962,14 @@ export namespace Prisma {
       spbb: string | null
       spbbCreatedAt: Date | null
       crosscheck: boolean
+      /**
+       * SESUAI / TIDAK_SESUAI
+       */
+      crosscheckStatus: string | null
+      /**
+       * Catatan hasil crosscheck
+       */
+      crosscheckNotes: string | null
       fakturPajak: string | null
       totalUnit: Prisma.Decimal | null
       totalDeal: Prisma.Decimal | null
@@ -28369,6 +28397,8 @@ export namespace Prisma {
     readonly spbb: FieldRef<"SalesProgress", 'String'>
     readonly spbbCreatedAt: FieldRef<"SalesProgress", 'DateTime'>
     readonly crosscheck: FieldRef<"SalesProgress", 'Boolean'>
+    readonly crosscheckStatus: FieldRef<"SalesProgress", 'String'>
+    readonly crosscheckNotes: FieldRef<"SalesProgress", 'String'>
     readonly fakturPajak: FieldRef<"SalesProgress", 'String'>
     readonly totalUnit: FieldRef<"SalesProgress", 'Decimal'>
     readonly totalDeal: FieldRef<"SalesProgress", 'Decimal'>
@@ -31292,6 +31322,8 @@ export namespace Prisma {
     spbb: 'spbb',
     spbbCreatedAt: 'spbbCreatedAt',
     crosscheck: 'crosscheck',
+    crosscheckStatus: 'crosscheckStatus',
+    crosscheckNotes: 'crosscheckNotes',
     fakturPajak: 'fakturPajak',
     totalUnit: 'totalUnit',
     totalDeal: 'totalDeal',
@@ -33724,6 +33756,8 @@ export namespace Prisma {
     spbb?: StringNullableFilter<"SalesProgress"> | string | null
     spbbCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
     crosscheck?: BoolFilter<"SalesProgress"> | boolean
+    crosscheckStatus?: StringNullableFilter<"SalesProgress"> | string | null
+    crosscheckNotes?: StringNullableFilter<"SalesProgress"> | string | null
     fakturPajak?: StringNullableFilter<"SalesProgress"> | string | null
     totalUnit?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
     totalDeal?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
@@ -33761,6 +33795,8 @@ export namespace Prisma {
     spbb?: SortOrderInput | SortOrder
     spbbCreatedAt?: SortOrderInput | SortOrder
     crosscheck?: SortOrder
+    crosscheckStatus?: SortOrderInput | SortOrder
+    crosscheckNotes?: SortOrderInput | SortOrder
     fakturPajak?: SortOrderInput | SortOrder
     totalUnit?: SortOrderInput | SortOrder
     totalDeal?: SortOrderInput | SortOrder
@@ -33801,6 +33837,8 @@ export namespace Prisma {
     spbb?: StringNullableFilter<"SalesProgress"> | string | null
     spbbCreatedAt?: DateTimeNullableFilter<"SalesProgress"> | Date | string | null
     crosscheck?: BoolFilter<"SalesProgress"> | boolean
+    crosscheckStatus?: StringNullableFilter<"SalesProgress"> | string | null
+    crosscheckNotes?: StringNullableFilter<"SalesProgress"> | string | null
     fakturPajak?: StringNullableFilter<"SalesProgress"> | string | null
     totalUnit?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
     totalDeal?: DecimalNullableFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
@@ -33838,6 +33876,8 @@ export namespace Prisma {
     spbb?: SortOrderInput | SortOrder
     spbbCreatedAt?: SortOrderInput | SortOrder
     crosscheck?: SortOrder
+    crosscheckStatus?: SortOrderInput | SortOrder
+    crosscheckNotes?: SortOrderInput | SortOrder
     fakturPajak?: SortOrderInput | SortOrder
     totalUnit?: SortOrderInput | SortOrder
     totalDeal?: SortOrderInput | SortOrder
@@ -33881,6 +33921,8 @@ export namespace Prisma {
     spbb?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
     spbbCreatedAt?: DateTimeNullableWithAggregatesFilter<"SalesProgress"> | Date | string | null
     crosscheck?: BoolWithAggregatesFilter<"SalesProgress"> | boolean
+    crosscheckStatus?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
+    crosscheckNotes?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
     fakturPajak?: StringNullableWithAggregatesFilter<"SalesProgress"> | string | null
     totalUnit?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
     totalDeal?: DecimalNullableWithAggregatesFilter<"SalesProgress"> | Decimal | DecimalJsLike | number | string | null
@@ -36639,6 +36681,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -36676,6 +36720,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -36713,6 +36759,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -36750,6 +36798,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -36787,6 +36837,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -36822,6 +36874,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -36857,6 +36911,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -38964,6 +39020,8 @@ export namespace Prisma {
     spbb?: SortOrder
     spbbCreatedAt?: SortOrder
     crosscheck?: SortOrder
+    crosscheckStatus?: SortOrder
+    crosscheckNotes?: SortOrder
     fakturPajak?: SortOrder
     totalUnit?: SortOrder
     totalDeal?: SortOrder
@@ -39006,6 +39064,8 @@ export namespace Prisma {
     spbb?: SortOrder
     spbbCreatedAt?: SortOrder
     crosscheck?: SortOrder
+    crosscheckStatus?: SortOrder
+    crosscheckNotes?: SortOrder
     fakturPajak?: SortOrder
     totalUnit?: SortOrder
     totalDeal?: SortOrder
@@ -39039,6 +39099,8 @@ export namespace Prisma {
     spbb?: SortOrder
     spbbCreatedAt?: SortOrder
     crosscheck?: SortOrder
+    crosscheckStatus?: SortOrder
+    crosscheckNotes?: SortOrder
     fakturPajak?: SortOrder
     totalUnit?: SortOrder
     totalDeal?: SortOrder
@@ -44182,6 +44244,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -44218,6 +44282,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -44270,6 +44336,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -44306,6 +44374,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -44342,6 +44412,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -44378,6 +44450,8 @@ export namespace Prisma {
     spbb?: string | null
     spbbCreatedAt?: Date | string | null
     crosscheck?: boolean
+    crosscheckStatus?: string | null
+    crosscheckNotes?: string | null
     fakturPajak?: string | null
     totalUnit?: Decimal | DecimalJsLike | number | string | null
     totalDeal?: Decimal | DecimalJsLike | number | string | null
@@ -44430,6 +44504,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -44466,6 +44542,8 @@ export namespace Prisma {
     spbb?: NullableStringFieldUpdateOperationsInput | string | null
     spbbCreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     crosscheck?: BoolFieldUpdateOperationsInput | boolean
+    crosscheckStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    crosscheckNotes?: NullableStringFieldUpdateOperationsInput | string | null
     fakturPajak?: NullableStringFieldUpdateOperationsInput | string | null
     totalUnit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     totalDeal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null

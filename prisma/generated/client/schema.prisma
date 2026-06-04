@@ -464,13 +464,33 @@ model SalesProgress {
   // =========================
   // INVOICE
   // =========================
-  nomorInvoice String?  @unique
-  notesInvoice String[]
+  nomorInvoice     String?   @unique
+  notesInvoice     String[]
+  invoiceCreatedAt DateTime?
+
+  // =========================
+  // DP
+  // =========================
+  dpNumber    String?   @unique
+  notesDP     String[]
+  dpCreatedAt DateTime?
+
+  // =========================
+  // SPBB
+  // =========================
+  spbb          String?
+  spbbCreatedAt DateTime?
 
   // =========================
   // VALIDASI
   // =========================
   crosscheck Boolean @default(false)
+
+  /// SESUAI / TIDAK_SESUAI
+  crosscheckStatus String? @default("TIDAK_SESUAI")
+
+  /// Catatan hasil crosscheck
+  crosscheckNotes String? @db.Text
 
   // =========================
   // PAJAK

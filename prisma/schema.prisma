@@ -486,6 +486,12 @@ model SalesProgress {
   // =========================
   crosscheck Boolean @default(false)
 
+  /// SESUAI / TIDAK_SESUAI
+  crosscheckStatus String? @default("TIDAK_SESUAI")
+
+  /// Catatan hasil crosscheck
+  crosscheckNotes String? @db.Text
+
   // =========================
   // PAJAK
   // =========================
