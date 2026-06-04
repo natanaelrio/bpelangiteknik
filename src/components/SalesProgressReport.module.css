@@ -408,8 +408,8 @@
 }
 
 .cardInfoCompactRight {
-    background-color: #fef3c7;
-    border: 1px solid #fcd34d;
+    /* background-color: #fef3c7; */
+    /* border: 1px solid #fcd34d; */
     border-radius: 6px;
     padding: 10px 12px;
     max-width: 250px;
@@ -430,6 +430,62 @@
     line-height: 1.4;
     white-space: pre-wrap;
     word-break: break-word;
+}
+
+/* Combined Notes Section */
+.combinedNotes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    /* background-color: #fef9c3; */
+    border: 1px solid #fde047;
+}
+
+.combinedNotesItem {
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+.combinedNotesItem.sales {
+    background-color: #dbeafe;
+    border: 1px solid #93c5fd;
+}
+
+.combinedNotesItem.crosscheck {
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
+.combinedNotesLabel {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.combinedNotesItem.sales .combinedNotesLabel {
+    color: #1e40af;
+}
+
+.combinedNotesItem.crosscheck .combinedNotesLabel {
+    color: #991b1b;
+}
+
+.combinedNotesContent {
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.combinedNotesItem.sales .combinedNotesContent {
+    color: #1e3a8a;
+}
+
+.combinedNotesItem.crosscheck .combinedNotesContent {
+    color: #7f1d1d;
 }
 
 /* Product Review Section */

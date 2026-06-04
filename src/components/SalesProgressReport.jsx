@@ -1887,14 +1887,28 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
                                         </div>
 
-                                        {item.crosscheckStatus === "TIDAK_SESUAI" && item.crosscheck && item.crosscheckNotes && (
+                                        {(item.crosscheckStatus === "TIDAK_SESUAI" && item.crosscheck && item.crosscheckNotes) || item.statusCatatan ? (
                                             <div className={styles.cardInfoCompactRight}>
-                                                <div className={styles.crosscheckNotesLabel}>Catatan Crosscheck:</div>
-                                                <div className={styles.crosscheckNotesContent}>
-                                                    {item.crosscheckNotes}
+                                                <div className={styles.combinedNotes}>
+                                                    {item.statusCatatan && (
+                                                        <div className={`${styles.combinedNotesItem} ${styles.sales}`}>
+                                                            <div className={styles.combinedNotesLabel}>Catatan Sales:</div>
+                                                            <div className={styles.combinedNotesContent}>
+                                                                {item.statusCatatan}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    {item.crosscheckStatus === "TIDAK_SESUAI" && item.crosscheck && item.crosscheckNotes && (
+                                                        <div className={`${styles.combinedNotesItem} ${styles.crosscheck}`}>
+                                                            <div className={styles.combinedNotesLabel}>Catatan Crosscheck:</div>
+                                                            <div className={styles.combinedNotesContent}>
+                                                                {item.crosscheckNotes}
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
-                                        )}
+                                        ) : null}
                                     </div>
                                 </div>
 
