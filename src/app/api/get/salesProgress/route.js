@@ -155,23 +155,23 @@ export async function GET(req) {
             const notCrosscheckedData = allData.filter(item => item.crosscheck === false);
 
             // Calculate crosscheckStatus statistics (SESUAI and TIDAK_SESUAI)
-            const sesuaiData = allData.filter(item => item.crosscheckStatus === 'SESUAI');
-            const tidakSesuaiData = allData.filter(item => item.crosscheckStatus === 'TIDAK_SESUAI');
+            const selesaiData = allData.filter(item => item.crosscheckStatus === 'SELESAI');
+            const komentarData = allData.filter(item => item.crosscheckStatus === 'KOMENTAR');
 
             crosscheckTotals.crosschecked.count = crosscheckedData.length;
             crosscheckTotals.crosschecked.totalDeal = crosscheckedData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0);
-            
+
             crosscheckTotals.notCrosschecked.count = notCrosscheckedData.length;
             crosscheckTotals.notCrosschecked.totalDeal = notCrosscheckedData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0);
 
             // Add crosscheckStatus totals
-            crosscheckTotals.sesuai = {
-                count: sesuaiData.length,
-                totalDeal: sesuaiData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0)
+            crosscheckTotals.selesai = {
+                count: selesaiData.length,
+                totalDeal: selesaiData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0)
             };
-            crosscheckTotals.tidakSesuai = {
-                count: tidakSesuaiData.length,
-                totalDeal: tidakSesuaiData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0)
+            crosscheckTotals.komentar = {
+                count: komentarData.length,
+                totalDeal: komentarData.reduce((sum, item) => sum + (parseFloat(item.totalDeal) || 0), 0)
             };
         } catch (e) {
             console.error('Error calculating totals:', e);

@@ -27963,7 +27963,7 @@ export namespace Prisma {
       spbbCreatedAt: Date | null
       crosscheck: boolean
       /**
-       * SESUAI / TIDAK_SESUAI
+       * SELESAI / KOMENTAR
        */
       crosscheckStatus: string | null
       /**

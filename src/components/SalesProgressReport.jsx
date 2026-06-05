@@ -67,7 +67,7 @@ export default function SalesProgressReport({ session }) {
         nama: '',
         spbb: '',
         spbbCreatedAt: new Date().toISOString().slice(0, 10),
-        crosscheckStatus: 'SESUAI',
+        crosscheckStatus: 'SELESAI',
         crosscheckNotes: ''
     });
     const [detailData, setDetailData] = useState(null);
@@ -117,8 +117,8 @@ export default function SalesProgressReport({ session }) {
     const [crosscheckTotals, setCrosscheckTotals] = useState({
         crosschecked: { count: 0, totalDeal: 0 },
         notCrosschecked: { count: 0, totalDeal: 0 },
-        sesuai: { count: 0, totalDeal: 0 },
-        tidakSesuai: { count: 0, totalDeal: 0 }
+        selesai: { count: 0, totalDeal: 0 },
+        komentar: { count: 0, totalDeal: 0 }
     });
 
     // Debounce search term
@@ -543,7 +543,7 @@ export default function SalesProgressReport({ session }) {
     };
 
     // Handle crosscheck
-    const handleCrosscheck = async (id, currentStatus, nama, currentSpbb = '', currentCrosscheckStatus = 'SESUAI', currentCrosscheckNotes = '') => {
+    const handleCrosscheck = async (id, currentStatus, nama, currentSpbb = '', currentCrosscheckStatus = 'SELESAI', currentCrosscheckNotes = '') => {
         const newStatus = !currentStatus;
 
         // Jika mengaktifkan crosscheck, tampilkan modal untuk input SPBB
@@ -553,7 +553,7 @@ export default function SalesProgressReport({ session }) {
                 nama: nama,
                 spbb: currentSpbb || '',
                 spbbCreatedAt: new Date().toISOString().slice(0, 10),
-                crosscheckStatus: currentCrosscheckStatus || 'SESUAI',
+                crosscheckStatus: currentCrosscheckStatus || 'SELESAI',
                 crosscheckNotes: currentCrosscheckNotes || ''
             });
             setShowSPBBModal(true);
@@ -615,8 +615,8 @@ export default function SalesProgressReport({ session }) {
         }
 
         // Validasi berdasarkan status crosscheck
-        if (spbbData.crosscheckStatus === 'SESUAI') {
-            // Jika SESUAI, wajib nomor SPBB dan Tanggal SPBB
+        if (spbbData.crosscheckStatus === 'SELESAI') {
+            // Jika SELESAI, wajib nomor SPBB dan Tanggal SPBB
             if (!spbbData.spbb) {
                 toast.error('Nomor SPBB wajib diisi');
                 return;
@@ -625,8 +625,8 @@ export default function SalesProgressReport({ session }) {
                 toast.error('Tanggal SPBB wajib diisi');
                 return;
             }
-        } else if (spbbData.crosscheckStatus === 'TIDAK_SESUAI') {
-            // Jika TIDAK SESUAI, wajib catatan crosscheck
+        } else if (spbbData.crosscheckStatus === 'KOMENTAR') {
+            // Jika KOMENTAR, wajib catatan crosscheck
             if (!spbbData.crosscheckNotes || !spbbData.crosscheckNotes.trim()) {
                 toast.error('Catatan Crosscheck wajib diisi');
                 return;
@@ -791,13 +791,13 @@ export default function SalesProgressReport({ session }) {
         if (apiData.invoiceCreatedAt) {
             // If it's already in ISO format (contains T), keep it
             // Otherwise, convert from YYYY-MM-DD to ISO
-            apiData.invoiceCreatedAt = apiData.invoiceCreatedAt.includes('T') 
-                ? apiData.invoiceCreatedAt 
+            apiData.invoiceCreatedAt = apiData.invoiceCreatedAt.includes('T')
+                ? apiData.invoiceCreatedAt
                 : new Date(apiData.invoiceCreatedAt).toISOString();
         }
         if (apiData.dpCreatedAt) {
-            apiData.dpCreatedAt = apiData.dpCreatedAt.includes('T') 
-                ? apiData.dpCreatedAt 
+            apiData.dpCreatedAt = apiData.dpCreatedAt.includes('T')
+                ? apiData.dpCreatedAt
                 : new Date(apiData.dpCreatedAt).toISOString();
         }
 
@@ -1576,8 +1576,8 @@ _Pengiriman dari Sales Progress Report_`;
                             className={styles.filterSelect}
                         >
                             <option value="">Semua Hasil</option>
-                            <option value="SESUAI">✅ SESUAI</option>
-                            <option value="TIDAK_SESUAI">❌ TIDAK SESUAI</option>
+                            <option value="SELESAI">✅ SELESAI</option>
+                            <option value="KOMENTAR">❌ KOMENTAR</option>
                         </select>
                     </div>
                     <div className={styles.filterGroup}>
@@ -1715,14 +1715,14 @@ _Pengiriman dari Sales Progress Report_`;
                     <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.notCrosschecked.totalDeal)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>✅ SESUAI</div>
-                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#10b981' }}>{crosscheckTotals.sesuai?.count || 0} data</div>
-                    <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.sesuai?.totalDeal || 0)}</div>
+                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>✅ SELESAI</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#10b981' }}>{crosscheckTotals.selesai?.count || 0} data</div>
+                    <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.selesai?.totalDeal || 0)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>❌ TIDAK SESUAI</div>
-                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ef4444' }}>{crosscheckTotals.tidakSesuai?.count || 0} data</div>
-                    <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.tidakSesuai?.totalDeal || 0)}</div>
+                    <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>❌ KOMENTAR</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ef4444' }}>{crosscheckTotals.komentar?.count || 0} data</div>
+                    <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{formatRupiah(crosscheckTotals.komentar?.totalDeal || 0)}</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '12px', color: '#0c4a6e', marginBottom: '4px' }}>Total Data</div>
@@ -1816,7 +1816,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                             borderRadius: '4px',
                                                             fontSize: '12px',
                                                             fontWeight: 'bold',
-                                                            backgroundColor: item.crosscheckStatus === 'SESUAI' ? '#10B981' : '#EF4444',
+                                                            backgroundColor: item.crosscheckStatus === 'SELESAI' ? '#10B981' : '#EF4444',
                                                             color: 'white'
                                                         }}>
                                                             {item.crosscheckStatus}
@@ -1887,7 +1887,7 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
                                         </div>
 
-                                        {(item.crosscheckStatus === "TIDAK_SESUAI" && item.crosscheck && item.crosscheckNotes) || item.statusCatatan ? (
+                                        {(item.crosscheckStatus === "KOMENTAR" && item.crosscheck && item.crosscheckNotes) || item.statusCatatan ? (
                                             <div className={styles.cardInfoCompactRight}>
                                                 <div className={styles.combinedNotes}>
                                                     {item.statusCatatan && (
@@ -1898,7 +1898,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                             </div>
                                                         </div>
                                                     )}
-                                                    {item.crosscheckStatus === "TIDAK_SESUAI" && item.crosscheck && item.crosscheckNotes && (
+                                                    {item.crosscheckStatus === "KOMENTAR" && item.crosscheck && item.crosscheckNotes && (
                                                         <div className={`${styles.combinedNotesItem} ${styles.crosscheck}`}>
                                                             <div className={styles.combinedNotesLabel}>Catatan Crosscheck:</div>
                                                             <div className={styles.combinedNotesContent}>
@@ -3696,7 +3696,7 @@ _Pengiriman dari Sales Progress Report_`;
                             </div>
 
                             <div className={styles.modalFooter}>
-                                {(SALES) && detailData.crosscheckStatus === 'TIDAK_SESUAI' && (
+                                {(SALES) && detailData.crosscheckStatus === 'KOMENTAR' || detailData.crosscheckStatus === '' || detailData.crosscheckStatus === undefined && (
                                     <button
                                         className={styles.btnEdit}
                                         onClick={() => {
@@ -3732,7 +3732,7 @@ _Pengiriman dari Sales Progress Report_`;
                                         </button>
                                     </>
                                 )}
-                                {detailData.crosscheckStatus === 'SESUAI' && SALES && (
+                                {detailData.crosscheckStatus === 'SELESAI' && SALES && (
                                     <div style={{
                                         padding: '10px',
                                         backgroundColor: '#FEF3C7',
@@ -3791,14 +3791,14 @@ _Pengiriman dari Sales Progress Report_`;
                                             value={spbbData.crosscheckStatus}
                                             onChange={(e) => setSpbbData({ ...spbbData, crosscheckStatus: e.target.value })}
                                         >
-                                            <option value="SESUAI">SESUAI</option>
-                                            <option value="TIDAK_SESUAI">TIDAK_SESUAI</option>
+                                            <option value="SELESAI">SELESAI</option>
+                                            <option value="KOMENTAR">KOMENTAR</option>
                                         </select>
                                     </div>
                                 </div>
 
-                                {/* Jika SESUAI, tampilkan input SPBB */}
-                                {spbbData.crosscheckStatus === 'SESUAI' && (
+                                {/* Jika SELESAI, tampilkan input SPBB */}
+                                {spbbData.crosscheckStatus === 'SELESAI' && (
                                     <div className={styles.section}>
                                         <h4>Informasi SPBB</h4>
                                         <div className={styles.formGroup}>
@@ -3828,8 +3828,8 @@ _Pengiriman dari Sales Progress Report_`;
                                     </div>
                                 )}
 
-                                {/* Jika TIDAK_SESUAI, tampilkan input Catatan */}
-                                {spbbData.crosscheckStatus === 'TIDAK_SESUAI' && (
+                                {/* Jika KOMENTAR, tampilkan input Catatan */}
+                                {spbbData.crosscheckStatus === 'KOMENTAR' && (
                                     <div className={styles.section}>
                                         <h4>Catatan Crosscheck</h4>
                                         <div className={styles.formGroup}>
@@ -3840,7 +3840,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                 className={styles.input}
                                                 value={spbbData.crosscheckNotes}
                                                 onChange={(e) => setSpbbData({ ...spbbData, crosscheckNotes: e.target.value })}
-                                                placeholder="Masukkan alasan mengapa tidak sesuai"
+                                                placeholder="Masukkan alasan mengapa tidak selesai"
                                                 rows={4}
                                                 style={{ resize: 'vertical' }}
                                             />
@@ -3860,7 +3860,7 @@ _Pengiriman dari Sales Progress Report_`;
                                 <button
                                     className={styles.btnCancel}
                                     onClick={handleSaveSPBB}
-                                    disabled={isLoadingCrosscheck || (spbbData.crosscheckStatus === 'SESUAI' && (!spbbData.spbb || !spbbData.spbbCreatedAt)) || (spbbData.crosscheckStatus === 'TIDAK_SESUAI' && (!spbbData.crosscheckNotes || !spbbData.crosscheckNotes.trim()))}
+                                    disabled={isLoadingCrosscheck || (spbbData.crosscheckStatus === 'SELESAI' && (!spbbData.spbb || !spbbData.spbbCreatedAt)) || (spbbData.crosscheckStatus === 'KOMENTAR' && (!spbbData.crosscheckNotes || !spbbData.crosscheckNotes.trim()))}
                                 >
                                     {isLoadingCrosscheck ? 'Menyimpan...' : 'Simpan'}
                                 </button>
