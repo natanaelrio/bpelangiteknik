@@ -3696,7 +3696,7 @@ _Pengiriman dari Sales Progress Report_`;
                             </div>
 
                             <div className={styles.modalFooter}>
-                                {(SALES) && detailData.crosscheckStatus === 'KOMENTAR' || detailData.crosscheckStatus === '' || detailData.crosscheckStatus === undefined && (
+                                {SALES && (detailData.crosscheckStatus == 'KOMENTAR' || detailData.crosscheckStatus === null) && (
                                     <button
                                         className={styles.btnEdit}
                                         onClick={() => {
