@@ -354,7 +354,10 @@ export default function SalesProgressReport({ session }) {
                 nomorInvoice: '',
                 RekeningName: '',
                 totalPayment: '',
-                sisaPayment: ''
+                sisaPayment: '',
+                invoiceCreatedAt: '',
+                dpNumber: '',
+                dpCreatedAt: '',
             }));
 
             return;
@@ -372,30 +375,30 @@ export default function SalesProgressReport({ session }) {
                         "Pembayaran cash before shipping",
                         "Free Jabodetabek"
                     ],
-                invoiceCreatedAt: new Date().toISOString()
+                // invoiceCreatedAt: new Date().toISOString() - tidak auto-fill, biarkan kosong
             }));
             return;
         }
 
         // Set dpCreatedAt when status changes to DP
-        if (name === 'status' && value === 'DP') {
-            setFormData(prev => ({
-                ...prev,
-                [name]: type === 'checkbox' ? checked : value,
-                dpCreatedAt: new Date().toISOString()
-            }));
-            return;
-        }
+        // if (name === 'status' && value === 'DP') {
+        //     setFormData(prev => ({
+        //         ...prev,
+        //         [name]: type === 'checkbox' ? checked : value,
+        //         dpCreatedAt: new Date().toISOString()
+        //     }));
+        //     return;
+        // }
 
         // Set dpNumber, dpCreatedAt, and notesDP when paymentStatus changes to DP (Uang Muka)
         if (name === 'paymentStatus' && value === 'DP') {
             // Generate DP number if not exists
-            const newDpNumber = formData.dpNumber || `DP-${Date.now()}`;
+            // const newDpNumber = formData.dpNumber;
             setFormData(prev => ({
                 ...prev,
                 [name]: type === 'checkbox' ? checked : value,
-                dpNumber: newDpNumber,
-                dpCreatedAt: prev.dpCreatedAt || new Date().toISOString(),
+                // dpNumber: formData.dpNumber,
+                // dpCreatedAt: formData.dpCreatedAt,
                 notesDP: prev.notesDP && prev.notesDP.length > 0
                     ? prev.notesDP
                     : [
@@ -420,41 +423,41 @@ export default function SalesProgressReport({ session }) {
                         "Pembayaran cash before shipping",
                         "Free Jabodetabek"
                     ],
-                invoiceCreatedAt: prev.invoiceCreatedAt || new Date().toISOString()
+                invoiceCreatedAt: formData.invoiceCreatedAt
             }));
             return;
         }
 
         // Reset dp fields when paymentStatus is cleared
-        if (name === 'paymentStatus' && value === '') {
-            setFormData(prev => ({
-                ...prev,
-                [name]: type === 'checkbox' ? checked : value,
-                dpNumber: '',
-                dpCreatedAt: ''
-            }));
-            return;
-        }
+        // if (name === 'paymentStatus' && value === '') {
+        //     setFormData(prev => ({
+        //         ...prev,
+        //         [name]: type === 'checkbox' ? checked : value,
+        //         dpNumber: '',
+        //         dpCreatedAt: ''
+        //     }));
+        //     return;
+        // }
 
-        // Update invoiceCreatedAt when nomorInvoice changes
-        if (name === 'nomorInvoice' && value) {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value,
-                invoiceCreatedAt: new Date().toISOString()
-            }));
-            return;
-        }
+        // // Update invoiceCreatedAt when nomorInvoice changes
+        // if (name === 'nomorInvoice' && value) {
+        //     setFormData(prev => ({
+        //         ...prev,
+        //         [name]: value,
+        //         invoiceCreatedAt: new Date().toISOString()
+        //     }));
+        //     return;
+        // }
 
-        // Update dpCreatedAt when dpNumber changes
-        if (name === 'dpNumber' && value) {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value,
-                dpCreatedAt: new Date().toISOString()
-            }));
-            return;
-        }
+        // // Update dpCreatedAt when dpNumber changes
+        // if (name === 'dpNumber' && value) {
+        //     setFormData(prev => ({
+        //         ...prev,
+        //         [name]: value,
+        //         dpCreatedAt: new Date().toISOString()
+        //     }));
+        //     return;
+        // }
 
         setFormData(prev => ({
             ...prev,
@@ -754,10 +757,14 @@ export default function SalesProgressReport({ session }) {
                 toast.error('Nomor Invoice wajib diisi');
                 return;
             }
-            // if (!formData.nomorInvoice) {
-            //     toast.error('Nomor Invoice wajib diisi');
-            //     return;
-            // }
+            if (formData.paymentStatus == 'DP' && !formData.dpCreatedAt) {
+                toast.error('Tanggal DP wajib diisi');
+                return;
+            }
+            if (formData.paymentStatus == 'LUNAS' && !formData.invoiceCreatedAt) {
+                toast.error('Tanggal Invoice wajib diisi');
+                return;
+            }
             if (!formData.RekeningName) {
                 toast.error('Rekening wajib diisi');
                 return;
@@ -1959,8 +1966,8 @@ _Pengiriman dari Sales Progress Report_`;
                             {modalMode === 'create' ? (
                                 // Create Mode Form
                                 <div className={styles.formGrid}>
-                                    {/* Basic Info */}
-                                    <div className={styles.formSection}>
+                                    {/* Left Column - Basic Info (Sticky) */}
+                                    <div className={styles.formGridLeft}>
                                         <h3>Informasi Dasar</h3>
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
@@ -2086,99 +2093,141 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
                                         </div>
 
-                                        {/* Notes Invoice - Only show when status is Invoice */}
-                                        {formData.status === 'Invoice' && (
-                                            <div className={styles.formSection}>
-                                                <h3>Catatan Invoice</h3>
-                                                <div style={{ marginBottom: '15px' }}>
-                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                                                        <input
-                                                            type="text"
-                                                            id="newNote"
-                                                            placeholder="Tambah catatan baru..."
-                                                            className={styles.input}
-                                                            onKeyPress={(e) => {
-                                                                if (e.key === 'Enter') {
-                                                                    const newNote = e.target.value.trim();
-                                                                    if (newNote) {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            notesInvoice: [...(prev.notesInvoice || []), newNote]
-                                                                        }));
-                                                                        e.target.value = '';
-                                                                    }
-                                                                }
-                                                            }}
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const input = document.getElementById('newNote');
-                                                                const newNote = input.value.trim();
-                                                                if (newNote) {
-                                                                    setFormData(prev => ({
-                                                                        ...prev,
-                                                                        notesInvoice: [...(prev.notesInvoice || []), newNote]
-                                                                    }));
-                                                                    input.value = '';
-                                                                }
-                                                            }}
-                                                            style={{
-                                                                padding: '8px 16px',
-                                                                backgroundColor: '#3B82F6',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '6px',
-                                                                cursor: 'pointer',
-                                                                fontWeight: '500'
-                                                            }}
-                                                        >
-                                                            + Tambah
-                                                        </button>
-                                                    </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                        {(formData.notesInvoice || []).map((note, idx) => (
-                                                            <div
-                                                                key={idx}
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    alignItems: 'center',
-                                                                    padding: '10px 12px',
-                                                                    backgroundColor: '#F3F4F6',
-                                                                    borderRadius: '6px',
-                                                                    border: '1px solid #E5E7EB',
-                                                                    fontSize: '14px'
-                                                                }}
-                                                            >
-                                                                <span>{note}</span>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
-                                                                        }));
-                                                                    }}
-                                                                    style={{
-                                                                        padding: '4px 8px',
-                                                                        backgroundColor: '#EF4444',
-                                                                        color: 'white',
-                                                                        border: 'none',
-                                                                        borderRadius: '4px',
-                                                                        cursor: 'pointer',
-                                                                        fontSize: '12px'
-                                                                    }}
-                                                                >
-                                                                    Hapus
-                                                                </button>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
 
+
+                                    </div>
+
+                                    {/* Right Column - Products, Total, Invoice, Notes */}
+                                    <div className={styles.formGridRight}>
+                                        {/* Product Info */}
+                                        <div className={styles.formSection}>
+                                            <h3>Informasi Produk</h3>
+                                            {formData.items?.map((item, index) => (
+                                                <div key={index} className={styles.itemSection}>
+                                                    <div className={styles.formRow}>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Brand</label>
+                                                            <select
+                                                                value={item.brand || ''}
+                                                                onChange={(e) => handleItemChange(index, 'brand', e.target.value)}
+                                                                className={styles.input}
+                                                            >
+                                                                <option value="">Pilih Brand</option>
+                                                                <option value="TSUZUMI">TSUZUMI</option>
+                                                                <option value="CHAMPIONS">CHAMPIONS</option>
+                                                                <option value="MONTOYA">MONTOYA</option>
+                                                                <option value="ISUZU">ISUZU</option>
+                                                                <option value="FAW-VW">FAW-VW</option>
+                                                                <option value="HIDEMITSU">HIDEMITSU</option>
+                                                                <option value="PRODUK LOCAL">PRODUK LOCAL</option>
+                                                                <option value="DLL">DLL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Nama Barang</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.namaBarang || ''}
+                                                                onChange={(e) => handleItemChange(index, 'namaBarang', e.target.value)}
+                                                                className={styles.input}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={styles.formRow}>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Kode Barang (<Link style={{
+                                                                textDecoration: 'underline',
+                                                            }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
+                                                                klik disini
+                                                            </Link>)</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.kodeBarang || ''}
+                                                                onChange={(e) => handleItemChange(index, 'kodeBarang', e.target.value)}
+                                                                className={styles.input}
+                                                            />
+                                                        </div>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Kategori</label>
+                                                            <select
+                                                                value={item.kategoriBarang || 'unit'}
+                                                                onChange={(e) => handleItemChange(index, 'kategoriBarang', e.target.value)}
+                                                                className={styles.input}
+                                                            >
+                                                                <option value="unit">Unit</option>
+                                                                <option value="sparepart">Sparepart</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={styles.formRow}>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Qty</label>
+                                                            <input
+                                                                type="number"
+                                                                value={item.qty}
+                                                                onChange={(e) => handleItemChange(index, 'qty', parseInt(e.target.value))}
+                                                                className={styles.input}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={styles.formRow}>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Harga OCT (Rp)</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.hargaUnit ? formatRupiah(item.hargaUnit) : ''}
+                                                                onChange={(e) => {
+                                                                    const rawValue = e.target.value.replace(/[^0-9]/g, '');
+                                                                    handleItemChange(index, 'hargaUnit', rawValue);
+                                                                }}
+                                                                placeholder="Rp 0"
+                                                                className={styles.input}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={styles.formRow}>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Harga Deal (Rp)</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.hargaDeal ? formatRupiah(item.hargaDeal) : ''}
+                                                                onChange={(e) => {
+                                                                    const rawValue = e.target.value.replace(/[^0-9]/g, '');
+                                                                    handleItemChange(index, 'hargaDeal', rawValue);
+                                                                }}
+                                                                placeholder="Rp 0"
+                                                                className={styles.input}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    {
+                                                        formData.items.length > 1 && (
+                                                            <button
+                                                                type="button"
+                                                                className={styles.btnRemoveItem}
+                                                                onClick={() => removeItem(index)}
+                                                            >
+                                                                Hapus Item
+                                                            </button>
+                                                        )
+                                                    }
+                                                </div>
+                                            ))}
+                                            {modalMode === 'create' && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnAddItem}
+                                                    onClick={addItem}
+                                                >
+                                                    + Tambah Produk
+                                                </button>
+                                            )}
+                                        </div>
 
                                         {/* Pricing Summary - Read only (auto-calculated from items) */}
                                         <div className={styles.formSection}>
@@ -2323,139 +2372,102 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
                                         )}
 
-
-                                    </div>
-
-                                    {/* Product Info */}
-                                    <div className={styles.formSection}>
-                                        <h3>Informasi Produk</h3>
-                                        {formData.items?.map((item, index) => (
-                                            <div key={index} className={styles.itemSection}>
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Brand</label>
-                                                        <select
-                                                            value={item.brand || ''}
-                                                            onChange={(e) => handleItemChange(index, 'brand', e.target.value)}
-                                                            className={styles.input}
-                                                        >
-                                                            <option value="">Pilih Brand</option>
-                                                            <option value="TSUZUMI">TSUZUMI</option>
-                                                            <option value="CHAMPIONS">CHAMPIONS</option>
-                                                            <option value="MONTOYA">MONTOYA</option>
-                                                            <option value="ISUZU">ISUZU</option>
-                                                            <option value="FAW-VW">FAW-VW</option>
-                                                            <option value="HIDEMITSU">HIDEMITSU</option>
-                                                            <option value="PRODUK LOCAL">PRODUK LOCAL</option>
-                                                            <option value="DLL">DLL</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Nama Barang</label>
+                                        {/* Notes Invoice - Only show when status is Invoice */}
+                                        {formData.status === 'Invoice' && (
+                                            <div className={styles.formSection}>
+                                                <h3>Catatan Invoice</h3>
+                                                <div style={{ marginBottom: '15px' }}>
+                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
                                                         <input
                                                             type="text"
-                                                            value={item.namaBarang || ''}
-                                                            onChange={(e) => handleItemChange(index, 'namaBarang', e.target.value)}
+                                                            id="newNote"
+                                                            placeholder="Tambah catatan baru..."
                                                             className={styles.input}
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Kode Barang (<Link style={{
-                                                            textDecoration: 'underline',
-                                                        }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
-                                                            klik disini
-                                                        </Link>)</label>
-                                                        <input
-                                                            type="text"
-                                                            value={item.kodeBarang || ''}
-                                                            onChange={(e) => handleItemChange(index, 'kodeBarang', e.target.value)}
-                                                            className={styles.input}
-                                                        />
-                                                    </div>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Kategori</label>
-                                                        <select
-                                                            value={item.kategoriBarang || 'unit'}
-                                                            onChange={(e) => handleItemChange(index, 'kategoriBarang', e.target.value)}
-                                                            className={styles.input}
-                                                        >
-                                                            <option value="unit">Unit</option>
-                                                            <option value="sparepart">Sparepart</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Qty</label>
-                                                        <input
-                                                            type="number"
-                                                            value={item.qty}
-                                                            onChange={(e) => handleItemChange(index, 'qty', parseInt(e.target.value))}
-                                                            className={styles.input}
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Harga OCT (Rp)</label>
-                                                        <input
-                                                            type="text"
-                                                            value={item.hargaUnit ? formatRupiah(item.hargaUnit) : ''}
-                                                            onChange={(e) => {
-                                                                const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                                handleItemChange(index, 'hargaUnit', rawValue);
+                                                            onKeyPress={(e) => {
+                                                                if (e.key === 'Enter') {
+                                                                    const newNote = e.target.value.trim();
+                                                                    if (newNote) {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                        }));
+                                                                        e.target.value = '';
+                                                                    }
+                                                                }
                                                             }}
-                                                            placeholder="Rp 0"
-                                                            className={styles.input}
                                                         />
-                                                    </div>
-                                                </div>
-
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Harga Deal (Rp)</label>
-                                                        <input
-                                                            type="text"
-                                                            value={item.hargaDeal ? formatRupiah(item.hargaDeal) : ''}
-                                                            onChange={(e) => {
-                                                                const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                                handleItemChange(index, 'hargaDeal', rawValue);
-                                                            }}
-                                                            placeholder="Rp 0"
-                                                            className={styles.input}
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                {
-                                                    formData.items.length > 1 && (
                                                         <button
                                                             type="button"
-                                                            className={styles.btnRemoveItem}
-                                                            onClick={() => removeItem(index)}
+                                                            onClick={() => {
+                                                                const input = document.getElementById('newNote');
+                                                                const newNote = input.value.trim();
+                                                                if (newNote) {
+                                                                    setFormData(prev => ({
+                                                                        ...prev,
+                                                                        notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                    }));
+                                                                    input.value = '';
+                                                                }
+                                                            }}
+                                                            style={{
+                                                                padding: '8px 16px',
+                                                                backgroundColor: '#3B82F6',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '6px',
+                                                                cursor: 'pointer',
+                                                                fontWeight: '500'
+                                                            }}
                                                         >
-                                                            Hapus Item
+                                                            + Tambah
                                                         </button>
-                                                    )
-                                                }
+                                                    </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                        {(formData.notesInvoice || []).map((note, idx) => (
+                                                            <div
+                                                                key={idx}
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    alignItems: 'center',
+                                                                    padding: '10px 12px',
+                                                                    backgroundColor: '#F3F4F6',
+                                                                    borderRadius: '6px',
+                                                                    border: '1px solid #E5E7EB',
+                                                                    fontSize: '14px'
+                                                                }}
+                                                            >
+                                                                <span>{note}</span>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
+                                                                        }));
+                                                                    }}
+                                                                    style={{
+                                                                        padding: '4px 8px',
+                                                                        backgroundColor: '#EF4444',
+                                                                        color: 'white',
+                                                                        border: 'none',
+                                                                        borderRadius: '4px',
+                                                                        cursor: 'pointer',
+                                                                        fontSize: '12px'
+                                                                    }}
+                                                                >
+                                                                    Hapus
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        ))}
-                                        {modalMode === 'create' && (
-                                            <button
-                                                type="button"
-                                                className={styles.btnAddItem}
-                                                onClick={addItem}
-                                            >
-                                                + Tambah Produk
-                                            </button>
                                         )}
-                                    </div>
 
+
+
+                                    </div>
 
 
 
@@ -2464,8 +2476,8 @@ _Pengiriman dari Sales Progress Report_`;
                             ) : (
                                 // Edit Mode Form
                                 <div className={styles.formGrid}>
-                                    {/* Basic Info - Read Only */}
-                                    <div className={styles.formSection}>
+                                    {/* Left Column - Basic Info (Sticky) */}
+                                    <div className={styles.formGridLeft}>
                                         <h3>Informasi Dasar</h3>
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
@@ -2562,8 +2574,6 @@ _Pengiriman dari Sales Progress Report_`;
                                             </div>
                                         </div>
 
-
-
                                         <div className={styles.formRow}>
                                             <div className={styles.formGroup}>
                                                 <label>Status Catatan</label>
@@ -2578,540 +2588,544 @@ _Pengiriman dari Sales Progress Report_`;
                                         </div>
                                     </div>
 
-                                    {/* Product Review - Editable items in edit mode for Negosiasi & Invoice */}
-                                    {(formData.status === 'Negosiasi' || formData.status === 'Invoice') && formData.items && formData.items.length > 0 && (
-                                        <div className={styles.formSection}>
-                                            <h3>Produk ({formData.items.length} item)</h3>
-                                            {formData.items.map((item, index) => (
-                                                <div key={index} className={styles.itemSection}>
-                                                    <div className={styles.formRow}>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Brand</label>
-                                                            <select
-                                                                value={item.brand || ''}
-                                                                onChange={(e) => handleItemChange(index, 'brand', e.target.value)}
-                                                                className={styles.input}
+                                    {/* Right Column - Products, Total, Invoice, Notes */}
+                                    <div className={styles.formGridRight}>
+
+                                        {/* Product Review - Editable items in edit mode for Negosiasi & Invoice */}
+                                        {(formData.status === 'Negosiasi' || formData.status === 'Invoice') && formData.items && formData.items.length > 0 && (
+                                            <div className={styles.formSection}>
+                                                <h3>Produk ({formData.items.length} item)</h3>
+                                                {formData.items.map((item, index) => (
+                                                    <div key={index} className={styles.itemSection}>
+                                                        <div className={styles.formRow}>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Brand</label>
+                                                                <select
+                                                                    value={item.brand || ''}
+                                                                    onChange={(e) => handleItemChange(index, 'brand', e.target.value)}
+                                                                    className={styles.input}
+                                                                >
+                                                                    <option value="">Pilih Brand</option>
+                                                                    <option value="TSUZUMI">TSUZUMI</option>
+                                                                    <option value="CHAMPIONS">CHAMPIONS</option>
+                                                                    <option value="MONTOYA">MONTOYA</option>
+                                                                    <option value="ISUZU">ISUZU</option>
+                                                                    <option value="FAW-VW">FAW-VW</option>
+                                                                    <option value="HIDEMITSU">HIDEMITSU</option>
+                                                                    <option value="PRODUK LOCAL">PRODUK LOCAL</option>
+                                                                    <option value="DLL">DLL</option>
+                                                                </select>
+                                                            </div>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Nama Barang</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={item.namaBarang || ''}
+                                                                    onChange={(e) => handleItemChange(index, 'namaBarang', e.target.value)}
+                                                                    className={styles.input}
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className={styles.formRow}>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Kode Barang (<Link style={{
+                                                                    textDecoration: 'underline',
+                                                                }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
+                                                                    klik disini
+                                                                </Link>)</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={item.kodeBarang || ''}
+                                                                    onChange={(e) => handleItemChange(index, 'kodeBarang', e.target.value)}
+                                                                    className={styles.input}
+                                                                />
+                                                            </div>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Kategori</label>
+                                                                <select
+                                                                    value={item.kategoriBarang || 'unit'}
+                                                                    onChange={(e) => handleItemChange(index, 'kategoriBarang', e.target.value)}
+                                                                    className={styles.input}
+                                                                >
+                                                                    <option value="unit">Unit</option>
+                                                                    <option value="sparepart">Sparepart</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className={styles.formRow}>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Qty</label>
+                                                                <input
+                                                                    type="number"
+                                                                    value={item.qty || 1}
+                                                                    onChange={(e) => handleItemChange(index, 'qty', parseInt(e.target.value))}
+                                                                    className={styles.input}
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className={styles.formRow}>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Harga OCT (Rp)</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={item.hargaUnit ? formatRupiah(item.hargaUnit) : ''}
+                                                                    onChange={(e) => {
+                                                                        const rawValue = e.target.value.replace(/[^0-9]/g, '');
+                                                                        handleItemChange(index, 'hargaUnit', rawValue);
+                                                                    }}
+                                                                    placeholder="Rp 0"
+                                                                    className={styles.input}
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className={styles.formRow}>
+                                                            <div className={styles.formGroup}>
+                                                                <label>Harga Deal (Rp)</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={item.hargaDeal ? formatRupiah(item.hargaDeal) : ''}
+                                                                    onChange={(e) => {
+                                                                        const rawValue = e.target.value.replace(/[^0-9]/g, '');
+                                                                        handleItemChange(index, 'hargaDeal', rawValue);
+                                                                    }}
+                                                                    placeholder="Rp 0"
+                                                                    className={styles.input}
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        {formData.items.length > 1 && (
+                                                            <button
+                                                                type="button"
+                                                                className={styles.btnRemoveItem}
+                                                                onClick={() => removeItem(index)}
                                                             >
-                                                                <option value="">Pilih Brand</option>
-                                                                <option value="TSUZUMI">TSUZUMI</option>
-                                                                <option value="CHAMPIONS">CHAMPIONS</option>
-                                                                <option value="MONTOYA">MONTOYA</option>
-                                                                <option value="ISUZU">ISUZU</option>
-                                                                <option value="FAW-VW">FAW-VW</option>
-                                                                <option value="HIDEMITSU">HIDEMITSU</option>
-                                                                <option value="PRODUK LOCAL">PRODUK LOCAL</option>
-                                                                <option value="DLL">DLL</option>
-                                                            </select>
-                                                        </div>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Nama Barang</label>
-                                                            <input
-                                                                type="text"
-                                                                value={item.namaBarang || ''}
-                                                                onChange={(e) => handleItemChange(index, 'namaBarang', e.target.value)}
-                                                                className={styles.input}
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className={styles.formRow}>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Kode Barang (<Link style={{
-                                                                textDecoration: 'underline',
-                                                            }} href={'https://docs.google.com/spreadsheets/d/1jNHhULbGyAQrReeckyEmMb6VNWMme7xvwUQDYlf6ffQ/edit?gid=0#gid=0'} target="_blank" rel="noopener noreferrer">
-                                                                klik disini
-                                                            </Link>)</label>
-                                                            <input
-                                                                type="text"
-                                                                value={item.kodeBarang || ''}
-                                                                onChange={(e) => handleItemChange(index, 'kodeBarang', e.target.value)}
-                                                                className={styles.input}
-                                                            />
-                                                        </div>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Kategori</label>
-                                                            <select
-                                                                value={item.kategoriBarang || 'unit'}
-                                                                onChange={(e) => handleItemChange(index, 'kategoriBarang', e.target.value)}
-                                                                className={styles.input}
-                                                            >
-                                                                <option value="unit">Unit</option>
-                                                                <option value="sparepart">Sparepart</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className={styles.formRow}>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Qty</label>
-                                                            <input
-                                                                type="number"
-                                                                value={item.qty || 1}
-                                                                onChange={(e) => handleItemChange(index, 'qty', parseInt(e.target.value))}
-                                                                className={styles.input}
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className={styles.formRow}>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Harga OCT (Rp)</label>
-                                                            <input
-                                                                type="text"
-                                                                value={item.hargaUnit ? formatRupiah(item.hargaUnit) : ''}
-                                                                onChange={(e) => {
-                                                                    const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                                    handleItemChange(index, 'hargaUnit', rawValue);
-                                                                }}
-                                                                placeholder="Rp 0"
-                                                                className={styles.input}
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className={styles.formRow}>
-                                                        <div className={styles.formGroup}>
-                                                            <label>Harga Deal (Rp)</label>
-                                                            <input
-                                                                type="text"
-                                                                value={item.hargaDeal ? formatRupiah(item.hargaDeal) : ''}
-                                                                onChange={(e) => {
-                                                                    const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                                    handleItemChange(index, 'hargaDeal', rawValue);
-                                                                }}
-                                                                placeholder="Rp 0"
-                                                                className={styles.input}
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    {formData.items.length > 1 && (
-                                                        <button
-                                                            type="button"
-                                                            className={styles.btnRemoveItem}
-                                                            onClick={() => removeItem(index)}
-                                                        >
-                                                            Hapus Item
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            ))}
-                                            <button
-                                                type="button"
-                                                className={styles.btnAddItem}
-                                                onClick={addItem}
-                                            >
-                                                + Tambah Produk
-                                            </button>
-                                        </div>
-                                    )}
-
-                                    {/* Product Review - Read only for other statuses */}
-                                    {!(formData.status === 'Negosiasi' || formData.status === 'Invoice') && formData.items && formData.items.length > 0 && (
-                                        <div className={styles.formSection}>
-                                            <h3>Produk ({formData.items.length} item)</h3>
-                                            <div className={styles.productReview}>
-                                                {formData.items.slice(0, 5).map((item, index) => (
-                                                    <div key={index} className={styles.productReviewItem}>
-                                                        <div className={styles.productReviewInfo}>
-                                                            <span className={styles.productReviewName}>{item.brand || '-'} - {item.namaBarang || 'Produk'}</span>
-                                                            <span className={styles.productReviewQty}>Kode: {item.kodeBarang || '-'} | Kategori: {item.kategoriBarang === 'sparepart' ? 'Sparepart' : 'Unit'} | Qty: {item.qty || 0}</span>
-                                                        </div>
-                                                        <div className={styles.productReviewPrices}>
-                                                            <span className={styles.productReviewPriceUnit}>Unit: {formatRupiah(item.hargaUnit || 0)}</span>
-                                                            <span className={styles.productReviewPrice}>Deal: {formatRupiah(item.hargaDeal || 0)}</span>
-                                                        </div>
+                                                                Hapus Item
+                                                            </button>
+                                                        )}
                                                     </div>
                                                 ))}
-                                                {formData.items.length > 5 && (
-                                                    <div className={styles.productReviewMore}>
-                                                        +{formData.items.length - 5} produk lainnya
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Total Harga Section */}
-                                    <div className={styles.formSection}>
-                                        <h3>Total Harga</h3>
-                                        <div className={styles.formRow}>
-                                            <div className={styles.formGroup}>
-                                                <label>Total Unit ( Harga OCT )</label>
-                                                <input
-                                                    type="text"
-                                                    name="totalUnit"
-                                                    value={formatRupiah(formData.totalUnit)}
-                                                    readOnly
-                                                    className={styles.input}
-                                                    style={{ backgroundColor: '#f5f5f5' }}
-                                                />
-                                            </div>
-                                            <div className={styles.formGroup}>
-                                                <label>Total Deal</label>
-                                                <input
-                                                    type="text"
-                                                    name="totalDeal"
-                                                    value={formatRupiah(formData.totalDeal)}
-                                                    readOnly
-                                                    className={styles.input}
-                                                    style={{ backgroundColor: '#f5f5f5' }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className={styles.formRow}>
-                                            <div className={styles.formGroup}>
-                                                <label>DPP (Total Deal / 1.11)</label>
-                                                <input
-                                                    type="text"
-                                                    name="dpp"
-                                                    value={formatRupiahRounded(formData.totalDeal / 1.11)}
-                                                    readOnly
-                                                    className={styles.input}
-                                                    style={{ backgroundColor: '#f5f5f5' }}
-                                                />
-                                            </div>
-                                            <div className={styles.formGroup}>
-                                                <label>PPN (DPP × 11%)</label>
-                                                <input
-                                                    type="text"
-                                                    name="ppn"
-                                                    value={formatRupiahRounded((formData.totalDeal / 1.11) * 0.11)}
-                                                    readOnly
-                                                    className={styles.input}
-                                                    style={{ backgroundColor: '#f5f5f5' }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {formData.status === 'Invoice' && (
-                                        <div className={styles.formSection}>
-                                            <h3>Invoice & Pembayaran</h3>
-
-                                            <div className={styles.formGroup}>
-                                                <label>Status Pembayaran</label>
-                                                <select
-                                                    name="paymentStatus"
-                                                    value={formData.paymentStatus || ''}
-                                                    onChange={handleInputChange}
-                                                    className={styles.input}
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnAddItem}
+                                                    onClick={addItem}
                                                 >
-                                                    <option value="">Pilih Status</option>
-                                                    <option value="BELUM_BAYAR">Belum Bayar</option>
-                                                    <option value="DP">DP (Uang Muka)</option>
-                                                    {/* <option value="CICIL">Cicilan</option> */}
-                                                    <option value="LUNAS">Lunas</option>
-                                                </select>
+                                                    + Tambah Produk
+                                                </button>
                                             </div>
-                                            <div className={styles.formRow}>
-                                                <div className={styles.formGroup}>
-                                                    {formData.paymentStatus === 'LUNAS' && (
-                                                        <>
-                                                            <label>Nomor Invoice</label>
-                                                            <input
-                                                                type="text"
-                                                                name="nomorInvoice"
-                                                                value={formData.nomorInvoice}
-                                                                onChange={handleInputChange}
-                                                                className={styles.input}
-                                                                placeholder="INV/001/2024"
-                                                            />
-                                                        </>
-                                                    )}
-                                                    {formData.paymentStatus === 'DP' && (
-                                                        <>
-                                                            <label>Nomor DP</label>
-                                                            <input
-                                                                type="text"
-                                                                name="dpNumber"
-                                                                value={formData.dpNumber}
-                                                                onChange={handleInputChange}
-                                                                className={styles.input}
-                                                                placeholder="DP/001/2024"
-                                                            />
-                                                        </>
-                                                    )}
-                                                </div>
-                                                <div className={styles.formGroup}>
-                                                    {formData.paymentStatus === 'LUNAS' && (
-                                                        <>
-                                                            <label>Tanggal Invoice</label>
-                                                            <input
-                                                                type="date"
-                                                                name="invoiceCreatedAt"
-                                                                value={formData.invoiceCreatedAt ? formData.invoiceCreatedAt.split('T')[0] : ''}
-                                                                onChange={handleInputChange}
-                                                                className={styles.input}
-                                                            />
-                                                        </>
-                                                    )}
-                                                    {formData.paymentStatus === 'DP' && (
-                                                        <>
-                                                            <label>Tanggal DP</label>
-                                                            <input
-                                                                type="date"
-                                                                name="dpCreatedAt"
-                                                                value={formData.dpCreatedAt ? formData.dpCreatedAt.split('T')[0] : ''}
-                                                                onChange={handleInputChange}
-                                                                className={styles.input}
-                                                            />
-                                                        </>
-                                                    )}
-                                                    {!formData.paymentStatus && (
-                                                        <label>Rekening</label>
-                                                    )}
-                                                    {(formData.paymentStatus === 'BELUM_BAYAR' || !formData.paymentStatus) && (
-                                                        <select
-                                                            name="RekeningName"
-                                                            value={formData.RekeningName || ''}
-                                                            onChange={handleInputChange}
-                                                            className={styles.input}
-                                                        >
-                                                            <option value="">Pilih Rekening</option>
-                                                            {bankList.map((bank, idx) => (
-                                                                <option key={idx} value={bank.nama}>{bank.nama}</option>
-                                                            ))}
-                                                        </select>
+                                        )}
+
+                                        {/* Product Review - Read only for other statuses */}
+                                        {!(formData.status === 'Negosiasi' || formData.status === 'Invoice') && formData.items && formData.items.length > 0 && (
+                                            <div className={styles.formSection}>
+                                                <h3>Produk ({formData.items.length} item)</h3>
+                                                <div className={styles.productReview}>
+                                                    {formData.items.slice(0, 5).map((item, index) => (
+                                                        <div key={index} className={styles.productReviewItem}>
+                                                            <div className={styles.productReviewInfo}>
+                                                                <span className={styles.productReviewName}>{item.brand || '-'} - {item.namaBarang || 'Produk'}</span>
+                                                                <span className={styles.productReviewQty}>Kode: {item.kodeBarang || '-'} | Kategori: {item.kategoriBarang === 'sparepart' ? 'Sparepart' : 'Unit'} | Qty: {item.qty || 0}</span>
+                                                            </div>
+                                                            <div className={styles.productReviewPrices}>
+                                                                <span className={styles.productReviewPriceUnit}>Unit: {formatRupiah(item.hargaUnit || 0)}</span>
+                                                                <span className={styles.productReviewPrice}>Deal: {formatRupiah(item.hargaDeal || 0)}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    {formData.items.length > 5 && (
+                                                        <div className={styles.productReviewMore}>
+                                                            +{formData.items.length - 5} produk lainnya
+                                                        </div>
                                                     )}
                                                 </div>
                                             </div>
-                                            {formData.paymentStatus !== 'BELUM_BAYAR' && formData.paymentStatus && (
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Rekening</label>
-                                                        <select
-                                                            name="RekeningName"
-                                                            value={formData.RekeningName || ''}
-                                                            onChange={handleInputChange}
-                                                            className={styles.input}
-                                                        >
-                                                            <option value="">Pilih Rekening</option>
-                                                            {bankList.map((bank, idx) => (
-                                                                <option key={idx} value={bank.nama}>{bank.nama}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            )}
+                                        )}
+
+                                        {/* Total Harga Section */}
+                                        <div className={styles.formSection}>
+                                            <h3>Total Harga</h3>
                                             <div className={styles.formRow}>
                                                 <div className={styles.formGroup}>
-                                                    <label>Total Pembayaran</label>
+                                                    <label>Total Unit ( Harga OCT )</label>
                                                     <input
                                                         type="text"
-                                                        name="totalPayment"
-                                                        value={formData.totalPayment ? formatRupiah(formData.totalPayment) : 'Rp 0'}
-                                                        onChange={(e) => {
-                                                            const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                            const totalPayment = parseFloat(rawValue) || 0;
-                                                            const totalDeal = parseFloat(formData.totalDeal) || 0;
-                                                            // Jika total pembayaran sama dengan total deal, sisa = 0
-                                                            const sisaPayment = totalPayment >= totalDeal ? 0 : totalDeal - totalPayment;
-                                                            handleInputChange({ target: { name: 'totalPayment', value: rawValue, type: 'text' } });
-                                                            handleInputChange({ target: { name: 'sisaPayment', value: sisaPayment.toString(), type: 'text' } });
-                                                        }}
-                                                        placeholder="Rp 0"
-                                                        className={styles.input}
-                                                    />
-                                                </div>
-                                                <div className={styles.formGroup}>
-                                                    <label>Sisa Pembayaran (Auto)</label>
-                                                    <input
-                                                        type="text"
-                                                        name="sisaPayment"
-                                                        value={formatRupiah(Math.max(0, (parseFloat(formData.totalDeal) || 0) - (parseFloat(formData.totalPayment) || 0)))}
+                                                        name="totalUnit"
+                                                        value={formatRupiah(formData.totalUnit)}
                                                         readOnly
                                                         className={styles.input}
-                                                        style={{ backgroundColor: '#f5f5f5', cursor: 'not-allowed' }}
+                                                        style={{ backgroundColor: '#f5f5f5' }}
+                                                    />
+                                                </div>
+                                                <div className={styles.formGroup}>
+                                                    <label>Total Deal</label>
+                                                    <input
+                                                        type="text"
+                                                        name="totalDeal"
+                                                        value={formatRupiah(formData.totalDeal)}
+                                                        readOnly
+                                                        className={styles.input}
+                                                        style={{ backgroundColor: '#f5f5f5' }}
                                                     />
                                                 </div>
                                             </div>
+                                            <div className={styles.formRow}>
+                                                <div className={styles.formGroup}>
+                                                    <label>DPP (Total Deal / 1.11)</label>
+                                                    <input
+                                                        type="text"
+                                                        name="dpp"
+                                                        value={formatRupiahRounded(formData.totalDeal / 1.11)}
+                                                        readOnly
+                                                        className={styles.input}
+                                                        style={{ backgroundColor: '#f5f5f5' }}
+                                                    />
+                                                </div>
+                                                <div className={styles.formGroup}>
+                                                    <label>PPN (DPP × 11%)</label>
+                                                    <input
+                                                        type="text"
+                                                        name="ppn"
+                                                        value={formatRupiahRounded((formData.totalDeal / 1.11) * 0.11)}
+                                                        readOnly
+                                                        className={styles.input}
+                                                        style={{ backgroundColor: '#f5f5f5' }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            {/* Notes Invoice Management */}
-                                            {formData.paymentStatus === 'LUNAS' && (
-                                                <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
-                                                    <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan Invoice</h4>
-                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                        {formData.status === 'Invoice' && (
+                                            <div className={styles.formSection}>
+                                                <h3>Invoice & Pembayaran</h3>
+
+                                                <div className={styles.formGroup}>
+                                                    <label>Status Pembayaran</label>
+                                                    <select
+                                                        name="paymentStatus"
+                                                        value={formData.paymentStatus || ''}
+                                                        onChange={handleInputChange}
+                                                        className={styles.input}
+                                                    >
+                                                        <option value="">Pilih Status</option>
+                                                        <option value="BELUM_BAYAR">Belum Bayar</option>
+                                                        <option value="DP">DP (Uang Muka)</option>
+                                                        {/* <option value="CICIL">Cicilan</option> */}
+                                                        <option value="LUNAS">Lunas</option>
+                                                    </select>
+                                                </div>
+                                                <div className={styles.formRow}>
+                                                    <div className={styles.formGroup}>
+                                                        {formData.paymentStatus === 'LUNAS' && (
+                                                            <>
+                                                                <label>Nomor Invoice</label>
+                                                                <input
+                                                                    type="text"
+                                                                    name="nomorInvoice"
+                                                                    value={formData.nomorInvoice}
+                                                                    onChange={handleInputChange}
+                                                                    className={styles.input}
+                                                                    placeholder="INV/001/2024"
+                                                                />
+                                                            </>
+                                                        )}
+                                                        {formData.paymentStatus === 'DP' && (
+                                                            <>
+                                                                <label>Nomor DP</label>
+                                                                <input
+                                                                    type="text"
+                                                                    name="dpNumber"
+                                                                    value={formData.dpNumber}
+                                                                    onChange={handleInputChange}
+                                                                    className={styles.input}
+                                                                    placeholder="DP/001/2024"
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                    <div className={styles.formGroup}>
+                                                        {formData.paymentStatus === 'LUNAS' && (
+                                                            <>
+                                                                <label>Tanggal Invoice</label>
+                                                                <input
+                                                                    type="date"
+                                                                    name="invoiceCreatedAt"
+                                                                    value={formData.invoiceCreatedAt}
+                                                                    onChange={handleInputChange}
+                                                                    className={styles.input}
+                                                                />
+                                                            </>
+                                                        )}
+                                                        {formData.paymentStatus === 'DP' && (
+                                                            <>
+                                                                <label>Tanggal DP</label>
+                                                                <input
+                                                                    type="date"
+                                                                    name="dpCreatedAt"
+                                                                    value={formData.dpCreatedAt}
+                                                                    onChange={handleInputChange}
+                                                                    className={styles.input}
+                                                                />
+                                                            </>
+                                                        )}
+                                                        {!formData.paymentStatus && (
+                                                            <label>Rekening</label>
+                                                        )}
+                                                        {(formData.paymentStatus === 'BELUM_BAYAR' || !formData.paymentStatus) && (
+                                                            <select
+                                                                name="RekeningName"
+                                                                value={formData.RekeningName || ''}
+                                                                onChange={handleInputChange}
+                                                                className={styles.input}
+                                                            >
+                                                                <option value="">Pilih Rekening</option>
+                                                                {bankList.map((bank, idx) => (
+                                                                    <option key={idx} value={bank.nama}>{bank.nama}</option>
+                                                                ))}
+                                                            </select>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                {formData.paymentStatus !== 'BELUM_BAYAR' && formData.paymentStatus && (
+                                                    <div className={styles.formRow}>
+                                                        <div className={styles.formGroup}>
+                                                            <label>Rekening</label>
+                                                            <select
+                                                                name="RekeningName"
+                                                                value={formData.RekeningName || ''}
+                                                                onChange={handleInputChange}
+                                                                className={styles.input}
+                                                            >
+                                                                <option value="">Pilih Rekening</option>
+                                                                {bankList.map((bank, idx) => (
+                                                                    <option key={idx} value={bank.nama}>{bank.nama}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                <div className={styles.formRow}>
+                                                    <div className={styles.formGroup}>
+                                                        <label>Total Pembayaran</label>
                                                         <input
                                                             type="text"
-                                                            id="newNoteInvoice"
-                                                            placeholder="Tambah catatan baru..."
+                                                            name="totalPayment"
+                                                            value={formData.totalPayment ? formatRupiah(formData.totalPayment) : 'Rp 0'}
+                                                            onChange={(e) => {
+                                                                const rawValue = e.target.value.replace(/[^0-9]/g, '');
+                                                                const totalPayment = parseFloat(rawValue) || 0;
+                                                                const totalDeal = parseFloat(formData.totalDeal) || 0;
+                                                                // Jika total pembayaran sama dengan total deal, sisa = 0
+                                                                const sisaPayment = totalPayment >= totalDeal ? 0 : totalDeal - totalPayment;
+                                                                handleInputChange({ target: { name: 'totalPayment', value: rawValue, type: 'text' } });
+                                                                handleInputChange({ target: { name: 'sisaPayment', value: sisaPayment.toString(), type: 'text' } });
+                                                            }}
+                                                            placeholder="Rp 0"
                                                             className={styles.input}
-                                                            onKeyPress={(e) => {
-                                                                if (e.key === 'Enter') {
-                                                                    const newNote = e.target.value.trim();
+                                                        />
+                                                    </div>
+                                                    <div className={styles.formGroup}>
+                                                        <label>Sisa Pembayaran (Auto)</label>
+                                                        <input
+                                                            type="text"
+                                                            name="sisaPayment"
+                                                            value={formatRupiah(Math.max(0, (parseFloat(formData.totalDeal) || 0) - (parseFloat(formData.totalPayment) || 0)))}
+                                                            readOnly
+                                                            className={styles.input}
+                                                            style={{ backgroundColor: '#f5f5f5', cursor: 'not-allowed' }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Notes Invoice Management */}
+                                                {formData.paymentStatus === 'LUNAS' && (
+                                                    <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
+                                                        <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan Invoice</h4>
+                                                        <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                                            <input
+                                                                type="text"
+                                                                id="newNoteInvoice"
+                                                                placeholder="Tambah catatan baru..."
+                                                                className={styles.input}
+                                                                onKeyPress={(e) => {
+                                                                    if (e.key === 'Enter') {
+                                                                        const newNote = e.target.value.trim();
+                                                                        if (newNote) {
+                                                                            setFormData(prev => ({
+                                                                                ...prev,
+                                                                                notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                            }));
+                                                                            e.target.value = '';
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    const input = document.getElementById('newNoteInvoice');
+                                                                    const newNote = input.value.trim();
                                                                     if (newNote) {
                                                                         setFormData(prev => ({
                                                                             ...prev,
                                                                             notesInvoice: [...(prev.notesInvoice || []), newNote]
                                                                         }));
-                                                                        e.target.value = '';
+                                                                        input.value = '';
                                                                     }
-                                                                }
-                                                            }}
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const input = document.getElementById('newNoteInvoice');
-                                                                const newNote = input.value.trim();
-                                                                if (newNote) {
-                                                                    setFormData(prev => ({
-                                                                        ...prev,
-                                                                        notesInvoice: [...(prev.notesInvoice || []), newNote]
-                                                                    }));
-                                                                    input.value = '';
-                                                                }
-                                                            }}
-                                                            style={{
-                                                                padding: '8px 16px',
-                                                                backgroundColor: '#3B82F6',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '6px',
-                                                                cursor: 'pointer',
-                                                                fontWeight: '500',
-                                                                whiteSpace: 'nowrap'
-                                                            }}
-                                                        >
-                                                            + Tambah
-                                                        </button>
-                                                    </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                        {(formData.notesInvoice || []).map((note, idx) => (
-                                                            <div
-                                                                key={idx}
+                                                                }}
                                                                 style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    alignItems: 'center',
-                                                                    padding: '10px 12px',
-                                                                    backgroundColor: '#F3F4F6',
+                                                                    padding: '8px 16px',
+                                                                    backgroundColor: '#3B82F6',
+                                                                    color: 'white',
+                                                                    border: 'none',
                                                                     borderRadius: '6px',
-                                                                    border: '1px solid #E5E7EB',
-                                                                    fontSize: '14px'
+                                                                    cursor: 'pointer',
+                                                                    fontWeight: '500',
+                                                                    whiteSpace: 'nowrap'
                                                                 }}
                                                             >
-                                                                <span>{note}</span>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
-                                                                        }));
-                                                                    }}
+                                                                + Tambah
+                                                            </button>
+                                                        </div>
+                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                            {(formData.notesInvoice || []).map((note, idx) => (
+                                                                <div
+                                                                    key={idx}
                                                                     style={{
-                                                                        padding: '4px 8px',
-                                                                        backgroundColor: '#EF4444',
-                                                                        color: 'white',
-                                                                        border: 'none',
-                                                                        borderRadius: '4px',
-                                                                        cursor: 'pointer',
-                                                                        fontSize: '12px'
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between',
+                                                                        alignItems: 'center',
+                                                                        padding: '10px 12px',
+                                                                        backgroundColor: '#F3F4F6',
+                                                                        borderRadius: '6px',
+                                                                        border: '1px solid #E5E7EB',
+                                                                        fontSize: '14px'
                                                                     }}
                                                                 >
-                                                                    Hapus
-                                                                </button>
-                                                            </div>
-                                                        ))}
+                                                                    <span>{note}</span>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            setFormData(prev => ({
+                                                                                ...prev,
+                                                                                notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
+                                                                            }));
+                                                                        }}
+                                                                        style={{
+                                                                            padding: '4px 8px',
+                                                                            backgroundColor: '#EF4444',
+                                                                            color: 'white',
+                                                                            border: 'none',
+                                                                            borderRadius: '4px',
+                                                                            cursor: 'pointer',
+                                                                            fontSize: '12px'
+                                                                        }}
+                                                                    >
+                                                                        Hapus
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
-                                            {/* Notes DP - Only show when paymentStatus is DP */}
-                                            {formData.paymentStatus === 'DP' && (
-                                                <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
-                                                    <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan DP</h4>
-                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                                                        <input
-                                                            type="text"
-                                                            id="newNoteDPEdit"
-                                                            placeholder="Tambah catatan baru..."
-                                                            className={styles.input}
-                                                            onKeyPress={(e) => {
-                                                                if (e.key === 'Enter') {
-                                                                    const newNote = e.target.value.trim();
+                                                )}
+                                                {/* Notes DP - Only show when paymentStatus is DP */}
+                                                {formData.paymentStatus === 'DP' && (
+                                                    <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
+                                                        <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: '600' }}>Catatan DP</h4>
+                                                        <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                                                            <input
+                                                                type="text"
+                                                                id="newNoteDPEdit"
+                                                                placeholder="Tambah catatan baru..."
+                                                                className={styles.input}
+                                                                onKeyPress={(e) => {
+                                                                    if (e.key === 'Enter') {
+                                                                        const newNote = e.target.value.trim();
+                                                                        if (newNote) {
+                                                                            setFormData(prev => ({
+                                                                                ...prev,
+                                                                                notesDP: [...(prev.notesDP || []), newNote]
+                                                                            }));
+                                                                            e.target.value = '';
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    const input = document.getElementById('newNoteDPEdit');
+                                                                    const newNote = input.value.trim();
                                                                     if (newNote) {
                                                                         setFormData(prev => ({
                                                                             ...prev,
                                                                             notesDP: [...(prev.notesDP || []), newNote]
                                                                         }));
-                                                                        e.target.value = '';
+                                                                        input.value = '';
                                                                     }
-                                                                }
-                                                            }}
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const input = document.getElementById('newNoteDPEdit');
-                                                                const newNote = input.value.trim();
-                                                                if (newNote) {
-                                                                    setFormData(prev => ({
-                                                                        ...prev,
-                                                                        notesDP: [...(prev.notesDP || []), newNote]
-                                                                    }));
-                                                                    input.value = '';
-                                                                }
-                                                            }}
-                                                            style={{
-                                                                padding: '8px 16px',
-                                                                backgroundColor: '#f59e0b',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '6px',
-                                                                cursor: 'pointer',
-                                                                fontWeight: '500',
-                                                                whiteSpace: 'nowrap'
-                                                            }}
-                                                        >
-                                                            + Tambah
-                                                        </button>
-                                                    </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                        {(formData.notesDP || []).map((note, idx) => (
-                                                            <div
-                                                                key={idx}
+                                                                }}
                                                                 style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    alignItems: 'center',
-                                                                    padding: '10px 12px',
-                                                                    backgroundColor: '#FEF3C7',
+                                                                    padding: '8px 16px',
+                                                                    backgroundColor: '#f59e0b',
+                                                                    color: 'white',
+                                                                    border: 'none',
                                                                     borderRadius: '6px',
-                                                                    border: '1px solid #FCD34D',
-                                                                    fontSize: '14px'
+                                                                    cursor: 'pointer',
+                                                                    fontWeight: '500',
+                                                                    whiteSpace: 'nowrap'
                                                                 }}
                                                             >
-                                                                {console.log(note)}
-                                                                <span>{note}</span>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            notesDP: (prev.notesDP || []).filter((_, i) => i !== idx)
-                                                                        }));
-                                                                    }}
+                                                                + Tambah
+                                                            </button>
+                                                        </div>
+                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                            {(formData.notesDP || []).map((note, idx) => (
+                                                                <div
+                                                                    key={idx}
                                                                     style={{
-                                                                        padding: '4px 8px',
-                                                                        backgroundColor: '#EF4444',
-                                                                        color: 'white',
-                                                                        border: 'none',
-                                                                        borderRadius: '4px',
-                                                                        cursor: 'pointer',
-                                                                        fontSize: '12px'
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between',
+                                                                        alignItems: 'center',
+                                                                        padding: '10px 12px',
+                                                                        backgroundColor: '#FEF3C7',
+                                                                        borderRadius: '6px',
+                                                                        border: '1px solid #FCD34D',
+                                                                        fontSize: '14px'
                                                                     }}
                                                                 >
-                                                                    Hapus
-                                                                </button>
-                                                            </div>
-                                                        ))}
+                                                                    {console.log(note)}
+                                                                    <span>{note}</span>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            setFormData(prev => ({
+                                                                                ...prev,
+                                                                                notesDP: (prev.notesDP || []).filter((_, i) => i !== idx)
+                                                                            }));
+                                                                        }}
+                                                                        style={{
+                                                                            padding: '4px 8px',
+                                                                            backgroundColor: '#EF4444',
+                                                                            color: 'white',
+                                                                            border: 'none',
+                                                                            borderRadius: '4px',
+                                                                            cursor: 'pointer',
+                                                                            fontSize: '12px'
+                                                                        }}
+                                                                    >
+                                                                        Hapus
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
 
                                     {/* Catatan fields hidden - remarks & remarksPajak auto-saved */}
                                 </div>

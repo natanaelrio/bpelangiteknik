@@ -790,8 +790,25 @@
 
 .formGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: 400px 1fr;
     gap: 24px;
+}
+
+/* Left column - Basic Info - Sticky */
+.formGridLeft {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Right column - Products, Total, Invoice, Notes */
+.formGridRight {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .formSection {
@@ -801,6 +818,17 @@
 }
 
 .formSection h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1918;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #c8302f;
+}
+
+.formGridLeft h3 {
     margin: 0 0 10px 0;
     font-size: 14px;
     font-weight: 700;
@@ -1213,6 +1241,7 @@ select.textarea {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
