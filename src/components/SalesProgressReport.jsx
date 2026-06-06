@@ -152,11 +152,7 @@ export default function SalesProgressReport({ session }) {
         invoiceCreatedAt: '',
         dpNumber: '',
         dpCreatedAt: '',
-        notesDP: [
-            "Pembayaran DP sebagai tanda jadi pemesanan.",
-            "Pelunasan dilakukan sebelum barang dikirim.",
-            "Estimasi pengiriman setelah pembayaran lunas diterima."
-        ],
+        notesDP: [],
         spbb: '',
         spbbCreatedAt: '',
         totalUnit: '',
@@ -173,11 +169,7 @@ export default function SalesProgressReport({ session }) {
         // Company & Bank fields
         salesCompany: perusahaan,
         RekeningName: '',
-        notesInvoice: [
-            "Garansi servise 1 tahun",
-            "Pembayaran cash before shipping",
-            "Free Jabodetabek"
-        ],
+        notesInvoice: [],
         items: [{
             brand: '',
             namaBarang: '',
@@ -829,6 +821,32 @@ export default function SalesProgressReport({ session }) {
             }
         }
 
+        // Remove notes based on payment status
+        // Saat LUNAS, hanya notesInvoice yang dikirim; saat DP, hanya notesDP yang dikirim
+        if (formData.paymentStatus === 'LUNAS') {
+            // LUNAS - hapus notesDP, pertahankan notesInvoice
+            delete apiData.notesDP;
+            // notesInvoice: ubah jadi null jika kosong SAAT CREATE MODE
+            if (!apiData.notesInvoice || apiData.notesInvoice.length === 0) {
+                apiData.notesInvoice = null;
+            }
+        } else if (formData.paymentStatus === 'DP') {
+            // DP - hapus notesInvoice, pertahankan notesDP
+            delete apiData.notesInvoice;
+            // notesDP: ubah jadi null jika kosong SAAT CREATE MODE
+            if (!apiData.notesDP || apiData.notesDP.length === 0) {
+                apiData.notesDP = null;
+            }
+        } else {
+            // Status lainnya - hapus keduanya jika kosong
+            if (!apiData.notesInvoice || apiData.notesInvoice.length === 0) {
+                delete apiData.notesInvoice;
+            }
+            if (!apiData.notesDP || apiData.notesDP.length === 0) {
+                delete apiData.notesDP;
+            }
+        }
+
         try {
             const response = await fetch('/api/p/salesProgress', {
                 method: 'POST',
@@ -994,11 +1012,7 @@ _Dikirim dari Sales Progress Report_`;
             invoiceCreatedAt: record.invoiceCreatedAt || '',
             dpNumber: record.dpNumber || '',
             dpCreatedAt: record.dpCreatedAt || '',
-            notesDP: record.notesDP || [
-                "Pembayaran DP sebagai tanda jadi pemesanan.",
-                "Pelunasan dilakukan sebelum barang dikirim.",
-                "Estimasi pengiriman setelah pembayaran lunas diterima."
-            ],
+            notesDP: record.notesDP || [],
             totalUnit: record.totalUnit || '',
             totalDeal: record.totalDeal || '',
             dpp: record.dpp || '',
@@ -1012,11 +1026,7 @@ _Dikirim dari Sales Progress Report_`;
             // Company & Bank fields
             salesCompany: record.salesCompany || perusahaan,
             RekeningName: record.RekeningName || '',
-            notesInvoice: record.notesInvoice || [
-                "Garansi servise 1 tahun",
-                "Pembayaran cash before shipping",
-                "Free Jabodetabek"
-            ],
+            notesInvoice: record.notesInvoice || [],
             items: record.items?.length > 0 ? record.items : [{
                 brand: '',
                 namaBarang: '',
@@ -1076,6 +1086,22 @@ a.c 139001000080567`
         {
             nama: "XENDIT - WEB TSUZUMI",
             detail: `Pembelian melalui website tsuzumijapan.com`
+        },
+        {
+            nama: "MARKETPLACE - TOKOPEDIA",
+            detail: `Pembelian melalui website tokopedia.com`
+        },
+        {
+            nama: "MARKETPLACE - SHOPEE",
+            detail: `Pembelian melalui website shopee.com`
+        },
+        {
+            nama: "MARKETPLACE - BLIBLI",
+            detail: `Pembelian melalui website blibli.com`
+        },
+        {
+            nama: "MARKETPLACE - INAPROC",
+            detail: `Pembelian melalui website inaproc.com`
         },
     ];
 
@@ -1185,16 +1211,8 @@ _Pengiriman dari Sales Progress Report_`;
         // Notes for invoice - use from item data based on paymentStatus
         // If paymentStatus is DP, use notesDP; otherwise use notesInvoice
         const notes = item.paymentStatus === 'DP'
-            ? (item.notesDP || [
-                "Pembayaran DP sebagai tanda jadi pemesanan.",
-                "Pelunasan dilakukan sebelum barang dikirim.",
-                "Estimasi pengiriman setelah pembayaran lunas diterima."
-            ])
-            : (item.notesInvoice || [
-                "Garansi servise 1 tahun",
-                "Pembayaran cash before shipping",
-                "Free Jabodetabek"
-            ]);
+            ? (item.notesDP || [])
+            : (item.notesInvoice || []);
 
         // Sales info
         const nameSales = item.salesName || userName;
@@ -1415,11 +1433,7 @@ _Pengiriman dari Sales Progress Report_`;
             // Company & Bank fields
             salesCompany: perusahaan,
             RekeningName: '',
-            notesInvoice: [
-                "Garansi servise 1 tahun",
-                "Pembayaran cash before shipping",
-                "Free Jabodetabek"
-            ],
+            notesInvoice: '',
             items: [{
                 brand: '',
                 namaBarang: '',
@@ -2032,16 +2046,10 @@ _Pengiriman dari Sales Progress Report_`;
                                                     className={styles.input}
                                                 >
                                                     <option value="">Pilih Status</option>
-                                                    {['MARKETPLACE SHOPEE', 'MARKETPLACE TOKPED', 'MARKETPLACE BLIBLI'].includes(formData.sumber) ? (
-                                                        <option value="Invoice">Invoice</option>
-                                                    ) : (
-                                                        <>
-                                                            <option value="Prospect">Prospect</option>
-                                                            <option value="Follow Up">Follow Up</option>
-                                                            <option value="Penawaran">Penawaran</option>
-                                                            <option value="Cancel">Cancel</option>
-                                                        </>
-                                                    )}
+                                                    <option value="Prospect">Prospect</option>
+                                                    <option value="Follow Up">Follow Up</option>
+                                                    <option value="Penawaran">Penawaran</option>
+                                                    <option value="Cancel">Cancel</option>
                                                 </select>
                                             </div>
                                             <div className={styles.formGroup}>
@@ -2051,28 +2059,18 @@ _Pengiriman dari Sales Progress Report_`;
                                                     value={formData.sumber}
                                                     onChange={(e) => {
                                                         const newSumber = e.target.value;
-                                                        // Auto-set status to Invoice for marketplace sources
-                                                        if (['MARKETPLACE SHOPEE', 'MARKETPLACE TOKPED', 'MARKETPLACE BLIBLI'].includes(newSumber)) {
-                                                            setFormData(prev => ({
-                                                                ...prev,
-                                                                sumber: newSumber,
-                                                                status: 'Invoice'
-                                                            }));
-                                                        } else {
-                                                            handleInputChange(e);
-                                                        }
+                                                        handleInputChange(e);
                                                     }}
                                                     className={styles.input}
                                                 >
                                                     <option value="">Pilih Sumber</option>
-                                                    <option value="USAHA SENDIRI">USAHA SENDIRI</option>
-                                                    <option value="WALK IN">WALK IN</option>
+                                                    <option value="USAHA SENDIRI ( WA )">USAHA SENDIRI ( WA )</option>
+                                                    <option value="WALK IN / OFFLINE">WALK IN/OFFLINE</option>
                                                     <option value="WA TOMMY ADMADIREDJA">WA TOMMY ADMADIREDJA</option>
                                                     <option value="WA FENTI MARLINA">WA FENTI MARLINA</option>
                                                     <option value="WEB PELANGI">WEB PELANGI</option>
                                                     <option value="WEB TSUZUMI/TALK TO">WEB TSUZUMI/TALK TO</option>
                                                     <option value="GRUP SALES PT">GRUP SALES PT</option>
-                                                    <option value="INAPROC">INAPROC</option>
                                                     <option value="MARKETPLACE SHOPEE">MARKETPLACE SHOPEE</option>
                                                     <option value="MARKETPLACE TOKPED">MARKETPLACE TOKPED</option>
                                                     <option value="MARKETPLACE BLIBLI">MARKETPLACE BLIBLI</option>
@@ -2283,193 +2281,7 @@ _Pengiriman dari Sales Progress Report_`;
                                             {/* DPP & PPN hidden - auto-calculated on save: DPP = totalDeal/1.11, PPN = DPP*11% */}
                                         </div>
 
-                                        {/* Payment Section */}
-                                        {(formData.status === 'Invoice' || formData.status === 'Deal') && (
-                                            <div className={styles.formSection}>
-
-                                                <h3>Pembayaran</h3>
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Status Pembayaran</label>
-                                                        <select
-                                                            name="paymentStatus"
-                                                            value={formData.paymentStatus || ''}
-                                                            onChange={handleInputChange}
-                                                            className={styles.input}
-                                                        >
-                                                            <option value="">Pilih Status</option>
-                                                            <option value="BELUM_BAYAR">Belum Bayar</option>
-                                                            <option value="DP">DP (Uang Muka)</option>
-                                                            {/* <option value="CICIL">Cicilan</option> */}
-                                                            <option value="LUNAS">Lunas</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div className={styles.formRow}>
-
-                                                    <div className={styles.formGroup}>
-                                                        <label>Nomor Invoice</label>
-                                                        <input
-                                                            type="text"
-                                                            name="nomorInvoice"
-                                                            value={formData.nomorInvoice}
-                                                            onChange={handleInputChange}
-                                                            className={styles.input}
-                                                            placeholder="INV/001/2024"
-                                                        />
-                                                    </div>
-
-
-                                                    <div className={styles.formGroup}>
-                                                        <label>Rekening</label>
-                                                        <select
-                                                            name="RekeningName"
-                                                            value={formData.RekeningName || ''}
-                                                            onChange={handleInputChange}
-                                                            className={styles.input}
-                                                        >
-                                                            <option value="">Pilih Rekening</option>
-                                                            {bankList.map((bank, idx) => (
-                                                                <option key={idx} value={bank.nama}>{bank.nama}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-                                                <div className={styles.formRow}>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Total Pembayaran</label>
-                                                        <input
-                                                            type="text"
-                                                            name="totalPayment"
-                                                            value={formData.totalPayment ? formatRupiah(formData.totalPayment) : 'Rp 0'}
-                                                            onChange={(e) => {
-                                                                const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                                const totalPayment = parseFloat(rawValue) || 0;
-                                                                const totalDeal = parseFloat(formData.totalDeal) || 0;
-                                                                // Jika total pembayaran sama dengan total deal, sisa = 0
-                                                                const sisaPayment = totalPayment >= totalDeal ? 0 : totalDeal - totalPayment;
-                                                                handleInputChange({ target: { name: 'totalPayment', value: rawValue, type: 'text' } });
-                                                                handleInputChange({ target: { name: 'sisaPayment', value: sisaPayment.toString(), type: 'text' } });
-                                                            }}
-                                                            placeholder="Rp 0"
-                                                            className={styles.input}
-                                                        />
-                                                    </div>
-                                                    <div className={styles.formGroup}>
-                                                        <label>Sisa Pembayaran (Auto)</label>
-                                                        <input
-                                                            type="text"
-                                                            name="sisaPayment"
-                                                            value={formatRupiah(Math.max(0, (parseFloat(formData.totalDeal) || 0) - (parseFloat(formData.totalPayment) || 0)))}
-                                                            readOnly
-                                                            className={styles.input}
-                                                            style={{ backgroundColor: '#f5f5f5', cursor: 'not-allowed' }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Notes Invoice - Only show when status is Invoice */}
-                                        {formData.status === 'Invoice' && (
-                                            <div className={styles.formSection}>
-                                                <h3>Catatan Invoice</h3>
-                                                <div style={{ marginBottom: '15px' }}>
-                                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                                                        <input
-                                                            type="text"
-                                                            id="newNote"
-                                                            placeholder="Tambah catatan baru..."
-                                                            className={styles.input}
-                                                            onKeyPress={(e) => {
-                                                                if (e.key === 'Enter') {
-                                                                    const newNote = e.target.value.trim();
-                                                                    if (newNote) {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            notesInvoice: [...(prev.notesInvoice || []), newNote]
-                                                                        }));
-                                                                        e.target.value = '';
-                                                                    }
-                                                                }
-                                                            }}
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const input = document.getElementById('newNote');
-                                                                const newNote = input.value.trim();
-                                                                if (newNote) {
-                                                                    setFormData(prev => ({
-                                                                        ...prev,
-                                                                        notesInvoice: [...(prev.notesInvoice || []), newNote]
-                                                                    }));
-                                                                    input.value = '';
-                                                                }
-                                                            }}
-                                                            style={{
-                                                                padding: '8px 16px',
-                                                                backgroundColor: '#3B82F6',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '6px',
-                                                                cursor: 'pointer',
-                                                                fontWeight: '500'
-                                                            }}
-                                                        >
-                                                            + Tambah
-                                                        </button>
-                                                    </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                        {(formData.notesInvoice || []).map((note, idx) => (
-                                                            <div
-                                                                key={idx}
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    alignItems: 'center',
-                                                                    padding: '10px 12px',
-                                                                    backgroundColor: '#F3F4F6',
-                                                                    borderRadius: '6px',
-                                                                    border: '1px solid #E5E7EB',
-                                                                    fontSize: '14px'
-                                                                }}
-                                                            >
-                                                                <span>{note}</span>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
-                                                                        }));
-                                                                    }}
-                                                                    style={{
-                                                                        padding: '4px 8px',
-                                                                        backgroundColor: '#EF4444',
-                                                                        color: 'white',
-                                                                        border: 'none',
-                                                                        borderRadius: '4px',
-                                                                        cursor: 'pointer',
-                                                                        fontSize: '12px'
-                                                                    }}
-                                                                >
-                                                                    Hapus
-                                                                </button>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-
-
-
                                     </div>
-
-
 
                                     {/* Catatan fields hidden - remarks & remarksPajak auto-saved */}
                                 </div>
@@ -2853,7 +2665,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                                 <input
                                                                     type="date"
                                                                     name="invoiceCreatedAt"
-                                                                    value={formData.invoiceCreatedAt}
+                                                                    value={formData.invoiceCreatedAt.split('T')[0]}
                                                                     onChange={handleInputChange}
                                                                     className={styles.input}
                                                                 />
@@ -2865,7 +2677,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                                 <input
                                                                     type="date"
                                                                     name="dpCreatedAt"
-                                                                    value={formData.dpCreatedAt}
+                                                                    value={formData.dpCreatedAt.split('T')[0]} // Format date to YYYY-MM-DD for input
                                                                     onChange={handleInputChange}
                                                                     className={styles.input}
                                                                 />
@@ -2956,7 +2768,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                                         if (newNote) {
                                                                             setFormData(prev => ({
                                                                                 ...prev,
-                                                                                notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                                notesInvoice: [...(prev.notesInvoice), newNote]
                                                                             }));
                                                                             e.target.value = '';
                                                                         }
@@ -2971,7 +2783,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                                     if (newNote) {
                                                                         setFormData(prev => ({
                                                                             ...prev,
-                                                                            notesInvoice: [...(prev.notesInvoice || []), newNote]
+                                                                            notesInvoice: [...(prev.notesInvoice), newNote]
                                                                         }));
                                                                         input.value = '';
                                                                     }
@@ -3011,7 +2823,7 @@ _Pengiriman dari Sales Progress Report_`;
                                                                         onClick={() => {
                                                                             setFormData(prev => ({
                                                                                 ...prev,
-                                                                                notesInvoice: (prev.notesInvoice || []).filter((_, i) => i !== idx)
+                                                                                notesInvoice: (prev.notesInvoice).filter((_, i) => i !== idx)
                                                                             }));
                                                                         }}
                                                                         style={{
@@ -3693,6 +3505,20 @@ _Pengiriman dari Sales Progress Report_`;
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Notes Dp - Show in Detail Data if exists */}
+                                {detailData.notesDP && detailData.notesDP.length > 0 && (
+                                    <div className={styles.section}>
+                                        <h4>Catatan Dp</h4>
+                                        <div className={styles.sectionContent}>
+                                            <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                                                {detailData.notesDP.map((note, idx) => (
+                                                    <li key={idx} style={{ marginBottom: '5px', fontSize: '14px' }}>{note}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                )}
 
                                 {/* Notes Invoice - Show in Detail Data if exists */}
                                 {detailData.notesInvoice && detailData.notesInvoice.length > 0 && (
