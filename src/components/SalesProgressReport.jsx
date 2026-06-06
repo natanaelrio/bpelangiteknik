@@ -2728,11 +2728,19 @@ _Pengiriman dari Sales Progress Report_`;
                                                             value={formData.totalPayment ? formatRupiah(formData.totalPayment) : 'Rp 0'}
                                                             onChange={(e) => {
                                                                 const rawValue = e.target.value.replace(/[^0-9]/g, '');
-                                                                const totalPayment = parseFloat(rawValue) || 0;
+                                                                let totalPayment = parseFloat(rawValue) || 0;
                                                                 const totalDeal = parseFloat(formData.totalDeal) || 0;
+                                                                const maxPayment = totalDeal; // Maksimal adalah total deal
+                                                                
+                                                                // Jika total pembayaran melebihi total deal, kasih alert dan batasi
+                                                                if (totalPayment > maxPayment) {
+                                                                    toast.error('Total pembayaran tidak boleh melebihi total deal!');
+                                                                    totalPayment = maxPayment;
+                                                                }
+                                                                
                                                                 // Jika total pembayaran sama dengan total deal, sisa = 0
                                                                 const sisaPayment = totalPayment >= totalDeal ? 0 : totalDeal - totalPayment;
-                                                                handleInputChange({ target: { name: 'totalPayment', value: rawValue, type: 'text' } });
+                                                                handleInputChange({ target: { name: 'totalPayment', value: totalPayment.toString(), type: 'text' } });
                                                                 handleInputChange({ target: { name: 'sisaPayment', value: sisaPayment.toString(), type: 'text' } });
                                                             }}
                                                             placeholder="Rp 0"
