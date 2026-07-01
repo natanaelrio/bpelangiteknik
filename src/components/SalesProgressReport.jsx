@@ -184,6 +184,8 @@ export default function SalesProgressReport({ session }) {
         }]
     });
 
+    console.log(formData);
+
     const API_KEY = process.env.NEXT_PUBLIC_SECREET;
 
     // Build query params for API
@@ -507,7 +509,11 @@ export default function SalesProgressReport({ session }) {
             const totalUnit = newItems.reduce((sum, item) => sum + (parseFloat(item.subtotalUnit) || 0), 0);
             const totalDeal = newItems.reduce((sum, item) => sum + (parseFloat(item.subtotalDeal) || 0), 0);
 
-            return { ...prev, items: newItems, totalUnit, totalDeal };
+            // Auto-calculate DPP and PPN
+            // const dpp = totalDeal > 0 ? Math.round(totalDeal / 1.11) : 0;
+            // const ppn = Math.round(dpp * 0.11);
+
+            return { ...prev, items: newItems, totalUnit, totalDeal, dpp, ppn };
         });
     };
 
@@ -1867,6 +1873,8 @@ _Pengiriman dari Sales Progress Report_`;
                                                 <div className={styles.compactRow}>
                                                     <span className={styles.compactLabel}>No SPBB:</span>
                                                     <span>{item.spbb || '-'}</span>
+                                                    <span className={styles.compactLabel}>Terbit SPBB::</span>
+                                                    <span>{moment(item.spbbCreatedAt).format('DD MMM YY') || '-'}</span>
                                                 </div>
                                             )}
 
@@ -1874,6 +1882,8 @@ _Pengiriman dari Sales Progress Report_`;
                                                 <div className={styles.compactRow}>
                                                     <span className={styles.compactLabel}>No INV:</span>
                                                     <span>{item.nomorInvoice || '-'}</span>
+                                                    <span className={styles.compactLabel}>Terbit INV:</span>
+                                                    <span>{moment(item.invoiceCreatedAt).format('DD MMM YY') || '-'}</span>
                                                 </div>
                                             )}
 
@@ -2731,13 +2741,13 @@ _Pengiriman dari Sales Progress Report_`;
                                                                 let totalPayment = parseFloat(rawValue) || 0;
                                                                 const totalDeal = parseFloat(formData.totalDeal) || 0;
                                                                 const maxPayment = totalDeal; // Maksimal adalah total deal
-                                                                
+
                                                                 // Jika total pembayaran melebihi total deal, kasih alert dan batasi
                                                                 if (totalPayment > maxPayment) {
                                                                     toast.error('Total pembayaran tidak boleh melebihi total deal!');
                                                                     totalPayment = maxPayment;
                                                                 }
-                                                                
+
                                                                 // Jika total pembayaran sama dengan total deal, sisa = 0
                                                                 const sisaPayment = totalPayment >= totalDeal ? 0 : totalDeal - totalPayment;
                                                                 handleInputChange({ target: { name: 'totalPayment', value: totalPayment.toString(), type: 'text' } });
