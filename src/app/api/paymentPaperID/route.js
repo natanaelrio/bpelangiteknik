@@ -22,8 +22,6 @@ export async function AmbilDataUsers(nota_user, payment_info) {
         }
     });
 
-    console.log(data);
-
     //AMBIL BARANG YG SUDAH TERBAYAR
     const IDCart = await prisma.cart.findMany({
         where: {
@@ -207,7 +205,7 @@ export async function POST(req, res) {
     const uuid = additional_info?.invoices?.[0]?.uuid || null;
 
     if (true) {
-        const data = await AmbilDataUsers('656f1324-9cec-4c83-ac54-832e051f09a2', payment_info)
+        const data = await AmbilDataUsers(uuid, payment_info)
         return new Response(JSON.stringify({ data }), {
             status: 200,
             headers: { "Content-Type": "application/json" },
