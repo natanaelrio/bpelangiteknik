@@ -156,7 +156,7 @@ export async function AmbilDataUsers(nota_user, payment_info) {
 *Sales Payment Confirmed* telah melakukan pembayaran
 
 Nota: ${`https://${data?.nota_url || '-'}`}
-No. Invoice: ${nota_user}
+No. Invoice: ${data.merchantOrderId || '-'}
 Customer: ${data?.nama_lengkap_user || '-'}
 Nomor Customer: ${data?.no_hp_user || '-'}
 Alamat: ${data?.alamat_lengkap_user || '-'}
