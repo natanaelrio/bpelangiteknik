@@ -379,6 +379,8 @@ model sales {
   numberWA       String   @unique
   clickCountForm Int      @default(0)
   clickCountWA   Int      @default(0)
+  percentWA      Int      @default(100)
+  percentForm    Int      @default(100)
 }
 
 model salesPenawaran {

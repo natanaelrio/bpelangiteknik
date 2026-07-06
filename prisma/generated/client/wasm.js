@@ -444,7 +444,9 @@ exports.Prisma.SalesScalarFieldEnum = {
   numberForm: 'numberForm',
   numberWA: 'numberWA',
   clickCountForm: 'clickCountForm',
-  clickCountWA: 'clickCountWA'
+  clickCountWA: 'clickCountWA',
+  percentWA: 'percentWA',
+  percentForm: 'percentForm'
 };
 
 exports.Prisma.SalesPenawaranScalarFieldEnum = {

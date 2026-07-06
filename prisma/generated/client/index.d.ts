@@ -24308,11 +24308,15 @@ export namespace Prisma {
   export type SalesAvgAggregateOutputType = {
     clickCountForm: number | null
     clickCountWA: number | null
+    percentWA: number | null
+    percentForm: number | null
   }
 
   export type SalesSumAggregateOutputType = {
     clickCountForm: number | null
     clickCountWA: number | null
+    percentWA: number | null
+    percentForm: number | null
   }
 
   export type SalesMinAggregateOutputType = {
@@ -24324,6 +24328,8 @@ export namespace Prisma {
     numberWA: string | null
     clickCountForm: number | null
     clickCountWA: number | null
+    percentWA: number | null
+    percentForm: number | null
   }
 
   export type SalesMaxAggregateOutputType = {
@@ -24335,6 +24341,8 @@ export namespace Prisma {
     numberWA: string | null
     clickCountForm: number | null
     clickCountWA: number | null
+    percentWA: number | null
+    percentForm: number | null
   }
 
   export type SalesCountAggregateOutputType = {
@@ -24346,6 +24354,8 @@ export namespace Prisma {
     numberWA: number
     clickCountForm: number
     clickCountWA: number
+    percentWA: number
+    percentForm: number
     _all: number
   }
 
@@ -24353,11 +24363,15 @@ export namespace Prisma {
   export type SalesAvgAggregateInputType = {
     clickCountForm?: true
     clickCountWA?: true
+    percentWA?: true
+    percentForm?: true
   }
 
   export type SalesSumAggregateInputType = {
     clickCountForm?: true
     clickCountWA?: true
+    percentWA?: true
+    percentForm?: true
   }
 
   export type SalesMinAggregateInputType = {
@@ -24369,6 +24383,8 @@ export namespace Prisma {
     numberWA?: true
     clickCountForm?: true
     clickCountWA?: true
+    percentWA?: true
+    percentForm?: true
   }
 
   export type SalesMaxAggregateInputType = {
@@ -24380,6 +24396,8 @@ export namespace Prisma {
     numberWA?: true
     clickCountForm?: true
     clickCountWA?: true
+    percentWA?: true
+    percentForm?: true
   }
 
   export type SalesCountAggregateInputType = {
@@ -24391,6 +24409,8 @@ export namespace Prisma {
     numberWA?: true
     clickCountForm?: true
     clickCountWA?: true
+    percentWA?: true
+    percentForm?: true
     _all?: true
   }
 
@@ -24489,6 +24509,8 @@ export namespace Prisma {
     numberWA: string
     clickCountForm: number
     clickCountWA: number
+    percentWA: number
+    percentForm: number
     _count: SalesCountAggregateOutputType | null
     _avg: SalesAvgAggregateOutputType | null
     _sum: SalesSumAggregateOutputType | null
@@ -24519,6 +24541,8 @@ export namespace Prisma {
     numberWA?: boolean
     clickCountForm?: boolean
     clickCountWA?: boolean
+    percentWA?: boolean
+    percentForm?: boolean
   }, ExtArgs["result"]["sales"]>
 
   export type salesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -24530,6 +24554,8 @@ export namespace Prisma {
     numberWA?: boolean
     clickCountForm?: boolean
     clickCountWA?: boolean
+    percentWA?: boolean
+    percentForm?: boolean
   }, ExtArgs["result"]["sales"]>
 
   export type salesSelectScalar = {
@@ -24541,6 +24567,8 @@ export namespace Prisma {
     numberWA?: boolean
     clickCountForm?: boolean
     clickCountWA?: boolean
+    percentWA?: boolean
+    percentForm?: boolean
   }
 
 
@@ -24556,6 +24584,8 @@ export namespace Prisma {
       numberWA: string
       clickCountForm: number
       clickCountWA: number
+      percentWA: number
+      percentForm: number
     }, ExtArgs["result"]["sales"]>
     composites: {}
   }
@@ -24957,6 +24987,8 @@ export namespace Prisma {
     readonly numberWA: FieldRef<"sales", 'String'>
     readonly clickCountForm: FieldRef<"sales", 'Int'>
     readonly clickCountWA: FieldRef<"sales", 'Int'>
+    readonly percentWA: FieldRef<"sales", 'Int'>
+    readonly percentForm: FieldRef<"sales", 'Int'>
   }
     
 
@@ -31260,7 +31292,9 @@ export namespace Prisma {
     numberForm: 'numberForm',
     numberWA: 'numberWA',
     clickCountForm: 'clickCountForm',
-    clickCountWA: 'clickCountWA'
+    clickCountWA: 'clickCountWA',
+    percentWA: 'percentWA',
+    percentForm: 'percentForm'
   };
 
   export type SalesScalarFieldEnum = (typeof SalesScalarFieldEnum)[keyof typeof SalesScalarFieldEnum]
@@ -33489,6 +33523,8 @@ export namespace Prisma {
     numberWA?: StringFilter<"sales"> | string
     clickCountForm?: IntFilter<"sales"> | number
     clickCountWA?: IntFilter<"sales"> | number
+    percentWA?: IntFilter<"sales"> | number
+    percentForm?: IntFilter<"sales"> | number
   }
 
   export type salesOrderByWithRelationInput = {
@@ -33500,6 +33536,8 @@ export namespace Prisma {
     numberWA?: SortOrder
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
   }
 
   export type salesWhereUniqueInput = Prisma.AtLeast<{
@@ -33514,6 +33552,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"sales"> | Date | string
     clickCountForm?: IntFilter<"sales"> | number
     clickCountWA?: IntFilter<"sales"> | number
+    percentWA?: IntFilter<"sales"> | number
+    percentForm?: IntFilter<"sales"> | number
   }, "id" | "numberForm" | "numberWA">
 
   export type salesOrderByWithAggregationInput = {
@@ -33525,6 +33565,8 @@ export namespace Prisma {
     numberWA?: SortOrder
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
     _count?: salesCountOrderByAggregateInput
     _avg?: salesAvgOrderByAggregateInput
     _max?: salesMaxOrderByAggregateInput
@@ -33544,6 +33586,8 @@ export namespace Prisma {
     numberWA?: StringWithAggregatesFilter<"sales"> | string
     clickCountForm?: IntWithAggregatesFilter<"sales"> | number
     clickCountWA?: IntWithAggregatesFilter<"sales"> | number
+    percentWA?: IntWithAggregatesFilter<"sales"> | number
+    percentForm?: IntWithAggregatesFilter<"sales"> | number
   }
 
   export type salesPenawaranWhereInput = {
@@ -36376,6 +36420,8 @@ export namespace Prisma {
     numberWA: string
     clickCountForm?: number
     clickCountWA?: number
+    percentWA?: number
+    percentForm?: number
   }
 
   export type salesUncheckedCreateInput = {
@@ -36387,6 +36433,8 @@ export namespace Prisma {
     numberWA: string
     clickCountForm?: number
     clickCountWA?: number
+    percentWA?: number
+    percentForm?: number
   }
 
   export type salesUpdateInput = {
@@ -36398,6 +36446,8 @@ export namespace Prisma {
     numberWA?: StringFieldUpdateOperationsInput | string
     clickCountForm?: IntFieldUpdateOperationsInput | number
     clickCountWA?: IntFieldUpdateOperationsInput | number
+    percentWA?: IntFieldUpdateOperationsInput | number
+    percentForm?: IntFieldUpdateOperationsInput | number
   }
 
   export type salesUncheckedUpdateInput = {
@@ -36409,6 +36459,8 @@ export namespace Prisma {
     numberWA?: StringFieldUpdateOperationsInput | string
     clickCountForm?: IntFieldUpdateOperationsInput | number
     clickCountWA?: IntFieldUpdateOperationsInput | number
+    percentWA?: IntFieldUpdateOperationsInput | number
+    percentForm?: IntFieldUpdateOperationsInput | number
   }
 
   export type salesCreateManyInput = {
@@ -36420,6 +36472,8 @@ export namespace Prisma {
     numberWA: string
     clickCountForm?: number
     clickCountWA?: number
+    percentWA?: number
+    percentForm?: number
   }
 
   export type salesUpdateManyMutationInput = {
@@ -36431,6 +36485,8 @@ export namespace Prisma {
     numberWA?: StringFieldUpdateOperationsInput | string
     clickCountForm?: IntFieldUpdateOperationsInput | number
     clickCountWA?: IntFieldUpdateOperationsInput | number
+    percentWA?: IntFieldUpdateOperationsInput | number
+    percentForm?: IntFieldUpdateOperationsInput | number
   }
 
   export type salesUncheckedUpdateManyInput = {
@@ -36442,6 +36498,8 @@ export namespace Prisma {
     numberWA?: StringFieldUpdateOperationsInput | string
     clickCountForm?: IntFieldUpdateOperationsInput | number
     clickCountWA?: IntFieldUpdateOperationsInput | number
+    percentWA?: IntFieldUpdateOperationsInput | number
+    percentForm?: IntFieldUpdateOperationsInput | number
   }
 
   export type salesPenawaranCreateInput = {
@@ -38779,11 +38837,15 @@ export namespace Prisma {
     numberWA?: SortOrder
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
   }
 
   export type salesAvgOrderByAggregateInput = {
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
   }
 
   export type salesMaxOrderByAggregateInput = {
@@ -38795,6 +38857,8 @@ export namespace Prisma {
     numberWA?: SortOrder
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
   }
 
   export type salesMinOrderByAggregateInput = {
@@ -38806,11 +38870,15 @@ export namespace Prisma {
     numberWA?: SortOrder
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
   }
 
   export type salesSumOrderByAggregateInput = {
     clickCountForm?: SortOrder
     clickCountWA?: SortOrder
+    percentWA?: SortOrder
+    percentForm?: SortOrder
   }
 
   export type BigIntFilter<$PrismaModel = never> = {
