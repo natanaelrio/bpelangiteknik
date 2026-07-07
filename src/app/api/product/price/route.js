@@ -72,9 +72,17 @@ export async function PUT(req) {
         const product = await prisma.listProduct.update({
             where: { slugProduct },
             data: updateData,
-            include: {
+            select: {
+                id: true,
+                slugProduct: true,
+                productName: true,
+                productPrice: true,
+                productPriceFinal: true,
+                productType: true,
                 imageProductUtama: {
-                    select: { secure_url: true }
+                    select: {
+                        secure_url: true
+                    }
                 }
             }
         });
