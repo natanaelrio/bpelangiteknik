@@ -53,6 +53,9 @@ export async function PUT(req) {
                 { status: 400 }
             );
         }
+        BigInt.prototype.toJSON = function () {
+            return this.toString();
+        };
 
         const updateData = {};
         if (productPrice !== undefined) {
