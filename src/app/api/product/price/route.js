@@ -117,11 +117,11 @@ export async function PUT(req) {
             redis: {
                 status: redisResponse.status,
                 success: redisResponse.ok,
-                response: redisResult
+                // response: redisResult
             },
             elasticsearch: {
                 success: true,
-                response: elasticResult ?? "Synced"
+                // response: elasticResult ?? "Synced"
             }
         });
     } catch (error) {
