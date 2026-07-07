@@ -88,7 +88,7 @@ export async function PUT(req) {
         });
 
         // Invalidate Redis cache
-        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
+        const redisResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/redis`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -99,12 +99,28 @@ export async function PUT(req) {
             }),
         });
 
-        // 2️⃣ Sync ke Elasticsearch (UPSERT)
-        await UpsertProductToES(product)
+        const redisResult = await redisResponse.json();
+
+        // Sync ke Elasticsearch (UPSERT)
+        const elasticResult = await UpsertProductToES(product);
 
 
 
-        return Response.json(product);
+
+        return Response.json({
+            success: true,
+            message: "Product updated successfully",
+            data: product,
+            redis: {
+                status: redisResponse.status,
+                success: redisResponse.ok,
+                response: redisResult
+            },
+            elasticsearch: {
+                success: true,
+                response: elasticResult ?? "Synced"
+            }
+        });
     } catch (error) {
         return Response.json(
             { error: error.message },
