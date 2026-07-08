@@ -348,11 +348,11 @@ export default function FormInput({ data, text, kondisi, session }) {
     }
 
     //SPEKSIFIKASI
-    const [specifications, setSpecifications] = useState(data ? data?.spekNew == null ? [{ id: 1, input: "", isi: "" }] : data?.spekNew : [{ id: 1, input: "", isi: "" }]);
+    const [specifications, setSpecifications] = useState(data ? data?.spekNew == null ? [{ id: Date.now(), input: "", isi: "" }] : data?.spekNew : [{ id: Date.now(), input: "", isi: "" }]);
 
 
     const handleAddSpecification = () => {
-        setSpecifications([...specifications, { id: specifications.length + 1, input: "", isi: "" }]);
+        setSpecifications([...specifications, { id: Date.now(), input: "", isi: "" }]);
     };
 
     const handleRemoveSpecification = (id) => {
