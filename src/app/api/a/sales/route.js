@@ -7,8 +7,12 @@ export async function GET(req) {
 
     if (!["wa", "form"].includes(type)) {
         return new Response(
-            JSON.stringify({ error: "Invalid type" }),
-            { status: 400 }
+            JSON.stringify({
+                error: "Invalid type",
+            }),
+            {
+                status: 400,
+            }
         );
     }
 
@@ -17,36 +21,41 @@ export async function GET(req) {
 
     if (salesList.length === 0) {
         return new Response(
-            JSON.stringify({ error: "Sales not found" }),
-            { status: 404 }
+            JSON.stringify({
+                error: "Sales not found",
+            }),
+            {
+                status: 404,
+            }
         );
     }
 
-    // Cari sales yang paling jauh dari target persentasenya
-    const selected = salesList
-        .map((sales) => {
-            const click =
-                type === "wa"
-                    ? sales.clickCountWA
-                    : sales.clickCountForm;
+    let selected;
 
-            const percent =
-                type === "wa"
-                    ? sales.percentWA
-                    : sales.percentForm;
-
-            return {
+    if (type === "wa") {
+        // Distribusi berdasarkan persentase WA
+        selected = salesList
+            .map((sales) => ({
                 ...sales,
-                score: click / percent,
-            };
-        })
-        .sort((a, b) => {
-            if (a.score === b.score) {
+                score: sales.clickCountWA / sales.percentWA,
+            }))
+            .sort((a, b) => {
+                if (a.score === b.score) {
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                }
+
+                return a.score - b.score;
+            })[0];
+    } else {
+        // Distribusi FORM berdasarkan click terkecil (Round Robin)
+        selected = salesList.sort((a, b) => {
+            if (a.clickCountForm === b.clickCountForm) {
                 return new Date(a.createdAt) - new Date(b.createdAt);
             }
 
-            return a.score - b.score;
+            return a.clickCountForm - b.clickCountForm;
         })[0];
+    }
 
     // Update click
     const updated = await prisma.sales.update({
