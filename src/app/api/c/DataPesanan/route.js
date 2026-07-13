@@ -43,8 +43,6 @@ export async function GET(req) {
         }
     });
 
-    console.log(data);
-
     const totalDataPesanan = data.reduce((acc, cart) => acc + (cart.dataPesananItems?.length || 0), 0);
 
     const result = {

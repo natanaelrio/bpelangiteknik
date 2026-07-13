@@ -72,6 +72,17 @@ export default function ListPesanan({ session, data, month, year, payment }) {
         setOpenResi(true)
         setIDitemResi(id)
     }
+
+    const handleCopyLinkPayment = async (linkPayment) => {
+        try {
+            await navigator.clipboard.writeText(linkPayment);
+            toast.success('Link pembayaran berhasil disalin!');
+        } catch (err) {
+            console.error('Gagal menyalin link:', err);
+            toast.error('Gagal menyalin link');
+        }
+    }
+
     const handleStatusChange = async (newStatus, pesanan) => {
         try {
             const items = pesanan?.dataPesananItems || []
@@ -387,6 +398,7 @@ export default function ListPesanan({ session, data, month, year, payment }) {
         router.refresh();
     };
 
+
     return (
         <>
             <div className={styles.container}>
@@ -426,7 +438,7 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                     <tbody>
                                         <Fragment >
                                             {data?.data?.map((pesanan, j) => {
-                                                console.log(pesanan.nota_url)
+                                                console.log(pesanan)
 
                                                 const items = pesanan?.dataPesananItems || []
                                                 const productItems = items.filter(item => item.note !== 'ongkir')
@@ -458,97 +470,111 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                         <tr className={styles.summaryRow}>
                                                             <td>
                                                                 <div className={styles.transactionSummary}>
-                                                                <div className={styles.transactionInfoBlock}>
-                                                                    <div className={styles.transactionInfoHeader}>
-                                                                        <div>
-                                                                            <div className={styles.orderPreviewText}>
-                                                                                {previewText || 'Pesanan belum memiliki produk.'}
-                                                                            </div>
-                                                                            <div className={styles.orderPreviewMeta}>
-                                                                                <span>{totalProductCount} item</span>
-                                                                                <span>{orderTotalValue}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className={styles.transactionInfoActions}>
-                                                                            {pesanan?.payment && (
-                                                                                <span className={`${styles.paymentBadge} ${styles.paymentBadgeInfo}`}>
-                                                                                    {JSON.parse(pesanan?.payment_info)?.channel?.toUpperCase()} - {JSON.parse(pesanan?.payment_info)?.method?.toUpperCase()}
-                                                                                </span>
-                                                                            )}
-                                                                            <span className={`${styles.paymentBadge} ${pesanan?.payment ? styles.paymentBadgePaid : styles.paymentBadgeUnpaid}`}>
-                                                                                {paymentStatusText}
-                                                                            </span>
-                                                                            {pesanan?.payment && pesanan?.nota_url && (
-                                                                                <Link
-                                                                                    href={`https://` + pesanan.nota_url}
-                                                                                    target="_blank"
-                                                                                    rel="noopener noreferrer"
-                                                                                    className={styles.primaryButton}
-                                                                                >
-                                                                                    Buka Nota
-                                                                                </Link>
-                                                                            )}
-                                                                            <button
-                                                                                type="button"
-                                                                                className={styles.secondaryButton}
-                                                                                onClick={() => toggleOrderDetails(pesanan.id)}
-                                                                            >
-                                                                                {expanded ? 'Sembunyikan detail' : 'Lihat detail'}
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className={styles.infoRow}>
-                                                                        <span className={styles.infoLabel}>ID:</span>
-                                                                        <span className={styles.infoValue}>{pesanan?.merchantOrderId}</span>
-                                                                    </div>
-                                                                    <div className={styles.infoRow}>
-                                                                        <span className={styles.infoLabel}>Tanggal:</span>
-                                                                        <span className={styles.infoValue}>{moment((pesanan?.start).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('DD MMM YYYY')}</span>
-                                                                    </div>
-                                                                    <div className={styles.infoRow}>
-                                                                        <span className={styles.infoLabel}>Status:</span>
-                                                                        <select
-                                                                            className={`${styles.statusSelect} ${selectValue === 'Selesai' ? styles.statusSelectPaid : selectValue === 'Dikirim' ? styles.statusSelectShipped : selectValue === 'Diproses' ? styles.statusSelectPending : ''}`}
-                                                                            value={selectValue}
-                                                                            onChange={(e) => handleStatusChange(e.target.value, pesanan)}
-                                                                        >
-                                                                            <option value="">Belum Diproses</option>
-                                                                            <option value="Diproses">Diproses</option>
-                                                                            <option value="Dikirim">Dikirim</option>
-                                                                            <option value="Selesai">Selesai</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    {selectValue === "Dikirim" && shippingItem && (
-                                                                        <div className={styles.infoRow}>
-                                                                            <span className={styles.infoLabel}>{shippingItem.productName}:</span>
-                                                                            {!openResi && (
-                                                                                <button onClick={() => handleTrackingNumberChange(shippingItem?.id)} className={styles.noteButtonSmall}>
-                                                                                    {shippingItem?.noResi ? shippingItem?.noResi : 'Tambahkan Resi'}
-                                                                                </button>
-                                                                            )}
-                                                                            {openResi && idItemResi === shippingItem?.id && (
-                                                                                <div className={styles.noresi}>
-                                                                                    <input
-                                                                                        type="text"
-                                                                                        placeholder="Masukkan nomor resi"
-                                                                                        value={resi}
-                                                                                        onChange={(e) => setResi(e.target.value)}
-                                                                                        disabled={loading}
-                                                                                    />
-                                                                                    <button disabled={loading} onClick={() => handleSaveTracking(shippingItem?.id)}>
-                                                                                        {idItemResi === shippingItem?.id && loading
-                                                                                            ? 'Loading'
-                                                                                            : shippingItem?.noResi
-                                                                                                ? 'Update'
-                                                                                                : 'Simpan'}
-                                                                                    </button>
-                                                                                    <div className={styles.close} onClick={() => setOpenResi(false)}>x</div>
+                                                                    <div className={styles.transactionInfoBlock}>
+                                                                        <div className={styles.transactionInfoHeader}>
+                                                                            <div>
+                                                                                <div className={styles.orderPreviewText}>
+                                                                                    {previewText || 'Pesanan belum memiliki produk.'}
                                                                                 </div>
-                                                                            )}
+                                                                                <div className={styles.orderPreviewMeta}>
+                                                                                    <span>{totalProductCount} item</span>
+                                                                                    <span>{orderTotalValue}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className={styles.transactionInfoActions}>
+                                                                                {pesanan?.payment && (
+                                                                                    <span className={`${styles.paymentBadge} ${styles.paymentBadgeInfo}`}>
+                                                                                        {JSON.parse(pesanan?.payment_info)?.channel?.toUpperCase()} - {JSON.parse(pesanan?.payment_info)?.method?.toUpperCase()}
+                                                                                    </span>
+                                                                                )}
+                                                                                <span className={`${styles.paymentBadge} ${pesanan?.payment ? styles.paymentBadgePaid : styles.paymentBadgeUnpaid}`}>
+                                                                                    {paymentStatusText}
+                                                                                </span>
+                                                                                {pesanan?.payment && pesanan?.nota_url && (
+                                                                                    <Link
+                                                                                        href={`https://` + pesanan.nota_url}
+                                                                                        target="_blank"
+                                                                                        rel="noopener noreferrer"
+                                                                                        className={styles.primaryButton}
+                                                                                    >
+                                                                                        Buka Nota
+                                                                                    </Link>
+                                                                                )}
+                                                                                {pesanan?.link_payment && (
+                                                                                    <div className={styles.linkPaymentInline}>
+                                                                                        <span className={styles.linkPaymentText} title={pesanan.link_payment}>
+                                                                                            {pesanan.link_payment.length > 30 ? pesanan.link_payment.substring(0, 30) + '...' : pesanan.link_payment}
+                                                                                        </span>
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            className={styles.copyButton}
+                                                                                            onClick={() => handleCopyLinkPayment(pesanan.link_payment)}
+                                                                                        >
+                                                                                            Copy
+                                                                                        </button>
+                                                                                    </div>
+                                                                                )}
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className={styles.secondaryButton}
+                                                                                    onClick={() => toggleOrderDetails(pesanan.id)}
+                                                                                >
+                                                                                    {expanded ? 'Sembunyikan detail' : 'Lihat detail'}
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
-                                                                    )}
+                                                                        <div className={styles.infoRow}>
+                                                                            <span className={styles.infoLabel}>ID:</span>
+                                                                            <span className={styles.infoValue}>{pesanan?.merchantOrderId}</span>
+                                                                        </div>
+                                                                        <div className={styles.infoRow}>
+                                                                            <span className={styles.infoLabel}>Tanggal:</span>
+                                                                            <span className={styles.infoValue}>{moment((pesanan?.start).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })).format('DD MMM YYYY')}</span>
+                                                                        </div>
+                                                                        <div className={styles.infoRow}>
+                                                                            <span className={styles.infoLabel}>Status:</span>
+                                                                            <select
+                                                                                className={`${styles.statusSelect} ${selectValue === 'Selesai' ? styles.statusSelectPaid : selectValue === 'Dikirim' ? styles.statusSelectShipped : selectValue === 'Diproses' ? styles.statusSelectPending : ''}`}
+                                                                                value={selectValue}
+                                                                                onChange={(e) => handleStatusChange(e.target.value, pesanan)}
+                                                                            >
+                                                                                <option value="">Belum Diproses</option>
+                                                                                <option value="Diproses">Diproses</option>
+                                                                                <option value="Dikirim">Dikirim</option>
+                                                                                <option value="Selesai">Selesai</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        {selectValue === "Dikirim" && shippingItem && (
+                                                                            <div className={styles.infoRow}>
+                                                                                <span className={styles.infoLabel}>{shippingItem.productName}:</span>
+                                                                                {!openResi && (
+                                                                                    <button onClick={() => handleTrackingNumberChange(shippingItem?.id)} className={styles.noteButtonSmall}>
+                                                                                        {shippingItem?.noResi ? shippingItem?.noResi : 'Tambahkan Resi'}
+                                                                                    </button>
+                                                                                )}
+                                                                                {openResi && idItemResi === shippingItem?.id && (
+                                                                                    <div className={styles.noresi}>
+                                                                                        <input
+                                                                                            type="text"
+                                                                                            placeholder="Masukkan nomor resi"
+                                                                                            value={resi}
+                                                                                            onChange={(e) => setResi(e.target.value)}
+                                                                                            disabled={loading}
+                                                                                        />
+                                                                                        <button disabled={loading} onClick={() => handleSaveTracking(shippingItem?.id)}>
+                                                                                            {idItemResi === shippingItem?.id && loading
+                                                                                                ? 'Loading'
+                                                                                                : shippingItem?.noResi
+                                                                                                    ? 'Update'
+                                                                                                    : 'Simpan'}
+                                                                                        </button>
+                                                                                        <div className={styles.close} onClick={() => setOpenResi(false)}>x</div>
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
                                                             </td>
                                                         </tr>
 
@@ -557,7 +583,7 @@ export default function ListPesanan({ session, data, month, year, payment }) {
                                                                 <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                                                                     <div className={styles.modalHeader}>
                                                                         <h2>Detail Pesanan</h2>
-                                                                        <button 
+                                                                        <button
                                                                             className={styles.modalClose}
                                                                             onClick={() => setExpandedOrder(null)}
                                                                         >
