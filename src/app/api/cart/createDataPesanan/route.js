@@ -27,6 +27,7 @@ export async function POST(req) {
             diskon: id.diskon,
             diskon_nominal: id.diskon_nominal,
             nota_url: id.nota_url,
+            link_payment: id.link_payment,
             dataPesananItems: { create: fromItems }
         },
     });

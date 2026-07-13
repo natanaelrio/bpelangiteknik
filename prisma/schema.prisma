@@ -274,6 +274,7 @@ model dataPesanan {
   kode                String?           @db.VarChar(200)
   alamat_detail       String?
   nota_url            String?           @db.VarChar(200)
+  link_payment        String?           @db.VarChar(200)
   payment_info        String?
   diskon_nominal      BigInt?
   cart                cart              @relation(fields: [cartID], references: [IDCart])

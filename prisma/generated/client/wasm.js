@@ -353,6 +353,7 @@ exports.Prisma.DataPesananScalarFieldEnum = {
   kode: 'kode',
   alamat_detail: 'alamat_detail',
   nota_url: 'nota_url',
+  link_payment: 'link_payment',
   payment_info: 'payment_info',
   diskon_nominal: 'diskon_nominal'
 };

@@ -17827,6 +17827,7 @@ export namespace Prisma {
     kode: string | null
     alamat_detail: string | null
     nota_url: string | null
+    link_payment: string | null
     payment_info: string | null
     diskon_nominal: bigint | null
   }
@@ -17848,6 +17849,7 @@ export namespace Prisma {
     kode: string | null
     alamat_detail: string | null
     nota_url: string | null
+    link_payment: string | null
     payment_info: string | null
     diskon_nominal: bigint | null
   }
@@ -17869,6 +17871,7 @@ export namespace Prisma {
     kode: number
     alamat_detail: number
     nota_url: number
+    link_payment: number
     payment_info: number
     diskon_nominal: number
     _all: number
@@ -17908,6 +17911,7 @@ export namespace Prisma {
     kode?: true
     alamat_detail?: true
     nota_url?: true
+    link_payment?: true
     payment_info?: true
     diskon_nominal?: true
   }
@@ -17929,6 +17933,7 @@ export namespace Prisma {
     kode?: true
     alamat_detail?: true
     nota_url?: true
+    link_payment?: true
     payment_info?: true
     diskon_nominal?: true
   }
@@ -17950,6 +17955,7 @@ export namespace Prisma {
     kode?: true
     alamat_detail?: true
     nota_url?: true
+    link_payment?: true
     payment_info?: true
     diskon_nominal?: true
     _all?: true
@@ -18058,6 +18064,7 @@ export namespace Prisma {
     kode: string | null
     alamat_detail: string | null
     nota_url: string | null
+    link_payment: string | null
     payment_info: string | null
     diskon_nominal: bigint | null
     _count: DataPesananCountAggregateOutputType | null
@@ -18098,6 +18105,7 @@ export namespace Prisma {
     kode?: boolean
     alamat_detail?: boolean
     nota_url?: boolean
+    link_payment?: boolean
     payment_info?: boolean
     diskon_nominal?: boolean
     cart?: boolean | cartDefaultArgs<ExtArgs>
@@ -18122,6 +18130,7 @@ export namespace Prisma {
     kode?: boolean
     alamat_detail?: boolean
     nota_url?: boolean
+    link_payment?: boolean
     payment_info?: boolean
     diskon_nominal?: boolean
     cart?: boolean | cartDefaultArgs<ExtArgs>
@@ -18144,6 +18153,7 @@ export namespace Prisma {
     kode?: boolean
     alamat_detail?: boolean
     nota_url?: boolean
+    link_payment?: boolean
     payment_info?: boolean
     diskon_nominal?: boolean
   }
@@ -18180,6 +18190,7 @@ export namespace Prisma {
       kode: string | null
       alamat_detail: string | null
       nota_url: string | null
+      link_payment: string | null
       payment_info: string | null
       diskon_nominal: bigint | null
     }, ExtArgs["result"]["dataPesanan"]>
@@ -18593,6 +18604,7 @@ export namespace Prisma {
     readonly kode: FieldRef<"dataPesanan", 'String'>
     readonly alamat_detail: FieldRef<"dataPesanan", 'String'>
     readonly nota_url: FieldRef<"dataPesanan", 'String'>
+    readonly link_payment: FieldRef<"dataPesanan", 'String'>
     readonly payment_info: FieldRef<"dataPesanan", 'String'>
     readonly diskon_nominal: FieldRef<"dataPesanan", 'BigInt'>
   }
@@ -31183,6 +31195,7 @@ export namespace Prisma {
     kode: 'kode',
     alamat_detail: 'alamat_detail',
     nota_url: 'nota_url',
+    link_payment: 'link_payment',
     payment_info: 'payment_info',
     diskon_nominal: 'diskon_nominal'
   };
@@ -32922,6 +32935,7 @@ export namespace Prisma {
     kode?: StringNullableFilter<"dataPesanan"> | string | null
     alamat_detail?: StringNullableFilter<"dataPesanan"> | string | null
     nota_url?: StringNullableFilter<"dataPesanan"> | string | null
+    link_payment?: StringNullableFilter<"dataPesanan"> | string | null
     payment_info?: StringNullableFilter<"dataPesanan"> | string | null
     diskon_nominal?: BigIntNullableFilter<"dataPesanan"> | bigint | number | null
     cart?: XOR<CartRelationFilter, cartWhereInput>
@@ -32945,6 +32959,7 @@ export namespace Prisma {
     kode?: SortOrderInput | SortOrder
     alamat_detail?: SortOrderInput | SortOrder
     nota_url?: SortOrderInput | SortOrder
+    link_payment?: SortOrderInput | SortOrder
     payment_info?: SortOrderInput | SortOrder
     diskon_nominal?: SortOrderInput | SortOrder
     cart?: cartOrderByWithRelationInput
@@ -32971,6 +32986,7 @@ export namespace Prisma {
     kode?: StringNullableFilter<"dataPesanan"> | string | null
     alamat_detail?: StringNullableFilter<"dataPesanan"> | string | null
     nota_url?: StringNullableFilter<"dataPesanan"> | string | null
+    link_payment?: StringNullableFilter<"dataPesanan"> | string | null
     payment_info?: StringNullableFilter<"dataPesanan"> | string | null
     diskon_nominal?: BigIntNullableFilter<"dataPesanan"> | bigint | number | null
     cart?: XOR<CartRelationFilter, cartWhereInput>
@@ -32994,6 +33010,7 @@ export namespace Prisma {
     kode?: SortOrderInput | SortOrder
     alamat_detail?: SortOrderInput | SortOrder
     nota_url?: SortOrderInput | SortOrder
+    link_payment?: SortOrderInput | SortOrder
     payment_info?: SortOrderInput | SortOrder
     diskon_nominal?: SortOrderInput | SortOrder
     _count?: dataPesananCountOrderByAggregateInput
@@ -33023,6 +33040,7 @@ export namespace Prisma {
     kode?: StringNullableWithAggregatesFilter<"dataPesanan"> | string | null
     alamat_detail?: StringNullableWithAggregatesFilter<"dataPesanan"> | string | null
     nota_url?: StringNullableWithAggregatesFilter<"dataPesanan"> | string | null
+    link_payment?: StringNullableWithAggregatesFilter<"dataPesanan"> | string | null
     payment_info?: StringNullableWithAggregatesFilter<"dataPesanan"> | string | null
     diskon_nominal?: BigIntNullableWithAggregatesFilter<"dataPesanan"> | bigint | number | null
   }
@@ -35717,6 +35735,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
     cart: cartCreateNestedOneWithoutDataPesananInput
@@ -35740,6 +35759,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
     dataPesananItems?: dataPesananItemUncheckedCreateNestedManyWithoutDataPesananInput
@@ -35760,6 +35780,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     cart?: cartUpdateOneRequiredWithoutDataPesananNestedInput
@@ -35783,6 +35804,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dataPesananItems?: dataPesananItemUncheckedUpdateManyWithoutDataPesananNestedInput
@@ -35805,6 +35827,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
   }
@@ -35824,6 +35847,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -35845,6 +35869,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -38453,6 +38478,7 @@ export namespace Prisma {
     kode?: SortOrder
     alamat_detail?: SortOrder
     nota_url?: SortOrder
+    link_payment?: SortOrder
     payment_info?: SortOrder
     diskon_nominal?: SortOrder
   }
@@ -38482,6 +38508,7 @@ export namespace Prisma {
     kode?: SortOrder
     alamat_detail?: SortOrder
     nota_url?: SortOrder
+    link_payment?: SortOrder
     payment_info?: SortOrder
     diskon_nominal?: SortOrder
   }
@@ -38503,6 +38530,7 @@ export namespace Prisma {
     kode?: SortOrder
     alamat_detail?: SortOrder
     nota_url?: SortOrder
+    link_payment?: SortOrder
     payment_info?: SortOrder
     diskon_nominal?: SortOrder
   }
@@ -42537,6 +42565,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
     dataPesananItems?: dataPesananItemCreateNestedManyWithoutDataPesananInput
@@ -42558,6 +42587,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
     dataPesananItems?: dataPesananItemUncheckedCreateNestedManyWithoutDataPesananInput
@@ -42710,6 +42740,7 @@ export namespace Prisma {
     kode?: StringNullableFilter<"dataPesanan"> | string | null
     alamat_detail?: StringNullableFilter<"dataPesanan"> | string | null
     nota_url?: StringNullableFilter<"dataPesanan"> | string | null
+    link_payment?: StringNullableFilter<"dataPesanan"> | string | null
     payment_info?: StringNullableFilter<"dataPesanan"> | string | null
     diskon_nominal?: BigIntNullableFilter<"dataPesanan"> | bigint | number | null
   }
@@ -43165,6 +43196,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
     cart: cartCreateNestedOneWithoutDataPesananInput
@@ -43187,6 +43219,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
   }
@@ -43222,6 +43255,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     cart?: cartUpdateOneRequiredWithoutDataPesananNestedInput
@@ -43244,6 +43278,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -45235,6 +45270,7 @@ export namespace Prisma {
     kode?: string | null
     alamat_detail?: string | null
     nota_url?: string | null
+    link_payment?: string | null
     payment_info?: string | null
     diskon_nominal?: bigint | number | null
   }
@@ -45283,6 +45319,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dataPesananItems?: dataPesananItemUpdateManyWithoutDataPesananNestedInput
@@ -45304,6 +45341,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     dataPesananItems?: dataPesananItemUncheckedUpdateManyWithoutDataPesananNestedInput
@@ -45325,6 +45363,7 @@ export namespace Prisma {
     kode?: NullableStringFieldUpdateOperationsInput | string | null
     alamat_detail?: NullableStringFieldUpdateOperationsInput | string | null
     nota_url?: NullableStringFieldUpdateOperationsInput | string | null
+    link_payment?: NullableStringFieldUpdateOperationsInput | string | null
     payment_info?: NullableStringFieldUpdateOperationsInput | string | null
     diskon_nominal?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
